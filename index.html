@@ -6,38 +6,42 @@
   <title>Leopis (Pvt) Ltd | Official Store Sri Lanka</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
 </head>
 <body class="bg-slate-100 text-slate-800 font-sans flex flex-col min-h-screen">
 
   <!-- Top Social Bar -->
   <div class="bg-slate-950 text-slate-400 text-xs py-2 px-4 border-b border-slate-800">
     <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
-      <div class="flex items-center gap-3">
-        <a href="tel:+94783366466" class="hover:text-amber-400 flex items-center gap-1">
+      <div class="flex items-center gap-4 text-[11px] sm:text-xs">
+        <a href="tel:+94783366466" class="hover:text-amber-400 flex items-center gap-1.5 transition">
           <i class="fa-solid fa-phone text-amber-500"></i> +94 78 336 6466
         </a>
-        <a href="mailto:director.leopis@gmail.com" class="hover:text-red-400 flex items-center gap-1">
+        <a href="mailto:director.leopis@gmail.com" class="hover:text-red-400 flex items-center gap-1.5 transition">
           <i class="fa-solid fa-envelope text-red-500"></i> director.leopis@gmail.com
         </a>
       </div>
-      <div class="flex items-center gap-3 text-sm">
-        <a href="https://wa.me/94783366466" target="_blank" class="hover:text-emerald-400" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
-        <a href="https://www.facebook.com/Leopis" target="_blank" class="hover:text-blue-400" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-        <a href="https://www.instagram.com/Leopis" target="_blank" class="hover:text-rose-400" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
-        <a href="https://www.tiktok.com/@Leopis" target="_blank" class="hover:text-pink-400" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
-        <a href="https://t.me/+94783366466" target="_blank" class="hover:text-sky-400" title="Telegram"><i class="fa-brands fa-telegram"></i></a>
+      <div class="flex items-center gap-3.5 text-sm">
+        <a href="https://wa.me/94783366466" target="_blank" class="hover:text-emerald-400 text-emerald-500 transition" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="https://www.facebook.com/share/1E44ZiZk7x/" target="_blank" class="hover:text-blue-400 text-blue-500 transition" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="https://www.instagram.com/leopispvt" target="_blank" class="hover:text-rose-400 text-rose-500 transition" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://www.tiktok.com/@leo.pis07" target="_blank" class="hover:text-pink-400 text-pink-400 transition" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+        <a href="https://t.me/+94783366466" target="_blank" class="hover:text-sky-400 text-sky-400 transition" title="Telegram"><i class="fa-brands fa-telegram"></i></a>
       </div>
     </div>
   </div>
 
   <!-- Main Header -->
-  <header class="sticky top-0 z-40 bg-slate-900 text-white shadow-lg">
+  <header class="sticky top-0 z-40 bg-slate-900 text-white shadow-lg border-b border-slate-800">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
       
       <!-- Company Branding & Logo -->
       <a href="/" class="flex items-center space-x-3">
-        <img src="logo.png" alt="Leopis Logo" class="h-10 w-auto object-contain rounded" onerror="this.style.display='none'">
-        <div>
+        <img src="logo.png" alt="Leopis Logo" class="h-10 w-auto object-contain rounded" onerror="this.onerror=null; this.src='https://placehold.co/80x80/0f172a/f59e0b?text=LEOPIS';">
+        <div class="leading-tight">
           <div class="text-base sm:text-lg font-black tracking-wider text-amber-500">
             LEOPIS <span class="text-xs font-semibold text-slate-300">(PVT) LTD</span>
           </div>
@@ -45,13 +49,13 @@
         </div>
       </a>
 
-      <!-- Actions -->
+      <!-- Actions (Admin & Cart) -->
       <div class="flex items-center space-x-3">
-        <button onclick="openAdminModal()" class="text-xs bg-slate-800 hover:bg-slate-700 px-3.5 py-2 rounded-lg border border-slate-700 font-semibold flex items-center gap-1.5 transition">
+        <button type="button" onclick="openAdminModal()" class="text-xs bg-slate-800 hover:bg-slate-700 active:scale-95 px-3.5 py-2 rounded-lg border border-slate-700 font-semibold flex items-center gap-1.5 transition text-white shadow-sm cursor-pointer">
           <i class="fa-solid fa-lock text-amber-400 text-xs"></i> <span>Admin</span>
         </button>
 
-        <button onclick="toggleDrawer('cartDrawer')" class="relative bg-slate-800 hover:bg-slate-700 p-2.5 rounded-lg border border-slate-700 transition">
+        <button type="button" onclick="toggleDrawer('cartDrawer')" class="relative bg-slate-800 hover:bg-slate-700 p-2.5 rounded-lg border border-slate-700 transition cursor-pointer">
           <i class="fa-solid fa-cart-shopping text-emerald-400"></i>
           <span id="cartCount" class="absolute -top-1 -right-1 bg-emerald-500 text-white text-[10px] font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
         </button>
@@ -65,18 +69,31 @@
     <!-- Hero Banner -->
     <div class="bg-gradient-to-r from-slate-900 via-slate-800 to-amber-950 rounded-2xl p-6 text-white mb-6 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
       <div>
-        <span class="text-[11px] uppercase tracking-wider text-amber-400 font-bold bg-amber-400/10 px-2.5 py-1 rounded border border-amber-400/20">Official Product Feed</span>
+        <span class="text-[11px] uppercase tracking-wider text-amber-400 font-bold bg-amber-400/10 px-2.5 py-1 rounded border border-amber-400/20">Official Product Catalog</span>
         <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight mt-1.5">Leopis (Pvt) Ltd</h1>
-        <p class="text-slate-300 text-xs sm:text-sm mt-1">Browse our latest product releases. Islandwide delivery directly confirmed via WhatsApp.</p>
+        <p class="text-slate-300 text-xs sm:text-sm mt-1">Direct Checkout & Islandwide Delivery verified directly via WhatsApp.</p>
+        <div class="mt-4 flex flex-wrap gap-2 text-xs">
+          <a href="tel:+94783366466" class="bg-slate-800/80 hover:bg-slate-700 px-3 py-1.5 rounded-lg border border-slate-700 flex items-center gap-1.5 transition">
+            <i class="fa-solid fa-phone text-amber-400"></i> +94 78 336 6466
+          </a>
+          <a href="https://wa.me/94783366466" target="_blank" class="bg-emerald-600 hover:bg-emerald-500 text-white px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition">
+            <i class="fa-brands fa-whatsapp"></i> WhatsApp Order
+          </a>
+        </div>
       </div>
-      <a href="https://wa.me/94783366466" target="_blank" class="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2 shadow-md transition">
-        <i class="fa-brands fa-whatsapp text-lg"></i> Direct Inquiries
-      </a>
+
+      <div class="bg-emerald-500/10 border border-emerald-500/30 px-4 py-3 rounded-xl flex items-center gap-3">
+        <i class="fa-brands fa-whatsapp text-3xl text-emerald-400"></i>
+        <div class="text-xs">
+          <div class="font-bold text-white">Direct WhatsApp Support</div>
+          <div class="text-emerald-300 text-[11px]">+94 78 336 6466</div>
+        </div>
+      </div>
     </div>
 
     <!-- Category Filter Bar (Tabs) -->
-    <div class="mb-6 flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none" id="categoryTabs">
-      <!-- Generated dynamically -->
+    <div class="mb-6 flex items-center gap-2 overflow-x-auto pb-2 no-scrollbar" id="categoryTabs">
+      <!-- Injected dynamically -->
     </div>
 
     <!-- Feed / Products Container -->
@@ -90,13 +107,13 @@
     </div>
   </main>
 
-  <!-- Footer -->
+  <!-- Footer with Verified Social Links -->
   <footer class="bg-slate-950 text-slate-300 border-t border-slate-800 pt-10 pb-8 mt-12 text-xs">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
       <div>
         <h3 class="text-sm font-bold text-white mb-2">Leopis (Pvt) Ltd</h3>
         <p class="text-slate-400 leading-relaxed">
-          Premium electronic gadgets, accessories, and digital solutions with genuine guarantee and fast islandwide dispatch in Sri Lanka.
+          Premium electronic gadgets, accessories, and digital solutions with genuine quality and islandwide fast delivery in Sri Lanka.
         </p>
       </div>
 
@@ -123,13 +140,21 @@
       </div>
 
       <div>
-        <h3 class="text-sm font-bold text-white mb-3">Follow Us</h3>
-        <p class="text-slate-400 mb-3">Stay updated with our newest inventory on social media:</p>
-        <div class="flex items-center gap-2.5">
-          <a href="https://www.facebook.com/Leopis" target="_blank" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-blue-600 flex items-center justify-center text-white transition"><i class="fa-brands fa-facebook-f"></i></a>
-          <a href="https://www.tiktok.com/@Leopis" target="_blank" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-pink-600 flex items-center justify-center text-white transition"><i class="fa-brands fa-tiktok"></i></a>
-          <a href="https://www.instagram.com/Leopis" target="_blank" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-rose-500 flex items-center justify-center text-white transition"><i class="fa-brands fa-instagram"></i></a>
-          <a href="https://wa.me/94783366466" target="_blank" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-emerald-600 flex items-center justify-center text-white transition"><i class="fa-brands fa-whatsapp"></i></a>
+        <h3 class="text-sm font-bold text-white mb-3">Official Social Media</h3>
+        <p class="text-slate-400 mb-3">Connect directly with our official pages:</p>
+        <div class="flex items-center gap-3">
+          <a href="https://www.facebook.com/share/1E44ZiZk7x/" target="_blank" class="w-9 h-9 rounded-lg bg-slate-800 hover:bg-blue-600 flex items-center justify-center text-white transition border border-slate-700" title="Facebook">
+            <i class="fa-brands fa-facebook-f"></i>
+          </a>
+          <a href="https://www.tiktok.com/@leo.pis07" target="_blank" class="w-9 h-9 rounded-lg bg-slate-800 hover:bg-pink-600 flex items-center justify-center text-white transition border border-slate-700" title="TikTok">
+            <i class="fa-brands fa-tiktok"></i>
+          </a>
+          <a href="https://www.instagram.com/leopispvt" target="_blank" class="w-9 h-9 rounded-lg bg-slate-800 hover:bg-rose-500 flex items-center justify-center text-white transition border border-slate-700" title="Instagram">
+            <i class="fa-brands fa-instagram"></i>
+          </a>
+          <a href="https://wa.me/94783366466" target="_blank" class="w-9 h-9 rounded-lg bg-slate-800 hover:bg-emerald-600 flex items-center justify-center text-white transition border border-slate-700" title="WhatsApp">
+            <i class="fa-brands fa-whatsapp"></i>
+          </a>
         </div>
       </div>
     </div>
@@ -140,7 +165,7 @@
   </footer>
 
   <!-- Shopping Cart Drawer -->
-  <div id="cartDrawer" class="fixed inset-0 z-50 overflow-hidden hidden">
+  <div id="cartDrawer" style="display: none;" class="fixed inset-0 z-50 overflow-hidden">
     <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onclick="toggleDrawer('cartDrawer')"></div>
     <section class="absolute inset-y-0 right-0 max-w-full flex pl-10">
       <div class="w-screen max-w-md bg-white shadow-2xl flex flex-col">
@@ -148,227 +173,9 @@
           <h3 class="font-bold flex items-center gap-2 text-sm">
             <i class="fa-solid fa-cart-shopping text-emerald-400"></i> Your Order Cart
           </h3>
-          <button onclick="toggleDrawer('cartDrawer')" class="text-slate-400 hover:text-white text-xl">&times;</button>
+          <button type="button" onclick="toggleDrawer('cartDrawer')" class="text-slate-400 hover:text-white text-xl cursor-pointer">&times;</button>
         </div>
 
         <div id="cartItemsList" class="flex-grow p-4 overflow-y-auto space-y-3"></div>
 
         <div class="p-4 border-t bg-slate-50 space-y-3">
-          <div class="flex justify-between font-bold text-slate-900 text-base">
-            <span>Total:</span>
-            <span id="cartTotal">LKR 0</span>
-          </div>
-
-          <div class="space-y-2">
-            <input type="text" id="custName" placeholder="Your Full Name" class="w-full text-xs p-2.5 border rounded-lg focus:ring-2 focus:ring-amber-500 outline-none">
-            <input type="tel" id="custPhone" placeholder="Mobile / WhatsApp Number (+94...)" class="w-full text-xs p-2.5 border rounded-lg focus:ring-2 focus:ring-amber-500 outline-none">
-            <select id="custDistrict" class="w-full text-xs p-2.5 border rounded-lg focus:ring-2 focus:ring-amber-500 outline-none">
-              <option value="">Select Delivery District</option>
-              <option value="Colombo">Colombo</option>
-              <option value="Gampaha">Gampaha</option>
-              <option value="Jaffna">Jaffna</option>
-              <option value="Kandy">Kandy</option>
-              <option value="Galle">Galle</option>
-              <option value="Batticaloa">Batticaloa</option>
-              <option value="Other">Other District</option>
-            </select>
-          </div>
-
-          <button onclick="checkoutToWhatsApp()" class="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-bold flex items-center justify-center gap-2 shadow-lg transition text-xs sm:text-sm">
-            <i class="fa-brands fa-whatsapp text-lg"></i> Send Order to Leopis WhatsApp
-          </button>
-        </div>
-      </div>
-    </section>
-  </div>
-
-  <!-- Admin Modal (Login + Dashboard) -->
-  <div id="adminModal" class="fixed inset-0 z-50 hidden bg-black/70 flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
-    <div class="bg-white rounded-2xl w-full max-w-2xl max-h-[92vh] flex flex-col shadow-2xl overflow-hidden">
-      
-      <!-- Modal Header -->
-      <div class="p-4 bg-slate-900 text-white flex justify-between items-center border-b border-slate-800">
-        <div class="flex items-center gap-2 text-sm font-bold">
-          <i class="fa-solid fa-shield-halved text-amber-400"></i>
-          <span id="adminModalTitle">Leopis Admin Authentication</span>
-        </div>
-        <button onclick="closeAdminModal()" class="text-slate-400 hover:text-white text-xl">&times;</button>
-      </div>
-
-      <!-- View 1: Login Form -->
-      <div id="adminLoginForm" class="p-6 space-y-4">
-        <p class="text-xs text-slate-500">Sign in with official company credentials to manage product feeds.</p>
-        <div>
-          <label class="text-xs font-semibold text-slate-700">Username</label>
-          <input type="text" id="adminUser" placeholder="Enter username" class="w-full text-xs p-2.5 border rounded-lg mt-1 focus:ring-2 focus:ring-amber-500 outline-none">
-        </div>
-        <div>
-          <label class="text-xs font-semibold text-slate-700">Password</label>
-          <input type="password" id="adminPass" placeholder="Enter password" class="w-full text-xs p-2.5 border rounded-lg mt-1 focus:ring-2 focus:ring-amber-500 outline-none">
-        </div>
-        <div id="loginError" class="text-xs text-red-500 hidden font-semibold">Incorrect Username or Password!</div>
-        <button onclick="handleAdminLogin()" class="w-full py-2.5 bg-slate-900 hover:bg-amber-600 text-white text-xs font-bold rounded-lg transition">
-          Log In as Admin
-        </button>
-      </div>
-
-      <!-- View 2: Admin Dashboard (FB-Style Post Composer) -->
-      <div id="adminDashboard" class="p-4 sm:p-6 overflow-y-auto space-y-6 hidden">
-        
-        <!-- Post Composer Box (FB Style) -->
-        <div class="bg-white border rounded-2xl p-4 shadow-sm space-y-3">
-          <div class="flex items-center justify-between border-b pb-3">
-            <div class="flex items-center gap-2">
-              <div class="w-8 h-8 rounded-full bg-amber-500/20 text-amber-600 flex items-center justify-center font-bold text-xs">L</div>
-              <span class="text-xs font-bold text-slate-800">Create New Product Post</span>
-            </div>
-            <button onclick="adminLogout()" class="text-[11px] text-red-500 hover:underline">Logout</button>
-          </div>
-
-          <!-- Post Category Selector -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-            <div>
-              <label class="text-[11px] font-semibold text-slate-600">Select Category</label>
-              <select id="newCategorySelect" class="w-full text-xs p-2 border rounded-lg mt-0.5">
-                <option value="Audio">Audio</option>
-                <option value="Smart Watches">Smart Watches</option>
-                <option value="Mobile Accessories">Mobile Accessories</option>
-                <option value="Smart Home">Smart Home</option>
-                <option value="Other">Custom Category...</option>
-              </select>
-            </div>
-            <div>
-              <label class="text-[11px] font-semibold text-slate-600">Custom Category (if Other)</label>
-              <input type="text" id="newCategoryCustom" placeholder="e.g. Chargers" class="w-full text-xs p-2 border rounded-lg mt-0.5">
-            </div>
-          </div>
-
-          <!-- Product Title -->
-          <div>
-            <label class="text-[11px] font-semibold text-slate-600">Product Title / Headline</label>
-            <input type="text" id="newTitle" placeholder="e.g. Wireless Pro Earbuds V5.3" class="w-full text-xs p-2 border rounded-lg mt-0.5">
-          </div>
-
-          <!-- Description / Caption -->
-          <div>
-            <label class="text-[11px] font-semibold text-slate-600">Post Description / Specs</label>
-            <textarea id="newDesc" rows="2" placeholder="Write product features, battery life, warranty details..." class="w-full text-xs p-2 border rounded-lg mt-0.5"></textarea>
-          </div>
-
-          <!-- Price & Image URL -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-            <div>
-              <label class="text-[11px] font-semibold text-slate-600">Price (LKR)</label>
-              <input type="number" id="newPrice" placeholder="e.g. 7500" class="w-full text-xs p-2 border rounded-lg mt-0.5">
-            </div>
-            <div>
-              <label class="text-[11px] font-semibold text-slate-600">Image Direct Link (URL)</label>
-              <input type="text" id="newImage" placeholder="https://... (or from imgbb)" class="w-full text-xs p-2 border rounded-lg mt-0.5">
-            </div>
-          </div>
-
-          <!-- Post Button -->
-          <button onclick="publishProduct()" class="w-full py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold flex items-center justify-center gap-2 shadow transition">
-            <i class="fa-solid fa-paper-plane"></i> Publish to Feed
-          </button>
-        </div>
-
-        <!-- Manage Existing Posts -->
-        <div class="border rounded-xl p-4">
-          <h4 class="text-xs font-bold text-slate-800 mb-3">Live Inventory Feed</h4>
-          <div id="adminItemsList" class="space-y-2"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    // Initial Catalog
-    const defaultCatalog = [
-      {
-        id: 1,
-        title: "Pro Wireless ANC Earbuds",
-        category: "Audio",
-        price: 6800,
-        desc: "Active Noise Cancellation with 36-hour playback time and deep bass stereo sound.",
-        image: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=500"
-      },
-      {
-        id: 2,
-        title: "Ultra AMOLED Smart Watch",
-        category: "Smart Watches",
-        price: 9400,
-        desc: "Always-on AMOLED display with heart rate sensor, blood oxygen tracker, and BT calling.",
-        image: "https://images.unsplash.com/photo-1575311373937-040b8e1fd5b6?w=500"
-      },
-      {
-        id: 3,
-        title: "65W GaN Fast Charger Multi-Port",
-        category: "Mobile Accessories",
-        price: 4200,
-        desc: "Dual Type-C and USB fast charging brick suitable for smartphones, tablets, and laptops.",
-        image: "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?w=500"
-      }
-    ];
-
-    let products = JSON.parse(localStorage.getItem('leopis_catalog')) || defaultCatalog;
-    let currentCategory = "All";
-    let cart = [];
-
-    // Render Categories & Filter Tabs
-    function renderCategoryTabs() {
-      const categories = ["All", ...new Set(products.map(p => p.category))];
-      const tabsContainer = document.getElementById('categoryTabs');
-      tabsContainer.innerHTML = '';
-
-      categories.forEach(cat => {
-        const isActive = cat === currentCategory;
-        const btn = document.createElement('button');
-        btn.className = `px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition ${
-          isActive 
-            ? 'bg-slate-900 text-white shadow-sm' 
-            : 'bg-white text-slate-600 hover:bg-slate-200 border border-slate-200'
-        }`;
-        btn.innerText = cat;
-        btn.onclick = () => {
-          currentCategory = cat;
-          renderCategoryTabs();
-          renderProducts();
-        };
-        tabsContainer.appendChild(btn);
-      });
-    }
-
-    // Render Products (Facebook Post Card Style)
-    function renderProducts() {
-      const grid = document.getElementById('productGrid');
-      grid.innerHTML = '';
-
-      const filtered = currentCategory === "All" 
-        ? products 
-        : products.filter(p => p.category === currentCategory);
-
-      document.getElementById('activeCategoryTitle').innerText = currentCategory === "All" ? "All Products" : currentCategory;
-      document.getElementById('productCounter').innerText = `${filtered.length} items`;
-
-      if (filtered.length === 0) {
-        grid.innerHTML = `<div class="col-span-full py-12 text-center text-slate-400 text-xs">No products in this category yet.</div>`;
-        return;
-      }
-
-      filtered.forEach(p => {
-        grid.innerHTML += `
-          <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col justify-between hover:shadow-md transition">
-            <!-- Post Header -->
-            <div class="p-3.5 flex items-center justify-between border-b border-slate-100">
-              <div class="flex items-center gap-2.5">
-                <div class="w-8 h-8 rounded-full bg-slate-900 text-amber-400 flex items-center justify-center font-bold text-xs">L</div>
-                <div>
-                  <h4 class="text-xs font-bold text-slate-900 leading-none">Leopis (Pvt) Ltd</h4>
-                  <span class="text-[10px] text-slate-400 font-medium">${p.category}</span>
-                </div>
-              </div>
-              <span class="text-[10px] bg-amber-50 text-amber-700 px-2 py-0.5 rounded font-bold border border-amber-200">Official</span>
-            </div>
-
-      
