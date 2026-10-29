@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leopis Digital | Official Store</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .badge { font-feature-settings: "tnum"; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans flex flex-col min-h-screen">
+
+  <!-- Header -->
+  <header class="sticky top-0 z-40 bg-slate-900 text-white shadow-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center space-x-2">
+        <span class="text-2xl font-black tracking-wider text-blue-500">LEOPIS</span>
+        <span class="text-xs uppercase bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded border border-blue-500/30">Digital LK</span>
+      </div>
+
+      <div class="flex items-center space-x-3">
+        <!-- Customer Button -->
+        <button onclick="toggleModal('customerModal')" id="customerBtn" class="text-xs sm:text-sm bg-slate-800 hover:bg-slate-700 px-3 py-2 rounded-lg border border-slate-700 transition">
+          <i class="fa-regular fa-user mr-1 text-blue-400"></i> <span id="customerBtnLabel">Customer Login</span>
+        </button>
+
+        <!-- Admin Access Button -->
+        <button onclick="openAdmin()" class="text-xs sm:text-sm bg-blue-600 hover:bg-blue-500 px-3 py-2 rounded-lg transition font-medium">
+          <i class="fa-solid fa-lock mr-1"></i> Admin Panel
+        </button>
+
+        <!-- Cart Button -->
+        <button onclick="toggleDrawer('cartDrawer')" class="relative bg-slate-800 hover:bg-slate-700 p-2.5 rounded-lg border border-slate-700 transition">
+          <i class="fa-solid fa-cart-shopping text-emerald-400"></i>
+          <span id="cartCount" class="absolute -top-1 -right-1 bg-emerald-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Store Front Content -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex-grow">
+    <!-- Hero / WhatsApp Banner -->
+    <div class="bg-gradient-to-r from-blue-900 to-slate-900 rounded-2xl p-6 sm:p-8 text-white mb-8 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
+      <div>
+        <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Leopis Digital Store</h1>
+        <p class="text-slate-300 text-sm mt-1">Official Online Portal. Direct Checkout via WhatsApp Islandwide.</p>
+      </div>
+      <div class="flex items-center gap-2 bg-emerald-500/20 border border-emerald-500/40 px-4 py-2 rounded-xl">
+        <i class="fa-brands fa-whatsapp text-2xl text-emerald-400"></i>
+        <span class="text-xs text-emerald-200">WhatsApp Active Orders Supported</span>
+      </div>
+    </div>
+
+    <!-- Product Grid -->
+    <div class="flex items-center justify-between mb-6">
+      <h2 class="text-xl font-bold text-slate-900">Featured Products</h2>
+      <div id="productCounter" class="text-xs text-slate-500 font-medium">0 items listed</div>
+    </div>
+    
+    <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <!-- Products render dynamically here -->
+    </div>
+  </main>
+
+  <!-- Cart Drawer -->
+  <div id="cartDrawer" class="fixed inset-0 z-50 overflow-hidden hidden">
+    <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onclick="toggleDrawer('cartDrawer')"></div>
+    <section class="absolute inset-y-0 right-0 max-w-full flex pl-10">
+      <div class="w-screen max-w-md bg-white shadow-xl flex flex-col">
+        <div class="p-4 bg-slate-900 text-white flex justify-between items-center">
+          <h3 class="font-bold flex items-center gap-2">
+            <i class="fa-solid fa-cart-shopping text-emerald-400"></i> Order Cart
+          </h3>
+          <button onclick="toggleDrawer('cartDrawer')" class="text-slate-400 hover:text-white text-lg">&times;</button>
+        </div>
+
+        <div id="cartItemsList" class="flex-grow p-
