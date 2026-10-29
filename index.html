@@ -1,37 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Leopis (Pvt) Ltd | Official Online Store Sri Lanka</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    body { font-family: 'Inter', sans-serif; }
-    html { scroll-behavior: smooth; }
-    .no-scrollbar::-webkit-scrollbar { display: none; }
-    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leopis (Pvt) Ltd | Official Online Store Sri Lanka</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+  html { scroll-behavior: smooth; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+</style>
 </head>
-<body class="bg-slate-50 text-slate-800 flex flex-col min-h-screen">
+<body class="bg-slate-50 text-slate-800 font-sans flex flex-col min-h-screen">
 
-  <!-- 1. Top Announcement & Social Bar -->
-  <div class="bg-slate-900 text-slate-300 text-xs py-2 px-4 border-b border-slate-800">
-    <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
-      <div class="flex items-center gap-4 text-[11px] sm:text-xs">
-        <a href="tel:+94783366466" class="hover:text-amber-400 flex items-center gap-1.5 transition">
-          <i class="fa-solid fa-phone text-amber-400"></i> +94 78 336 6466
-        </a>
-        <a href="mailto:director.leopis@gmail.com" class="hover:text-red-400 flex items-center gap-1.5 transition hidden sm:flex">
-          <i class="fa-solid fa-envelope text-red-400"></i> director.leopis@gmail.com
-        </a>
-        <span class="text-slate-500 hidden md:inline">|</span>
-        <span class="text-emerald-400 text-[11px] hidden md:inline"><i class="fa-solid fa-truck-fast"></i> Islandwide Fast Delivery Available</span>
+<!-- Top Bar -->
+<div class="bg-slate-900 text-slate-300 text-xs py-2 px-4 border-b border-slate-800">
+  <div class="max-w-7xl mx-auto flex justify-between items-center">
+    <div class="flex items-center gap-4 text-[11px] sm:text-xs">
+      <a href="tel:+94783366466" class="hover:text-amber-400 flex items-center gap-1.5"><i class="fa-solid fa-phone text-amber-400"></i> +94 78 336 6466</a>
+      <a href="mailto:director.leopis@gmail.com" class="hover:text-red-400 hidden sm:flex items-center gap-1.5"><i class="fa-solid fa-envelope text-red-400"></i> director.leopis@gmail.com</a>
+    </div>
+    <div class="flex items-center gap-3.5 text-sm">
+      <a href="https://wa.me/94783366466" target="_blank" class="text-emerald-400"><i class="fa-brands fa-whatsapp"></i></a>
+      <a href="https://www.facebook.com/share/1E44ZiZk7x/" target="_blank" class="text-blue-400"><i class="fa-brands fa-facebook-f"></i></a>
+      <a href="https://www.instagram.com/leopispvt" target="_blank" class="text-rose-400"><i class="fa-brands fa-instagram"></i></a>
+      <a href="https://www.tiktok.com/@leo.pis07" target="_blank" class="text-pink-400"><i class="fa-brands fa-tiktok"></i></a>
+      <a href="https://t.me/+94783366466" target="_blank" class="text-sky-400"><i class="fa-brands fa-telegram"></i></a>
+    </div>
+  </div>
+</div>
+
+<!-- Navbar -->
+<header class="sticky top-0 z-40 bg-white border-b border-slate-200 shadow-sm">
+  <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
+    <a href="/" class="flex items-center space-x-2.5 shrink-0">
+      <img src="logo.png" alt="Leopis" class="h-9 w-auto object-contain rounded" onerror="this.onerror=null;this.src='https://placehold.co/80x80/0f172a/f59e0b?text=L';">
+      <div class="leading-tight">
+        <div class="text-base sm:text-lg font-black text-slate-900">LEOPIS <span class="text-xs font-bold text-amber-600">(PVT) LTD</span></div>
+        <span class="text-[9px] uppercase tracking-wider text-slate-400 font-bold block">Official Store Sri Lanka</span>
       </div>
+    </a>
+    <div class="flex-grow max-w-md hidden md:block">
+      <input type="text" id="searchInput" oninput="filterSearch(this.value)" placeholder="Search products..." class="w-full text-xs px-4 py-2 border border-slate-200 rounded-full bg-slate-50 focus:bg-white outline-none focus:ring-2 focus:ring-amber-500">
+    </div>
+    <div class="flex items-center space-x-2 shrink-0">
+      <a href="#adminSection" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-2 rounded-lg font-semibold flex items-center gap-1.5 border border-slate-200">
+        <i class="fa-solid fa-lock text-amber-500 text-xs"></i> <span>Admin</span>
+      </a>
+      <button type="button" onclick="toggleCart()" class="bg-slate-900 text-white px-3 py-2 rounded-lg font-semibold flex items-center gap-2">
+        <i class="fa-solid fa-bag-shopping text-emerald-400 text-sm"></i>
+        <span id="cartCount" class="bg-amber-500 text-slate-900 text-[11px] font-black rounded-full h-5 w-5 flex items-center justify-center">0</span>
+      </button>
+    </div>
+  </div>
+  <div class="px-4 pb-2.5 md:hidden">
+    <input type="text" oninput="filterSearch(this.value)" placeholder="Search products, watches, audio..." class="w-full text-xs px-4 py-2 border border-slate-200 rounded-full bg-slate-50 outline-none focus:ring-2 focus:ring-amber-500">
+  </div>
+</header>
 
-      <!-- Social Media Channel Icons -->
-      <div class="flex items-center gap-3.5 text-sm
-        
+<!-- Hero Banner -->
+<section class="max-w-7xl mx-auto px-4 pt-5 w-full">
+  <div class="bg-gradient-to-r from-slate-900 via-slate-800 to-amber-950 rounded-2xl p-6 text-white shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+    <div>
+      <span class="text-[10px] uppercase tracking-wider text-amber-400 font-bold bg-amber-400/10 px-2.5 py-1 rounded border border-amber-400/20">Islandwide Express Delivery</span>
+      <h1 class="text-2xl sm:text-3xl font-extrabold mt-2">Leopis (Pvt) Ltd</h1>
+      <p class="text-slate-300 text-xs sm:text-sm mt-1">Genuine electronic gadgets & accessories. Direct WhatsApp ordering across Sri Lanka.</p>
+      <div class="mt-4 flex flex-wrap gap-2 text-xs">
+        <a href="https://wa.me/94783366466" target="_blank" class="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-xl font-bold flex items-center gap-1.5"><i class="fa-brands fa-whatsapp"></i> WhatsApp Order</a>
+        <a href="tel:+94783366466" class="bg-white/10 hover:bg-white/20 text-white px-3.5 py-2 rounded-xl border border-white/10 flex items-center gap-1.5"><i class="fa-solid fa-phone text-amber-400"></i> +94 78 336 6466</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Category Pills -->
+<section class="max-w-7xl mx-auto px-4 pt-5 w-full">
+  <div class="flex items-center gap-2 overflow-x-auto pb-2 no-scrollbar" id="categoryTabs"></div>
+</section>
+
+<!-- Product Grid -->
+<main class="max-w-7xl mx-auto px-4 py-4 flex-grow w-full">
+  <div class="flex items-center justify-between mb-4">
+    <h2 id="activeCategoryTitle" class="text-base sm:text-lg font-extrabold text-slate-900">All Featured Items</h2>
+    <span class="text-xs text-slate-500" id="productCounter">0 items</span>
+  </div>
+  <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5"></div>
+</main>
+
+<!-- On-Page Admin Panel -->
+<section id="adminSection" class="max-w-2xl mx-auto px-4 pt-10 pb-14 w-full">
+  <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+    <div class="bg-slate-900 text-white p-4 flex items-center justify-between">
+      <span class="text-sm font-bold flex items-center gap-2"><i class="fa-solid fa-shield-halved text-amber-400"></i> Leopis Admin Dashboard</span>
+      <span class="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded">Staff Only</span>
+    </div>
+    <div id="adminLoginForm" class="p-5 space-y-3">
+      <input type="text" id="adminUser" placeholder="Username (Leopis)" class="w-full text-xs p-3 border rounded-xl bg-slate-50 outline-none">
+      <input type="password" id="adminPass" placeholder="Password (Leopis@1988)" class="w-full text-xs p-3 border rounded-xl bg-slate-50 outline-none">
+      <div id="loginError" class="text-xs text-red-500 hidden font-bold">Invalid Username or Password!</div>
+      <button type="button" onclick="handleAdminLogin()" class="w-full py-3 bg-slate-900 hover:bg-amber-600 text-white text-xs font-bold rounded-xl">Login to Admin Panel</button>
+    </div>
+    <div id="adminDashboard" class="p-5 space-y-5 hidden">
+      <div class="flex justify-between items-center border-b pb-2">
+        <span class="text-xs font-bold text-emerald-600">● Admin Logged In</span>
+        <button type="button" onclick="adminLogout()" class="text-xs text-red-500 font-bold">Logout</button>
+      </div>
+      <div class="space-y-2.5 bg-slate-50 p-4 rounded-xl border">
+        <h3 class="text-xs font-bold text-slate-800">Post New Product</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <select id="newCat" class="text-xs p-2.5 border rounded-lg bg-white">
+            <option value="Audio">Audio</option>
+            <option value="Smart Watches">Smart Watches</option>
+            <option value="Mobile Accessories">Mobile Accessories</option>
+            <option value="Smart Home">Smart Home</option>
+            <option value="Other">Custom Category...</option>
+          </select>
+          <input type="text" id="newCatCustom" placeholder="Custom Category (if Other)" class="text-xs p-2.5 border rounded-lg bg-white">
+        </div>
+        <input type="text" id="newTitle" placeholder="Product Title" class="w-full text-xs p-2.5 border rounded-lg bg-white">
+        <textarea id="newDesc" rows="2
+  
