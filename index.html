@@ -3,9 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<!-- SEO Meta Tags for Search Engine Optimization -->
 <meta name="description" content="Leopis (Pvt) Ltd Official Store Sri Lanka. Best electronic gadgets, smart watches, mobile accessories with islandwide cash on delivery.">
-<meta name="keywords" content="Leopis, Leopis Digital, Sri Lanka online store, electronic gadgets Sri Lanka, cash on delivery Colombo Jaffna">
 <title>Leopis (Pvt) Ltd | Official Online Store Sri Lanka</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -18,7 +16,6 @@
   }
 </style>
 <script>
-// XSS Security Sanitizer
 function sanitizeInput(str) {
   if (typeof str !== 'string') return str;
   return str.replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#x27;");
@@ -90,15 +87,13 @@ function updateBusinessAnalytics() {
   const box = document.getElementById('businessReportBox');
   if (box) {
     box.innerHTML = `
-      <div>Total Web Orders: <b>${realOrdersLog.length}</b></div>
-      <div>Actual Revenue: <b>LKR ${totalRevenue.toLocaleString()}</b></div>
-      <div>Actual Cost: <b>LKR ${totalCost.toLocaleString()}</b></div>
+      <div>Total Orders: <b>${realOrdersLog.length}</b></div>
+      <div>Revenue: <b>LKR ${totalRevenue.toLocaleString()}</b></div>
+      <div>Cost: <b>LKR ${totalCost.toLocaleString()}</b></div>
       <div class="text-emerald-600 font-bold col-span-3">Net Profit: LKR ${netProfit.toLocaleString()}</div>
     `;
   }
 }
-
-// BULK CSV / EXCEL AUTO CONVERT & CATEGORIZE ENGINE (Supports 2000+ products fast)
 function handleCsvUpload(event) {
   const file = event.target.files[0];
   if (!file) return;
@@ -107,53 +102,27 @@ function handleCsvUpload(event) {
     const text = e.target.result;
     const lines = text.split('\n');
     let addedCount = 0;
-
     for (let i = 1; i < lines.length; i++) {
       const line = lines[i].trim();
       if (!line) continue;
-      // CSV format expected: Title, Price, Cost, Category, Description, ImageURL
       const cols = line.split(',');
       if (cols.length >= 2) {
         const title = sanitizeInput(cols[0].trim());
         const price = parseFloat(cols[1]) || 5000;
         const cost = parseFloat(cols[2]) || (price * 0.7);
-        let category = cols[3] ? sanitizeInput(cols[3].trim()) : "";
-        const desc = cols[4] ? sanitizeInput(cols[4].trim()) : "Imported product from catalog.";
+        let category = cols[3] ? sanitizeInput(cols[3].trim()) : "General";
+        const desc = cols[4] ? sanitizeInput(cols[4].trim()) : "Imported product.";
         const image = cols[5] ? sanitizeInput(cols[5].trim()) : "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=500";
-
-        // Auto-categorization if category is empty based on title keywords
-        if (!category || category === "") {
-          const tLower = title.toLowerCase();
-          if (tLower.includes('watch') || tLower.includes('band')) category = "Smart Watches";
-          else if (tLower.includes('earbud') || tLower.includes('headphone') || tLower.includes('audio') || tLower.includes('speaker')) category = "Audio";
-          else if (tLower.includes('charger') || tLower.includes('cable') || tLower.includes('adapter') || tLower.includes('power')) category = "Mobile Accessories";
-          else if (tLower.includes('smart') || tLower.includes('home') || tLower.includes('bulb')) category = "Smart Home";
-          else category = "General Gadgets";
-        }
-
-        products.unshift({
-          id: Date.now() + i,
-          title,
-          category,
-          price,
-          cost,
-          special: false,
-          desc,
-          image
-        });
+        products.unshift({ id: Date.now() + i, title, category, price, cost, special: false, desc, image });
         addedCount++;
       }
     }
-
     localStorage.setItem('leopis_catalog', JSON.stringify(products));
-    renderCategoryTabs();
-    renderProducts();
-    renderAdminList();
-    alert(`Successfully imported ${addedCount} products with auto-categorization! Website remains fast.`);
+    renderCategoryTabs(); renderProducts(); renderAdminList();
+    alert(`Successfully imported ${addedCount} products!`);
   };
   reader.readAsText(file);
 }
-
 function previewFile() {
   const file = document.getElementById('newImgFile').files[0];
   if (!file) return;
@@ -196,7 +165,192 @@ function publishProduct() {
   }
 
   localStorage.setItem('leopis_catalog', JSON.stringify(products));
-  document.getElementById('newTitle').value = ''; document.getElementById('new
+  document.getElementById('newTitle').value = ''; document.getElementById('newDesc').value = '';
+  document.getElementById('newPrice').value = ''; document.getElementById('newCost').value = '';
+  document.getElementById('newImage').value = ''; document.getElementById('newImgFile').value = '';
+  document.getElementById('imgPreview').classList.add('hidden'); uploadedBase64 = "";
+  renderCategoryTabs(); renderProducts(); renderAdminList();
+}
+function editProduct(id) {
+  const p = products.find(x => x.id === id);
+  if (!p) return;
+  editingProductId = p.id;
+  document.getElementById('newCat').value = p.category;
+  document.getElementById('newTitle').value = p.title;
+  document.getElementById('newPrice').value = p.price;
+  document.getElementById('newCost').value = p.cost;
+  document.getElementById('newDesc').value = p.desc;
+  document.getElementById('newSpecial').checked = p.special;
+  document.getElementById('newImage').value = p.image;
+  document.getElementById('imgPreview').src = p.image;
+  document.getElementById('imgPreview').classList.remove('hidden');
+  document.getElementById('publishBtnText').innerText = "Update Product";
+  window.scrollTo({ top: document.getElementById('adminSection').offsetTop, behavior: 'smooth' });
+}
+function deleteProduct(id) {
+  products = products.filter(p => p.id !== id);
+  localStorage.setItem('leopis_catalog', JSON.stringify(products));
+  renderCategoryTabs(); renderProducts(); renderAdminList();
+}
+function renderAdminList() {
+  const box = document.getElementById('adminItemsList');
+  if (!box) return;
+  box.innerHTML = '';
+  products.forEach(p => {
+    box.innerHTML += `<div class="flex justify-between items-center border-b py-2 text-xs"><div class="flex items-center gap-2"><img src="${p.image}" class="w-8 h-8 rounded object-cover"><span><b>${p.title}</b> (LKR ${p.price})</span></div><div class="flex gap-1"><button type="button" onclick="editProduct(${p.id})" class="text-blue-600 font-bold px-2">Edit</button><button type="button" onclick="deleteProduct(${p.id})" class="text-red-500 font-bold px-2">Delete</button></div></div>`;
+  });
+}
+function renderCategoryTabs() {
+  const box = document.getElementById('categoryTabs');
+  if (!box) return;
+  const cats = ["All", ...new Set(products.map(p => p.category))];
+  box.innerHTML = '';
+  cats.forEach(c => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = `px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap ${c === currentCategory ? 'bg-slate-900 text-white shadow' : 'bg-white text-slate-700 border'}`;
+    b.innerText = c;
+    b.onclick = () => { currentCategory = c; renderCategoryTabs(); renderProducts(); };
+    box.appendChild(b);
+  });
+}
+function filterSearch(q) { searchQuery = sanitizeInput(q || '').toLowerCase().replace(/\s+/g, ''); renderProducts(); }
+function renderProducts() {
+  const grid = document.getElementById('productGrid');
+  const specialGrid = document.getElementById('specialOfferGrid');
+  if (!grid) return;
+  grid.innerHTML = ''; if (specialGrid) specialGrid.innerHTML = '';
+
+  const clean = s => (s || '').toLowerCase().replace(/\s+/g, '');
+  let list = currentCategory === "All" ? products : products.filter(p => p.category === currentCategory);
+  if (searchQuery) list = list.filter(p => clean(p.title).includes(searchQuery) || clean(p.category).includes(searchQuery) || clean(p.desc).includes(searchQuery));
+
+  if (specialGrid && currentCategory === "All" && !searchQuery) {
+    const specials = products.filter(p => p.special).slice(0, 3);
+    specials.forEach(p => {
+      specialGrid.innerHTML += `
+        <div class="bg-gradient-to-br from-amber-500/10 to-slate-900/5 rounded-2xl border-2 border-amber-500/40 p-3.5 flex flex-col justify-between shadow-sm shrink-0 w-64">
+          <div class="relative w-full h-32 bg-slate-100 rounded-xl overflow-hidden mb-2">
+            <img src="${p.image}" class="w-full h-full object-cover">
+            <span class="absolute top-2 left-2 text-[10px] bg-amber-600 text-white px-2 py-0.5 rounded font-bold">Special Offer</span>
+          </div>
+          <div>
+            <h3 class="font-bold text-slate-900 text-xs mb-1 truncate">${p.title}</h3>
+            <p class="text-[11px] text-slate-500 line-clamp-1 mb-1.5">${p.desc || ''}</p>
+            <div class="text-sm font-extrabold text-slate-900 mb-2">LKR ${Number(p.price).toLocaleString()}</div>
+          </div>
+          <div class="space-y-1.5">
+            <div class="flex items-center gap-1.5">
+              <div class="flex items-center border rounded-lg bg-white overflow-hidden">
+                <button type="button" onclick="changeQty(${p.id}, -1)" class="px-2 py-0.5 text-xs bg-slate-100">-</button>
+                <span id="qty-${p.id}" class="px-2.5 text-xs font-bold">1</span>
+                <button type="button" onclick="changeQty(${p.id}, 1)" class="px-2 py-0.5 text-xs bg-slate-100">+</button>
+              </div>
+              <button type="button" onclick="addWithOptions(${p.id})" class="flex-grow py-1.5 bg-slate-900 text-white rounded-lg text-xs font-bold">+ Add</button>
+            </div>
+            <a href="https://wa.me/94783366466?text=${encodeURIComponent('Inquiry regarding rate & details for: ' + p.title + ' (Price: LKR ' + p.price + ')')}" target="_blank" class="w-full py-1 bg-amber-100 text-amber-800 rounded-lg text-[10px] font-bold flex items-center justify-center gap-1">
+              <i class="fa-solid fa-comment-dots"></i> Talk for Rate Inquiry
+            </a>
+          </div>
+        </div>`;
+    });
+  }
+
+  document.getElementById('activeCategoryTitle').innerText = currentCategory === "All" ? "All Featured Items" : currentCategory;
+  document.getElementById('productCounter').innerText = `${list.length} items`;
+
+  list.forEach(p => {
+    grid.innerHTML += `
+      <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col justify-between">
+        <div class="relative w-full h-36 bg-slate-100"><img src="${p.image}" class="w-full h-full object-cover"><span class="absolute top-2 left-2 text-[10px] bg-slate-900/80 text-white px-2 py-0.5 rounded">${p.category}</span></div>
+        <div class="p-3.5 flex flex-col flex-grow justify-between">
+          <div>
+            <h3 class="font-bold text-slate-900 text-xs mb-1 truncate">${p.title}</h3>
+            <p class="text-[11px] text-slate-500 line-clamp-2">${p.desc || ''}</p>
+          </div>
+          <div class="mt-3 pt-2.5 border-t space-y-2">
+            <div class="text-sm font-extrabold text-slate-900">LKR ${Number(p.price).toLocaleString()}</div>
+            <div class="flex items-center gap-1.5">
+              <div class="flex items-center border rounded-lg bg-slate-50 overflow-hidden">
+                <button type="button" onclick="changeQty(${p.id}, -1)" class="px-2 py-0.5 text-xs bg-slate-200">-</button>
+                <span id="qty-${p.id}" class="px-2.5 text-xs font-bold">1</span>
+                <button type="button" onclick="changeQty(${p.id}, 1)" class="px-2 py-0.5 text-xs bg-slate-200">+</button>
+              </div>
+              <button type="button" onclick="addWithOptions(${p.id})" class="flex-grow py-1.5 bg-slate-900 text-white rounded-lg text-xs font-bold">+ Add</button>
+            </div>
+            <div class="grid grid-cols-2 gap-1.5">
+              <a href="https://wa.me/94783366466?text=${encodeURIComponent('Inquiry for rate & details: ' + p.title + ' (LKR ' + p.price + ')')}" target="_blank" class="py-1 bg-amber-100 text-amber-800 rounded-lg text-[10px] font-bold flex items-center justify-center gap-1">
+                <i class="fa-solid fa-comment-dots"></i> Talk Inquiry
+              </a>
+              <a href="https://wa.me/94783366466?text=${encodeURIComponent('Instant Order: ' + p.title + ' (Qty: 1) - LKR ' + p.price)}" target="_blank" class="py-1 bg-emerald-600 text-white rounded-lg text-[10px] font-bold flex items-center justify-center gap-1">
+                <i class="fa-brands fa-whatsapp"></i> Buy WhatsApp
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>`;
+  });
+}
+function changeQty(id, delta) {
+  const el = document.getElementById(`qty-${id}`);
+  if (!el) return;
+  let q = parseInt(el.innerText) + delta;
+  if (q < 1) q = 1;
+  el.innerText = q;
+}
+function addWithOptions(id) {
+  const prod = products.find(p => p.id === id);
+  const qEl = document.getElementById(`qty-${id}`);
+  const qty = qEl ? parseInt(qEl.innerText) : 1;
+  const item = cart.find(c => c.id === id);
+  if (item) item.qty += qty; else cart.push({ ...prod, qty });
+  updateCart();
+  alert(`${qty} item(s) added to cart!`);
+}
+function toggleCart() { const d = document.getElementById('cartDrawer'); if (d) d.style.display = d.style.display === 'none' ? 'flex' : 'none'; }
+function updateCart() {
+  const box = document.getElementById('cartItemsList');
+  if (!box) return;
+  box.innerHTML = '';
+  let subtotal = 0, count = 0;
+  cart.forEach(i => {
+    subtotal += i.price * i.qty; count += i.qty;
+    box.innerHTML += `<div class="flex justify-between border-b pb-2 text-xs"><div><b>${i.title}</b><div>LKR ${i.price} x ${i.qty} = LKR ${(i.price * i.qty).toLocaleString()}</div></div><button type="button" onclick="cart=cart.filter(c=>c.id!==${i.id});updateCart()" class="text-red-500">Remove</button></div>`;
+  });
+  const deliveryFee = cart.length > 0 ? 450 : 0;
+  const grandTotal = subtotal + deliveryFee;
+
+  document.getElementById('cartCount').innerText = count;
+  document.getElementById('cartSubtotal').innerText = 'LKR ' + subtotal.toLocaleString();
+  document.getElementById('cartDeliveryFee').innerText = 'LKR ' + deliveryFee.toLocaleString();
+  document.getElementById('cartTotal').innerText = 'LKR ' + grandTotal.toLocaleString();
+}
+function checkoutWhatsApp() {
+  if (!cart.length) return alert("Cart is empty!");
+  const n = sanitizeInput(document.getElementById('custName').value.trim());
+  const ph = sanitizeInput(document.getElementById('custPhone').value.trim());
+  const d = sanitizeInput(document.getElementById('custDistrict').value.trim());
+  if (!n || !ph || !d) return alert("Fill Name, Phone, and District!");
+  
+  let subtotal = cart.reduce((a, i) => a + (i.price * i.qty), 0);
+  let deliveryFee = 450;
+  let total = subtotal + deliveryFee;
+  let totalCost = cart.reduce((a, i) => a + ((i.cost || (i.price * 0.7)) * i.qty), 0);
+  
+  realOrdersLog.push({ total, cost: totalCost, date: new Date().toLocaleDateString() });
+  localStorage.setItem('leopis_orders_log', JSON.stringify(realOrdersLog));
+
+  let items = cart.map(i => `• ${i.title} (Qty: ${i.qty}) - LKR ${(i.price * i.qty).toLocaleString()}`).join('\n');
+  let msg = `*Leopis (Pvt) Ltd Order - Cash on Delivery*\nCustomer: ${n}\nPhone: ${ph}\nDistrict: ${d}\n\n*Items Ordered:*\n${items}\n\nDelivery Fee: LKR 450\n*Total Payable (Inc. Delivery):* LKR ${total.toLocaleString()}`;
+  window.open(`https://wa.me/94783366466?text=${encodeURIComponent(msg)}`, '_blank');
+}
+window.addEventListener('DOMContentLoaded', () => {
+  renderCategoryTabs(); renderProducts();
+  document.getElementById('visitorCounterDisplay').innerText = visitCount;
+  document.getElementById('salesCounterDisplay').innerText = deliveredOrdersCount;
+});
+</script>
+</head>
 <body class="bg-slate-100 text-slate-800 font-sans flex flex-col min-h-screen">
 <div class="app-container w-full max-w-7xl mx-auto flex flex-col flex-grow bg-white shadow-md">
 
@@ -253,7 +407,7 @@ function publishProduct() {
   </div>
 </header>
 
-<!-- ADMIN DASHBOARD PANEL WITH CSV / EXCEL BULK UPLOADER -->
+<!-- ADMIN DASHBOARD PANEL WITH CSV UPLOADER & SUMMARY REPORT -->
 <section id="adminSection" class="max-w-2xl mx-auto px-4 pt-4 w-full hidden">
   <div class="bg-white rounded-2xl shadow-lg border-2 border-slate-900 overflow-hidden my-4">
     <div class="bg-slate-900 text-white p-3.5 flex items-center justify-between">
@@ -273,16 +427,15 @@ function publishProduct() {
         <button type="button" onclick="adminLogout()" class="text-xs text-red-500 font-bold">Logout</button>
       </div>
 
-      <!-- Real Business Sales & Cost Report -->
+      <!-- Real Business Summary Report -->
       <div class="bg-slate-100 p-3.5 rounded-xl border space-y-2 text-xs">
-        <h4 class="font-bold text-slate-900"><i class="fa-solid fa-chart-line text-blue-600"></i> Actual Business Sales & Profit Report</h4>
+        <h4 class="font-bold text-slate-900"><i class="fa-solid fa-chart-line text-blue-600"></i> Business Summary Report</h4>
         <div id="businessReportBox" class="grid grid-cols-3 gap-2 bg-white p-2.5 rounded-lg border text-[11px]"></div>
       </div>
 
-      <!-- Bulk CSV/Excel Uploader for 2000+ Products -->
+      <!-- Bulk CSV Uploader -->
       <div class="bg-emerald-50 p-3.5 rounded-xl border border-emerald-200 space-y-2 text-xs">
-        <h4 class="font-bold text-emerald-900"><i class="fa-solid fa-file-csv"></i> Bulk Upload 2000+ Products (CSV File)</h4>
-        <p class="text-[11px] text-slate-600">Upload your CSV file (Title, Price, Cost, Category, Description, ImageURL). Categories and SEO tags will auto-generate!</p>
+        <h4 class="font-bold text-emerald-900"><i class="fa-solid fa-file-csv"></i> Bulk Upload Products (CSV File)</h4>
         <input type="file" id="csvFileInput" accept=".csv" onchange="handleCsvUpload(event)" class="w-full text-xs p-2 border rounded-lg bg-white">
       </div>
 
@@ -346,7 +499,7 @@ function publishProduct() {
   <!-- Left to Right Horizontal Scroll Container -->
   <div id="specialOfferGrid" class="flex gap-4 overflow-x-auto pb-3 no-scrollbar mb-8"></div>
 </section>
-  <!-- Category Filter Tabs -->
+<!-- Category Filter Tabs -->
 <section class="max-w-7xl mx-auto px-4 pt-2 w-full">
   <div class="flex items-center gap-2 overflow-x-auto pb-2 no-scrollbar" id="categoryTabs"></div>
 </section>
@@ -390,7 +543,7 @@ function publishProduct() {
   </div>
 </section>
 
-<!-- AI FAQ Chat Section (Unlimited Multi-Questions) -->
+<!-- AI FAQ Chat Section -->
 <section class="max-w-7xl mx-auto px-4 py-4 w-full">
   <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
     <div class="flex items-center gap-2 mb-3">
@@ -398,7 +551,7 @@ function publishProduct() {
       <h3 class="text-sm font-bold text-slate-900">Ask Leopis AI Assistant (Unlimited Chat)</h3>
     </div>
     <div id="chatBox" class="bg-slate-50 border rounded-xl p-3 h-36 overflow-y-auto text-xs space-y-2 mb-3">
-      <div class="text-slate-500">AI: Hello! Ask me anything about Leopis products, delivery, or warranty. You can ask multiple questions!</div>
+      <div class="text-slate-500">AI: Hello! Ask me anything about Leopis products, delivery, or warranty.</div>
     </div>
     <div class="flex gap-2">
       <input type="text" id="chatInput" placeholder="Ask any question..." class="text-xs p-2.5 border rounded-lg flex-grow bg-white outline-none">
@@ -407,7 +560,7 @@ function publishProduct() {
   </div>
 </section>
 
-<!-- Cart Drawer with Auto Rs 450 Delivery Fee -->
+<!-- Cart Drawer -->
 <div id="cartDrawer" style="display:none;" class="fixed inset-0 z-50 bg-black/60 justify-end">
   <div class="w-full max-w-md bg-white h-full flex flex-col shadow-2xl">
     <div class="p-4 bg-slate-900 text-white flex justify-between items-center">
