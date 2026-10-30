@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- App-Style Mobile Scaling (Viewport lock to prevent zooming out like an app) -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Leopis (Pvt) Ltd | Official Online Store Sri Lanka</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -10,6 +11,11 @@
   html { scroll-behavior: smooth; }
   .no-scrollbar::-webkit-scrollbar { display: none; }
   .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  /* App-Style Mobile Container Look */
+  @media (max-width: 768px) {
+    body { background-color: #f1f5f9; }
+    .app-container { border-radius: 0px; box-shadow: none; }
+  }
 </style>
 <script>
 // XSS & Hacker Protection Sanitizer Function
@@ -18,7 +24,7 @@ function sanitizeInput(str) {
   return str.replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#x27;");
 }
 
-// Default Catalog (3 Special Offer Products + Normal Products with Market Prices & Costs)
+// Default Catalog (3 Special Offer Products + Normal Products)
 const defaultCatalog = [
   { id: 1, title: "Pro Wireless ANC Earbuds V5.3", category: "Audio", price: 6800, cost: 4500, special: true, desc: "Active Noise Cancellation, 36-hr battery.", image: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=500" },
   { id: 2, title: "Ultra AMOLED Smart Watch", category: "Smart Watches", price: 9400, cost: 6500, special: true, desc: "Always-on display, Bluetooth calling.", image: "https://images.unsplash.com/photo-1575311373937-040b8e1fd5b6?w=500" },
@@ -29,14 +35,15 @@ let saved = null;
 try { saved = JSON.parse(localStorage.getItem('leopis_catalog')); } catch(e) {}
 let products = (Array.isArray(saved) && saved.length > 0) ? saved : defaultCatalog;
 
-// AI Knowledge Base
 let aiKnowledge = localStorage.getItem('leopis_ai_kb') || "Leopis (Pvt) Ltd provides top quality electronics and mobile accessories in Sri Lanka with islandwide cash on delivery.";
-
 let currentCategory = "All", searchQuery = "", cart = [], uploadedBase64 = "";
 
-// Real Visitor Counter & Actual Sales Report from Cart/Orders
-let visitCount = localStorage.getItem('leopis_visits') ? parseInt(localStorage.getItem('leopis_visits')) + 1 : 1240;
+// Auto Visitor Views starting from 7996 & increasing on every visit
+let visitCount = localStorage.getItem('leopis_visits') ? parseInt(localStorage.getItem('leopis_visits')) + 1 : 7996;
 localStorage.setItem('leopis_visits', visitCount);
+
+// Orders / Sales Delivered starting from 3986 (can be increased by admin)
+let deliveredOrdersCount = localStorage.getItem('leopis_delivered_sales') ? parseInt(localStorage.getItem('leopis_delivered_sales')) : 3986;
 
 let realOrdersLog = JSON.parse(localStorage.getItem('leopis_orders_log')) || [];
 
@@ -57,35 +64,38 @@ function handleAdminLogin() {
   } else { document.getElementById('loginError').classList.remove('hidden'); }
 }
 function adminLogout() {
-  document.getElementById('adminLoginForm').classList.add('hidden'); // keep hidden for password security
+  document.getElementById('adminLoginForm').classList.remove('hidden');
   document.getElementById('adminDashboard').classList.add('hidden');
   document.getElementById('adminUser').value = '';
   document.getElementById('adminPass').value = '';
+}
+function updateDeliveredSales() {
+  const val = parseInt(document.getElementById('salesInputVal').value);
+  if (isNaN(val)) return;
+  deliveredOrdersCount = val;
+  localStorage.setItem('leopis_delivered_sales', deliveredOrdersCount);
+  document.getElementById('salesCounterDisplay').innerText = deliveredOrdersCount;
+  alert("Delivered Orders Counter Updated!");
 }
 function saveAiTraining() {
   const text = sanitizeInput(document.getElementById('aiTrainingInput').value.trim());
   if (!text) return;
   aiKnowledge = text;
   localStorage.setItem('leopis_ai_kb', aiKnowledge);
-  alert("AI Assistant successfully trained with your company details!");
+  alert("AI Assistant trained successfully!");
 }
 function loadAiKbInput() {
   const el = document.getElementById('aiTrainingInput');
   if (el) el.value = aiKnowledge;
 }
 function updateBusinessAnalytics() {
-  let totalRevenue = 0;
-  let totalCost = 0;
-  realOrdersLog.forEach(ord => {
-    totalRevenue += ord.total;
-    totalCost += ord.cost;
-  });
+  let totalRevenue = 0, totalCost = 0;
+  realOrdersLog.forEach(ord => { totalRevenue += ord.total; totalCost += ord.cost; });
   const netProfit = totalRevenue - totalCost;
-  
   const box = document.getElementById('businessReportBox');
   if (box) {
     box.innerHTML = `
-      <div>Total Orders: <b>${realOrdersLog.length}</b></div>
+      <div>Total Web Orders: <b>${realOrdersLog.length}</b></div>
       <div>Actual Revenue: <b>LKR ${totalRevenue.toLocaleString()}</b></div>
       <div>Actual Cost: <b>LKR ${totalCost.toLocaleString()}</b></div>
       <div class="text-emerald-600 font-bold col-span-3">Net Profit: LKR ${netProfit.toLocaleString()}</div>
@@ -100,7 +110,7 @@ function previewFile() {
     const img = new Image();
     img.onload = function() {
       const canvas = document.createElement('canvas');
-      let w = img.width, h = img.height, max = 350; // Optimized reduced size for clear display
+      let w = img.width, h = img.height, max = 350;
       if (w > max) { h *= max / w; w = max; }
       canvas.width = w; canvas.height = h;
       canvas.getContext('2d').drawImage(img, 0, 0, w, h);
@@ -121,7 +131,7 @@ function publishProduct() {
   const special = document.getElementById('newSpecial').checked;
   const urlImg = sanitizeInput(document.getElementById('newImage').value.trim());
   const image = uploadedBase64 || urlImg || 'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=500';
-  if (!title || isNaN(price)) return alert("Enter Product Name and Market Price!");
+  if (!title || isNaN(price)) return alert("Enter Product Name and Price!");
   products.unshift({ id: Date.now(), title, category, price, cost, special, desc, image });
   localStorage.setItem('leopis_catalog', JSON.stringify(products));
   document.getElementById('newTitle').value = ''; document.getElementById('newDesc').value = '';
@@ -141,7 +151,7 @@ function renderAdminList() {
   if (!box) return;
   box.innerHTML = '';
   products.forEach(p => {
-    box.innerHTML += `<div class="flex justify-between items-center border-b py-2 text-xs"><div class="flex items-center gap-2"><img src="${p.image}" class="w-8 h-8 rounded object-cover"><span><b>${p.title}</b> (${p.category} - Market: LKR ${p.price})</span></div><button type="button" onclick="deleteProduct(${p.id})" class="text-red-500 font-bold px-2">Delete</button></div>`;
+    box.innerHTML += `<div class="flex justify-between items-center border-b py-2 text-xs"><div class="flex items-center gap-2"><img src="${p.image}" class="w-8 h-8 rounded object-cover"><span><b>${p.title}</b> (${p.category} - LKR ${p.price})</span></div><button type="button" onclick="deleteProduct(${p.id})" class="text-red-500 font-bold px-2">Delete</button></div>`;
   });
 }
 function renderCategoryTabs() {
@@ -169,28 +179,32 @@ function renderProducts() {
   let list = currentCategory === "All" ? products : products.filter(p => p.category === currentCategory);
   if (searchQuery) list = list.filter(p => clean(p.title).includes(searchQuery) || clean(p.category).includes(searchQuery) || clean(p.desc).includes(searchQuery));
 
-  // Render Special Offer Products (Left to Right Horizontal Scrolling)
   if (specialGrid && currentCategory === "All" && !searchQuery) {
     const specials = products.filter(p => p.special).slice(0, 3);
     specials.forEach(p => {
       specialGrid.innerHTML += `
-        <div class="bg-gradient-to-br from-amber-500/10 to-slate-900/5 rounded-2xl border-2 border-amber-500/40 p-4 flex flex-col justify-between shadow-sm shrink-0 w-72">
-          <div class="relative w-full h-32 bg-slate-100 rounded-xl overflow-hidden mb-3">
+        <div class="bg-gradient-to-br from-amber-500/10 to-slate-900/5 rounded-2xl border-2 border-amber-500/40 p-3.5 flex flex-col justify-between shadow-sm shrink-0 w-64">
+          <div class="relative w-full h-32 bg-slate-100 rounded-xl overflow-hidden mb-2">
             <img src="${p.image}" class="w-full h-full object-cover">
             <span class="absolute top-2 left-2 text-[10px] bg-amber-600 text-white px-2 py-0.5 rounded font-bold">Special Offer</span>
           </div>
           <div>
-            <h3 class="font-bold text-slate-900 text-sm mb-1">${p.title}</h3>
-            <p class="text-xs text-slate-500 line-clamp-2 mb-2">${p.desc || ''}</p>
-            <div class="text-base font-extrabold text-slate-900 mb-3">LKR ${Number(p.price).toLocaleString()}</div>
+            <h3 class="font-bold text-slate-900 text-xs mb-1 truncate">${p.title}</h3>
+            <p class="text-[11px] text-slate-500 line-clamp-1 mb-1.5">${p.desc || ''}</p>
+            <div class="text-sm font-extrabold text-slate-900 mb-2">LKR ${Number(p.price).toLocaleString()}</div>
           </div>
-          <div class="flex items-center gap-2">
-            <div class="flex items-center border rounded-lg bg-white overflow-hidden">
-              <button type="button" onclick="changeQty(${p.id}, -1)" class="px-2.5 py-1 text-xs bg-slate-100">-</button>
-              <span id="qty-${p.id}" class="px-3 text-xs font-bold">1</span>
-              <button type="button" onclick="changeQty(${p.id}, 1)" class="px-2.5 py-1 text-xs bg-slate-100">+</button>
+          <div class="space-y-1.5">
+            <div class="flex items-center gap-1.5">
+              <div class="flex items-center border rounded-lg bg-white overflow-hidden">
+                <button type="button" onclick="changeQty(${p.id}, -1)" class="px-2 py-0.5 text-xs bg-slate-100">-</button>
+                <span id="qty-${p.id}" class="px-2.5 text-xs font-bold">1</span>
+                <button type="button" onclick="changeQty(${p.id}, 1)" class="px-2 py-0.5 text-xs bg-slate-100">+</button>
+              </div>
+              <button type="button" onclick="addWithOptions(${p.id})" class="flex-grow py-1.5 bg-slate-900 text-white rounded-lg text-xs font-bold">+ Add</button>
             </div>
-            <button type="button" onclick="addWithOptions(${p.id})" class="flex-grow py-2 bg-slate-900 hover:bg-amber-600 text-white rounded-lg text-xs font-bold transition">+ Add</button>
+            <a href="https://wa.me/94783366466?text=${encodeURIComponent('Inquiry regarding rate & details for: ' + p.title + ' (Price: LKR ' + p.price + ')')}" target="_blank" class="w-full py-1 bg-amber-100 text-amber-800 rounded-lg text-[10px] font-bold flex items-center justify-center gap-1">
+              <i class="fa-solid fa-comment-dots"></i> Talk for Rate Inquiry
+            </a>
           </div>
         </div>`;
     });
@@ -203,22 +217,29 @@ function renderProducts() {
     grid.innerHTML += `
       <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col justify-between">
         <div class="relative w-full h-36 bg-slate-100"><img src="${p.image}" class="w-full h-full object-cover"><span class="absolute top-2 left-2 text-[10px] bg-slate-900/80 text-white px-2 py-0.5 rounded">${p.category}</span></div>
-        <div class="p-4 flex flex-col flex-grow justify-between">
+        <div class="p-3.5 flex flex-col flex-grow justify-between">
           <div>
-            <h3 class="font-bold text-slate-900 text-sm mb-1">${p.title}</h3>
-            <p class="text-xs text-slate-500 line-clamp-2">${p.desc || ''}</p>
+            <h3 class="font-bold text-slate-900 text-xs mb-1 truncate">${p.title}</h3>
+            <p class="text-[11px] text-slate-500 line-clamp-2">${p.desc || ''}</p>
           </div>
-          <div class="mt-4 pt-3 border-t">
-            <div class="text-base font-extrabold text-slate-900 mb-2.5">LKR ${Number(p.price).toLocaleString()}</div>
-            <div class="flex items-center gap-2 mb-2">
+          <div class="mt-3 pt-2.5 border-t space-y-2">
+            <div class="text-sm font-extrabold text-slate-900">LKR ${Number(p.price).toLocaleString()}</div>
+            <div class="flex items-center gap-1.5">
               <div class="flex items-center border rounded-lg bg-slate-50 overflow-hidden">
-                <button type="button" onclick="changeQty(${p.id}, -1)" class="px-2.5 py-1 text-xs bg-slate-200">-</button>
-                <span id="qty-${p.id}" class="px-3 text-xs font-bold">1</span>
-                <button type="button" onclick="changeQty(${p.id}, 1)" class="px-2.5 py-1 text-xs bg-slate-200">+</button>
+                <button type="button" onclick="changeQty(${p.id}, -1)" class="px-2 py-0.5 text-xs bg-slate-200">-</button>
+                <span id="qty-${p.id}" class="px-2.5 text-xs font-bold">1</span>
+                <button type="button" onclick="changeQty(${p.id}, 1)" class="px-2 py-0.5 text-xs bg-slate-200">+</button>
               </div>
-              <button type="button" onclick="addWithOptions(${p.id})" class="flex-grow py-2 bg-slate-900 text-white rounded-lg text-xs font-bold">+ Add to Cart</button>
+              <button type="button" onclick="addWithOptions(${p.id})" class="flex-grow py-1.5 bg-slate-900 text-white rounded-lg text-xs font-bold">+ Add</button>
             </div>
-            <a href="https://wa.me/94783366466?text=${encodeURIComponent('Instant Order: ' + p.title + ' (x1) - LKR ' + p.price)}" target="_blank" class="w-full py-1.5 bg-emerald-600 text-white rounded-lg text-[11px] font-bold flex items-center justify-center gap-1"><i class="fa-brands fa-whatsapp"></i> Buy via WhatsApp</a>
+            <div class="grid grid-cols-2 gap-1.5">
+              <a href="https://wa.me/94783366466?text=${encodeURIComponent('Inquiry for rate & details: ' + p.title + ' (LKR ' + p.price + ')')}" target="_blank" class="py-1 bg-amber-100 text-amber-800 rounded-lg text-[10px] font-bold flex items-center justify-center gap-1">
+                <i class="fa-solid fa-comment-dots"></i> Talk Inquiry
+              </a>
+              <a href="https://wa.me/94783366466?text=${encodeURIComponent('Instant Order: ' + p.title + ' (Qty: 1) - LKR ' + p.price)}" target="_blank" class="py-1 bg-emerald-600 text-white rounded-lg text-[10px] font-bold flex items-center justify-center gap-1">
+                <i class="fa-brands fa-whatsapp"></i> Buy WhatsApp
+              </a>
+            </div>
           </div>
         </div>
       </div>`;
@@ -245,13 +266,18 @@ function updateCart() {
   const box = document.getElementById('cartItemsList');
   if (!box) return;
   box.innerHTML = '';
-  let total = 0, count = 0;
+  let subtotal = 0, count = 0;
   cart.forEach(i => {
-    total += i.price * i.qty; count += i.qty;
-    box.innerHTML += `<div class="flex justify-between border-b pb-2 text-xs"><div><b>${i.title}</b><div>LKR ${i.price} x ${i.qty}</div></div><button type="button" onclick="cart=cart.filter(c=>c.id!==${i.id});updateCart()" class="text-red-500">Remove</button></div>`;
+    subtotal += i.price * i.qty; count += i.qty;
+    box.innerHTML += `<div class="flex justify-between border-b pb-2 text-xs"><div><b>${i.title}</b><div>LKR ${i.price} x ${i.qty} = LKR ${(i.price * i.qty).toLocaleString()}</div></div><button type="button" onclick="cart=cart.filter(c=>c.id!==${i.id});updateCart()" class="text-red-500">Remove</button></div>`;
   });
+  const deliveryFee = cart.length > 0 ? 450 : 0;
+  const grandTotal = subtotal + deliveryFee;
+
   document.getElementById('cartCount').innerText = count;
-  document.getElementById('cartTotal').innerText = 'LKR ' + total.toLocaleString();
+  document.getElementById('cartSubtotal').innerText = 'LKR ' + subtotal.toLocaleString();
+  document.getElementById('cartDeliveryFee').innerText = 'LKR ' + deliveryFee.toLocaleString();
+  document.getElementById('cartTotal').innerText = 'LKR ' + grandTotal.toLocaleString();
 }
 function checkoutWhatsApp() {
   if (!cart.length) return alert("Cart is empty!");
@@ -260,37 +286,39 @@ function checkoutWhatsApp() {
   const d = sanitizeInput(document.getElementById('custDistrict').value.trim());
   if (!n || !ph || !d) return alert("Fill Name, Phone, and District!");
   
-  let total = cart.reduce((a, i) => a + (i.price * i.qty), 0);
+  let subtotal = cart.reduce((a, i) => a + (i.price * i.qty), 0);
+  let deliveryFee = 450;
+  let total = subtotal + deliveryFee;
   let totalCost = cart.reduce((a, i) => a + ((i.cost || (i.price * 0.7)) * i.qty), 0);
   
-  // Save order for real business report
   realOrdersLog.push({ total, cost: totalCost, date: new Date().toLocaleDateString() });
   localStorage.setItem('leopis_orders_log', JSON.stringify(realOrdersLog));
 
   let items = cart.map(i => `• ${i.title} (Qty: ${i.qty}) - LKR ${(i.price * i.qty).toLocaleString()}`).join('\n');
-  let msg = `*Leopis (Pvt) Ltd Order - Cash on Delivery*\nCustomer: ${n}\nPhone: ${ph}\nDistrict: ${d}\n\n*Items Ordered:*\n${items}\n\n*Total Payable:* LKR ${total.toLocaleString()}`;
+  let msg = `*Leopis (Pvt) Ltd Order - Cash on Delivery*\nCustomer: ${n}\nPhone: ${ph}\nDistrict: ${d}\n\n*Items Ordered:*\n${items}\n\nDelivery Fee: LKR 450\n*Total Payable (Inc. Delivery):* LKR ${total.toLocaleString()}`;
   window.open(`https://wa.me/94783366466?text=${encodeURIComponent(msg)}`, '_blank');
 }
 window.addEventListener('DOMContentLoaded', () => {
   renderCategoryTabs(); renderProducts();
   document.getElementById('visitorCounterDisplay').innerText = visitCount;
-  document.getElementById('salesCounterDisplay').innerText = realOrdersLog.length + 48;
+  document.getElementById('salesCounterDisplay').innerText = deliveredOrdersCount;
 });
 </script>
 </head>
-<body class="bg-slate-50 text-slate-800 font-sans flex flex-col min-h-screen">
+<body class="bg-slate-100 text-slate-800 font-sans flex flex-col min-h-screen">
+<div class="app-container w-full max-w-7xl mx-auto flex flex-col flex-grow bg-white shadow-md">
 
-<!-- Top Announcement Bar with Sinhala / Tamil / English Translate Buttons -->
+<!-- Top Announcement Bar -->
 <div class="bg-slate-900 text-slate-300 text-xs py-2 px-4 border-b border-slate-800">
   <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
     <div class="flex items-center gap-4 text-[11px] sm:text-xs">
       <a href="tel:+94783366466" class="hover:text-amber-400 flex items-center gap-1.5"><i class="fa-solid fa-phone text-amber-400"></i> +94 78 336 6466</a>
       <span class="hidden md:inline">|</span>
-      <span class="text-emerald-400"><i class="fa-solid fa-eye"></i> Views: <b id="visitorCounterDisplay">1240</b></span>
-      <span class="text-amber-400"><i class="fa-solid fa-bag-shopping"></i> Sales: <b id="salesCounterDisplay">48</b></span>
+      <span class="text-emerald-400"><i class="fa-solid fa-eye"></i> Views: <b id="visitorCounterDisplay">7996</b></span>
+      <span class="text-amber-400"><i class="fa-solid fa-truck-fast"></i> Delivered Orders: <b id="salesCounterDisplay">3986</b></span>
     </div>
     
-    <!-- Language Selection Buttons (English, Sinhala, Tamil) -->
+    <!-- Language Selection (English, Sinhala, Tamil) -->
     <div class="flex items-center gap-2">
       <div class="flex bg-slate-800 rounded p-0.5 text-[11px]">
         <button type="button" onclick="setLanguage('en')" class="px-2 py-0.5 rounded bg-amber-500 text-slate-900 font-bold" id="lang-en">ENG</button>
@@ -305,7 +333,7 @@ window.addEventListener('DOMContentLoaded', () => {
   </div>
 </div>
 
-<!-- Main Navbar -->
+<!-- Main App Header -->
 <header class="sticky top-0 z-40 bg-white border-b border-slate-200 shadow-sm">
   <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
     <a href="/" class="flex items-center space-x-2.5 shrink-0">
@@ -333,9 +361,9 @@ window.addEventListener('DOMContentLoaded', () => {
   </div>
 </header>
 
-<!-- ADMIN DASHBOARD PANEL (Hidden, no password shown) -->
+<!-- ADMIN DASHBOARD PANEL (Hidden credentials, secure) -->
 <section id="adminSection" class="max-w-2xl mx-auto px-4 pt-4 w-full hidden">
-  <div class="bg-white rounded-2xl shadow-lg border-2 border-slate-900 overflow-hidden">
+  <div class="bg-white rounded-2xl shadow-lg border-2 border-slate-900 overflow-hidden my-4">
     <div class="bg-slate-900 text-white p-3.5 flex items-center justify-between">
       <span class="text-xs sm:text-sm font-bold flex items-center gap-2"><i class="fa-solid fa-shield-halved text-amber-400"></i> Leopis Admin Portal</span>
       <button type="button" onclick="toggleAdmin()" class="text-slate-400 hover:text-white text-lg font-bold px-2">&times;</button>
@@ -359,6 +387,15 @@ window.addEventListener('DOMContentLoaded', () => {
         <div id="businessReportBox" class="grid grid-cols-3 gap-2 bg-white p-2.5 rounded-lg border text-[11px]"></div>
       </div>
 
+      <!-- Manual Delivered Orders Counter Updater -->
+      <div class="bg-amber-50 p-3 rounded-xl border border-amber-200 space-y-2">
+        <h4 class="text-xs font-bold text-amber-900">Update Delivered Orders Counter</h4>
+        <div class="flex gap-2">
+          <input type="number" id="salesInputVal" placeholder="New count (e.g. 3990)" class="text-xs p-2 border rounded-lg bg-white flex-grow">
+          <button type="button" onclick="updateDeliveredSales()" class="px-3 py-2 bg-amber-600 text-white rounded-lg text-xs font-bold">Update</button>
+        </div>
+      </div>
+
       <!-- Train AI Assistant -->
       <div class="bg-blue-50 p-3 rounded-xl border border-blue-200 space-y-2">
         <h4 class="text-xs font-bold text-blue-900"><i class="fa-solid fa-robot"></i> Train AI Assistant</h4>
@@ -378,7 +415,7 @@ window.addEventListener('DOMContentLoaded', () => {
         <textarea id="newDesc" rows="2" placeholder="Details..." class="w-full text-xs p-2.5 border rounded-lg bg-white"></textarea>
         <div class="flex items-center gap-2">
           <input type="checkbox" id="newSpecial" class="w-4 h-4 text-amber-600">
-          <label for="newSpecial" class="text-xs font-bold text-slate-700">Special Offer (Main Page Top)</label>
+          <label for="newSpecial" class="text-xs font-bold text-slate-700">Special Offer (Main Page Top Horizontal)</label>
         </div>
         <div class="grid grid-cols-2 gap-2">
           <input type="file" id="newImgFile" accept="image/*" onchange="previewFile()" class="text-[11px] p-1.5 border rounded-lg bg-white">
@@ -392,7 +429,7 @@ window.addEventListener('DOMContentLoaded', () => {
   </div>
 </section>
 
-<!-- Hero Banner & Left-to-Right Horizontal Scrolling Special Offers Section -->
+<!-- Hero Banner & Horizontal Scroll Special Offers Section -->
 <section class="max-w-7xl mx-auto px-4 pt-5 w-full">
   <div class="bg-gradient-to-r from-slate-900 via-slate-800 to-amber-950 rounded-2xl p-6 text-white shadow-sm mb-6">
     <span class="text-[10px] uppercase tracking-wider text-amber-400 font-bold bg-amber-400/10 px-2.5 py-1 rounded border border-amber-400/20" data-tr="banner_sub">Official Store Sri Lanka</span>
@@ -406,8 +443,8 @@ window.addEventListener('DOMContentLoaded', () => {
   </div>
   <!-- Left to Right Horizontal Scroll Container -->
   <div id="specialOfferGrid" class="flex gap-4 overflow-x-auto pb-3 no-scrollbar mb-8"></div>
-</section>
-<!-- Category Filter Tabs -->
+            </section>
+            <!-- Category Filter Tabs -->
 <section class="max-w-7xl mx-auto px-4 pt-2 w-full">
   <div class="flex items-center gap-2 overflow-x-auto pb-2 no-scrollbar" id="categoryTabs"></div>
 </section>
@@ -468,7 +505,7 @@ window.addEventListener('DOMContentLoaded', () => {
   </div>
 </section>
 
-<!-- Cart Drawer -->
+<!-- Cart Drawer with Auto Rs 450 Delivery Fee -->
 <div id="cartDrawer" style="display:none;" class="fixed inset-0 z-50 bg-black/60 justify-end">
   <div class="w-full max-w-md bg-white h-full flex flex-col shadow-2xl">
     <div class="p-4 bg-slate-900 text-white flex justify-between items-center">
@@ -476,19 +513,21 @@ window.addEventListener('DOMContentLoaded', () => {
       <button type="button" onclick="toggleCart()" class="text-xl">&times;</button>
     </div>
     <div id="cartItemsList" class="flex-grow p-4 overflow-y-auto space-y-3"></div>
-    <div class="p-4 border-t bg-slate-50 space-y-2.5">
-      <div class="flex justify-between font-bold text-sm"><span>Total:</span><span id="cartTotal">LKR 0</span></div>
-      <input type="text" id="custName" placeholder="Full Name" class="w-full text-xs p-2.5 border rounded-lg bg-white">
-      <input type="tel" id="custPhone" placeholder="Phone Number" class="w-full text-xs p-2.5 border rounded-lg bg-white">
-      <input type="text" id="custDistrict" placeholder="Delivery City / District" class="w-full text-xs p-2.5 border rounded-lg bg-white">
-      <button type="button" onclick="checkoutWhatsApp()" class="w-full py-3 bg-emerald-600 text-white rounded-xl font-bold text-xs flex justify-center items-center gap-2">
+    <div class="p-4 border-t bg-slate-50 space-y-2 text-xs">
+      <div class="flex justify-between"><span>Subtotal:</span><span id="cartSubtotal">LKR 0</span></div>
+      <div class="flex justify-between text-slate-600"><span>Delivery Fee (Anywhere in SL):</span><span id="cartDeliveryFee">LKR 450</span></div>
+      <div class="flex justify-between font-bold text-sm border-t pt-2"><span>Total Payable:</span><span id="cartTotal" class="text-emerald-600">LKR 0</span></div>
+      <input type="text" id="custName" placeholder="Full Name" class="w-full p-2.5 border rounded-lg bg-white mt-1">
+      <input type="tel" id="custPhone" placeholder="Phone Number" class="w-full p-2.5 border rounded-lg bg-white">
+      <input type="text" id="custDistrict" placeholder="Delivery City / District" class="w-full p-2.5 border rounded-lg bg-white">
+      <button type="button" onclick="checkoutWhatsApp()" class="w-full py-3 bg-emerald-600 text-white rounded-xl font-bold flex justify-center items-center gap-2 mt-2">
         <i class="fa-brands fa-whatsapp text-base"></i> Confirm Order (Cash on Delivery)
       </button>
     </div>
   </div>
 </div>
 
-<!-- Footer with Short & Sweet Company Bio -->
+<!-- Footer -->
 <footer class="bg-slate-950 text-slate-400 border-t border-slate-800 py-8 mt-12 text-xs">
   <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
     <div>
@@ -514,11 +553,11 @@ window.addEventListener('DOMContentLoaded', () => {
 </footer>
 
 <script>
-// Multi-language Translation Dictionary (English, Sinhala, Tamil)
+// Multi-language Dictionary (English, Sinhala, Tamil)
 const translations = {
   en: { store_sl: "Sri Lanka", search_ph: "Search products...", admin_btn: "Admin", banner_sub: "Official Store Sri Lanka", banner_desc: "Premium gadgets & accessories. Cash on Delivery across Sri Lanka.", spec_offers: "Special Offer Products", swipe_txt: "Swipe Left / Right ➔" },
   si: { store_sl: "ශ්‍රී ලංකාව", search_ph: "භාණ්ඩ සොයන්න...", admin_btn: "පරිපාලක", banner_sub: "නිල වෙළඳසැල ශ්‍රී ලංකාව", banner_desc: "උසස් තත්ත්වයේ උපකරණ සහ උපාංග. දිවයින පුරා මුදල් ගෙවීමේ ක්‍රමයට (COD).", spec_offers: "විශේෂ දීමනා", swipe_txt: "වමපසට / දකුණුපසට ස්වයිප් කරන්න ➔" },
-  ta: { store_sl: "இலங்கை", search_ph: "பொருட்களை தேட...", admin_btn: "நி நிர்வாகி", banner_sub: "அதிகாரப்பூர்வ அங்காடி இலங்கை", banner_desc: "பிரீமியம் கேஜெட்டுகள் & துணைக்கருவிகள். இலங்கை முழுவதும் கேஷ் ஆன் டெலிவரி.", spec_offers: "சிறப்பு சலுகைகள்", swipe_txt: "இடது / வலது ஸ்வைப் செய்யவும் ➔" }
+  ta: { store_sl: "இலங்கை", search_ph: "பொருட்களை தேட...", admin_btn: "நிர்வாகி", banner_sub: "அதிகாரப்பூர்வ அங்காடி இலங்கை", banner_desc: "பிரீமியம் கேஜெட்டுகள் & துணைக்கருவிகள். இலங்கை முழுவதும் கேஷ் ஆன் டெலிவரி.", spec_offers: "சிறப்பு சலுகைகள்", swipe_txt: "இடது / வலது ஸ்வைப் செய்யவும் ➔" }
 };
 
 function setLanguage(lang) {
@@ -544,7 +583,7 @@ function setLanguage(lang) {
   });
 }
 
-// AI Chat with Admin Knowledge Base
+// AI Chat using Admin Knowledge Base
 function sendAiChat() {
   const input = document.getElementById('chatInput');
   const box = document.getElementById('chatBox');
@@ -557,7 +596,7 @@ function sendAiChat() {
   setTimeout(() => {
     let reply = aiKnowledge;
     const low = txt.toLowerCase();
-    if (low.includes('delivery') || low.includes('time')) reply = "Islandwide cash on delivery takes 2 to 3 working days in Sri Lanka.";
+    if (low.includes('delivery') || low.includes('time')) reply = "Islandwide delivery takes 2 to 3 working days with Rs 450 delivery fee across Sri Lanka.";
     else if (low.includes('whatsapp') || low.includes('contact')) reply = "You can contact our WhatsApp hotline directly at +94783366466.";
     
     box.innerHTML += `<div class="text-slate-700">AI: ${reply}</div>`;
@@ -566,5 +605,4 @@ function sendAiChat() {
 }
 </script>
 </body>
-  </html>
-  
+</html>
