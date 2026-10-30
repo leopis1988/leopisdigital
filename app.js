@@ -4,8 +4,9 @@
 (() => {
   'use strict';
 
-  // DEMO ONLY: visible client-side PIN is not secure authentication. Replace with server auth for a live store.
-  const ADMIN_PIN = 'CHANGE-THIS-PIN';
+  // DEMO ONLY: this PIN is public in the source and is NOT secure authentication.
+  // Never use a client-side PIN to protect a production store or customer data.
+  const ADMIN_PIN = 'LEOPIS1234';
   const WHATSAPP_NUMBER = '94783366466';
   // Optional HTTPS endpoints you own. Never put secret API keys in this public JavaScript file.
   const SEARCH_ANALYTICS_ENDPOINT = ''; // e.g. https://your-domain/api/search-events
@@ -202,7 +203,8 @@
     const rows = cart.map((item) => { const product = products.find((p) => p.id === item.id) || item; return `- ${product.name} x ${item.qty}: ${money(product.price * item.qty)}`; });
     const subtotal = cart.reduce((sum, item) => sum + Number((products.find((p) => p.id === item.id) || item).price) * item.qty, 0);
     const message = `Leopis order enquiry\nName: ${name}\nPhone: ${phone}\nCity/District: ${district}\n\nItems:\n${rows.join('\n')}\n\nSubtotal: ${money(subtotal)}\nPlease confirm availability, delivery fee and COD details.`;
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, '_blank', 'noopener,noreferrer');
+    // Navigate in the same tab; mobile browsers often block scripted pop-up tabs.
+    window.location.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
   }
   function productHelperAnswer(question) {
     const q = normalize(question);
@@ -236,7 +238,4 @@
   function initialize() {
     $('#year').textContent = String(new Date().getFullYear());
     $('#storeKnowledge').value = storeKnowledge;
-    renderAll();
-    let searchTimer;
-    $('#searchInput').addEventListener('input', (event) => {
-      query = cleanText(event.target.value, 100); c
+    const localViews = Number(localStorage.g
