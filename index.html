@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<!-- App-Style Mobile Scaling (Viewport lock to prevent zooming out like an app) -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Leopis (Pvt) Ltd | Official Online Store Sri Lanka</title>
 <script src="https://cdn.tailwindcss.com"></script>
@@ -11,20 +10,18 @@
   html { scroll-behavior: smooth; }
   .no-scrollbar::-webkit-scrollbar { display: none; }
   .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-  /* App-Style Mobile Container Look */
-  @media (max-width: 768px) {
-    body { background-color: #f1f5f9; }
-    .app-container { border-radius: 0px; box-shadow: none; }
+  @media (min-width: 768px) {
+    .app-container { max-width: 1280px; margin: 0 auto; border-radius: 12px; margin-top: 16px; margin-bottom: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
   }
 </style>
 <script>
-// XSS & Hacker Protection Sanitizer Function
+// XSS & Hacker Protection Sanitizer
 function sanitizeInput(str) {
   if (typeof str !== 'string') return str;
   return str.replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#x27;");
 }
 
-// Default Catalog (3 Special Offer Products + Normal Products)
+// Default Catalog
 const defaultCatalog = [
   { id: 1, title: "Pro Wireless ANC Earbuds V5.3", category: "Audio", price: 6800, cost: 4500, special: true, desc: "Active Noise Cancellation, 36-hr battery.", image: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=500" },
   { id: 2, title: "Ultra AMOLED Smart Watch", category: "Smart Watches", price: 9400, cost: 6500, special: true, desc: "Always-on display, Bluetooth calling.", image: "https://images.unsplash.com/photo-1575311373937-040b8e1fd5b6?w=500" },
@@ -35,16 +32,16 @@ let saved = null;
 try { saved = JSON.parse(localStorage.getItem('leopis_catalog')); } catch(e) {}
 let products = (Array.isArray(saved) && saved.length > 0) ? saved : defaultCatalog;
 
+// AI Knowledge Base
 let aiKnowledge = localStorage.getItem('leopis_ai_kb') || "Leopis (Pvt) Ltd provides top quality electronics and mobile accessories in Sri Lanka with islandwide cash on delivery.";
-let currentCategory = "All", searchQuery = "", cart = [], uploadedBase64 = "";
+let currentCategory = "All", searchQuery = "", cart = [], uploadedBase64 = "", editingProductId = null;
 
-// Auto Visitor Views starting from 7996 & increasing on every visit
+// Auto Visitor Views starting from 7996 & automatically increasing on every visit
 let visitCount = localStorage.getItem('leopis_visits') ? parseInt(localStorage.getItem('leopis_visits')) + 1 : 7996;
 localStorage.setItem('leopis_visits', visitCount);
 
-// Orders / Sales Delivered starting from 3986 (can be increased by admin)
+// Delivered Orders starting from 3986 (Manual & Random increase by admin)
 let deliveredOrdersCount = localStorage.getItem('leopis_delivered_sales') ? parseInt(localStorage.getItem('leopis_delivered_sales')) : 3986;
-
 let realOrdersLog = JSON.parse(localStorage.getItem('leopis_orders_log')) || [];
 
 function toggleAdmin() {
@@ -82,7 +79,7 @@ function saveAiTraining() {
   if (!text) return;
   aiKnowledge = text;
   localStorage.setItem('leopis_ai_kb', aiKnowledge);
-  alert("AI Assistant trained successfully!");
+  alert("AI Assistant trained successfully with your custom details!");
 }
 function loadAiKbInput() {
   const el = document.getElementById('aiTrainingInput');
@@ -132,14 +129,41 @@ function publishProduct() {
   const urlImg = sanitizeInput(document.getElementById('newImage').value.trim());
   const image = uploadedBase64 || urlImg || 'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=500';
   if (!title || isNaN(price)) return alert("Enter Product Name and Price!");
-  products.unshift({ id: Date.now(), title, category, price, cost, special, desc, image });
+
+  if (editingProductId) {
+    // Edit existing product
+    products = products.map(p => p.id === editingProductId ? { ...p, title, category, price, cost, special, desc, image } : p);
+    editingProductId = null;
+    document.getElementById('publishBtnText').innerText = "Publish Product";
+    alert("Product Updated Successfully!");
+  } else {
+    // Add new product
+    products.unshift({ id: Date.now(), title, category, price, cost, special, desc, image });
+    alert("Product Published Successfully!");
+  }
+
   localStorage.setItem('leopis_catalog', JSON.stringify(products));
   document.getElementById('newTitle').value = ''; document.getElementById('newDesc').value = '';
   document.getElementById('newPrice').value = ''; document.getElementById('newCost').value = '';
   document.getElementById('newImage').value = ''; document.getElementById('newImgFile').value = '';
   document.getElementById('imgPreview').classList.add('hidden'); uploadedBase64 = "";
   renderCategoryTabs(); renderProducts(); renderAdminList();
-  alert("Product Published Successfully!");
+}
+function editProduct(id) {
+  const p = products.find(x => x.id === id);
+  if (!p) return;
+  editingProductId = p.id;
+  document.getElementById('newCat').value = p.category;
+  document.getElementById('newTitle').value = p.title;
+  document.getElementById('newPrice').value = p.price;
+  document.getElementById('newCost').value = p.cost;
+  document.getElementById('newDesc').value = p.desc;
+  document.getElementById('newSpecial').checked = p.special;
+  document.getElementById('newImage').value = p.image;
+  document.getElementById('imgPreview').src = p.image;
+  document.getElementById('imgPreview').classList.remove('hidden');
+  document.getElementById('publishBtnText').innerText = "Update Product";
+  window.scrollTo({ top: document.getElementById('adminSection').offsetTop, behavior: 'smooth' });
 }
 function deleteProduct(id) {
   products = products.filter(p => p.id !== id);
@@ -151,7 +175,7 @@ function renderAdminList() {
   if (!box) return;
   box.innerHTML = '';
   products.forEach(p => {
-    box.innerHTML += `<div class="flex justify-between items-center border-b py-2 text-xs"><div class="flex items-center gap-2"><img src="${p.image}" class="w-8 h-8 rounded object-cover"><span><b>${p.title}</b> (${p.category} - LKR ${p.price})</span></div><button type="button" onclick="deleteProduct(${p.id})" class="text-red-500 font-bold px-2">Delete</button></div>`;
+    box.innerHTML += `<div class="flex justify-between items-center border-b py-2 text-xs"><div class="flex items-center gap-2"><img src="${p.image}" class="w-8 h-8 rounded object-cover"><span><b>${p.title}</b> (LKR ${p.price})</span></div><div class="flex gap-1"><button type="button" onclick="editProduct(${p.id})" class="text-blue-600 font-bold px-2">Edit</button><button type="button" onclick="deleteProduct(${p.id})" class="text-red-500 font-bold px-2">Delete</button></div></div>`;
   });
 }
 function renderCategoryTabs() {
@@ -361,7 +385,7 @@ window.addEventListener('DOMContentLoaded', () => {
   </div>
 </header>
 
-<!-- ADMIN DASHBOARD PANEL (Hidden credentials, secure) -->
+<!-- ADMIN DASHBOARD PANEL (Hidden credentials) -->
 <section id="adminSection" class="max-w-2xl mx-auto px-4 pt-4 w-full hidden">
   <div class="bg-white rounded-2xl shadow-lg border-2 border-slate-900 overflow-hidden my-4">
     <div class="bg-slate-900 text-white p-3.5 flex items-center justify-between">
@@ -403,9 +427,9 @@ window.addEventListener('DOMContentLoaded', () => {
         <button type="button" onclick="saveAiTraining()" class="w-full py-2 bg-blue-600 text-white rounded-lg text-xs font-bold">Save AI Knowledge</button>
       </div>
 
-      <!-- Add Product -->
+      <!-- Add / Edit Product -->
       <div class="space-y-3 bg-slate-50 p-4 rounded-xl border">
-        <h3 class="text-xs font-bold text-slate-900">+ Add Product</h3>
+        <h3 class="text-xs font-bold text-slate-900">+ Add / Edit Product</h3>
         <input type="text" id="newCat" placeholder="Category" class="w-full text-xs p-2.5 border rounded-lg bg-white">
         <input type="text" id="newTitle" placeholder="Product Name" class="w-full text-xs p-2.5 border rounded-lg bg-white">
         <div class="grid grid-cols-2 gap-2">
@@ -422,9 +446,12 @@ window.addEventListener('DOMContentLoaded', () => {
           <input type="text" id="newImage" placeholder="Or Image URL" class="text-xs p-2 border rounded-lg bg-white">
         </div>
         <img id="imgPreview" class="h-14 w-14 object-cover rounded border hidden" />
-        <button type="button" onclick="publishProduct()" class="w-full py-2.5 bg-blue-600 text-white rounded-xl text-xs font-bold">Publish Product</button>
+        <button type="button" onclick="publishProduct()" class="w-full py-2.5 bg-blue-600 text-white rounded-xl text-xs font-bold"><span id="publishBtnText">Publish Product</span></button>
       </div>
-      <div id="adminItemsList" class="space-y-2 max-h-48 overflow-y-auto"></div>
+      <div>
+        <h4 class="text-xs font-bold text-slate-800 mb-2">Manage & Edit Products</h4>
+        <div id="adminItemsList" class="space-y-2 max-h-48 overflow-y-auto"></div>
+      </div>
     </div>
   </div>
 </section>
@@ -443,8 +470,8 @@ window.addEventListener('DOMContentLoaded', () => {
   </div>
   <!-- Left to Right Horizontal Scroll Container -->
   <div id="specialOfferGrid" class="flex gap-4 overflow-x-auto pb-3 no-scrollbar mb-8"></div>
-            </section>
-            <!-- Category Filter Tabs -->
+  </section>
+  <!-- Category Filter Tabs -->
 <section class="max-w-7xl mx-auto px-4 pt-2 w-full">
   <div class="flex items-center gap-2 overflow-x-auto pb-2 no-scrollbar" id="categoryTabs"></div>
 </section>
@@ -488,18 +515,18 @@ window.addEventListener('DOMContentLoaded', () => {
   </div>
 </section>
 
-<!-- AI FAQ Chat Section -->
+<!-- AI FAQ Chat Section (Unlimited Multi-Questions) -->
 <section class="max-w-7xl mx-auto px-4 py-4 w-full">
   <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
     <div class="flex items-center gap-2 mb-3">
       <i class="fa-solid fa-robot text-amber-500 text-lg"></i>
-      <h3 class="text-sm font-bold text-slate-900">Ask Leopis AI Assistant</h3>
+      <h3 class="text-sm font-bold text-slate-900">Ask Leopis AI Assistant (Unlimited Chat)</h3>
     </div>
-    <div id="chatBox" class="bg-slate-50 border rounded-xl p-3 h-32 overflow-y-auto text-xs space-y-2 mb-3">
-      <div class="text-slate-500">AI: Hello! Ask me about islandwide delivery, warranty, or cash on delivery.</div>
+    <div id="chatBox" class="bg-slate-50 border rounded-xl p-3 h-36 overflow-y-auto text-xs space-y-2 mb-3">
+      <div class="text-slate-500">AI: Hello! Ask me anything about Leopis products, delivery, or warranty. You can ask multiple questions!</div>
     </div>
     <div class="flex gap-2">
-      <input type="text" id="chatInput" placeholder="Ask question..." class="text-xs p-2.5 border rounded-lg flex-grow bg-white outline-none">
+      <input type="text" id="chatInput" placeholder="Ask any question..." class="text-xs p-2.5 border rounded-lg flex-grow bg-white outline-none">
       <button type="button" onclick="sendAiChat()" class="px-4 py-2.5 bg-slate-900 text-white rounded-lg text-xs font-bold">Ask AI</button>
     </div>
   </div>
@@ -583,7 +610,7 @@ function setLanguage(lang) {
   });
 }
 
-// AI Chat using Admin Knowledge Base
+// AI Unlimited Chat using Admin Knowledge Base
 function sendAiChat() {
   const input = document.getElementById('chatInput');
   const box = document.getElementById('chatBox');
