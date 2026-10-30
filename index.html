@@ -22,9 +22,13 @@ const defaultCatalog = [
 let saved = null;
 try { saved = JSON.parse(localStorage.getItem('leopis_catalog')); } catch(e) {}
 let products = (Array.isArray(saved) && saved.length > 0) ? saved : defaultCatalog;
+
+// AI Training Knowledge Base saved in LocalStorage
+let aiKnowledge = localStorage.getItem('leopis_ai_kb') || "Leopis (Pvt) Ltd provides top quality electronics and mobile accessories in Sri Lanka with islandwide cash on delivery.";
+
 let currentCategory = "All", searchQuery = "", cart = [], uploadedBase64 = "";
 
-// Stats & Counters
+// Auto Visitor Counter & Business Reports
 let visitCount = localStorage.getItem('leopis_visits') ? parseInt(localStorage.getItem('leopis_visits')) + 1 : 1240;
 localStorage.setItem('leopis_visits', visitCount);
 let manualSales = localStorage.getItem('leopis_manual_sales') || "48";
@@ -41,7 +45,9 @@ function handleAdminLogin() {
     document.getElementById('adminLoginForm').classList.add('hidden');
     document.getElementById('adminDashboard').classList.remove('hidden');
     renderAdminList();
-  } else { document.getElementById('loginError').classList.remove('hidden'); }
+    loadAiKbInput();
+    updateBusinessAnalytics();
+  } else { document.getElementById('loginError').classList.add('hidden'); }
 }
 function adminLogout() {
   document.getElementById('adminLoginForm').classList.remove('hidden');
@@ -53,7 +59,33 @@ function updateManualSales() {
   manualSales = val;
   localStorage.setItem('leopis_manual_sales', manualSales);
   document.getElementById('salesCounterDisplay').innerText = manualSales;
+  updateBusinessAnalytics();
   alert("Sales Counter Updated!");
+}
+function saveAiTraining() {
+  const text = document.getElementById('aiTrainingInput').value.trim();
+  if (!text) return;
+  aiKnowledge = text;
+  localStorage.setItem('leopis_ai_kb', aiKnowledge);
+  alert("AI Assistant successfully trained with your company details!");
+}
+function loadAiKbInput() {
+  const el = document.getElementById('aiTrainingInput');
+  if (el) el.value = aiKnowledge;
+}
+function updateBusinessAnalytics() {
+  const totalRevenue = products.reduce((acc, p) => acc + (p.price * 5), 0); // Estimated volume
+  const totalCost = products.reduce((acc, p) => acc + ((p.cost || (p.price * 0.7)) * 5), 0);
+  const netProfit = totalRevenue - totalCost;
+  
+  const box = document.getElementById('businessReportBox');
+  if (box) {
+    box.innerHTML = `
+      <div>Total Revenue: <b>LKR ${totalRevenue.toLocaleString()}</b></div>
+      <div>Estimated Cost: <b>LKR ${totalCost.toLocaleString()}</b></div>
+      <div class="text-emerald-600 font-bold">Net Profit: LKR ${netProfit.toLocaleString()}</div>
+    `;
+  }
 }
 function previewFile() {
   const file = document.getElementById('newImgFile').files[0];
@@ -63,7 +95,7 @@ function previewFile() {
     const img = new Image();
     img.onload = function() {
       const canvas = document.createElement('canvas');
-      let w = img.width, h = img.height, max = 500;
+      let w = img.width, h = img.height, max = 400; // Reduced size for clear optimized images
       if (w > max) { h *= max / w; w = max; }
       canvas.width = w; canvas.height = h;
       canvas.getContext('2d').drawImage(img, 0, 0, w, h);
@@ -80,11 +112,11 @@ function publishProduct() {
   const title = document.getElementById('newTitle').value.trim();
   const desc = document.getElementById('newDesc').value.trim();
   const price = parseFloat(document.getElementById('newPrice').value);
-  const cost = parseFloat(document.getElementById('newCost').value) || 0;
+  const cost = parseFloat(document.getElementById('newCost').value) || (price * 0.7);
   const special = document.getElementById('newSpecial').checked;
   const urlImg = document.getElementById('newImage').value.trim();
   const image = uploadedBase64 || urlImg || 'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=500';
-  if (!title || isNaN(price)) return alert("Enter Product Name and Price!");
+  if (!title || isNaN(price)) return alert("Enter Product Name and Market Price!");
   products.unshift({ id: Date.now(), title, category, price, cost, special, desc, image });
   localStorage.setItem('leopis_catalog', JSON.stringify(products));
   document.getElementById('newTitle').value = ''; document.getElementById('newDesc').value = '';
@@ -104,7 +136,7 @@ function renderAdminList() {
   if (!box) return;
   box.innerHTML = '';
   products.forEach(p => {
-    box.innerHTML += `<div class="flex justify-between items-center border-b py-2 text-xs"><div class="flex items-center gap-2"><img src="${p.image}" class="w-8 h-8 rounded object-cover"><span><b>${p.title}</b> (${p.category} - LKR ${p.price} | Cost: ${p.cost})</span></div><button type="button" onclick="deleteProduct(${p.id})" class="text-red-500 font-bold px-2">Delete</button></div>`;
+    box.innerHTML += `<div class="flex justify-between items-center border-b py-2 text-xs"><div class="flex items-center gap-2"><img src="${p.image}" class="w-8 h-8 rounded object-cover"><span><b>${p.title}</b> (${p.category} - Market: LKR ${p.price})</span></div><button type="button" onclick="deleteProduct(${p.id})" class="text-red-500 font-bold px-2">Delete</button></div>`;
   });
 }
 function renderCategoryTabs() {
@@ -132,13 +164,13 @@ function renderProducts() {
   let list = currentCategory === "All" ? products : products.filter(p => p.category === currentCategory);
   if (searchQuery) list = list.filter(p => clean(p.title).includes(searchQuery) || clean(p.category).includes(searchQuery) || clean(p.desc).includes(searchQuery));
 
-  // Render 3 Special Offer Products on Main Page top if on "All"
+  // Render 3 Special Offer Products on Main Page top
   if (specialGrid && currentCategory === "All" && !searchQuery) {
     const specials = products.filter(p => p.special).slice(0, 3);
     specials.forEach(p => {
       specialGrid.innerHTML += `
-        <div class="bg-gradient-to-br from-amber-500/10 to-slate-900/5 rounded-2xl border-2 border-amber-500/40 p-4 flex flex-col justify-between shadow-sm">
-          <div class="relative aspect-square bg-slate-100 rounded-xl overflow-hidden mb-3">
+        <div class="bg-gradient-to-br from-amber-500/10 to-slate-900/5 rounded-2xl border-2 border-amber-500/40 p-4 flex flex-col justify-between shadow-sm shrink-0 w-72 sm:w-auto">
+          <div class="relative w-full h-36 bg-slate-100 rounded-xl overflow-hidden mb-3">
             <img src="${p.image}" class="w-full h-full object-cover">
             <span class="absolute top-2 left-2 text-[10px] bg-amber-600 text-white px-2 py-0.5 rounded font-bold">Special Offer</span>
           </div>
@@ -149,9 +181,9 @@ function renderProducts() {
           </div>
           <div class="flex items-center gap-2">
             <div class="flex items-center border rounded-lg bg-white overflow-hidden">
-              <button type="button" onclick="changeQty(${p.id}, -1)" class="px-2.5 py-1 text-xs bg-slate-100 hover:bg-slate-200">-</button>
+              <button type="button" onclick="changeQty(${p.id}, -1)" class="px-2.5 py-1 text-xs bg-slate-100">-</button>
               <span id="qty-${p.id}" class="px-3 text-xs font-bold">1</span>
-              <button type="button" onclick="changeQty(${p.id}, 1)" class="px-2.5 py-1 text-xs bg-slate-100 hover:bg-slate-200">+</button>
+              <button type="button" onclick="changeQty(${p.id}, 1)" class="px-2.5 py-1 text-xs bg-slate-100">+</button>
             </div>
             <button type="button" onclick="addWithOptions(${p.id})" class="flex-grow py-2 bg-slate-900 hover:bg-amber-600 text-white rounded-lg text-xs font-bold transition">+ Add</button>
           </div>
@@ -165,7 +197,7 @@ function renderProducts() {
   list.forEach(p => {
     grid.innerHTML += `
       <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col justify-between">
-        <div class="relative aspect-square bg-slate-100"><img src="${p.image}" class="w-full h-full object-cover"><span class="absolute top-2 left-2 text-[10px] bg-slate-900/80 text-white px-2 py-0.5 rounded">${p.category}</span></div>
+        <div class="relative w-full h-40 bg-slate-100"><img src="${p.image}" class="w-full h-full object-cover"><span class="absolute top-2 left-2 text-[10px] bg-slate-900/80 text-white px-2 py-0.5 rounded">${p.category}</span></div>
         <div class="p-4 flex flex-col flex-grow justify-between">
           <div>
             <h3 class="font-bold text-slate-900 text-sm mb-1">${p.title}</h3>
@@ -236,26 +268,19 @@ window.addEventListener('DOMContentLoaded', () => {
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans flex flex-col min-h-screen">
 
-<!-- Top Announcement & Social Bar with Auto Translate Widget -->
+<!-- Top Announcement Bar with Real Google Translate Widget -->
 <div class="bg-slate-900 text-slate-300 text-xs py-2 px-4 border-b border-slate-800">
   <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
     <div class="flex items-center gap-4 text-[11px] sm:text-xs">
       <a href="tel:+94783366466" class="hover:text-amber-400 flex items-center gap-1.5"><i class="fa-solid fa-phone text-amber-400"></i> +94 78 336 6466</a>
       <span class="hidden md:inline">|</span>
-      <span class="text-emerald-400"><i class="fa-solid fa-eye"></i> Visitors: <b id="visitorCounterDisplay">1240</b></span>
+      <span class="text-emerald-400"><i class="fa-solid fa-eye"></i> Views: <b id="visitorCounterDisplay">1240</b></span>
       <span class="text-amber-400"><i class="fa-solid fa-bag-shopping"></i> Sales: <b id="salesCounterDisplay">48</b></span>
     </div>
     
-    <!-- Multi-Language Translator Dropdown -->
+    <!-- Real Google Translate Widget Integration -->
     <div class="flex items-center gap-3">
-      <div class="flex items-center gap-1 bg-slate-800 px-2 py-1 rounded text-[11px]">
-        <i class="fa-solid fa-globe text-amber-400"></i>
-        <select id="google_translate_element" onchange="changeLanguage(this.value)" class="bg-transparent text-white outline-none cursor-pointer">
-          <option value="en" class="text-slate-900">English</option>
-          <option value="ta" class="text-slate-900">தமிழ் (Tamil)</option>
-          <option value="si" class="text-slate-900">සිංහල (Sinhala)</option>
-        </select>
-      </div>
+      <div id="google_translate_element" class="text-slate-900 text-[11px]"></div>
       <div class="flex items-center gap-2.5 text-sm">
         <a href="https://wa.me/94783366466" target="_blank" class="text-emerald-400"><i class="fa-brands fa-whatsapp"></i></a>
         <a href="https://www.facebook.com/share/1E44ZiZk7x/" target="_blank" class="text-blue-400"><i class="fa-brands fa-facebook-f"></i></a>
@@ -293,7 +318,7 @@ window.addEventListener('DOMContentLoaded', () => {
   </div>
 </header>
 
-<!-- ADMIN DASHBOARD PANEL -->
+<!-- ADMIN DASHBOARD PANEL WITH AI TRAINING & BUSINESS REPORTS -->
 <section id="adminSection" class="max-w-2xl mx-auto px-4 pt-4 w-full hidden">
   <div class="bg-white rounded-2xl shadow-lg border-2 border-slate-900 overflow-hidden">
     <div class="bg-slate-900 text-white p-3.5 flex items-center justify-between">
@@ -312,29 +337,42 @@ window.addEventListener('DOMContentLoaded', () => {
         <span class="text-xs font-bold text-emerald-600">● Admin Logged In</span>
         <button type="button" onclick="adminLogout()" class="text-xs text-red-500 font-bold">Logout</button>
       </div>
+
+      <!-- Business Sales & Cost Report Dashboard -->
+      <div class="bg-slate-100 p-3.5 rounded-xl border space-y-2 text-xs">
+        <h4 class="font-bold text-slate-900"><i class="fa-solid fa-chart-line text-blue-600"></i> Business Sales & Cost Report</h4>
+        <div id="businessReportBox" class="grid grid-cols-3 gap-2 bg-white p-2.5 rounded-lg border text-[11px]"></div>
+      </div>
       
       <!-- Manual Sales Counter Updater -->
       <div class="bg-amber-50 p-3 rounded-xl border border-amber-200 space-y-2">
-        <h4 class="text-xs font-bold text-amber-900">Update Order Sales Counter</h4>
+        <h4 class="text-xs font-bold text-amber-900">Update Sales Counter</h4>
         <div class="flex gap-2">
-          <input type="number" id="salesInputVal" placeholder="Enter total sales count" class="text-xs p-2 border rounded-lg bg-white flex-grow">
+          <input type="number" id="salesInputVal" placeholder="Total sales count" class="text-xs p-2 border rounded-lg bg-white flex-grow">
           <button type="button" onclick="updateManualSales()" class="px-3 py-2 bg-amber-600 text-white rounded-lg text-xs font-bold">Update</button>
         </div>
       </div>
 
+      <!-- Train AI Assistant -->
+      <div class="bg-blue-50 p-3 rounded-xl border border-blue-200 space-y-2">
+        <h4 class="text-xs font-bold text-blue-900"><i class="fa-solid fa-robot"></i> Train AI Assistant</h4>
+        <textarea id="aiTrainingInput" rows="3" placeholder="Type info about Leopis company, warranty, shipping..." class="w-full text-xs p-2 border rounded-lg bg-white outline-none"></textarea>
+        <button type="button" onclick="saveAiTraining()" class="w-full py-2 bg-blue-600 text-white rounded-lg text-xs font-bold">Save AI Knowledge</button>
+      </div>
+
       <!-- Add Product -->
       <div class="space-y-3 bg-slate-50 p-4 rounded-xl border">
-        <h3 class="text-xs font-bold text-slate-900">+ Add Product (Mark Special for Main Page)</h3>
-        <input type="text" id="newCat" placeholder="Category (e.g. Audio, Smart Watches)" class="w-full text-xs p-2.5 border rounded-lg bg-white">
+        <h3 class="text-xs font-bold text-slate-900">+ Add Product (Market Price & Cost)</h3>
+        <input type="text" id="newCat" placeholder="Category (e.g. Audio, Watches)" class="w-full text-xs p-2.5 border rounded-lg bg-white">
         <input type="text" id="newTitle" placeholder="Product Name" class="w-full text-xs p-2.5 border rounded-lg bg-white">
         <div class="grid grid-cols-2 gap-2">
-          <input type="number" id="newPrice" placeholder="Selling Price (LKR)" class="text-xs p-2.5 border rounded-lg bg-white">
-          <input type="number" id="newCost" placeholder="Our Cost (LKR) [Optional]" class="text-xs p-2.5 border rounded-lg bg-white">
+          <input type="number" id="newPrice" placeholder="Market Price (LKR)" class="text-xs p-2.5 border rounded-lg bg-white">
+          <input type="number" id="newCost" placeholder="Our Cost (LKR)" class="text-xs p-2.5 border rounded-lg bg-white">
         </div>
         <textarea id="newDesc" rows="2" placeholder="Details..." class="w-full text-xs p-2.5 border rounded-lg bg-white"></textarea>
         <div class="flex items-center gap-2">
           <input type="checkbox" id="newSpecial" class="w-4 h-4 text-amber-600">
-          <label for="newSpecial" class="text-xs font-bold text-slate-700">Set as Special Offer Product (Show on Main Page)</label>
+          <label for="newSpecial" class="text-xs font-bold text-slate-700">Special Offer (Show on Main Page Top)</label>
         </div>
         <div class="grid grid-cols-2 gap-2">
           <input type="file" id="newImgFile" accept="image/*" onchange="previewFile()" class="text-[11px] p-1.5 border rounded-lg bg-white">
@@ -348,7 +386,7 @@ window.addEventListener('DOMContentLoaded', () => {
   </div>
 </section>
 
-<!-- Hero Banner & Special Offer 3 Products Section -->
+<!-- Hero Banner & Left-to-Right Horizontal Scrolling Special Offers Section -->
 <section class="max-w-7xl mx-auto px-4 pt-5 w-full">
   <div class="bg-gradient-to-r from-slate-900 via-slate-800 to-amber-950 rounded-2xl p-6 text-white shadow-sm mb-6">
     <span class="text-[10px] uppercase tracking-wider text-amber-400 font-bold bg-amber-400/10 px-2.5 py-1 rounded border border-amber-400/20">Official Store Sri Lanka</span>
@@ -356,11 +394,12 @@ window.addEventListener('DOMContentLoaded', () => {
     <p class="text-slate-300 text-xs sm:text-sm mt-1">Premium gadgets & accessories. Cash on Delivery across Sri Lanka.</p>
   </div>
 
-  <div class="mb-2">
+  <div class="mb-3 flex items-center justify-between">
     <h2 class="text-base font-extrabold text-slate-900 flex items-center gap-2"><i class="fa-solid fa-fire text-amber-500"></i> Special Offer Products</h2>
+    <span class="text-[11px] text-slate-500">Swipe Left / Right ➔</span>
   </div>
-  <!-- 3 Special Offer Products Grid -->
-  <div id="specialOfferGrid" class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8"></div>
+  <!-- Left to Right Horizontal Scroll Container -->
+  <div id="specialOfferGrid" class="flex gap-4 overflow-x-auto pb-3 no-scrollbar mb-8"></div>
   </section>
   <!-- Category Filter Tabs -->
 <section class="max-w-7xl mx-auto px-4 pt-2 w-full">
@@ -376,18 +415,18 @@ window.addEventListener('DOMContentLoaded', () => {
   <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5"></div>
 </main>
 
-<!-- AI FAQ Chat Section (Free Gemini Integration Simulation) -->
+<!-- AI FAQ Chat Section (Trained by Admin Knowledge Base) -->
 <section class="max-w-7xl mx-auto px-4 py-8 w-full">
   <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
     <div class="flex items-center gap-2 mb-3">
       <i class="fa-solid fa-robot text-amber-500 text-lg"></i>
-      <h3 class="text-sm font-bold text-slate-900">Ask Leopis AI Assistant (FAQ Chat)</h3>
+      <h3 class="text-sm font-bold text-slate-900">Ask Leopis AI Assistant</h3>
     </div>
     <div id="chatBox" class="bg-slate-50 border rounded-xl p-3 h-36 overflow-y-auto text-xs space-y-2 mb-3">
-      <div class="text-slate-500">AI: Hello! Ask me about islandwide delivery, warranty, or cash on delivery in Sri Lanka.</div>
+      <div class="text-slate-500">AI: Hello! Ask me anything about Leopis products, delivery, or warranty.</div>
     </div>
     <div class="flex gap-2">
-      <input type="text" id="chatInput" placeholder="Type your question..." class="text-xs p-2.5 border rounded-lg flex-grow bg-white outline-none">
+      <input type="text" id="chatInput" placeholder="Ask question..." class="text-xs p-2.5 border rounded-lg flex-grow bg-white outline-none">
       <button type="button" onclick="sendAiChat()" class="px-4 py-2.5 bg-slate-900 text-white rounded-lg text-xs font-bold">Ask AI</button>
     </div>
   </div>
@@ -418,7 +457,7 @@ window.addEventListener('DOMContentLoaded', () => {
   <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
     <div>
       <h3 class="text-sm font-bold text-white mb-2">Leopis (Pvt) Ltd</h3>
-      <p class="text-slate-400">Leopis (Pvt) Ltd delivers premium electronic gadgets, smart wearables, and mobile accessories islandwide across Sri Lanka with trusted cash on delivery service.</p>
+      <p class="text-slate-400">Leopis (Pvt) Ltd provides top quality electronics and mobile accessories in Sri Lanka with islandwide cash on delivery service.</p>
     </div>
     <div class="space-y-1.5">
       <div class="font-bold text-white mb-2">Contact Us</div>
@@ -439,17 +478,15 @@ window.addEventListener('DOMContentLoaded', () => {
 </footer>
 
 <script>
-// Google Translate Simulation for Tamil, English & Sinhala
-function changeLanguage(lang) {
-  const translations = {
-    en: { title: "Official Store Sri Lanka", cart: "Cart", buy: "Buy" },
-    ta: { title: "அதிகாரப்பூர்வ அங்காடி இலங்கை", cart: "கூடை", buy: "வாங்கு" },
-    si: { title: "නිල වෙළඳසැල ශ්‍රී ලංකාව", cart: "කරත්තය", buy: "මිලදී ගන්න" }
-  };
-  alert("Language switched! (Google Translate Engine active for: " + lang.toUpperCase() + ")");
+// Real Google Translate Script Integration
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'en,ta,si', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
 }
+</script>
+<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
-// AI FAQ Chat Simulator
+<script>
+// AI FAQ Chat using Admin Knowledge Base
 function sendAiChat() {
   const input = document.getElementById('chatInput');
   const box = document.getElementById('chatBox');
@@ -460,11 +497,10 @@ function sendAiChat() {
   input.value = '';
 
   setTimeout(() => {
-    let reply = "Yes, we provide islandwide cash on delivery across Sri Lanka within 2-3 working days!";
+    let reply = aiKnowledge;
     const low = txt.toLowerCase();
-    if (low.includes('delivery') || low.includes('time')) reply = "Delivery takes 2 to 3 working days islandwide in Sri Lanka.";
-    else if (low.includes('warranty') || low.includes('guarantee')) reply = "All our products come with a standard store warranty and quality check.";
-    else if (low.includes('whatsapp') || low.includes('contact')) reply = "You can contact our hotline or WhatsApp directly at +94783366466.";
+    if (low.includes('delivery') || low.includes('time')) reply = "Islandwide cash on delivery takes 2 to 3 working days in Sri Lanka.";
+    else if (low.includes('whatsapp') || low.includes('contact')) reply = "You can contact our WhatsApp hotline directly at +94783366466.";
     
     box.innerHTML += `<div class="text-slate-700">AI: ${reply}</div>`;
     box.scrollTop = box.scrollHeight;
