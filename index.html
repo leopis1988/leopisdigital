@@ -1,87 +1,302 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="si">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#132b2a">
-  <meta name="description" content="Shop Leopis gadgets and mobile accessories in Sri Lanka. Browse featured products and order via WhatsApp.">
-  <link rel="canonical" href="https://leopisdigital.com/">
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Leopis | Gadgets & Mobile Accessories">
-  <meta property="og:description" content="Browse Leopis gadgets and mobile accessories in Sri Lanka.">
-  <meta property="og:url" content="https://leopisdigital.com/">
-  <meta name="twitter:card" content="summary">
-  <title>Leopis | Gadgets & Mobile Accessories in Sri Lanka</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
-  <!-- SheetJS enables .xls/.xlsx and CSV import in this browser-only starter. -->
-  <script defer src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-  <script defer src="app.js"></script>
-  <!-- Basic entity signals for search engines. Add your verified address/contact details before publishing. -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "Leopis (Pvt) Ltd",
-    "url": "https://leopisdigital.com/",
-    "telephone": "+94783366466",
-    "email": "director.leopis@gmail.com",
-    "areaServed": { "@type": "Country", "name": "Sri Lanka" },
-    "sameAs": [
-      "https://www.facebook.com/share/1E44ZiZk7x/",
-      "https://www.instagram.com/leopispvt",
-      "https://www.tiktok.com/@leo.pis07"
-    ]
-  }
-  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leopis Digital Sri Lanka | Online Shopping - Cash on Delivery</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body>
-  <div class="announcement"><span>Islandwide delivery across Sri Lanka <span aria-label="Views on this device">· Local views: <b id="visitorCount">0</b></span></span><a href="https://wa.me/94783366466" target="_blank" rel="noopener">WhatsApp +94 78 336 6466</a></div>
-  <header class="site-header">
-    <a class="brand" href="#top" aria-label="Leopis home"><span class="brand-mark">L</span><span><b>LEOPIS</b><small>(PVT) LTD · SRI LANKA</small></span></a>
-    <label class="search-box" aria-label="Search products"><span aria-hidden="true">⌕</span><input id="searchInput" type="search" placeholder="Search products, category..." autocomplete="off"><kbd>/</kbd></label>
-    <div class="header-actions"><button class="button button-soft" id="adminOpenBtn" type="button">Admin</button><button class="button button-dark" id="cartOpenBtn" type="button">Bag <span class="cart-count" id="cartCount">0</span></button></div>
-  </header>
+<body class="bg-gray-50 text-gray-800 font-sans">
 
-  <main id="top">
-    <section class="hero wrap">
-      <div class="hero-copy"><p class="eyebrow">SMARTER EVERYDAY · LEOPIS SRI LANKA</p><h1>Good tech.<br><em>Better everyday.</em></h1><p class="hero-text">Explore practical gadgets and mobile accessories, with simple WhatsApp ordering and islandwide delivery.</p><a class="button button-lime" href="#catalog">Explore products <span aria-hidden="true">↘</span></a></div>
-      <div class="hero-note"><span class="note-orbit">L</span><p>Curated picks<br><strong>for everyday life.</strong></p><span class="note-caption">COLOMBO · SRI LANKA</span></div>
-      <div class="hero-bottom"><span>01 / MADE TO BE USEFUL</span><span>Browse · Choose · WhatsApp</span></div>
-    </section>
-
-    <section class="wrap featured-section" id="featuredSection" hidden><div class="section-heading"><div><p class="eyebrow">THE SHORTLIST</p><h2>Featured finds</h2></div><span class="muted">New picks from Leopis</span></div><div class="featured-track" id="featuredTrack"></div></section>
-
-    <section class="wrap catalog-section" id="catalog">
-      <div class="section-heading"><div><p class="eyebrow">THE LEOPIS EDIT</p><h2>Shop the collection</h2></div><span class="muted" id="resultCount"></span></div>
-      <nav class="category-list" id="categoryList" aria-label="Product categories"></nav>
-      <div class="product-grid" id="productGrid" aria-live="polite"></div>
-      <p class="empty-state" id="emptyState" hidden>No matches yet. Try a different search or category.</p>
-    </section>
-
-    <section class="wrap help-strip"><div><p class="eyebrow">NEED A HAND?</p><h2>Ask about a product.</h2><p>Our product helper can answer from the current catalogue and store information.</p></div><button class="button button-dark" id="assistantOpenBtn" type="button">Chat with Leopis <span aria-hidden="true">↗</span></button></section>
-  </main>
-
-  <footer class="site-footer"><div class="wrap footer-inner"><div><a class="brand brand-footer" href="#top"><span class="brand-mark">L</span><span><b>LEOPIS</b><small>(PVT) LTD</small></span></a><p>Gadgets and mobile accessories, delivered across Sri Lanka.</p></div><div><b>Contact</b><a href="tel:+94783366466">+94 78 336 6466</a><a href="mailto:director.leopis@gmail.com">director.leopis@gmail.com</a></div><div><b>Order & support</b><a href="https://wa.me/94783366466" target="_blank" rel="noopener">WhatsApp Leopis</a><span>Cash on delivery details confirmed on WhatsApp.</span></div></div><div class="wrap footer-bottom"><span>© <span id="year"></span> Leopis (Pvt) Ltd</span><span>Product information and availability are confirmed by the store.</span></div></footer>
-
-  <div class="overlay" id="adminOverlay" hidden><section class="drawer admin-drawer" role="dialog" aria-modal="true" aria-labelledby="adminTitle"><div class="drawer-head"><div><p class="eyebrow">STORE CONTROL</p><h2 id="adminTitle">Admin workspace</h2></div><button class="icon-button" data-close="adminOverlay" aria-label="Close admin">×</button></div>
-    <form class="admin-login" id="adminLogin"><p class="muted">Enter the demo PIN configured in <code>app.js</code>.</p><label>Admin PIN<input id="adminPin" type="password" autocomplete="current-password" required></label><button class="button button-dark" type="submit">Unlock workspace</button><p class="small-note">This browser-only demo PIN is not secure authentication. Do not use it to protect a live store.</p></form>
-    <div id="adminPanel" hidden>
-      <div class="admin-topline"><span class="status-pill">● Local workspace</span><button class="text-button" id="logoutBtn" type="button">Lock admin</button></div>
-      <div class="admin-tabs"><button class="tab-button active" data-tab="productsTab">Products</button><button class="tab-button" data-tab="searchesTab">Search insights</button><button class="tab-button" data-tab="settingsTab">Store settings</button></div>
-      <section class="tab-panel" id="productsTab"><div class="admin-card"><div class="section-heading compact"><div><p class="eyebrow">CATALOGUE</p><h3 id="productFormTitle">Add product</h3></div></div>
-        <form id="productForm" class="form-grid"><input type="hidden" id="productId"><label>Product name<input id="productName" required maxlength="120" placeholder="e.g. Wireless earbuds"></label><label>Category<input id="productCategory" required maxlength="60" placeholder="Audio"></label><label>Price (LKR)<input id="productPrice" type="number" min="0" step="1" required></label><label>Cost (LKR, optional)<input id="productCost" type="number" min="0" step="1"></label><label class="full-width">Image URL<input id="productImage" type="url" placeholder="https://..."></label><label class="full-width">Description<textarea id="productDescription" rows="3" maxlength="400" placeholder="Key details"></textarea></label><label class="check-label full-width"><input id="productFeatured" type="checkbox"> Feature this product on the homepage</label><div class="form-actions full-width"><button class="button button-lime" type="submit" id="saveProductBtn">Publish product</button><button class="button button-soft" type="button" id="cancelEditBtn" hidden>Cancel edit</button></div></form>
-      </div><div class="admin-card"><div class="section-heading compact"><div><p class="eyebrow">BULK IMPORT</p><h3>Upload Excel or CSV</h3></div></div><p class="muted">Accepted: .xlsx, .xls, .csv. Use columns: name, price, category, description, image, featured, cost.</p><label class="upload-button">Choose spreadsheet<input id="spreadsheetInput" type="file" accept=".xlsx,.xls,.csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel,text/csv"></label><div class="small-note" id="importStatus" aria-live="polite">Your file is read in this browser; imported products are saved on this device.</div><div class="table-wrap"><table><thead><tr><th>Product</th><th>Category</th><th>Price</th><th>Actions</th></tr></thead><tbody id="adminProductRows"></tbody></table></div></div></section>
-      <section class="tab-panel" id="searchesTab" hidden><div class="admin-card"><div class="section-heading compact"><div><p class="eyebrow">CUSTOMER INTENT</p><h3>Recent searches</h3></div><button class="text-button" id="clearSearchesBtn" type="button">Clear local history</button></div><p class="muted">This list is local to this browser unless you connect a private analytics endpoint in app.js.</p><div id="searchInsights" class="insight-list"></div></div></section>
-      <section class="tab-panel" id="settingsTab" hidden><div class="admin-card"><div class="section-heading compact"><div><p class="eyebrow">STORE PROFILE</p><h3>Assistant knowledge</h3></div></div><label>Delivery / policy information<textarea id="storeKnowledge" rows="7"></textarea></label><button class="button button-dark settings-save" id="saveKnowledgeBtn" type="button">Save store information</button><p class="small-note">The built-in product helper is catalogue-aware but not a connected generative AI model. A secure server endpoint is required for real AI responses.</p></div></section>
+    <!-- Top Announcement Bar -->
+    <div class="bg-blue-600 text-white text-xs sm:text-sm py-2 px-4 text-center font-medium">
+        island-wide Cash on Delivery (COD) Available | Call / WhatsApp: 077-1234567
     </div>
-  </section></div>
 
-  <div class="overlay" id="cartOverlay" hidden><section class="drawer cart-drawer" role="dialog" aria-modal="true" aria-labelledby="cartTitle"><div class="drawer-head"><div><p class="eyebrow">YOUR SELECTION</p><h2 id="cartTitle">Shopping bag</h2></div><button class="icon-button" data-close="cartOverlay" aria-label="Close cart">×</button></div><div class="cart-items" id="cartItems"></div><div class="cart-footer"><div class="total-row"><span>Subtotal</span><strong id="cartSubtotal">LKR 0</strong></div><p class="small-note">Delivery cost is confirmed on WhatsApp.</p><label>Your name<input id="customerName" autocomplete="name" placeholder="Full name"></label><label>Phone number<input id="customerPhone" autocomplete="tel" type="tel" placeholder="+94..."></label><label>City / district<input id="customerDistrict" autocomplete="address-level2" placeholder="Delivery area"></label><button class="button button-lime checkout-button" id="checkoutBtn" type="button">Continue order on WhatsApp ↗</button><p class="small-note">Your details are added to a WhatsApp message. This demo does not store customer information.</p></div></section></div>
+    <!-- Header / Navbar -->
+    <header class="sticky top-0 z-50 bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+            <a href="#" class="text-2xl font-black tracking-tight text-blue-600 flex items-center gap-2">
+                <i class="fa-solid fa-bag-shopping"></i> Leopis Digital
+            </a>
+            
+            <!-- Search Bar -->
+            <div class="hidden md:flex flex-1 max-w-md mx-8">
+                <div class="relative w-full">
+                    <input type="text" id="searchInput" placeholder="Search products (e.g., Smartwatch, Trimmer)..." class="w-full pl-10 pr-4 py-2 border rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <i class="fa-solid fa-search absolute left-3.5 top-3 text-gray-400"></i>
+                </div>
+            </div>
 
-  <div class="assistant-pop" id="assistantPop" hidden><section class="assistant-card" role="dialog" aria-modal="false" aria-labelledby="assistantTitle"><div class="assistant-head"><div><p class="eyebrow">LEOPIS SUPPORT</p><h2 id="assistantTitle">Product helper</h2></div><button class="icon-button" id="assistantCloseBtn" aria-label="Close assistant">×</button></div><div class="chat-messages" id="chatMessages" aria-live="polite"><div class="chat-bubble bot">Hi! Ask me about products in the catalogue, prices, delivery, or how to contact Leopis.</div></div><form class="chat-form" id="chatForm"><input id="chatInput" maxlength="300" placeholder="Ask a question..." autocomplete="off" required><button class="button button-dark" type="submit">Send</button></form><p class="small-note">Answers use the local product list and store notes; please confirm availability with Leopis.</p></section></div>
-  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+            <!-- Cart Trigger -->
+            <button onclick="toggleCart()" class="relative bg-blue-50 text-blue-600 p-2.5 rounded-full hover:bg-blue-100 transition flex items-center gap-2 px-4">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span class="text-sm font-semibold hidden sm:inline">Cart</span>
+                <span id="cartCount" class="bg-blue-600 text-white text-xs px-2 py-0.5 rounded-full">0</span>
+            </button>
+        </div>
+        <!-- Mobile Search Bar -->
+        <div class="px-4 pb-3 md:hidden">
+            <div class="relative w-full">
+                <input type="text" id="mobileSearchInput" placeholder="Search products..." class="w-full pl-10 pr-4 py-2 border rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <i class="fa-solid fa-search absolute left-3.5 top-3 text-gray-400"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-r from-blue-900 to-indigo-900 text-white py-12 px-4">
+        <div class="max-w-7xl mx-auto text-center">
+            <h1 class="text-3xl sm:text-5xl font-bold mb-4">Smart Gadgets & Lifestyle Products</h1>
+            <p class="text-blue-200 text-sm sm:text-base max-w-2xl mx-auto mb-6">Order online safely with island-wide Cash on Delivery across Sri Lanka. Direct WhatsApp checkout support available!</p>
+            <a href="#shop" class="bg-blue-500 hover:bg-blue-600 text-white font-medium px-6 py-3 rounded-full shadow-lg transition">Shop Now</a>
+        </div>
+    </section>
+    <!-- Main Shop Section -->
+    <main id="shop" class="max-w-7xl mx-auto px-4 py-10">
+        <div class="flex flex-col sm:flex-row items-center justify-between mb-8 gap-4">
+            <h2 class="text-2xl font-bold text-gray-900">Featured Products</h2>
+            <!-- Category Filter Buttons -->
+            <div id="categoryFilters" class="flex flex-wrap gap-2">
+                <button onclick="filterCategory('All')" class="cat-btn bg-blue-600 text-white text-sm px-4 py-2 rounded-full transition">All</button>
+                <button onclick="filterCategory('Gadgets')" class="cat-btn bg-white border border-gray-300 text-gray-700 text-sm px-4 py-2 rounded-full hover:bg-gray-100 transition">Gadgets</button>
+                <button onclick="filterCategory('Grooming')" class="cat-btn bg-white border border-gray-300 text-gray-700 text-sm px-4 py-2 rounded-full hover:bg-gray-100 transition">Grooming</button>
+                <button onclick="filterCategory('Audio')" class="cat-btn bg-white border border-gray-300 text-gray-700 text-sm px-4 py-2 rounded-full hover:bg-gray-100 transition">Audio</button>
+            </div>
+        </div>
+
+        <!-- Product Grid -->
+        <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <!-- Dynamic Products will be injected here via JavaScript -->
+        </div>
+    </main>
+
+    <!-- Shopping Cart Slide-over Drawer -->
+    <div id="cartDrawer" class="fixed inset-0 z-50 overflow-hidden hidden">
+        <div class="absolute inset-0 bg-black bg-opacity-50 transition-opacity" onclick="toggleCart()"></div>
+        <div class="absolute inset-y-0 right-0 max-w-full flex pl-10">
+            <div class="w-screen max-w-md bg-white shadow-xl flex flex-col">
+                <div class="flex items-center justify-between p-4 border-b">
+                    <h3 class="text-lg font-bold text-gray-900">Your Shopping Cart</h3>
+                    <button onclick="toggleCart()" class="text-gray-400 hover:text-gray-500 text-xl font-bold">&times;</button>
+                </div>
+                
+                <div id="cartItemsContainer" class="flex-1 overflow-y-auto p-4 space-y-4">
+                    <!-- Cart items listed here -->
+                </div>
+
+                <div class="border-t p-4 bg-gray-50">
+                    <div class="flex justify-between text-base font-medium text-gray-900 mb-4">
+                        <p>Subtotal</p>
+                        <p id="cartSubtotal">LKR 0</p>
+                    </div>
+                    <!-- Checkout form for WhatsApp COD -->
+                    <div class="space-y-3 mb-4">
+                        <input type="text" id="customerName" placeholder="Full Name" class="w-full p-2 border rounded text-sm">
+                        <input type="text" id="customerPhone" placeholder="Phone Number" class="w-full p-2 border rounded text-sm">
+                        <textarea id="customerAddress" placeholder="Delivery Address" rows="2" class="w-full p-2 border rounded text-sm"></textarea>
+                    </div>
+                    <button onclick="checkoutWhatsApp()" class="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-3 rounded-lg shadow transition flex items-center justify-center gap-2">
+                        <i class="fa-brands fa-whatsapp text-xl"></i> Order via WhatsApp (COD)
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+        <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8 px-4 mt-16">
+        <div class="max-w-7xl mx-auto text-center text-sm text-gray-400">
+            <p>&copy; 2026 Leopis Digital Sri Lanka. All rights reserved. Island-wide Cash on Delivery.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // Sample Products Catalog (LKR Prices)
+        const products = [
+            { id: 1, name: "Ultra Smartwatch Series 9", category: "Gadgets", price: 4500, image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=500&q=80" },
+            { id: 2, name: "Professional Hair Trimmer", category: "Grooming", price: 3200, image: "https://images.unsplash.com/photo-1621607512214-68297480165e?auto=format&fit=crop&w=500&q=80" },
+            { id: 3, name: "Wireless Bluetooth Speaker", category: "Audio", price: 5500, image: "https://images.unsplash.com/photo-1545454675-3531b543be5d?auto=format&fit=crop&w=500&q=80" },
+            { id: 4, name: "10000mAh Power Bank", category: "Gadgets", price: 3800, image: "https://images.unsplash.com/photo-1609592424158-48b6f0089a80?auto=format&fit=crop&w=500&q=80" },
+            { id: 5, name: "TWS Wireless Earbuds", category: "Audio", price: 2900, image: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&w=500&q=80" },
+            { id: 6, name: "Mini Facial Grooming Kit", category: "Grooming", price: 2400, image: "https://images.unsplash.com/photo-1583947215259-38e31be8751f?auto=format&fit=crop&w=500&q=80" }
+        ];
+
+        let cart = [];
+        let currentCategory = 'All';
+        let searchQuery = '';
+
+        // Render Products
+        function renderProducts() {
+            const grid = document.getElementById('productGrid');
+            grid.innerHTML = '';
+
+            const filtered = products.filter(p => {
+                const matchesCategory = currentCategory === 'All' || p.category === currentCategory;
+                const matchesSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase());
+                return matchesCategory && matchesSearch;
+            });
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `<p class="col-span-full text-center text-gray-500 py-10">No products found.</p>`;
+                return;
+            }
+
+            filtered.forEach(p => {
+                const card = document.createElement('div');
+                card.className = "bg-white border rounded-xl overflow-hidden shadow-sm hover:shadow-md transition flex flex-col justify-between";
+                card.innerHTML = `
+                    <div>
+                        <img src="${p.image}" alt="${p.name}" class="w-full h-48 object-cover">
+                        <div class="p-4">
+                            <span class="text-xs font-semibold text-blue-600 uppercase">${p.category}</span>
+                            <h3 class="font-bold text-gray-900 mt-1 mb-2">${p.name}</h3>
+                            <p class="text-gray-900 font-bold">LKR ${p.price.toLocaleString()}</p>
+                        </div>
+                    </div>
+                    <div class="p-4 pt-0">
+                        <button onclick="addToCart(${p.id})" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg text-sm font-medium transition">
+                            Add to Cart
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Filter Category
+        function filterCategory(cat) {
+            currentCategory = cat;
+            document.querySelectorAll('.cat-btn').forEach(btn => {
+                if(btn.textContent.trim() === cat) {
+                    btn.className = "cat-btn bg-blue-600 text-white text-sm px-4 py-2 rounded-full transition";
+                } else {
+                    btn.className = "cat-btn bg-white border border-gray-300 text-gray-700 text-sm px-4 py-2 rounded-full hover:bg-gray-100 transition";
+                }
+            });
+            renderProducts();
+        }
+
+        // Search Input Event Listeners
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            searchQuery = e.target.value;
+            renderProducts();
+        });
+        document.getElementById('mobileSearchInput').addEventListener('input', (e) => {
+            searchQuery = e.target.value;
+            renderProducts();
+        });
+
+        // Cart Management
+        function toggleCart() {
+            const drawer = document.getElementById('cartDrawer');
+            drawer.classList.toggle('hidden');
+        }
+
+        function addToCart(id) {
+            const product = products.find(p => p.id === id);
+            const existing = cart.find(item => item.id === id);
+            if(existing) {
+                existing.qty++;
+            } else {
+                cart.push({ ...product, qty: 1 });
+            }
+            updateCartUI();
+            toggleCart();
+        }
+
+        function updateQuantity(id, change) {
+            const item = cart.find(i => i.id === id);
+            if(item) {
+                item.qty += change;
+                if(item.qty <= 0) {
+                    cart = cart.filter(i => i.id !== id);
+                }
+            }
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const countEl = document.getElementById('cartCount');
+            const container = document.getElementById('cartItemsContainer');
+            const subtotalEl = document.getElementById('cartSubtotal');
+
+            const totalCount = cart.reduce((sum, item) => sum + item.qty, 0);
+            countEl.textContent = totalCount;
+
+            if(cart.length === 0) {
+                container.innerHTML = `<p class="text-center text-gray-500 py-8">Your cart is empty.</p>`;
+                subtotalEl.textContent = "LKR 0";
+                return;
+            }
+
+            container.innerHTML = '';
+            let subtotal = 0;
+
+            cart.forEach(item => {
+                subtotal += item.price * item.qty;
+                const div = document.createElement('div');
+                div.className = "flex items-center justify-between border-b pb-3";
+                div.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <img src="${item.image}" class="w-12 h-12 object-cover rounded">
+                        <div>
+                            <h4 class="text-sm font-semibold">${item.name}</h4>
+                            <p class="text-xs text-gray-500">LKR ${item.price.toLocaleString()} x ${item.qty}</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button onclick="updateQuantity(${item.id}, -1)" class="px-2 py-1 bg-gray-200 rounded text-xs font-bold">-</button>
+                        <span class="text-sm font-medium">${item.qty}</span>
+                        <button onclick="updateQuantity(${item.id}, 1)" class="px-2 py-1 bg-gray-200 rounded text-xs font-bold">+</button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+
+            subtotalEl.textContent = `LKR ${subtotal.toLocaleString()}`;
+        }
+
+        // WhatsApp Checkout
+        function checkoutWhatsApp() {
+            if(cart.length === 0) {
+                alert("Your cart is empty!");
+                return;
+            }
+            const name = document.getElementById('customerName').value.trim();
+            const phone = document.getElementById('customerPhone').value.trim();
+            const address = document.getElementById('customerAddress').value.trim();
+
+            if(!name || !phone || !address) {
+                alert("Please fill in all delivery details (Name, Phone, Address).");
+                return;
+            }
+
+            let message = `*New Order - Leopis Digital*%0A`;
+            message += `*Name:* ${name}%0A`;
+            message += `*Phone:* ${phone}%0A`;
+            message += `*Address:* ${address}%0A%0A`;
+            message += `*Items:*%0A`;
+
+            let total = 0;
+            cart.forEach(item => {
+                message += `- ${item.name} (x${item.qty}) : LKR ${(item.price * item.qty).toLocaleString()}%0A`;
+                total += item.price * item.qty;
+            });
+
+            message += `%0A*Total Amount (COD):* LKR ${total.toLocaleString()}`;
+
+            // Replace with your business WhatsApp number (with country code, e.g., 94771234567)
+            const whatsappNumber = "94771234567"; 
+            const url = `https://wa.me/${whatsappNumber}?text=${message}`;
+            window.open(url, '_blank');
+        }
+
+        // Initial Render
+        renderProducts();
+    </script>
 </body>
 </html>
