@@ -1,665 +1,335 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="description" content="Leopis (Pvt) Ltd Official Store Sri Lanka. Best electronic gadgets, smart watches, mobile accessories with islandwide cash on delivery.">
-<title>Leopis (Pvt) Ltd | Official Online Store Sri Lanka</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<style>
-  html { scroll-behavior: smooth; }
-  .no-scrollbar::-webkit-scrollbar { display: none; }
-  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-  @media (min-width: 768px) {
-    .app-container { max-width: 1280px; margin: 0 auto; border-radius: 12px; margin-top: 16px; margin-bottom: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#132b2a">
+  <meta name="description" content="Shop Leopis gadgets and mobile accessories in Sri Lanka. Browse featured products and order via WhatsApp.">
+  <!-- Replace the example canonical URL with your real domain before publishing. -->
+  <link rel="canonical" href="https://www.example.com/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Leopis | Gadgets & Mobile Accessories">
+  <meta property="og:description" content="Browse Leopis gadgets and mobile accessories in Sri Lanka.">
+  <meta property="og:url" content="https://www.example.com/">
+  <meta name="twitter:card" content="summary">
+  <title>Leopis | Gadgets & Mobile Accessories in Sri Lanka</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <!-- SheetJS enables .xls/.xlsx and CSV import in this browser-only starter. -->
+  <script defer src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script defer src="app.js"></script>
+  <!-- Basic entity signals for search engines. Add your verified address/contact details before publishing. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Leopis (Pvt) Ltd",
+    "url": "https://www.example.com/",
+    "telephone": "+94783366466",
+    "email": "director.leopis@gmail.com",
+    "areaServed": { "@type": "Country", "name": "Sri Lanka" },
+    "sameAs": [
+      "https://www.facebook.com/share/1E44ZiZk7x/",
+      "https://www.instagram.com/leopispvt",
+      "https://www.tiktok.com/@leo.pis07"
+    ]
   }
-</style>
-<script>
-function sanitizeInput(str) {
-  if (typeof str !== 'string') return str;
-  return str.replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#x27;");
-}
+  </script>
+</head>
+<body>
+  <div class="announcement"><span>Islandwide delivery across Sri Lanka</span><a href="https://wa.me/94783366466" target="_blank" rel="noopener">WhatsApp +94 78 336 6466</a></div>
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="Leopis home"><span class="brand-mark">L</span><span><b>LEOPIS</b><small>(PVT) LTD · SRI LANKA</small></span></a>
+    <label class="search-box" aria-label="Search products"><span aria-hidden="true">⌕</span><input id="searchInput" type="search" placeholder="Search products, category..." autocomplete="off"><kbd>/</kbd></label>
+    <div class="header-actions"><button class="button button-soft" id="adminOpenBtn" type="button">Admin</button><button class="button button-dark" id="cartOpenBtn" type="button">Bag <span class="cart-count" id="cartCount">0</span></button></div>
+  </header>
 
-const defaultCatalog = [
-  { id: 1, title: "Pro Wireless ANC Earbuds V5.3", category: "Audio", price: 6800, cost: 4500, special: true, desc: "Active Noise Cancellation, 36-hr battery.", image: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=500" },
-  { id: 2, title: "Ultra AMOLED Smart Watch", category: "Smart Watches", price: 9400, cost: 6500, special: true, desc: "Always-on display, Bluetooth calling.", image: "https://images.unsplash.com/photo-1575311373937-040b8e1fd5b6?w=500" },
-  { id: 3, title: "65W GaN Fast Charger", category: "Mobile Accessories", price: 4200, cost: 2800, special: true, desc: "Dual Type-C fast charging adapter.", image: "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?w=500" }
-];
+  <main id="top">
+    <section class="hero wrap">
+      <div class="hero-copy"><p class="eyebrow">SMARTER EVERYDAY · LEOPIS SRI LANKA</p><h1>Good tech.<br><em>Better everyday.</em></h1><p class="hero-text">Explore practical gadgets and mobile accessories, with simple WhatsApp ordering and islandwide delivery.</p><a class="button button-lime" href="#catalog">Explore products <span aria-hidden="true">↘</span></a></div>
+      <div class="hero-note"><span class="note-orbit">L</span><p>Curated picks<br><strong>for everyday life.</strong></p><span class="note-caption">COLOMBO · SRI LANKA</span></div>
+      <div class="hero-bottom"><span>01 / MADE TO BE USEFUL</span><span>Browse · Choose · WhatsApp</span></div>
+    </section>
 
-let saved = null;
-try { saved = JSON.parse(localStorage.getItem('leopis_catalog')); } catch(e) {}
-let products = (Array.isArray(saved) && saved.length > 0) ? saved : defaultCatalog;
+    <section class="wrap featured-section" id="featuredSection" hidden><div class="section-heading"><div><p class="eyebrow">THE SHORTLIST</p><h2>Featured finds</h2></div><span class="muted">New picks from Leopis</span></div><div class="featured-track" id="featuredTrack"></div></section>
 
-let aiKnowledge = localStorage.getItem('leopis_ai_kb') || "Leopis (Pvt) Ltd provides top quality electronics and mobile accessories in Sri Lanka with islandwide cash on delivery.";
-let currentCategory = "All", searchQuery = "", cart = [], uploadedBase64 = "", editingProductId = null;
+    <section class="wrap catalog-section" id="catalog">
+      <div class="section-heading"><div><p class="eyebrow">THE LEOPIS EDIT</p><h2>Shop the collection</h2></div><span class="muted" id="resultCount"></span></div>
+      <nav class="category-list" id="categoryList" aria-label="Product categories"></nav>
+      <div class="product-grid" id="productGrid" aria-live="polite"></div>
+      <p class="empty-state" id="emptyState" hidden>No matches yet. Try a different search or category.</p>
+    </section>
 
-let visitCount = localStorage.getItem('leopis_visits') ? parseInt(localStorage.getItem('leopis_visits')) + 1 : 7996;
-localStorage.setItem('leopis_visits', visitCount);
+    <section class="wrap help-strip"><div><p class="eyebrow">NEED A HAND?</p><h2>Ask about a product.</h2><p>Our product helper can answer from the current catalogue and store information.</p></div><button class="button button-dark" id="assistantOpenBtn" type="button">Chat with Leopis <span aria-hidden="true">↗</span></button></section>
+  </main>
 
-let deliveredOrdersCount = localStorage.getItem('leopis_delivered_sales') ? parseInt(localStorage.getItem('leopis_delivered_sales')) : 3986;
-let realOrdersLog = JSON.parse(localStorage.getItem('leopis_orders_log')) || [];
+  <footer class="site-footer"><div class="wrap footer-inner"><div><a class="brand brand-footer" href="#top"><span class="brand-mark">L</span><span><b>LEOPIS</b><small>(PVT) LTD</small></span></a><p>Gadgets and mobile accessories, delivered across Sri Lanka.</p></div><div><b>Contact</b><a href="tel:+94783366466">+94 78 336 6466</a><a href="mailto:director.leopis@gmail.com">director.leopis@gmail.com</a></div><div><b>Order & support</b><a href="https://wa.me/94783366466" target="_blank" rel="noopener">WhatsApp Leopis</a><span>Cash on delivery details confirmed on WhatsApp.</span></div></div><div class="wrap footer-bottom"><span>© <span id="year"></span> Leopis (Pvt) Ltd</span><span>Product information and availability are confirmed by the store.</span></div></footer>
 
-function toggleAdmin() {
-  const sec = document.getElementById('adminSection');
-  if (sec) { sec.classList.toggle('hidden'); if (!sec.classList.contains('hidden')) window.scrollTo({ top: 0, behavior: 'smooth' }); }
-}
-function handleAdminLogin() {
-  const u = sanitizeInput((document.getElementById('adminUser').value || '').trim().toLowerCase());
-  const p = sanitizeInput((document.getElementById('adminPass').value || '').trim());
-  if (u === "leopis" && (p === "Leopis@1988" || p === "leopis@1988")) {
-    document.getElementById('loginError').classList.add('hidden');
-    document.getElementById('adminLoginForm').classList.add('hidden');
-    document.getElementById('adminDashboard').classList.remove('hidden');
-    renderAdminList();
-    loadAiKbInput();
-    updateBusinessAnalytics();
-  } else { document.getElementById('loginError').classList.remove('hidden'); }
-}
-function adminLogout() {
-  document.getElementById('adminLoginForm').classList.remove('hidden');
-  document.getElementById('adminDashboard').classList.add('hidden');
-  document.getElementById('adminUser').value = ''; document.getElementById('adminPass').value = '';
-}
-function updateDeliveredSales() {
-  const val = parseInt(document.getElementById('salesInputVal').value);
-  if (isNaN(val)) return;
-  deliveredOrdersCount = val;
-  localStorage.setItem('leopis_delivered_sales', deliveredOrdersCount);
-  document.getElementById('salesCounterDisplay').innerText = deliveredOrdersCount;
-  alert("Delivered Orders Counter Updated!");
-}
-function saveAiTraining() {
-  const text = sanitizeInput(document.getElementById('aiTrainingInput').value.trim());
-  if (!text) return;
-  aiKnowledge = text;
-  localStorage.setItem('leopis_ai_kb', aiKnowledge);
-  alert("AI Assistant trained successfully!");
-}
-function loadAiKbInput() {
-  const el = document.getElementById('aiTrainingInput');
-  if (el) el.value = aiKnowledge;
-}
-function updateBusinessAnalytics() {
-  let totalRevenue = 0, totalCost = 0;
-  realOrdersLog.forEach(ord => { totalRevenue += ord.total; totalCost += ord.cost; });
-  const netProfit = totalRevenue - totalCost;
-  const box = document.getElementById('businessReportBox');
-  if (box) {
-    box.innerHTML = `
-      <div>Total Orders: <b>${realOrdersLog.length}</b></div>
-      <div>Revenue: <b>LKR ${totalRevenue.toLocaleString()}</b></div>
-      <div>Cost: <b>LKR ${totalCost.toLocaleString()}</b></div>
-      <div class="text-emerald-600 font-bold col-span-3">Net Profit: LKR ${netProfit.toLocaleString()}</div>
-    `;
+  <div class="overlay" id="adminOverlay" hidden><section class="drawer admin-drawer" role="dialog" aria-modal="true" aria-labelledby="adminTitle"><div class="drawer-head"><div><p class="eyebrow">STORE CONTROL</p><h2 id="adminTitle">Admin workspace</h2></div><button class="icon-button" data-close="adminOverlay" aria-label="Close admin">×</button></div>
+    <form class="admin-login" id="adminLogin"><p class="muted">Enter the demo PIN configured in <code>app.js</code>.</p><label>Admin PIN<input id="adminPin" type="password" autocomplete="current-password" required></label><button class="button button-dark" type="submit">Unlock workspace</button><p class="small-note">This browser-only demo PIN is not secure authentication. Do not use it to protect a live store.</p></form>
+    <div id="adminPanel" hidden>
+      <div class="admin-topline"><span class="status-pill">● Local workspace</span><button class="text-button" id="logoutBtn" type="button">Lock admin</button></div>
+      <div class="admin-tabs"><button class="tab-button active" data-tab="productsTab">Products</button><button class="tab-button" data-tab="searchesTab">Search insights</button><button class="tab-button" data-tab="settingsTab">Store settings</button></div>
+      <section class="tab-panel" id="productsTab"><div class="admin-card"><div class="section-heading compact"><div><p class="eyebrow">CATALOGUE</p><h3 id="productFormTitle">Add product</h3></div></div>
+        <form id="productForm" class="form-grid"><input type="hidden" id="productId"><label>Product name<input id="productName" required maxlength="120" placeholder="e.g. Wireless earbuds"></label><label>Category<input id="productCategory" required maxlength="60" placeholder="Audio"></label><label>Price (LKR)<input id="productPrice" type="number" min="0" step="1" required></label><label>Cost (LKR, optional)<input id="productCost" type="number" min="0" step="1"></label><label class="full-width">Image URL<input id="productImage" type="url" placeholder="https://..."></label><label class="full-width">Description<textarea id="productDescription" rows="3" maxlength="400" placeholder="Key details"></textarea></label><label class="check-label full-width"><input id="productFeatured" type="checkbox"> Feature this product on the homepage</label><div class="form-actions full-width"><button class="button button-lime" type="submit" id="saveProductBtn">Publish product</button><button class="button button-soft" type="button" id="cancelEditBtn" hidden>Cancel edit</button></div></form>
+      </div><div class="admin-card"><div class="section-heading compact"><div><p class="eyebrow">BULK IMPORT</p><h3>Upload Excel or CSV</h3></div></div><p class="muted">Accepted: .xlsx, .xls, .csv. Use columns: name, price, category, description, image, featured, cost.</p><label class="upload-button">Choose spreadsheet<input id="spreadsheetInput" type="file" accept=".xlsx,.xls,.csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel,text/csv"></label><div class="small-note" id="importStatus" aria-live="polite">Your file is read in this browser; imported products are saved on this device.</div><div class="table-wrap"><table><thead><tr><th>Product</th><th>Category</th><th>Price</th><th>Actions</th></tr></thead><tbody id="adminProductRows"></tbody></table></div></div></section>
+      <section class="tab-panel" id="searchesTab" hidden><div class="admin-card"><div class="section-heading compact"><div><p class="eyebrow">CUSTOMER INTENT</p><h3>Recent searches</h3></div><button class="text-button" id="clearSearchesBtn" type="button">Clear local history</button></div><p class="muted">This list is local to this browser unless you connect a private analytics endpoint in app.js.</p><div id="searchInsights" class="insight-list"></div></div></section>
+      <section class="tab-panel" id="settingsTab" hidden><div class="admin-card"><div class="section-heading compact"><div><p class="eyebrow">STORE PROFILE</p><h3>Assistant knowledge</h3></div></div><label>Delivery / policy information<textarea id="storeKnowledge" rows="7"></textarea></label><button class="button button-dark settings-save" id="saveKnowledgeBtn" type="button">Save store information</button><p class="small-note">The built-in product helper is catalogue-aware but not a connected generative AI model. A secure server endpoint is required for real AI responses.</p></div></section>
+    </div>
+  </section></div>
+
+  <div class="overlay" id="cartOverlay" hidden><section class="drawer cart-drawer" role="dialog" aria-modal="true" aria-labelledby="cartTitle"><div class="drawer-head"><div><p class="eyebrow">YOUR SELECTION</p><h2 id="cartTitle">Shopping bag</h2></div><button class="icon-button" data-close="cartOverlay" aria-label="Close cart">×</button></div><div class="cart-items" id="cartItems"></div><div class="cart-footer"><div class="total-row"><span>Subtotal</span><strong id="cartSubtotal">LKR 0</strong></div><p class="small-note">Delivery cost is confirmed on WhatsApp.</p><label>Your name<input id="customerName" autocomplete="name" placeholder="Full name"></label><label>Phone number<input id="customerPhone" autocomplete="tel" type="tel" placeholder="+94..."></label><label>City / district<input id="customerDistrict" autocomplete="address-level2" placeholder="Delivery area"></label><button class="button button-lime checkout-button" id="checkoutBtn" type="button">Continue order on WhatsApp ↗</button><p class="small-note">Your details are added to a WhatsApp message. This demo does not store customer information.</p></div></section></div>
+
+  <div class="assistant-pop" id="assistantPop" hidden><section class="assistant-card" role="dialog" aria-modal="false" aria-labelledby="assistantTitle"><div class="assistant-head"><div><p class="eyebrow">LEOPIS SUPPORT</p><h2 id="assistantTitle">Product helper</h2></div><button class="icon-button" id="assistantCloseBtn" aria-label="Close assistant">×</button></div><div class="chat-messages" id="chatMessages" aria-live="polite"><div class="chat-bubble bot">Hi! Ask me about products in the catalogue, prices, delivery, or how to contact Leopis.</div></div><form class="chat-form" id="chatForm"><input id="chatInput" maxlength="300" placeholder="Ask a question..." autocomplete="off" required><button class="button button-dark" type="submit">Send</button></form><p class="small-note">Answers use the local product list and store notes; please confirm availability with Leopis.</p></section></div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         </html>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap');
+:root{--ink:#17302e;--ink-2:#24413e;--muted:#74817b;--paper:#f7f7f2;--white:#fff;--line:#e6e9e1;--lime:#d7f36a;--lime-dark:#b5d44e;--orange:#dc744a;--shadow:0 18px 60px rgba(22,48,46,.12);--radius:22px;font-family:'DM Sans',sans-serif;color:var(--ink);background:var(--paper);font-synthesis:none;text-rendering:optimizeLegibility}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-width:320px;background:var(--paper);font-size:15px}button,input,textarea{font:inherit}button,a{-webkit-tap-highlight-color:transparent}a{color:inherit;text-decoration:none}button{cursor:pointer}.wrap{width:min(1180px,calc(100% - 48px));margin-inline:auto}.announcement{min-height:35px;padding:8px 5vw;display:flex;justify-content:space-between;align-items:center;background:var(--ink);color:#e8eee5;font-size:11px;letter-spacing:.04em}.announcement a{color:var(--lime)}.site-header{position:sticky;top:0;z-index:15;display:grid;grid-template-columns:1fr minmax(220px,410px) 1fr;align-items:center;gap:22px;min-height:76px;padding:12px max(24px,calc((100vw - 1180px)/2));background:rgba(247,247,242,.93);border-bottom:1px solid rgba(23,48,46,.08);backdrop-filter:blur(16px)}.brand{display:inline-flex;align-items:center;gap:10px;width:max-content}.brand-mark{display:grid;place-items:center;width:39px;height:39px;border-radius:13px 13px 13px 4px;background:var(--lime);color:var(--ink);font:800 22px 'Manrope',sans-serif}.brand b{display:block;font:800 17px 'Manrope',sans-serif;letter-spacing:.09em}.brand small{display:block;margin-top:2px;color:var(--muted);font-size:9px;letter-spacing:.12em}.search-box{display:flex;align-items:center;gap:10px;height:42px;padding:0 13px;border:1px solid var(--line);border-radius:14px;background:#fff;color:var(--muted)}.search-box>span{font-size:24px;line-height:1}.search-box input{width:100%;border:0;outline:0;background:transparent;color:var(--ink);font-size:13px}.search-box kbd{padding:2px 6px;border:1px solid var(--line);border-radius:5px;font-size:10px}.header-actions{display:flex;justify-content:flex-end;gap:8px}.button{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:42px;padding:0 17px;border:0;border-radius:13px;font-weight:700;font-size:12px;transition:transform .18s,background .18s,color .18s}.button:hover{transform:translateY(-1px)}.button-dark{background:var(--ink);color:#fff}.button-dark:hover{background:var(--ink-2)}.button-soft{background:#e9ede6;color:var(--ink)}.button-lime{background:var(--lime);color:var(--ink)}.button-lime:hover{background:var(--lime-dark)}.cart-count{display:grid;place-items:center;min-width:20px;height:20px;padding:0 5px;border-radius:99px;background:var(--lime);color:var(--ink);font-size:10px}.hero{position:relative;display:grid;grid-template-columns:1.2fr .8fr;align-items:center;min-height:435px;margin-top:32px;padding:58px 7%;overflow:hidden;border-radius:30px;background:var(--ink);color:white}.hero:before,.hero:after{position:absolute;content:"";border:1px solid rgba(215,243,106,.23);border-radius:50%;pointer-events:none}.hero:before{width:510px;height:510px;right:-70px;top:-235px}.hero:after{width:395px;height:395px;right:-12px;top:-177px}.hero-copy{position:relative;z-index:1;max-width:570px}.eyebrow{margin:0 0 11px;color:#89968c;font-size:9px;font-weight:700;letter-spacing:.17em}.hero .eyebrow{color:var(--lime)}h1,h2,h3,p{margin-top:0}h1,h2,h3{font-family:'Manrope',sans-serif}.hero h1{margin:0;font-size:clamp(43px,6vw,72px);line-height:1.03;letter-spacing:-.065em}.hero h1 em{color:var(--lime);font-style:normal}.hero-text{max-width:390px;margin:18px 0 25px;color:#c5d0c8;font-size:14px;line-height:1.75}.hero-note{position:relative;z-index:1;justify-self:end;width:225px;height:225px;padding:25px;border:1px solid rgba(215,243,106,.5);border-radius:50%;background:radial-gradient(circle at 43% 35%,#31534c,#1a3531 68%);box-shadow:0 0 0 24px rgba(215,243,106,.025)}.note-orbit{display:grid;place-items:center;width:60px;height:60px;border:1px solid rgba(215,243,106,.65);border-radius:50%;color:var(--lime);font:800 34px 'Manrope',sans-serif}.hero-note p{margin:24px 0 18px;font-size:12px;line-height:1.55;color:#cad4cc}.hero-note strong{color:white}.note-caption{font-size:8px;letter-spacing:.14em;color:var(--lime)}.hero-bottom{position:absolute;right:7%;bottom:20px;left:7%;display:flex;justify-content:space-between;border-top:1px solid rgba(255,255,255,.13);padding-top:12px;color:#9eaca1;font-size:9px;letter-spacing:.08em}.featured-section,.catalog-section{padding-top:88px}.section-heading{display:flex;align-items:end;justify-content:space-between;gap:18px;margin-bottom:23px}.section-heading h2{margin:0;font-size:32px;letter-spacing:-.045em}.section-heading .eyebrow{margin-bottom:7px}.muted{color:var(--muted);font-size:12px;line-height:1.65}.featured-track{display:grid;grid-auto-columns:minmax(220px,1fr);grid-auto-flow:column;gap:16px;overflow-x:auto;padding:3px 2px 14px;scroll-snap-type:x mandatory}.featured-track .product-card{scroll-snap-align:start}.category-list{display:flex;gap:9px;margin-bottom:23px;overflow-x:auto;padding:2px 1px 7px;scrollbar-width:thin}.category-chip{flex:0 0 auto;padding:9px 15px;border:1px solid var(--line);border-radius:99px;background:white;color:var(--muted);font-size:11px;font-weight:700}.category-chip.active{border-color:var(--ink);background:var(--ink);color:white}.product-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px}.product-card{min-width:0;padding:10px;border:1px solid var(--line);border-radius:19px;background:#fff;transition:transform .18s,box-shadow .18s}.product-card:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(23,48,46,.09)}.product-image{position:relative;display:grid;place-items:center;aspect-ratio:1.2;overflow:hidden;border-radius:12px;background:linear-gradient(140deg,#ecf0e9,#f7f7f2)}.product-image img{width:100%;height:100%;object-fit:cover}.image-fallback{color:#93a097;font:700 13px 'Manrope',sans-serif;letter-spacing:.1em}.product-tag{position:absolute;top:9px;left:9px;padding:5px 8px;border-radius:99px;background:rgba(255,255,255,.9);color:var(--ink);font-size:9px;font-weight:700}.product-info{padding:13px 4px 3px}.product-info h3{margin:0 0 6px;font-size:14px;line-height:1.35;letter-spacing:-.02em}.product-description{min-height:33px;margin:0 0 12px;color:var(--muted);font-size:11px;line-height:1.5}.product-bottom{display:flex;align-items:center;justify-content:space-between;gap:6px}.product-price{font:800 14px 'Manrope',sans-serif}.add-button{width:34px;height:34px;border:0;border-radius:11px;background:var(--lime);color:var(--ink);font-size:20px;font-weight:600}.empty-state{padding:45px 15px;text-align:center;color:var(--muted)}.help-strip{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-top:92px;margin-bottom:92px;padding:31px 36px;border-radius:23px;background:#e9ede6}.help-strip h2{margin:0 0 6px;font-size:26px;letter-spacing:-.04em}.help-strip p:not(.eyebrow){margin:0;color:var(--muted);font-size:12px}.site-footer{padding:44px 0 18px;background:var(--ink);color:#d8e0d8}.footer-inner{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:30px;padding-bottom:32px}.brand-footer .brand-mark{background:var(--lime)}.brand-footer small{color:#9eaca1}.footer-inner p,.footer-inner span,.footer-inner a:not(.brand){display:block;margin:13px 0 0;color:#aebbb1;font-size:11px;line-height:1.65}.footer-inner>div> b{display:block;color:white;font-size:11px}.footer-bottom{display:flex;justify-content:space-between;gap:15px;border-top:1px solid rgba(255,255,255,.12);padding-top:14px;color:#84948a;font-size:10px}.overlay{position:fixed;inset:0;z-index:30;display:flex;justify-content:flex-end;background:rgba(10,22,21,.48);backdrop-filter:blur(3px)}.overlay[hidden],.assistant-pop[hidden]{display:none}.drawer{width:min(590px,100%);height:100%;overflow:auto;padding:27px;background:var(--paper);box-shadow:var(--shadow);animation:slide-in .24s ease-out}.admin-drawer{width:min(730px,100%)}@keyframes slide-in{from{transform:translateX(25px);opacity:.7}to{transform:translateX(0);opacity:1}}.drawer-head,.assistant-head{display:flex;align-items:start;justify-content:space-between;gap:15px;margin-bottom:22px}.drawer-head h2,.assistant-head h2{margin:0;font-size:25px;letter-spacing:-.04em}.icon-button{display:grid;place-items:center;width:36px;height:36px;border:1px solid var(--line);border-radius:11px;background:white;color:var(--ink);font-size:22px}.admin-login{max-width:410px;padding:22px;border:1px solid var(--line);border-radius:18px;background:#fff}.admin-login>label,.cart-footer label,.tab-panel> .admin-card>label{display:block;margin:14px 0;color:var(--ink);font-size:11px;font-weight:700}.admin-login input,.cart-footer input,.tab-panel textarea{display:block;width:100%;margin-top:7px;padding:11px 12px;border:1px solid var(--line);border-radius:10px;background:#fff;outline-color:var(--lime-dark);font-size:12px}.admin-login .button{width:100%;margin-top:8px}.small-note{color:#87938a;font-size:10px;line-height:1.55}.admin-topline{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}.status-pill{padding:7px 10px;border-radius:99px;background:#e8f4cf;color:#526a20;font-size:10px;font-weight:700}.text-button{padding:4px;border:0;background:transparent;color:#668078;font-size:10px;font-weight:700}.admin-tabs{display:flex;gap:7px;margin:12px 0 18px;border-bottom:1px solid var(--line)}.tab-button{padding:11px 14px;border:0;border-bottom:2px solid transparent;background:transparent;color:var(--muted);font-size:11px;font-weight:700}.tab-button.active{border-color:var(--ink);color:var(--ink)}.admin-card{margin:15px 0;padding:19px;border:1px solid var(--line);border-radius:17px;background:#fff}.section-heading.compact{margin-bottom:15px}.section-heading.compact h3{margin:0;font-size:18px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.form-grid label{display:block;color:var(--ink);font-size:10px;font-weight:700}.form-grid input:not([type=checkbox]),.form-grid textarea{display:block;width:100%;margin-top:6px;padding:10px;border:1px solid var(--line);border-radius:9px;background:#fcfcf9;outline-color:var(--lime-dark);font-size:11px}.form-grid textarea{resize:vertical}.full-width{grid-column:1/-1}.check-label{display:flex!important;align-items:center;gap:8px}.form-actions{display:flex;gap:8px}.table-wrap{max-height:260px;margin-top:13px;overflow:auto}table{width:100%;border-collapse:collapse;text-align:left;font-size:10px}th,td{padding:10px 7px;border-bottom:1px solid #edf0e9}th{position:sticky;top:0;background:#f6f7f2;color:#728077;font-size:9px;text-transform:uppercase;letter-spacing:.06em}td:first-child{max-width:185px;font-weight:700}.row-actions{display:flex;gap:8px}.row-actions button{padding:4px;border:0;background:transparent;color:#52716a;font-size:10px;font-weight:700}.row-actions .delete-action{color:#bf5d45}.upload-button{display:inline-flex;position:relative;overflow:hidden;align-items:center;min-height:38px;padding:0 13px;border-radius:10px;background:var(--ink);color:#fff;font-size:10px;font-weight:700;cursor:pointer}.upload-button input{position:absolute;inset:0;opacity:0;cursor:pointer}.insight-list{display:grid;gap:9px}.insight-row{display:flex;justify-content:space-between;gap:12px;padding:12px;border:1px solid var(--line);border-radius:11px;background:#fbfcf8;font-size:11px}.insight-row strong{overflow-wrap:anywhere}.insight-row span{flex:0 0 auto;color:var(--muted);font-size:10px}.settings-save{margin-top:6px}.cart-items{display:grid;gap:12px}.cart-line{display:grid;grid-template-columns:1fr auto;gap:10px;padding:14px 0;border-bottom:1px solid var(--line)}.cart-line h3{margin:0 0 5px;font-size:13px}.cart-line p{margin:0;color:var(--muted);font-size:10px}.cart-line-actions{display:flex;align-items:center;gap:8px}.cart-line-actions button{width:27px;height:27px;border:1px solid var(--line);border-radius:8px;background:white}.cart-line-actions .remove-item{border:0;color:#b8563e}.cart-empty{padding:35px 0;color:var(--muted);text-align:center;font-size:12px}.cart-footer{margin-top:21px;padding-top:16px;border-top:1px solid var(--line)}.total-row{display:flex;justify-content:space-between;font-size:13px}.total-row strong{font:800 16px 'Manrope',sans-serif}.checkout-button{width:100%;margin-top:10px}.assistant-pop{position:fixed;right:23px;bottom:23px;z-index:25;width:min(380px,calc(100vw - 32px));filter:drop-shadow(0 18px 45px rgba(18,43,40,.22))}.assistant-card{padding:18px;border:1px solid var(--line);border-radius:20px;background:var(--paper)}.assistant-head{margin-bottom:12px}.assistant-head h2{font-size:19px}.chat-messages{display:flex;flex-direction:column;gap:9px;height:250px;padding:12px;overflow-y:auto;border:1px solid var(--line);border-radius:13px;background:white}.chat-bubble{max-width:88%;padding:10px 12px;border-radius:12px;font-size:11px;line-height:1.55;overflow-wrap:anywhere}.chat-bubble.bot{align-self:flex-start;background:#edf1e9}.chat-bubble.user{align-self:flex-end;background:var(--ink);color:white}.chat-form{display:flex;gap:7px;margin:10px 0}.chat-form input{min-width:0;flex:1;padding:10px;border:1px solid var(--line);border-radius:10px;outline-color:var(--lime-dark);font-size:11px}.chat-form .button{min-height:38px;padding:0 12px}.toast{position:fixed;bottom:20px;left:50%;z-index:45;max-width:calc(100vw - 36px);padding:11px 16px;border-radius:11px;background:var(--ink);color:#fff;box-shadow:var(--shadow);font-size:11px;opacity:0;pointer-events:none;transform:translate(-50%,12px);transition:.22s}.toast.visible{opacity:1;transform:translate(-50%,0)}
+@media(max-width:900px){.product-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.hero{min-height:390px;padding-inline:6%}.hero-note{width:190px;height:190px;padding:22px}.footer-inner{grid-template-columns:1.2fr 1fr 1fr;gap:20px}}
+@media(max-width:650px){.wrap{width:calc(100% - 30px)}.announcement{padding-inline:15px;font-size:9px}.site-header{grid-template-columns:1fr auto;gap:10px;min-height:66px;padding:10px 15px}.brand-mark{width:35px;height:35px}.brand b{font-size:15px}.brand small{font-size:8px}.search-box{grid-column:1/-1;grid-row:2;height:39px}.header-actions{grid-column:2;grid-row:1}.header-actions .button{min-height:36px;padding:0 11px;font-size:10px}.hero{grid-template-columns:1fr;min-height:440px;margin-top:15px;padding:43px 25px 56px;border-radius:22px}.hero h1{font-size:48px}.hero-text{max-width:310px;font-size:12px}.hero-note{position:absolute;right:18px;bottom:55px;width:130px;height:130px;padding:15px}.hero-note p{margin:12px 0 9px;font-size:9px}.note-orbit{width:38px;height:38px;font-size:23px}.note-caption{font-size:6px}.hero:before{right:-245px;top:165px}.hero:after{right:-185px;top:195px}.hero-bottom{right:25px;left:25px;font-size:7px}.featured-section,.catalog-section{padding-top:57px}.section-heading h2{font-size:25px}.section-heading .muted{font-size:10px}.product-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.product-card{padding:7px;border-radius:15px}.product-image{aspect-ratio:1.05}.product-info{padding:10px 3px 3px}.product-info h3{font-size:12px}.product-description{font-size:10px}.product-price{font-size:12px}.help-strip{align-items:flex-start;flex-direction:column;margin-top:60px;margin-bottom:60px;padding:23px}.help-strip h2{font-size:22px}.footer-inner{grid-template-columns:1fr 1fr;gap:22px}.footer-inner>div:first-child{grid-column:1/-1}.footer-bottom{flex-direction:column;font-size:9px}.drawer{padding:20px 16px}.admin-card{padding:14px}.form-grid{gap:9px}.assistant-pop{right:10px;bottom:10px}.featured-track{grid-auto-columns:minmax(190px,72vw)}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}    
+/* Leopis three-file storefront starter.
+   Browser-only demo: data lives in this browser. Configure a real backend before production.
+*/
+(() => {
+  'use strict';
+
+  // DEMO ONLY: visible client-side PIN is not secure authentication. Replace with server auth for a live store.
+  const ADMIN_PIN = 'CHANGE-THIS-PIN';
+  const WHATSAPP_NUMBER = '94783366466';
+  // Optional HTTPS endpoints you own. Never put secret API keys in this public JavaScript file.
+  const SEARCH_ANALYTICS_ENDPOINT = ''; // e.g. https://your-domain/api/search-events
+  const AI_ENDPOINT = ''; // secure server proxy only; accepts {question, products, storeKnowledge}
+  const DEFAULT_KNOWLEDGE = 'Leopis (Pvt) Ltd sells gadgets and mobile accessories in Sri Lanka. Contact WhatsApp +94 78 336 6466 to confirm current product availability, delivery cost and timing. Cash-on-delivery details are confirmed with the store.';
+  const STORAGE = { products: 'leopis_v2_products', searches: 'leopis_v2_searches', cart: 'leopis_v2_cart', knowledge: 'leopis_v2_knowledge' };
+  const seedProducts = [
+    { id: 'seed-earbuds', name: 'Pro Wireless ANC Earbuds', category: 'Audio', price: 6800, cost: 4500, description: 'Active noise cancellation with a long-lasting everyday battery.', image: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=700&q=80', featured: true },
+    { id: 'seed-watch', name: 'AMOLED Smart Watch', category: 'Smart Watches', price: 9400, cost: 6500, description: 'Bright display and Bluetooth calling for your daily routine.', image: 'https://images.unsplash.com/photo-1575311373937-040b8e1fd5b6?w=700&q=80', featured: true },
+    { id: 'seed-charger', name: '65W Fast Charger', category: 'Mobile Accessories', price: 4200, cost: 2800, description: 'Compact fast charging for compatible USB-C devices.', image: 'https://images.unsplash.com/photo-1583863788434-e58a36330cf0?w=700&q=80', featured: true },
+    { id: 'seed-speaker', name: 'Portable Bluetooth Speaker', category: 'Audio', price: 5900, cost: 3900, description: 'A compact speaker for music at home or on the move.', image: 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=700&q=80', featured: false }
+  ];
+  const readJSON = (key, fallback) => { try { const value = JSON.parse(localStorage.getItem(key)); return value ?? fallback; } catch { return fallback; } };
+  let products = readJSON(STORAGE.products, null);
+  if (!Array.isArray(products) || !products.length) products = structuredClone(seedProducts);
+  let searches = readJSON(STORAGE.searches, []);
+  if (!Array.isArray(searches)) searches = [];
+  let cart = readJSON(STORAGE.cart, []);
+  if (!Array.isArray(cart)) cart = [];
+  let storeKnowledge = localStorage.getItem(STORAGE.knowledge) || DEFAULT_KNOWLEDGE;
+  let activeCategory = 'All';
+  let query = '';
+  let toastTimer;
+  const $ = (selector) => document.querySelector(selector);
+  const el = (tag, className, text) => { const node = document.createElement(tag); if (className) node.className = className; if (text !== undefined) node.textContent = text; return node; };
+  const money = (value) => `LKR ${Number(value || 0).toLocaleString('en-LK')}`;
+  const save = (key, value) => { try { localStorage.setItem(key, JSON.stringify(value)); return true; } catch { showToast('Browser storage is full. Please reduce the amount of data.'); return false; } };
+  const cleanText = (value, limit = 400) => String(value ?? '').trim().slice(0, limit);
+  const normalize = (value) => String(value ?? '').toLocaleLowerCase().replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
+  const safeImageUrl = (value) => { try { const u = new URL(String(value)); return ['https:', 'http:'].includes(u.protocol) ? u.href : ''; } catch { return ''; } };
+
+  function showToast(message) {
+    const node = $('#toast'); node.textContent = message; node.classList.add('visible');
+    clearTimeout(toastTimer); toastTimer = setTimeout(() => node.classList.remove('visible'), 2600);
   }
-}
-function handleCsvUpload(event) {
-  const file = event.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    const text = e.target.result;
-    const lines = text.split('\n');
-    let addedCount = 0;
-    for (let i = 1; i < lines.length; i++) {
-      const line = lines[i].trim();
-      if (!line) continue;
-      const cols = line.split(',');
-      if (cols.length >= 2) {
-        const title = sanitizeInput(cols[0].trim());
-        const price = parseFloat(cols[1]) || 5000;
-        const cost = parseFloat(cols[2]) || (price * 0.7);
-        let category = cols[3] ? sanitizeInput(cols[3].trim()) : "General";
-        const desc = cols[4] ? sanitizeInput(cols[4].trim()) : "Imported product.";
-        const image = cols[5] ? sanitizeInput(cols[5].trim()) : "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=500";
-        products.unshift({ id: Date.now() + i, title, category, price, cost, special: false, desc, image });
-        addedCount++;
-      }
+  function openOverlay(id) { const node = document.getElementById(id); node.hidden = false; document.body.style.overflow = 'hidden'; }
+  function closeOverlay(id) { const node = document.getElementById(id); node.hidden = true; document.body.style.overflow = ''; }
+  function recordSearch(value, resultCount) {
+    const text = cleanText(value, 100);
+    if (!text) return;
+    // Aggregate repeated searches so the local insight list stays compact.
+    const key = normalize(text);
+    const prior = searches.find((item) => normalize(item.term) === key);
+    if (prior) { prior.count += 1; prior.results = resultCount; prior.at = new Date().toISOString(); }
+    else searches.unshift({ term: text, count: 1, results: resultCount, at: new Date().toISOString() });
+    searches = searches.slice(0, 100);
+    save(STORAGE.searches, searches);
+    if (SEARCH_ANALYTICS_ENDPOINT) {
+      fetch(SEARCH_ANALYTICS_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ term: text, results: resultCount, at: new Date().toISOString() }), keepalive: true }).catch(() => {});
     }
-    localStorage.setItem('leopis_catalog', JSON.stringify(products));
-    renderCategoryTabs(); renderProducts(); renderAdminList();
-    alert(`Successfully imported ${addedCount} products!`);
-  };
-  reader.readAsText(file);
-}
-function previewFile() {
-  const file = document.getElementById('newImgFile').files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    const img = new Image();
-    img.onload = function() {
-      const canvas = document.createElement('canvas');
-      let w = img.width, h = img.height, max = 350;
-      if (w > max) { h *= max / w; w = max; }
-      canvas.width = w; canvas.height = h;
-      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-      uploadedBase64 = canvas.toDataURL('image/jpeg', 0.75);
-      const prev = document.getElementById('imgPreview');
-      prev.src = uploadedBase64; prev.classList.remove('hidden');
-    };
-    img.src = e.target.result;
-  };
-  reader.readAsDataURL(file);
-}
-function publishProduct() {
-  const category = sanitizeInput(document.getElementById('newCat').value.trim()) || "General";
-  const title = sanitizeInput(document.getElementById('newTitle').value.trim());
-  const desc = sanitizeInput(document.getElementById('newDesc').value.trim());
-  const price = parseFloat(document.getElementById('newPrice').value);
-  const cost = parseFloat(document.getElementById('newCost').value) || (price * 0.7);
-  const special = document.getElementById('newSpecial').checked;
-  const urlImg = sanitizeInput(document.getElementById('newImage').value.trim());
-  const image = uploadedBase64 || urlImg || 'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=500';
-  if (!title || isNaN(price)) return alert("Enter Product Name and Price!");
-
-  if (editingProductId) {
-    products = products.map(p => p.id === editingProductId ? { ...p, title, category, price, cost, special, desc, image } : p);
-    editingProductId = null;
-    document.getElementById('publishBtnText').innerText = "Publish Product";
-    alert("Product Updated Successfully!");
-  } else {
-    products.unshift({ id: Date.now(), title, category, price, cost, special, desc, image });
-    alert("Product Published Successfully!");
   }
-
-  localStorage.setItem('leopis_catalog', JSON.stringify(products));
-  document.getElementById('newTitle').value = ''; document.getElementById('newDesc').value = '';
-  document.getElementById('newPrice').value = ''; document.getElementById('newCost').value = '';
-  document.getElementById('newImage').value = ''; document.getElementById('newImgFile').value = '';
-  document.getElementById('imgPreview').classList.add('hidden'); uploadedBase64 = "";
-  renderCategoryTabs(); renderProducts(); renderAdminList();
-}
-function editProduct(id) {
-  const p = products.find(x => x.id === id);
-  if (!p) return;
-  editingProductId = p.id;
-  document.getElementById('newCat').value = p.category;
-  document.getElementById('newTitle').value = p.title;
-  document.getElementById('newPrice').value = p.price;
-  document.getElementById('newCost').value = p.cost;
-  document.getElementById('newDesc').value = p.desc;
-  document.getElementById('newSpecial').checked = p.special;
-  document.getElementById('newImage').value = p.image;
-  document.getElementById('imgPreview').src = p.image;
-  document.getElementById('imgPreview').classList.remove('hidden');
-  document.getElementById('publishBtnText').innerText = "Update Product";
-  window.scrollTo({ top: document.getElementById('adminSection').offsetTop, behavior: 'smooth' });
-}
-function deleteProduct(id) {
-  products = products.filter(p => p.id !== id);
-  localStorage.setItem('leopis_catalog', JSON.stringify(products));
-  renderCategoryTabs(); renderProducts(); renderAdminList();
-}
-function renderAdminList() {
-  const box = document.getElementById('adminItemsList');
-  if (!box) return;
-  box.innerHTML = '';
-  products.forEach(p => {
-    box.innerHTML += `<div class="flex justify-between items-center border-b py-2 text-xs"><div class="flex items-center gap-2"><img src="${p.image}" class="w-8 h-8 rounded object-cover"><span><b>${p.title}</b> (LKR ${p.price})</span></div><div class="flex gap-1"><button type="button" onclick="editProduct(${p.id})" class="text-blue-600 font-bold px-2">Edit</button><button type="button" onclick="deleteProduct(${p.id})" class="text-red-500 font-bold px-2">Delete</button></div></div>`;
-  });
-}
-function renderCategoryTabs() {
-  const box = document.getElementById('categoryTabs');
-  if (!box) return;
-  const cats = ["All", ...new Set(products.map(p => p.category))];
-  box.innerHTML = '';
-  cats.forEach(c => {
-    const b = document.createElement('button');
-    b.type = 'button';
-    b.className = `px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap ${c === currentCategory ? 'bg-slate-900 text-white shadow' : 'bg-white text-slate-700 border'}`;
-    b.innerText = c;
-    b.onclick = () => { currentCategory = c; renderCategoryTabs(); renderProducts(); };
-    box.appendChild(b);
-  });
-}
-function filterSearch(q) { searchQuery = sanitizeInput(q || '').toLowerCase().replace(/\s+/g, ''); renderProducts(); }
-function renderProducts() {
-  const grid = document.getElementById('productGrid');
-  const specialGrid = document.getElementById('specialOfferGrid');
-  if (!grid) return;
-  grid.innerHTML = ''; if (specialGrid) specialGrid.innerHTML = '';
-
-  const clean = s => (s || '').toLowerCase().replace(/\s+/g, '');
-  let list = currentCategory === "All" ? products : products.filter(p => p.category === currentCategory);
-  if (searchQuery) list = list.filter(p => clean(p.title).includes(searchQuery) || clean(p.category).includes(searchQuery) || clean(p.desc).includes(searchQuery));
-
-  if (specialGrid && currentCategory === "All" && !searchQuery) {
-    const specials = products.filter(p => p.special).slice(0, 3);
-    specials.forEach(p => {
-      specialGrid.innerHTML += `
-        <div class="bg-gradient-to-br from-amber-500/10 to-slate-900/5 rounded-2xl border-2 border-amber-500/40 p-3.5 flex flex-col justify-between shadow-sm shrink-0 w-64">
-          <div class="relative w-full h-32 bg-slate-100 rounded-xl overflow-hidden mb-2">
-            <img src="${p.image}" class="w-full h-full object-cover">
-            <span class="absolute top-2 left-2 text-[10px] bg-amber-600 text-white px-2 py-0.5 rounded font-bold">Special Offer</span>
-          </div>
-          <div>
-            <h3 class="font-bold text-slate-900 text-xs mb-1 truncate">${p.title}</h3>
-            <p class="text-[11px] text-slate-500 line-clamp-1 mb-1.5">${p.desc || ''}</p>
-            <div class="text-sm font-extrabold text-slate-900 mb-2">LKR ${Number(p.price).toLocaleString()}</div>
-          </div>
-          <div class="space-y-1.5">
-            <div class="flex items-center gap-1.5">
-              <div class="flex items-center border rounded-lg bg-white overflow-hidden">
-                <button type="button" onclick="changeQty(${p.id}, -1)" class="px-2 py-0.5 text-xs bg-slate-100">-</button>
-                <span id="qty-${p.id}" class="px-2.5 text-xs font-bold">1</span>
-                <button type="button" onclick="changeQty(${p.id}, 1)" class="px-2 py-0.5 text-xs bg-slate-100">+</button>
-              </div>
-              <button type="button" onclick="addWithOptions(${p.id})" class="flex-grow py-1.5 bg-slate-900 text-white rounded-lg text-xs font-bold">+ Add</button>
-            </div>
-            <a href="https://wa.me/94783366466?text=${encodeURIComponent('Inquiry regarding rate & details for: ' + p.title + ' (Price: LKR ' + p.price + ')')}" target="_blank" class="w-full py-1 bg-amber-100 text-amber-800 rounded-lg text-[10px] font-bold flex items-center justify-center gap-1">
-              <i class="fa-solid fa-comment-dots"></i> Talk for Rate Inquiry
-            </a>
-          </div>
-        </div>`;
+  function filteredProducts() {
+    return products.filter((p) => (activeCategory === 'All' || p.category === activeCategory) && (!query || [p.name, p.category, p.description].some((part) => normalize(part).includes(normalize(query)))));
+  }
+  function makeProductCard(product) {
+    const card = el('article', 'product-card');
+    const photo = el('div', 'product-image');
+    if (product.image && safeImageUrl(product.image)) {
+      const img = el('img'); img.src = safeImageUrl(product.image); img.alt = product.name; img.loading = 'lazy'; img.decoding = 'async';
+      img.onerror = () => { img.remove(); photo.append(el('span', 'image-fallback', 'LEOPIS PICK')); };
+      photo.append(img);
+    } else photo.append(el('span', 'image-fallback', 'LEOPIS PICK'));
+    photo.append(el('span', 'product-tag', product.category || 'Gadgets'));
+    const info = el('div', 'product-info'); info.append(el('h3', '', product.name), el('p', 'product-description', product.description || 'Ask Leopis for product details.'));
+    const bottom = el('div', 'product-bottom'); bottom.append(el('strong', 'product-price', money(product.price)));
+    const add = el('button', 'add-button', '+'); add.type = 'button'; add.setAttribute('aria-label', `Add ${product.name} to bag`); add.addEventListener('click', () => addToCart(product.id)); bottom.append(add);
+    info.append(bottom); card.append(photo, info); return card;
+  }
+  function renderProducts() {
+    const list = filteredProducts();
+    const grid = $('#productGrid'); grid.replaceChildren(...list.map(makeProductCard));
+    $('#emptyState').hidden = list.length > 0;
+    $('#resultCount').textContent = `${list.length} ${list.length === 1 ? 'item' : 'items'}`;
+    renderFeatured();
+    return list;
+  }
+  function renderFeatured() {
+    const featured = products.filter((p) => p.featured);
+    const section = $('#featuredSection'); section.hidden = featured.length === 0 || Boolean(query) || activeCategory !== 'All';
+    $('#featuredTrack').replaceChildren(...featured.map(makeProductCard));
+  }
+  function renderCategories() {
+    const names = ['All', ...new Set(products.map((p) => cleanText(p.category, 60)).filter(Boolean))];
+    const list = $('#categoryList'); list.replaceChildren();
+    names.forEach((name) => { const button = el('button', `category-chip${name === activeCategory ? ' active' : ''}`, name); button.type = 'button'; button.addEventListener('click', () => { activeCategory = name; renderCategories(); renderProducts(); }); list.append(button); });
+  }
+  function renderAdminProducts() {
+    const tbody = $('#adminProductRows'); tbody.replaceChildren();
+    products.forEach((product) => {
+      const row = el('tr'); row.append(el('td', '', product.name), el('td', '', product.category), el('td', '', money(product.price)));
+      const actions = el('td'); const group = el('div', 'row-actions');
+      const edit = el('button', '', 'Edit'); edit.type = 'button'; edit.addEventListener('click', () => editProduct(product.id));
+      const remove = el('button', 'delete-action', 'Delete'); remove.type = 'button'; remove.addEventListener('click', () => deleteProduct(product.id));
+      group.append(edit, remove); actions.append(group); row.append(actions); tbody.append(row);
     });
   }
-
-  document.getElementById('activeCategoryTitle').innerText = currentCategory === "All" ? "All Featured Items" : currentCategory;
-  document.getElementById('productCounter').innerText = `${list.length} items`;
-
-  list.forEach(p => {
-    grid.innerHTML += `
-      <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col justify-between">
-        <div class="relative w-full h-36 bg-slate-100"><img src="${p.image}" class="w-full h-full object-cover"><span class="absolute top-2 left-2 text-[10px] bg-slate-900/80 text-white px-2 py-0.5 rounded">${p.category}</span></div>
-        <div class="p-3.5 flex flex-col flex-grow justify-between">
-          <div>
-            <h3 class="font-bold text-slate-900 text-xs mb-1 truncate">${p.title}</h3>
-            <p class="text-[11px] text-slate-500 line-clamp-2">${p.desc || ''}</p>
-          </div>
-          <div class="mt-3 pt-2.5 border-t space-y-2">
-            <div class="text-sm font-extrabold text-slate-900">LKR ${Number(p.price).toLocaleString()}</div>
-            <div class="flex items-center gap-1.5">
-              <div class="flex items-center border rounded-lg bg-slate-50 overflow-hidden">
-                <button type="button" onclick="changeQty(${p.id}, -1)" class="px-2 py-0.5 text-xs bg-slate-200">-</button>
-                <span id="qty-${p.id}" class="px-2.5 text-xs font-bold">1</span>
-                <button type="button" onclick="changeQty(${p.id}, 1)" class="px-2 py-0.5 text-xs bg-slate-200">+</button>
-              </div>
-              <button type="button" onclick="addWithOptions(${p.id})" class="flex-grow py-1.5 bg-slate-900 text-white rounded-lg text-xs font-bold">+ Add</button>
-            </div>
-            <div class="grid grid-cols-2 gap-1.5">
-              <a href="https://wa.me/94783366466?text=${encodeURIComponent('Inquiry for rate & details: ' + p.title + ' (LKR ' + p.price + ')')}" target="_blank" class="py-1 bg-amber-100 text-amber-800 rounded-lg text-[10px] font-bold flex items-center justify-center gap-1">
-                <i class="fa-solid fa-comment-dots"></i> Talk Inquiry
-              </a>
-              <a href="https://wa.me/94783366466?text=${encodeURIComponent('Instant Order: ' + p.title + ' (Qty: 1) - LKR ' + p.price)}" target="_blank" class="py-1 bg-emerald-600 text-white rounded-lg text-[10px] font-bold flex items-center justify-center gap-1">
-                <i class="fa-brands fa-whatsapp"></i> Buy WhatsApp
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>`;
-  });
-}
-function changeQty(id, delta) {
-  const el = document.getElementById(`qty-${id}`);
-  if (!el) return;
-  let q = parseInt(el.innerText) + delta;
-  if (q < 1) q = 1;
-  el.innerText = q;
-}
-function addWithOptions(id) {
-  const prod = products.find(p => p.id === id);
-  const qEl = document.getElementById(`qty-${id}`);
-  const qty = qEl ? parseInt(qEl.innerText) : 1;
-  const item = cart.find(c => c.id === id);
-  if (item) item.qty += qty; else cart.push({ ...prod, qty });
-  updateCart();
-  alert(`${qty} item(s) added to cart!`);
-}
-function toggleCart() { const d = document.getElementById('cartDrawer'); if (d) d.style.display = d.style.display === 'none' ? 'flex' : 'none'; }
-function updateCart() {
-  const box = document.getElementById('cartItemsList');
-  if (!box) return;
-  box.innerHTML = '';
-  let subtotal = 0, count = 0;
-  cart.forEach(i => {
-    subtotal += i.price * i.qty; count += i.qty;
-    box.innerHTML += `<div class="flex justify-between border-b pb-2 text-xs"><div><b>${i.title}</b><div>LKR ${i.price} x ${i.qty} = LKR ${(i.price * i.qty).toLocaleString()}</div></div><button type="button" onclick="cart=cart.filter(c=>c.id!==${i.id});updateCart()" class="text-red-500">Remove</button></div>`;
-  });
-  const deliveryFee = cart.length > 0 ? 450 : 0;
-  const grandTotal = subtotal + deliveryFee;
-
-  document.getElementById('cartCount').innerText = count;
-  document.getElementById('cartSubtotal').innerText = 'LKR ' + subtotal.toLocaleString();
-  document.getElementById('cartDeliveryFee').innerText = 'LKR ' + deliveryFee.toLocaleString();
-  document.getElementById('cartTotal').innerText = 'LKR ' + grandTotal.toLocaleString();
-}
-function checkoutWhatsApp() {
-  if (!cart.length) return alert("Cart is empty!");
-  const n = sanitizeInput(document.getElementById('custName').value.trim());
-  const ph = sanitizeInput(document.getElementById('custPhone').value.trim());
-  const d = sanitizeInput(document.getElementById('custDistrict').value.trim());
-  if (!n || !ph || !d) return alert("Fill Name, Phone, and District!");
-  
-  let subtotal = cart.reduce((a, i) => a + (i.price * i.qty), 0);
-  let deliveryFee = 450;
-  let total = subtotal + deliveryFee;
-  let totalCost = cart.reduce((a, i) => a + ((i.cost || (i.price * 0.7)) * i.qty), 0);
-  
-  realOrdersLog.push({ total, cost: totalCost, date: new Date().toLocaleDateString() });
-  localStorage.setItem('leopis_orders_log', JSON.stringify(realOrdersLog));
-
-  let items = cart.map(i => `• ${i.title} (Qty: ${i.qty}) - LKR ${(i.price * i.qty).toLocaleString()}`).join('\n');
-  let msg = `*Leopis (Pvt) Ltd Order - Cash on Delivery*\nCustomer: ${n}\nPhone: ${ph}\nDistrict: ${d}\n\n*Items Ordered:*\n${items}\n\nDelivery Fee: LKR 450\n*Total Payable (Inc. Delivery):* LKR ${total.toLocaleString()}`;
-  window.open(`https://wa.me/94783366466?text=${encodeURIComponent(msg)}`, '_blank');
-}
-window.addEventListener('DOMContentLoaded', () => {
-  renderCategoryTabs(); renderProducts();
-  document.getElementById('visitorCounterDisplay').innerText = visitCount;
-  document.getElementById('salesCounterDisplay').innerText = deliveredOrdersCount;
-});
-</script>
-</head>
-<body class="bg-slate-100 text-slate-800 font-sans flex flex-col min-h-screen">
-<div class="app-container w-full max-w-7xl mx-auto flex flex-col flex-grow bg-white shadow-md">
-
-<!-- Top Announcement Bar -->
-<div class="bg-slate-900 text-slate-300 text-xs py-2 px-4 border-b border-slate-800">
-  <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
-    <div class="flex items-center gap-4 text-[11px] sm:text-xs">
-      <a href="tel:+94783366466" class="hover:text-amber-400 flex items-center gap-1.5"><i class="fa-solid fa-phone text-amber-400"></i> +94 78 336 6466</a>
-      <span class="hidden md:inline">|</span>
-      <span class="text-emerald-400"><i class="fa-solid fa-eye"></i> Views: <b id="visitorCounterDisplay">7996</b></span>
-      <span class="text-amber-400"><i class="fa-solid fa-truck-fast"></i> Delivered Orders: <b id="salesCounterDisplay">3986</b></span>
-    </div>
-    
-    <!-- Language Selection (English, Sinhala, Tamil) -->
-    <div class="flex items-center gap-2">
-      <div class="flex bg-slate-800 rounded p-0.5 text-[11px]">
-        <button type="button" onclick="setLanguage('en')" class="px-2 py-0.5 rounded bg-amber-500 text-slate-900 font-bold" id="lang-en">ENG</button>
-        <button type="button" onclick="setLanguage('si')" class="px-2 py-0.5 rounded text-white hover:text-amber-400" id="lang-si">සිංහල</button>
-        <button type="button" onclick="setLanguage('ta')" class="px-2 py-0.5 rounded text-white hover:text-amber-400" id="lang-ta">தமிழ்</button>
-      </div>
-      <div class="flex items-center gap-2.5 text-sm ml-2">
-        <a href="https://wa.me/94783366466" target="_blank" class="text-emerald-400"><i class="fa-brands fa-whatsapp"></i></a>
-        <a href="https://www.facebook.com/share/1E44ZiZk7x/" target="_blank" class="text-blue-400"><i class="fa-brands fa-facebook-f"></i></a>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Main App Header -->
-<header class="sticky top-0 z-40 bg-white border-b border-slate-200 shadow-sm">
-  <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
-    <a href="/" class="flex items-center space-x-2.5 shrink-0">
-      <img src="logo.png" alt="Leopis" class="h-9 w-auto object-contain rounded" onerror="this.onerror=null;this.src='https://placehold.co/80x80/0f172a/f59e0b?text=L';">
-      <div class="leading-tight">
-        <div class="text-base sm:text-lg font-black text-slate-900">LEOPIS <span class="text-xs font-bold text-amber-600">(PVT) LTD</span></div>
-        <span class="text-[9px] uppercase tracking-wider text-slate-400 font-bold block" data-tr="store_sl">Sri Lanka</span>
-      </div>
-    </a>
-    <div class="flex-grow max-w-md hidden md:block">
-      <input type="text" oninput="filterSearch(this.value)" placeholder="Search products..." class="w-full text-xs px-4 py-2 border border-slate-200 rounded-full bg-slate-50 outline-none focus:ring-2 focus:ring-amber-500" data-tr-placeholder="search_ph">
-    </div>
-    <div class="flex items-center space-x-2 shrink-0">
-      <button type="button" onclick="toggleAdmin()" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-2 rounded-lg font-semibold flex items-center gap-1.5 border border-slate-200 cursor-pointer">
-        <i class="fa-solid fa-lock text-amber-500 text-xs"></i> <span data-tr="admin_btn">Admin</span>
-      </button>
-      <button type="button" onclick="toggleCart()" class="bg-slate-900 text-white px-3 py-2 rounded-lg font-semibold flex items-center gap-2 cursor-pointer">
-        <i class="fa-solid fa-bag-shopping text-emerald-400 text-sm"></i>
-        <span id="cartCount" class="bg-amber-500 text-slate-900 text-[11px] font-black rounded-full h-5 w-5 flex items-center justify-center">0</span>
-      </button>
-    </div>
-  </div>
-  <div class="px-4 pb-2.5 md:hidden">
-    <input type="text" oninput="filterSearch(this.value)" placeholder="Search products..." class="w-full text-xs px-4 py-2 border border-slate-200 rounded-full bg-slate-50 outline-none focus:ring-2 focus:ring-amber-500" data-tr-placeholder="search_ph">
-  </div>
-</header>
-
-<!-- ADMIN DASHBOARD PANEL -->
-<section id="adminSection" class="max-w-2xl mx-auto px-4 pt-4 w-full hidden">
-  <div class="bg-white rounded-2xl shadow-lg border-2 border-slate-900 overflow-hidden my-4">
-    <div class="bg-slate-900 text-white p-3.5 flex items-center justify-between">
-      <span class="text-xs sm:text-sm font-bold flex items-center gap-2"><i class="fa-solid fa-shield-halved text-amber-400"></i> Leopis Admin Portal</span>
-      <button type="button" onclick="toggleAdmin()" class="text-slate-400 hover:text-white text-lg font-bold px-2">&times;</button>
-    </div>
-    <div id="adminLoginForm" class="p-5 space-y-3">
-      <p class="text-xs text-slate-500">Enter Admin Credentials:</p>
-      <input type="text" id="adminUser" placeholder="Username" class="w-full text-xs p-3 border rounded-xl bg-slate-50 outline-none">
-      <input type="password" id="adminPass" placeholder="Password" class="w-full text-xs p-3 border rounded-xl bg-slate-50 outline-none">
-      <div id="loginError" class="text-xs text-red-600 hidden font-bold">Incorrect Username or Password!</div>
-      <button type="button" onclick="handleAdminLogin()" class="w-full py-3 bg-slate-900 hover:bg-amber-600 text-white text-xs font-bold rounded-xl">Login</button>
-    </div>
-    <div id="adminDashboard" class="p-4 sm:p-5 space-y-5 hidden">
-      <div class="flex justify-between items-center border-b pb-2">
-        <span class="text-xs font-bold text-emerald-600">● Admin Logged In</span>
-        <button type="button" onclick="adminLogout()" class="text-xs text-red-500 font-bold">Logout</button>
-      </div>
-
-      <!-- Business Summary Report -->
-      <div class="bg-slate-100 p-3.5 rounded-xl border space-y-2 text-xs">
-        <h4 class="font-bold text-slate-900"><i class="fa-solid fa-chart-line text-blue-600"></i> Business Summary Report</h4>
-        <div id="businessReportBox" class="grid grid-cols-3 gap-2 bg-white p-2.5 rounded-lg border text-[11px]"></div>
-      </div>
-
-      <!-- CSV / Excel File Uploader (Accepts .csv, .xlsx, .xls) -->
-      <div class="bg-emerald-50 p-3.5 rounded-xl border border-emerald-200 space-y-2 text-xs">
-        <h4 class="font-bold text-emerald-900"><i class="fa-solid fa-file-excel"></i> Bulk Upload Excel / CSV Products</h4>
-        <p class="text-[11px] text-slate-600">Select your Excel or CSV file (Note: For best results on mobile, save Excel as CSV format).</p>
-        <input type="file" id="csvFileInput" accept=".csv, .xlsx, .xls, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" onchange="handleCsvUpload(event)" class="w-full text-xs p-2 border rounded-lg bg-white">
-      </div>
-
-      <!-- Manual Delivered Orders Counter Updater -->
-      <div class="bg-amber-50 p-3 rounded-xl border border-amber-200 space-y-2">
-        <h4 class="text-xs font-bold text-amber-900">Update Delivered Orders Counter</h4>
-        <div class="flex gap-2">
-          <input type="number" id="salesInputVal" placeholder="New count (e.g. 3990)" class="text-xs p-2 border rounded-lg bg-white flex-grow">
-          <button type="button" onclick="updateDeliveredSales()" class="px-3 py-2 bg-amber-600 text-white rounded-lg text-xs font-bold">Update</button>
-        </div>
-      </div>
-
-      <!-- Train AI Assistant -->
-      <div class="bg-blue-50 p-3 rounded-xl border border-blue-200 space-y-2">
-        <h4 class="text-xs font-bold text-blue-900"><i class="fa-solid fa-robot"></i> Train AI Assistant</h4>
-        <textarea id="aiTrainingInput" rows="3" placeholder="Type info about Leopis company..." class="w-full text-xs p-2 border rounded-lg bg-white outline-none"></textarea>
-        <button type="button" onclick="saveAiTraining()" class="w-full py-2 bg-blue-600 text-white rounded-lg text-xs font-bold">Save AI Knowledge</button>
-      </div>
-
-      <!-- Add / Edit Product -->
-      <div class="space-y-3 bg-slate-50 p-4 rounded-xl border">
-        <h3 class="text-xs font-bold text-slate-900">+ Add / Edit Product</h3>
-        <input type="text" id="newCat" placeholder="Category" class="w-full text-xs p-2.5 border rounded-lg bg-white">
-        <input type="text" id="newTitle" placeholder="Product Name" class="w-full text-xs p-2.5 border rounded-lg bg-white">
-        <div class="grid grid-cols-2 gap-2">
-          <input type="number" id="newPrice" placeholder="Market Price (LKR)" class="text-xs p-2.5 border rounded-lg bg-white">
-          <input type="number" id="newCost" placeholder="Our Cost (LKR)" class="text-xs p-2.5 border rounded-lg bg-white">
-        </div>
-        <textarea id="newDesc" rows="2" placeholder="Details..." class="w-full text-xs p-2.5 border rounded-lg bg-white"></textarea>
-        <div class="flex items-center gap-2">
-          <input type="checkbox" id="newSpecial" class="w-4 h-4 text-amber-600">
-          <label for="newSpecial" class="text-xs font-bold text-slate-700">Special Offer (Main Page Top Horizontal)</label>
-        </div>
-        <div class="grid grid-cols-2 gap-2">
-          <input type="file" id="newImgFile" accept="image/*" onchange="previewFile()" class="text-[11px] p-1.5 border rounded-lg bg-white">
-          <input type="text" id="newImage" placeholder="Or Image URL" class="text-xs p-2 border rounded-lg bg-white">
-        </div>
-        <img id="imgPreview" class="h-14 w-14 object-cover rounded border hidden" />
-        <button type="button" onclick="publishProduct()" class="w-full py-2.5 bg-blue-600 text-white rounded-xl text-xs font-bold"><span id="publishBtnText">Publish Product</span></button>
-      </div>
-      <div>
-        <h4 class="text-xs font-bold text-slate-800 mb-2">Manage & Edit Products</h4>
-        <div id="adminItemsList" class="space-y-2 max-h-48 overflow-y-auto"></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Hero Banner & Horizontal Scroll Special Offers Section -->
-<section class="max-w-7xl mx-auto px-4 pt-5 w-full">
-  <div class="bg-gradient-to-r from-slate-900 via-slate-800 to-amber-950 rounded-2xl p-6 text-white shadow-sm mb-6">
-    <span class="text-[10px] uppercase tracking-wider text-amber-400 font-bold bg-amber-400/10 px-2.5 py-1 rounded border border-amber-400/20" data-tr="banner_sub">Official Store Sri Lanka</span>
-    <h1 class="text-2xl sm:text-3xl font-extrabold mt-2">Leopis (Pvt) Ltd</h1>
-    <p class="text-slate-300 text-xs sm:text-sm mt-1" data-tr="banner_desc">Premium gadgets & accessories. Cash on Delivery across Sri Lanka.</p>
-  </div>
-
-  <div class="mb-3 flex items-center justify-between">
-    <h2 class="text-base font-extrabold text-slate-900 flex items-center gap-2"><i class="fa-solid fa-fire text-amber-500"></i> <span data-tr="spec_offers">Special Offer Products</span></h2>
-    <span class="text-[11px] text-slate-500" data-tr="swipe_txt">Swipe Left / Right ➔</span>
-  </div>
-  <!-- Left to Right Horizontal Scroll Container -->
-  <div id="specialOfferGrid" class="flex gap-4 overflow-x-auto pb-3 no-scrollbar mb-8"></div>
-</section>
-<!-- Category Filter Tabs -->
-<section class="max-w-7xl mx-auto px-4 pt-2 w-full">
-  <div class="flex items-center gap-2 overflow-x-auto pb-2 no-scrollbar" id="categoryTabs"></div>
-</section>
-
-<!-- Main Products Feed -->
-<main class="max-w-7xl mx-auto px-4 py-4 flex-grow w-full">
-  <div class="flex items-center justify-between mb-4">
-    <h2 id="activeCategoryTitle" class="text-base font-extrabold text-slate-900">All Featured Items</h2>
-    <span class="text-xs text-slate-500" id="productCounter">0 items</span>
-  </div>
-  <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5"></div>
-</main>
-
-<!-- Customer Reviews with Google Ratings -->
-<section class="max-w-7xl mx-auto px-4 py-6 w-full">
-  <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
-    <div class="flex items-center justify-between mb-4 border-b pb-3">
-      <div>
-        <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2"><i class="fa-solid fa-star text-amber-500"></i> Customer Reviews & Google Ratings</h3>
-        <p class="text-xs text-slate-500">Verified Sri Lankan buyer feedback</p>
-      </div>
-      <div class="text-right">
-        <div class="text-base font-black text-slate-900">4.9 / 5.0</div>
-        <div class="text-[10px] text-amber-500"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i> (128 Google Reviews)</div>
-      </div>
-    </div>
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
-      <div class="bg-slate-50 p-3 rounded-xl border">
-        <div class="flex justify-between font-bold mb-1"><span>Ramesh Perera</span><span class="text-amber-500">★★★★★</span></div>
-        <p class="text-slate-600">"Super fast delivery to Jaffna within 2 days. Genuine ANC earbuds!"</p>
-      </div>
-      <div class="bg-slate-50 p-3 rounded-xl border">
-        <div class="flex justify-between font-bold mb-1"><span>Fathima Nusra</span><span class="text-amber-500">★★★★★</span></div>
-        <p class="text-slate-600">"Excellent customer service via WhatsApp and cash on delivery was smooth."</p>
-      </div>
-      <div class="bg-slate-50 p-3 rounded-xl border">
-        <div class="flex justify-between font-bold mb-1"><span>Nuwan Kumara</span><span class="text-amber-500">★★★★★</span></div>
-        <p class="text-slate-600">"Best smartwatch quality in Colombo. Highly recommended Leopis!"</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- AI FAQ Chat Section -->
-<section class="max-w-7xl mx-auto px-4 py-4 w-full">
-  <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
-    <div class="flex items-center gap-2 mb-3">
-      <i class="fa-solid fa-robot text-amber-500 text-lg"></i>
-      <h3 class="text-sm font-bold text-slate-900">Ask Leopis AI Assistant (Unlimited Chat)</h3>
-    </div>
-    <div id="chatBox" class="bg-slate-50 border rounded-xl p-3 h-36 overflow-y-auto text-xs space-y-2 mb-3">
-      <div class="text-slate-500">AI: Hello! Ask me anything about Leopis products, delivery, or warranty.</div>
-    </div>
-    <div class="flex gap-2">
-      <input type="text" id="chatInput" placeholder="Ask any question..." class="text-xs p-2.5 border rounded-lg flex-grow bg-white outline-none">
-      <button type="button" onclick="sendAiChat()" class="px-4 py-2.5 bg-slate-900 text-white rounded-lg text-xs font-bold">Ask AI</button>
-    </div>
-  </div>
-</section>
-
-<!-- Cart Drawer -->
-<div id="cartDrawer" style="display:none;" class="fixed inset-0 z-50 bg-black/60 justify-end">
-  <div class="w-full max-w-md bg-white h-full flex flex-col shadow-2xl">
-    <div class="p-4 bg-slate-900 text-white flex justify-between items-center">
-      <span class="font-bold text-sm">Shopping Cart</span>
-      <button type="button" onclick="toggleCart()" class="text-xl">&times;</button>
-    </div>
-    <div id="cartItemsList" class="flex-grow p-4 overflow-y-auto space-y-3"></div>
-    <div class="p-4 border-t bg-slate-50 space-y-2 text-xs">
-      <div class="flex justify-between"><span>Subtotal:</span><span id="cartSubtotal">LKR 0</span></div>
-      <div class="flex justify-between text-slate-600"><span>Delivery Fee (Anywhere in SL):</span><span id="cartDeliveryFee">LKR 450</span></div>
-      <div class="flex justify-between font-bold text-sm border-t pt-2"><span>Total Payable:</span><span id="cartTotal" class="text-emerald-600">LKR 0</span></div>
-      <input type="text" id="custName" placeholder="Full Name" class="w-full p-2.5 border rounded-lg bg-white mt-1">
-      <input type="tel" id="custPhone" placeholder="Phone Number" class="w-full p-2.5 border rounded-lg bg-white">
-      <input type="text" id="custDistrict" placeholder="Delivery City / District" class="w-full p-2.5 border rounded-lg bg-white">
-      <button type="button" onclick="checkoutWhatsApp()" class="w-full py-3 bg-emerald-600 text-white rounded-xl font-bold flex justify-center items-center gap-2 mt-2">
-        <i class="fa-brands fa-whatsapp text-base"></i> Confirm Order (Cash on Delivery)
-      </button>
-    </div>
-  </div>
-</div>
-
-<!-- Footer with Web Designed by Leopisdigital -->
-<footer class="bg-slate-950 text-slate-400 border-t border-slate-800 py-8 mt-12 text-xs">
-  <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-    <div>
-      <h3 class="text-sm font-bold text-white mb-2">Leopis (Pvt) Ltd</h3>
-      <p class="text-slate-400">Leopis (Pvt) Ltd delivers premium electronic gadgets and mobile accessories islandwide across Sri Lanka with trusted cash on delivery service.</p>
-    </div>
-    <div class="space-y-1.5">
-      <div class="font-bold text-white mb-2">Contact Us</div>
-      <div>Hotline / WhatsApp: <a href="https://wa.me/94783366466" class="text-emerald-400">+94 78 336 6466</a></div>
-      <div>Telegram: <a href="https://t.me/+94783366466" class="text-sky-400">+94 78 336 6466</a></div>
-      <div>Email: <a href="mailto:director.leopis@gmail.com" class="text-amber-400">director.leopis@gmail.com</a></div>
-    </div>
-    <div>
-      <div class="font-bold text-white mb-2">Follow Leopis</div>
-      <div class="flex gap-3 text-base">
-        <a href="https://www.facebook.com/share/1E44ZiZk7x/" target="_blank" class="p-2 bg-slate-800 rounded-lg text-white"><i class="fa-brands fa-facebook-f"></i></a>
-        <a href="https://www.tiktok.com/@leo.pis07" target="_blank" class="p-2 bg-slate-800 rounded-lg text-white"><i class="fa-brands fa-tiktok"></i></a>
-        <a href="https://www.instagram.com/leopispvt" target="_blank" class="p-2 bg-slate-800 rounded-lg text-white"><i class="fa-brands fa-instagram"></i></a>
-      </div>
-    </div>
-  </div>
-  <div class="text-center text-slate-600 text-[11px] border-t border-slate-900 pt-4 space-y-1">
-    <div>&copy; 2026 Leopis (Pvt) Ltd. Sri Lanka. All rights reserved.</div>
-    <div class="text-amber-500 font-semibold">Web designed by Leopisdigital</div>
-  </div>
-</footer>
-
-<script>
-const translations = {
-  en: { store_sl: "Sri Lanka", search_ph: "Search products...", admin_btn: "Admin", banner_sub: "Official Store Sri Lanka", banner_desc: "Premium gadgets & accessories. Cash on Delivery across Sri Lanka.", spec_offers: "Special Offer Products", swipe_txt: "Swipe Left / Right ➔" },
-  si: { store_sl: "ශ්‍රී ලංකාව", search_ph: "භාණ්ඩ සොයන්න...", admin_btn: "පරිපාලක", banner_sub: "නිල වෙළඳසැල ශ්‍රී ලංකාව", banner_desc: "උසස් තත්ත්වයේ උපකරණ සහ උපාංග. දිවයින පුරා මුදල් ගෙවීමේ ක්‍රමයට (COD).", spec_offers: "විශේෂ දීමනා", swipe_txt: "වමපසට / දකුණුපසට ස්වයිප් කරන්න ➔" },
-  ta: { store_sl: "இலங்கை", search_ph: "பொருட்களை தேட...", admin_btn: "நிர்வாகி", banner_sub: "அதிகாரப்பூர்வ அங்காடி இலங்கை", banner_desc: "பிரீமியம் கேஜெட்டுகள் & துணைக்கருவிகள். இலங்கை முழுவதும் கேஷ் ஆன் டெலிவரி.", spec_offers: "சிறப்பு சலுகைகள்", swipe_txt: "இடது / வலது ஸ்வைப் செய்யவும் ➔" }
-};
-
-function setLanguage(lang) {
-  ['en', 'si', 'ta'].forEach(l => {
-    const btn = document.getElementById(`lang-${l}`);
-    if (btn) {
-      if (l === lang) {
-        btn.className = "px-2 py-0.5 rounded bg-amber-500 text-slate-900 font-bold";
-      } else {
-        btn.className = "px-2 py-0.5 rounded text-white hover:text-amber-400";
-      }
+  function renderSearchInsights() {
+    const list = $('#searchInsights'); list.replaceChildren();
+    if (!searches.length) { list.append(el('p', 'muted', 'No searches recorded on this browser yet.')); return; }
+    [...searches].sort((a, b) => b.count - a.count).forEach((item) => {
+      const row = el('div', 'insight-row'); row.append(el('strong', '', item.term), el('span', '', `${item.count} search${item.count === 1 ? '' : 'es'} · ${item.results} results`)); list.append(row);
+    });
+  }
+  function renderCart() {
+    const list = $('#cartItems'); list.replaceChildren();
+    if (!cart.length) list.append(el('div', 'cart-empty', 'Your bag is empty. Add a product to get started.'));
+    let subtotal = 0; let count = 0;
+    cart.forEach((item) => {
+      const product = products.find((p) => p.id === item.id) || item;
+      subtotal += Number(product.price) * item.qty; count += item.qty;
+      const line = el('div', 'cart-line'); const copy = el('div'); copy.append(el('h3', '', product.name), el('p', '', `${money(product.price)} each · ${money(product.price * item.qty)}`));
+      const actions = el('div', 'cart-line-actions');
+      const minus = el('button', '', '−'); minus.type = 'button'; minus.setAttribute('aria-label', 'Decrease quantity'); minus.addEventListener('click', () => changeQuantity(item.id, -1));
+      const qty = el('span', '', String(item.qty));
+      const plus = el('button', '', '+'); plus.type = 'button'; plus.setAttribute('aria-label', 'Increase quantity'); plus.addEventListener('click', () => changeQuantity(item.id, 1));
+      const remove = el('button', 'remove-item', '×'); remove.type = 'button'; remove.setAttribute('aria-label', `Remove ${product.name}`); remove.addEventListener('click', () => { cart = cart.filter((i) => i.id !== item.id); save(STORAGE.cart, cart); renderCart(); });
+      actions.append(minus, qty, plus, remove); line.append(copy, actions); list.append(line);
+    });
+    $('#cartCount').textContent = String(count); $('#cartSubtotal').textContent = money(subtotal);
+  }
+  function addToCart(id) {
+    const item = cart.find((p) => p.id === id);
+    if (item) item.qty += 1; else { const product = products.find((p) => p.id === id); if (!product) return; cart.push({ id, qty: 1 }); }
+    save(STORAGE.cart, cart); renderCart(); showToast('Added to your bag');
+  }
+  function changeQuantity(id, change) {
+    const item = cart.find((p) => p.id === id); if (!item) return;
+    item.qty += change; if (item.qty < 1) cart = cart.filter((p) => p.id !== id);
+    save(STORAGE.cart, cart); renderCart();
+  }
+  function resetProductForm() {
+    $('#productForm').reset(); $('#productId').value = ''; $('#productFormTitle').textContent = 'Add product'; $('#saveProductBtn').textContent = 'Publish product'; $('#cancelEditBtn').hidden = true;
+  }
+  function editProduct(id) {
+    const product = products.find((p) => p.id === id); if (!product) return;
+    $('#productId').value = product.id; $('#productName').value = product.name; $('#productCategory').value = product.category;
+    $('#productPrice').value = product.price; $('#productCost').value = product.cost ?? ''; $('#productImage').value = product.image || '';
+    $('#productDescription').value = product.description || ''; $('#productFeatured').checked = Boolean(product.featured);
+    $('#productFormTitle').textContent = 'Edit product'; $('#saveProductBtn').textContent = 'Save changes'; $('#cancelEditBtn').hidden = false;
+    $('#productName').focus(); $('#productsTab').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  function deleteProduct(id) {
+    products = products.filter((p) => p.id !== id); cart = cart.filter((p) => p.id !== id);
+    save(STORAGE.products, products); save(STORAGE.cart, cart); renderAll(); showToast('Product removed');
+  }
+  function saveProduct(event) {
+    event.preventDefault();
+    const id = $('#productId').value || `p-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
+    const price = Number($('#productPrice').value); const costValue = $('#productCost').value;
+    const product = { id, name: cleanText($('#productName').value, 120), category: cleanText($('#productCategory').value, 60), price, cost: costValue === '' ? null : Number(costValue), image: safeImageUrl($('#productImage').value), description: cleanText($('#productDescription').value, 400), featured: $('#productFeatured').checked };
+    if (!product.name || !product.category || !Number.isFinite(price) || price < 0) return showToast('Enter a product name, category, and valid price.');
+    const at = products.findIndex((p) => p.id === id);
+    if (at >= 0) products[at] = product; else products.unshift(product);
+    save(STORAGE.products, products); resetProductForm(); renderAll(); showToast('Product published on the main page');
+  }
+  function canonicalHeader(value) {
+    const key = normalize(value).replace(/ /g, '');
+    const aliases = { name: ['name','product','productname','title','item','itemname'], category: ['category','type','productcategory'], price: ['price','sellingprice','saleprice','retailprice','lkr'], cost: ['cost','costprice','purchaseprice'], description: ['description','details','desc','productdescription'], image: ['image','imageurl','photo','photourl','picture'], featured: ['featured','special','homepage','highlight'] };
+    for (const [field, list] of Object.entries(aliases)) if (list.includes(key)) return field;
+    return key;
+  }
+  function parseBoolean(value) { return ['true','yes','1','y','on','featured'].includes(String(value ?? '').trim().toLowerCase()); }
+  async function importSpreadsheet(file) {
+    const status = $('#importStatus');
+    if (!file) return;
+    if (!window.XLSX) { status.textContent = 'Spreadsheet reader is still loading. Check your connection and reload the page.'; return; }
+    status.textContent = `Reading ${file.name}…`;
+    try {
+      const data = await file.arrayBuffer();
+      const workbook = XLSX.read(data, { type: 'array', cellDates: false });
+      const sheet = workbook.Sheets[workbook.SheetNames[0]];
+      const rows = XLSX.utils.sheet_to_json(sheet, { defval: '', raw: false });
+      if (!rows.length) throw new Error('No product rows were found in the first sheet.');
+      const imported = []; let skipped = 0;
+      rows.forEach((row, index) => {
+        const mapped = {};
+        Object.entries(row).forEach(([header, value]) => { mapped[canonicalHeader(header)] = value; });
+        const name = cleanText(mapped.name, 120); const category = cleanText(mapped.category || 'General', 60);
+        const price = Number(String(mapped.price ?? '').replace(/[\s,]/g, ''));
+        if (!name || !Number.isFinite(price) || price < 0) { skipped++; return; }
+        imported.push({ id: `imp-${Date.now()}-${index}-${Math.random().toString(36).slice(2,5)}`, name, category, price, cost: Number.isFinite(Number(mapped.cost)) && mapped.cost !== '' ? Number(mapped.cost) : null, description: cleanText(mapped.description || 'Imported product.', 400), image: safeImageUrl(mapped.image), featured: parseBoolean(mapped.featured) });
+      });
+      if (!imported.length) throw new Error('No valid rows. Check that the sheet has name and price columns, with a header row.');
+      products = [...imported, ...products]; save(STORAGE.products, products); renderAll();
+      status.textContent = `Imported ${imported.length} product(s)${skipped ? `; skipped ${skipped} invalid row(s)` : ''}. They are now on the main page.`;
+      showToast(`${imported.length} products added to the catalogue`);
+    } catch (error) { status.textContent = `Import failed: ${error.message || 'Unable to read this file.'}`; }
+    finally { $('#spreadsheetInput').value = ''; }
+  }
+  function checkout() {
+    if (!cart.length) return showToast('Your bag is empty.');
+    const name = cleanText($('#customerName').value, 100); const phone = cleanText($('#customerPhone').value, 30); const district = cleanText($('#customerDistrict').value, 100);
+    if (!name || !phone || !district) return showToast('Please enter your name, phone number, and delivery area.');
+    const rows = cart.map((item) => { const product = products.find((p) => p.id === item.id) || item; return `- ${product.name} x ${item.qty}: ${money(product.price * item.qty)}`; });
+    const subtotal = cart.reduce((sum, item) => sum + Number((products.find((p) => p.id === item.id) || item).price) * item.qty, 0);
+    const message = `Leopis order enquiry\nName: ${name}\nPhone: ${phone}\nCity/District: ${district}\n\nItems:\n${rows.join('\n')}\n\nSubtotal: ${money(subtotal)}\nPlease confirm availability, delivery fee and COD details.`;
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, '_blank', 'noopener,noreferrer');
+  }
+  function productHelperAnswer(question) {
+    const q = normalize(question);
+    const candidates = products.map((p) => ({ p, score: [p.name, p.category].reduce((score, value) => score + (q.includes(normalize(value)) ? normalize(value).split(' ').length + 1 : 0), 0) })).filter((x) => x.score > 0).sort((a, b) => b.score - a.score);
+    if (candidates.length) {
+      const p = candidates[0].p;
+      if (/price|cost|how much|விலை/.test(q)) return `${p.name} is listed at ${money(p.price)}. Please contact Leopis to confirm the current price and availability.`;
+      return `${p.name} (${p.category}) is listed at ${money(p.price)}. ${p.description || ''} Please contact Leopis to confirm stock and details.`;
     }
-  });
-
-  const t = translations[lang] || translations['en'];
-  document.querySelectorAll('[data-tr]').forEach(el => {
-    const key = el.getAttribute('data-tr');
-    if (t[key]) el.innerText = t[key];
-  });
-  document.querySelectorAll('[data-tr-placeholder]').forEach(el => {
-    const key = el.getAttribute('data-tr-placeholder');
-    if (t[key]) el.setAttribute('placeholder', t[key]);
-  });
-}
-
-function sendAiChat() {
-  const input = document.getElementById('chatInput');
-  const box = document.getElementById('chatBox');
-  const txt = sanitizeInput(input.value.trim());
-  if (!txt) return;
-
-  box.innerHTML += `<div class="text-right text-blue-600 font-bold">You: ${txt}</div>`;
-  input.value = '';
-
-  setTimeout(() => {
-    let reply = aiKnowledge;
-    const low = txt.toLowerCase();
-    if (low.includes('delivery') || low.includes('time')) reply = "Islandwide delivery takes 2 to 3 working days with Rs 450 delivery fee across Sri Lanka.";
-    else if (low.includes('whatsapp') || low.includes('contact')) reply = "You can contact our WhatsApp hotline directly at +94783366466.";
-    
-    box.innerHTML += `<div class="text-slate-700">AI: ${reply}</div>`;
-    box.scrollTop = box.scrollHeight;
-  }, 600);
-}
-</script>
-</body>
-</html>
+    if (/delivery|shipping|deliver|time|days|district|நாள|டெலிவரி/.test(q)) return storeKnowledge;
+    if (/contact|whatsapp|phone|call|number|தொடர்பு/.test(q)) return 'You can contact Leopis on WhatsApp at +94 78 336 6466: https://wa.me/94783366466';
+    if (/warranty|return|refund|exchange|policy/.test(q)) return 'Please contact Leopis directly to confirm the current warranty, return or exchange terms for your item.';
+    if (/payment|cash|cod|pay/.test(q)) return 'Cash-on-delivery and payment details are confirmed by Leopis on WhatsApp. Contact +94 78 336 6466.';
+    return 'I could not find a reliable answer in the current catalogue or store notes. Try a product name or contact Leopis on WhatsApp: https://wa.me/94783366466';
+  }
+  function addChatBubble(text, who) { const bubble = el('div', `chat-bubble ${who}`, text); $('#chatMessages').append(bubble); $('#chatMessages').scrollTop = $('#chatMessages').scrollHeight; }
+  async function askHelper(question) {
+    addChatBubble(question, 'user');
+    if (AI_ENDPOINT) {
+      try {
+        const response = await fetch(AI_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ question, products: products.map(({ name, category, price, description }) => ({ name, category, price, description })), storeKnowledge }) });
+        if (!response.ok) throw new Error('AI service unavailable');
+        const data = await response.json();
+        addChatBubble(cleanText(data.answer || data.reply || 'Please contact Leopis for help.', 1200), 'bot');
+        return;
+      } catch { addChatBubble('The online assistant is temporarily unavailable. Please message Leopis on WhatsApp: https://wa.me/94783366466', 'bot'); return; }
+    }
+    addChatBubble(productHelperAnswer(question), 'bot');
+  }
+  function renderAll() { renderCategories(); renderProducts(); renderAdminProducts(); renderCart(); renderSearchInsights(); }
+  function initialize() {
+    $('#year').textContent = String(new Date().getFullYear());
+    $('#storeKnowledge').value = storeKnowledge;
+    renderAll();
+    let searchTimer;
+    $('#searchInput').addEventListener('input', (event) => {
+      query = cleanText(event.target.value, 100); c
