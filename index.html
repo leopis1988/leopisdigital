@@ -4,37 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leopis Digital Sri Lanka | Online Shopping - Cash on Delivery</title>
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- SheetJS for Excel Upload -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans">
 
-    <!-- Top Announcement Bar & Social Icons -->
+    <!-- Top Announcement Bar & Social Links -->
     <div class="bg-blue-900 text-white text-xs sm:text-sm py-2 px-4 flex flex-col sm:flex-row justify-between items-center gap-2">
         <div class="text-center sm:text-left">
             <span>Island-wide Cash on Delivery (COD) | WhatsApp: <a href="https://wa.me/94783366466" class="underline">+94 78 336 6466</a></span>
         </div>
         <div class="flex items-center gap-4">
-            <a href="https://www.facebook.com/share/1AFDUuDtu1/" target="_blank" class="hover:text-blue-300"><i class="fa-brands fa-facebook-f"></i></a>
-            <a href="https://instagram.com/leopispvt" target="_blank" class="hover:text-blue-300"><i class="fa-brands fa-instagram"></i></a>
-            <a href="mailto:director.leopis@gmail.com" class="hover:text-blue-300"><i class="fa-solid fa-envelope"></i></a>
+            <a href="https://www.facebook.com/share/1AFDUuDtu1/" target="_blank" class="hover:text-blue-300"><i class="fa-brands fa-facebook-f"></i> Facebook</a>
+            <a href="https://instagram.com/leopispvt" target="_blank" class="hover:text-blue-300"><i class="fa-brands fa-instagram"></i> Instagram</a>
+            <a href="mailto:director.leopis@gmail.com" class="hover:text-blue-300"><i class="fa-solid fa-envelope"></i> Email</a>
             <button onclick="openAdminLogin()" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-2.5 py-1 rounded font-semibold"><i class="fa-solid fa-lock"></i> Admin</button>
         </div>
     </div>
-        <!-- Header / Navbar with Logo PNG Support -->
+        <!-- Header / Navbar -->
     <header class="sticky top-0 z-45 bg-white shadow-sm">
         <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
             <a href="#" onclick="goHome()" class="flex items-center gap-2 cursor-pointer">
-                <!-- Brand Logo PNG (Can be updated via Admin Panel) -->
                 <img id="siteLogoImg" src="logo.png" alt="Leopis Digital Logo" class="h-10 w-auto object-contain" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=150&q=80';">
                 <span id="siteLogoText" class="text-2xl font-black tracking-tight text-blue-600">Leopis Digital</span>
             </a>
             
-            <!-- Search Bar -->
             <div class="hidden md:flex flex-1 max-w-md mx-8">
                 <div class="relative w-full">
                     <input type="text" id="searchInput" placeholder="Search products..." class="w-full pl-10 pr-4 py-2 border rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
@@ -42,14 +37,12 @@
                 </div>
             </div>
 
-            <!-- Cart Trigger -->
             <button onclick="toggleCart()" class="relative bg-blue-50 text-blue-600 p-2.5 rounded-full hover:bg-blue-100 transition flex items-center gap-2 px-4">
                 <i class="fa-solid fa-cart-shopping"></i>
                 <span class="text-sm font-semibold hidden sm:inline">Cart</span>
                 <span id="cartCount" class="bg-blue-600 text-white text-xs px-2 py-0.5 rounded-full">0</span>
             </button>
         </div>
-        <!-- Mobile Search Bar -->
         <div class="px-4 pb-3 md:hidden">
             <div class="relative w-full">
                 <input type="text" id="mobileSearchInput" placeholder="Search products..." class="w-full pl-10 pr-4 py-2 border rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
@@ -58,7 +51,7 @@
         </div>
     </header>
 
-    <!-- Special Promotions Top Banner -->
+    <!-- Special Promo Banner -->
     <div id="promoBannerSection" class="bg-gradient-to-r from-amber-500 to-orange-600 text-white py-3 px-4 text-center font-bold text-sm shadow-inner">
         🔥 <span id="promoBannerText">Special Promotion: Get 10% OFF using promo code 'LEOPIS10' on all orders!</span> 🔥
     </div>
@@ -76,22 +69,22 @@
                 <p id="orderDeliveredDisplay" class="text-lg font-bold text-green-600">3288</p>
             </div>
         </div>
-        </div>
-            <!-- Hero Section -->
+    </div>
+
+    <!-- Hero Section -->
     <section class="bg-gradient-to-r from-blue-900 to-indigo-900 text-white py-12 px-4">
         <div class="max-w-7xl mx-auto text-center">
             <h1 class="text-3xl sm:text-5xl font-bold mb-4">Smart Gadgets & Professional Services</h1>
-            <p class="text-blue-200 text-sm sm:text-base max-w-2xl mx-auto mb-6">Island-wide Cash on Delivery with direct WhatsApp ordering. Web design, construction consultants, and digital marketing services.</p>
-            <a href="#shop" class="bg-blue-500 hover:bg-blue-600 text-white font-medium px-6 py-3 rounded-full shadow-lg transition">Explore Products</a>
+            <p class="text-blue-200 text-sm sm:text-base max-w-2xl mx-auto mb-6">Island-wide Cash on Delivery with direct WhatsApp ordering. Web design, construction 3D designs, and digital marketing.</p>
+            <a href="#mainContentArea" class="bg-blue-500 hover:bg-blue-600 text-white font-medium px-6 py-3 rounded-full shadow-lg transition">Explore Store</a>
         </div>
     </section>
 
-    <!-- Main View Dynamic Container (Home / Category View / Service View) -->
+    <!-- Main Dynamic Content Area -->
     <main id="mainContentArea" class="max-w-7xl mx-auto px-4 py-10">
-        <!-- Dynamic content injected here -->
+        <!-- Rendered dynamically -->
     </main>
-
-    <!-- Add to Cart Pop-up Modal with Additional Suggestions -->
+        <!-- Add to Cart Pop-up Modal -->
     <div id="cartPopupModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 hidden">
         <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl relative transform transition-all">
             <button onclick="closeCartPopup()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-xl font-bold">&times;</button>
@@ -102,14 +95,10 @@
                 <h3 class="text-lg font-bold text-gray-900">Successfully Added to Cart!</h3>
                 <p id="popupItemName" class="text-sm text-gray-600 mt-1"></p>
             </div>
-
             <div class="border-t border-b py-3 my-3">
-                <p class="text-xs font-bold text-gray-500 uppercase mb-2">You might also like / Select additional products:</p>
-                <div id="popupSuggestions" class="grid grid-cols-3 gap-2 max-h-40 overflow-y-auto">
-                    <!-- Suggested items -->
-                </div>
+                <p class="text-xs font-bold text-gray-500 uppercase mb-2">You might also like:</p>
+                <div id="popupSuggestions" class="grid grid-cols-3 gap-2 max-h-40 overflow-y-auto"></div>
             </div>
-
             <div class="flex gap-3 mt-4">
                 <button onclick="closeCartPopup()" class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 py-2.5 rounded-lg text-sm font-semibold transition">Continue Shopping</button>
                 <button onclick="closeCartPopup(); toggleCart();" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2.5 rounded-lg text-sm font-semibold transition">View Cart & Checkout</button>
@@ -117,7 +106,7 @@
         </div>
     </div>
 
-    <!-- Shopping Cart Slide-over Drawer -->
+    <!-- Shopping Cart Slide Drawer -->
     <div id="cartDrawer" class="fixed inset-0 z-50 overflow-hidden hidden">
         <div class="absolute inset-0 bg-black bg-opacity-50 transition-opacity" onclick="toggleCart()"></div>
         <div class="absolute inset-y-0 right-0 max-w-full flex pl-10">
@@ -126,18 +115,13 @@
                     <h3 class="text-lg font-bold text-gray-900">Your Shopping Cart</h3>
                     <button onclick="toggleCart()" class="text-gray-400 hover:text-gray-500 text-xl font-bold">&times;</button>
                 </div>
-                
-                <div id="cartItemsContainer" class="flex-1 overflow-y-auto p-4 space-y-4">
-                    <!-- Cart items -->
-                </div>
-
+                <div id="cartItemsContainer" class="flex-1 overflow-y-auto p-4 space-y-4"></div>
                 <div class="border-t p-4 bg-gray-50 space-y-3">
                     <div class="flex gap-2">
                         <input type="text" id="promoCodeInput" placeholder="Enter Promo Code" class="flex-1 p-2 border rounded text-sm uppercase">
                         <button onclick="applyPromoCode()" class="bg-gray-800 hover:bg-black text-white px-4 py-2 rounded text-sm font-semibold">Apply</button>
                     </div>
                     <p id="promoMessage" class="text-xs text-green-600 font-medium"></p>
-
                     <div class="flex justify-between text-sm font-medium text-gray-700">
                         <p>Subtotal</p>
                         <p id="cartSubtotal">LKR 0</p>
@@ -150,13 +134,11 @@
                         <p>Total (COD)</p>
                         <p id="cartTotal">LKR 0</p>
                     </div>
-
                     <div class="space-y-2 pt-2">
                         <input type="text" id="customerName" placeholder="Full Name" class="w-full p-2 border rounded text-sm">
                         <input type="text" id="customerPhone" placeholder="Phone Number" class="w-full p-2 border rounded text-sm">
                         <textarea id="customerAddress" placeholder="Delivery Address" rows="2" class="w-full p-2 border rounded text-sm"></textarea>
                     </div>
-
                     <button onclick="checkoutWhatsApp()" class="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-3 rounded-lg shadow transition flex items-center justify-center gap-2">
                         <i class="fa-brands fa-whatsapp text-xl"></i> Order via WhatsApp (COD)
                     </button>
@@ -164,31 +146,57 @@
             </div>
         </div>
     </div>
-        <!-- Related Business Services Section -->
-    <section class="bg-gray-100 py-12 px-4 border-t mt-16">
+
+    <!-- About Us Story Section -->
+    <section class="bg-white py-12 px-4 border-t">
+        <div class="max-w-4xl mx-auto text-center space-y-4">
+            <h2 class="text-2xl font-bold text-blue-900">About Leopis Digital</h2>
+            <p class="text-gray-600 text-sm leading-relaxed">
+                Founded with a strong vision in Sri Lanka, Leopis Digital has grown from a passionate tech venture into a trusted island-wide provider of smart lifestyle gadgets, professional e-commerce web solutions, and expert construction consultancy. Our mission is to deliver unmatched reliability, seamless cash-on-delivery shopping, and digital excellence to every household and business across the island.
+            </p>
+        </div>
+    </section>
+        <!-- Services Section -->
+    <section class="bg-gray-100 py-12 px-4 border-t">
         <div class="max-w-7xl mx-auto">
-            <h2 class="text-2xl font-bold text-center mb-8 text-gray-900">Other Professional Services by Leopis Digital</h2>
+            <h2 class="text-2xl font-bold text-center mb-8 text-gray-900">Our Professional Services</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div onclick="openServiceDetail('web')" class="bg-white p-6 rounded-xl shadow-sm border cursor-pointer hover:shadow-md transition">
-                    <div class="w-10 h-10 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center mb-4 text-lg">
-                        <i class="fa-solid fa-laptop-code"></i>
-                    </div>
+                    <div class="w-10 h-10 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center mb-4 text-lg"><i class="fa-solid fa-laptop-code"></i></div>
                     <h3 class="font-bold text-lg mb-2">Web Design & E-Commerce</h3>
-                    <p class="text-gray-600 text-sm">Custom online store development, blazing fast speed, and mobile-friendly responsive UI designs.</p>
+                    <p class="text-gray-600 text-sm">Custom online store development with WhatsApp checkout integration and responsive mobile UI.</p>
                 </div>
                 <div onclick="openServiceDetail('construction')" class="bg-white p-6 rounded-xl shadow-sm border cursor-pointer hover:shadow-md transition">
-                    <div class="w-10 h-10 bg-amber-100 text-amber-600 rounded-lg flex items-center justify-center mb-4 text-lg">
-                        <i class="fa-solid fa-building"></i>
-                    </div>
-                    <h3 class="font-bold text-lg mb-2">Construction & Consultant</h3>
-                    <p class="text-gray-600 text-sm">Island-wide expert construction services, building estimation, supervision, and structural consulting.</p>
+                    <div class="w-10 h-10 bg-amber-100 text-amber-600 rounded-lg flex items-center justify-center mb-4 text-lg"><i class="fa-solid fa-building"></i></div>
+                    <h3 class="font-bold text-lg mb-2">Construction & 3D Houses</h3>
+                    <p class="text-gray-600 text-sm">Island-wide expert construction services, structural consulting, and stunning 3D house designs.</p>
                 </div>
                 <div onclick="openServiceDetail('marketing')" class="bg-white p-6 rounded-xl shadow-sm border cursor-pointer hover:shadow-md transition">
-                    <div class="w-10 h-10 bg-green-100 text-green-600 rounded-lg flex items-center justify-center mb-4 text-lg">
-                        <i class="fa-solid fa-bullhorn"></i>
-                    </div>
+                    <div class="w-10 h-10 bg-green-100 text-green-600 rounded-lg flex items-center justify-center mb-4 text-lg"><i class="fa-solid fa-bullhorn"></i></div>
                     <h3 class="font-bold text-lg mb-2">Digital Marketing & Ads</h3>
-                    <p class="text-gray-600 text-sm">Promote your products on Google, Facebook, Instagram, and TikTok to maximize your sales growth.</p>
+                    <p class="text-gray-600 text-sm">Boost your sales with targeted marketing campaigns across Google, Facebook, Instagram, and TikTok.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ & Google Reviews Section -->
+    <section class="bg-white py-12 px-4 border-t">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div>
+                <h3 class="text-xl font-bold text-gray-900 mb-4"><i class="fa-solid fa-circle-question text-blue-600 mr-2"></i> Frequently Asked Questions (FAQ)</h3>
+                <div class="space-y-3 text-sm">
+                    <div class="border p-3 rounded bg-gray-50"><p class="font-bold">Q: Do you offer island-wide COD?</p><p class="text-gray-600">A: Yes, Cash on Delivery is available across all districts in Sri Lanka.</p></div>
+                    <div class="border p-3 rounded bg-gray-50"><p class="font-bold">Q: How to order via WhatsApp?</p><p class="text-gray-600">A: Add products to cart, fill delivery details, and click 'Order via WhatsApp'.</p></div>
+                </div>
+            </div>
+            <div>
+                <h3 class="text-xl font-bold text-gray-900 mb-4"><i class="fa-solid fa-star text-amber-500 mr-2"></i> Google Reviews & Testimonials</h3>
+                <div class="space-y-3 text-sm">
+                    <div class="border p-3 rounded bg-gray-50 flex items-start gap-3">
+                        <div class="bg-blue-600 text-white font-bold w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0">T</div>
+                        <div><p class="font-bold">Thevarajah G.</p><p class="text-xs text-amber-500">★★★★★</p><p class="text-gray-600 text-xs mt-1">Excellent service and fast delivery across Sri Lanka. Highly recommended!</p></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -214,20 +222,19 @@
         </div>
     </div>
 
-    <!-- Admin Dashboard Modal (Includes Logo PNG URL Update) -->
+    <!-- Admin Dashboard Modal -->
     <div id="adminDashboardModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70 hidden">
         <div class="bg-white rounded-2xl max-w-4xl w-full p-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
             <button onclick="closeAdminDashboard()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-xl font-bold">&times;</button>
             <h2 class="text-2xl font-bold text-gray-900 mb-6">Leopis Admin Management Panel</h2>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Stats, Logo & Promo Settings -->
                 <div class="bg-gray-50 p-4 rounded-xl border space-y-4">
-                    <h3 class="font-bold text-md text-blue-600">Logo, Counters & Banner Update</h3>
+                    <h3 class="font-bold text-md text-blue-600">Logo File Upload & Settings</h3>
                     <div class="space-y-3 text-sm">
                         <div>
-                            <label class="block text-xs font-semibold text-gray-600 mb-1">Logo Image URL (logo.png or link):</label>
-                            <input type="text" id="editLogoUrl" class="w-full p-2 border rounded" placeholder="logo.png">
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">Upload Logo PNG File:</label>
+                            <input type="file" id="logoFileUpload" accept="image/*" class="w-full p-1.5 border rounded bg-white text-xs">
                         </div>
                         <div>
                             <label class="block text-xs font-semibold text-gray-600 mb-1">Total Visits Counter:</label>
@@ -245,528 +252,5 @@
                             <label class="block text-xs font-semibold text-gray-600 mb-1">Promo Code & Discount %:</label>
                             <div class="flex gap-2">
                                 <input type="text" id="editPromoCode" placeholder="Code" class="w-1/2 p-2 border rounded uppercase">
-                                <input type="number" id="editPromoDiscount" placeholder="Discount %" class="w-1/2 p-2 border rounded">
-                            </div>
-                        </div>
-                        <button onclick="saveAdminSettings()" class="w-full bg-blue-600 text-white py-2 rounded text-sm font-semibold hover:bg-blue-700">Update Settings</button>
-                    </div>
-
-                    <!-- Admin Service Post Editor -->
-                    <div class="border-t pt-3">
-                        <h3 class="font-bold text-md text-blue-600 mb-2">Update Other Services Post</h3>
-                        <select id="serviceSelectEdit" class="w-full p-2 border rounded text-sm mb-2">
-                            <option value="web">Web Design & E-Commerce</option>
-                            <option value="construction">Construction & Consultant</option>
-                            <option value="marketing">Digital Marketing & Ads</option>
-                        </select>
-                        <textarea id="servicePostContent" placeholder="Enter service description/posts details..." rows="3" class="w-full p-2 border rounded text-sm mb-2"></textarea>
-                        <button onclick="saveServicePost()" class="w-full bg-indigo-600 text-white py-2 rounded text-sm font-semibold hover:bg-indigo-700">Publish Service Post</button>
-                    </div>
-                </div>
-
-                <!-- Product Management (Daraz Style: Single + Bulk Excel) -->
-                <div class="bg-gray-50 p-4 rounded-xl border space-y-4">
-                    <h3 class="font-bold text-md text-blue-600">Product Management (Daraz Style)</h3>
-                    
-                    <!-- Single Product Form -->
-                    <div class="bg-white p-3 rounded border space-y-2 text-xs">
-                        <p class="font-bold text-gray-700 uppercase">Add Single Product</p>
-                        <input type="text" id="singleProdName" placeholder="Product Name" class="w-full p-1.5 border rounded">
-                        <div class="flex gap-2">
-                            <input type="text" id="singleProdCat" placeholder="Category" class="w-1/2 p-1.5 border rounded">
-                            <input type="number" id="singleProdPrice" placeholder="Price (LKR)" class="w-1/2 p-1.5 border rounded">
-                        </div>
-                        <input type="text" id="singleProdImage" placeholder="Image URL" class="w-full p-1.5 border rounded">
-                        <button onclick="addSingleProduct()" class="w-full bg-blue-600 text-white py-1.5 rounded font-semibold hover:bg-blue-700">Add Product</button>
-                    </div>
-
-                    <!-- Bulk Excel Upload -->
-                    <div class="bg-white p-3 rounded border space-y-2 text-xs">
-                        <p class="font-bold text-gray-700 uppercase">Bulk Excel Upload (Duplicate Check Active)</p>
-                        <input type="file" id="excelFileUpload" accept=".xlsx, .xls" class="w-full p-1 border rounded bg-white text-xs">
-                        <button onclick="processExcelUpload()" class="w-full bg-green-600 text-white py-1.5 rounded font-semibold hover:bg-green-700">Upload & Sync Bulk Products</button>
-                    </div>
-
-                    <div>
-                        <label class="block text-xs font-semibold text-gray-600 mb-1">Manage / Edit Rates & Delete:</label>
-                        <div id="adminProductList" class="max-h-32 overflow-y-auto border bg-white p-2 rounded space-y-2 text-xs">
-                            <!-- Dynamic admin product list -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="mt-6 border-t pt-4 flex justify-between items-center">
-                <span class="text-xs text-gray-500">Security Protection Enabled: CSRF & Sanitized Inputs active.</span>
-                <button onclick="closeAdminDashboard()" class="bg-gray-800 text-white px-5 py-2 rounded text-sm">Close Panel</button>
-            </div>
-        </div>
-    </div>
-     <!-- JavaScript Core & Logic -->
-    <script>
-        function sanitizeInput(str) {
-            if (typeof str !== 'string') return str;
-            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
-        }
-
-        let visitCount = 10899;
-        let deliveredCount = 3288;
-        let logoUrl = "logo.png";
-        let promoText = "Special Promotion: Get 10% OFF using promo code 'LEOPIS10' on all orders!";
-        let activePromo = { code: "LEOPIS10", discountPercent: 10 };
-
-        let products = [
-            { id: 1, name: "Ultra Smartwatch Series 9", category: "Gadgets", price: 4500, image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=500&q=80" },
-            { id: 2, name: "Professional Hair Trimmer", category: "Grooming", price: 3200, image: "https://images.unsplash.com/photo-1621607512214-68297480165e?auto=format&fit=crop&w=500&q=80" },
-            { id: 3, name: "Wireless Bluetooth Speaker", category: "Audio", price: 5500, image: "https://images.unsplash.com/photo-1545454675-3531b543be5d?auto=format&fit=crop&w=500&q=80" },
-            { id: 4, name: "10000mAh Power Bank", category: "Gadgets", price: 3800, image: "https://images.unsplash.com/photo-1609592424158-48b6f0089a80?auto=format&fit=crop&w=500&q=80" }
-        ];
-
-        let servicePosts = {
-            web: "We provide custom high-performance e-commerce and business web design solutions with mobile responsiveness and secure payment/WhatsApp checkout integration.",
-            construction: "Island-wide expert construction services, building estimation, architectural supervision, and structural consulting by seasoned professionals.",
-            marketing: "Scale your business with targeted digital advertising campaigns across Google, Facebook, Instagram, and TikTok to maximize your ROI."
-        };
-
-        let cart = [];
-        let currentView = 'home';
-        let selectedCategory = '';
-        let selectedServiceKey = '';
-        let searchQuery = '';
-        let appliedDiscount = 0;
-
-        window.addEventListener('DOMContentLoaded', () => {
-            visitCount++;
-            document.getElementById('visitCountDisplay').textContent = visitCount.toLocaleString();
-            document.getElementById('orderDeliveredDisplay').textContent = deliveredCount.toLocaleString();
-            document.getElementById('siteLogoImg').src = logoUrl;
-            renderMainContent();
-        });
-
-        function goHome() {
-            currentView = 'home';
-            selectedCategory = '';
-            renderMainContent();
-        }
-
-        function renderMainContent() {
-            const container = document.getElementById('mainContentArea');
-            container.innerHTML = '';
-
-            if (currentView === 'service') {
-                renderServiceDetailView(container);
-                return;
-            }
-
-            if (currentView === 'category') {
-                renderCategoryDetailView(container);
-                return;
-            }
-
-            let categories = [...new Set(products.map(p => p.category))];
-            
-            let html = `
-                <div class="flex flex-col sm:flex-row items-center justify-between mb-8 gap-4">
-                    <h2 class="text-2xl font-bold text-gray-900">Featured Categories & Products</h2>
-                    <div class="flex gap-2">
-                        <button onclick="searchQuery=''; renderMainContent();" class="bg-blue-600 text-white text-sm px-4 py-2 rounded-full transition">All Products</button>
-                    </div>
-                </div>
-            `;
-
-            if (searchQuery.trim() !== '') {
-                html += `<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="productGridContainer"></div>`;
-                container.innerHTML = html;
-                renderProductCards(products.filter(p => p.name.toLowerCase().includes(searchQuery.toLowerCase())), document.getElementById('productGridContainer'));
-                return;
-            }
-
-            categories.forEach(cat => {
-                let catProducts = products.filter(p => p.category === cat);
-                html += `
-                    <div class="mb-12">
-                        <div class="flex justify-between items-center mb-4 border-b pb-2">
-                            <h3 class="text-xl font-bold text-blue-900 uppercase"><i class="fa-solid fa-tag mr-2"></i>${cat}</h3>
-                            <button onclick="openCategoryView('${cat}')" class="text-sm font-semibold text-blue-600 hover:underline">View All (${catProducts.length}) &rarr;</button>
-                        </div>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="grid_${cat}"></div>
-                    </div>
-                `;
-            });
-
-            container.innerHTML = html;
-
-            categories.forEach(cat => {
-                let catProducts = products.filter(p => p.category === cat).slice(0, 4);
-                renderProductCards(catProducts, document.getElementById(`grid_${cat}`));
-            });
-        }
-
-        function openCategoryView(cat) {
-            currentView = 'category';
-            selectedCategory = cat;
-            renderMainContent();
-        }
-
-        function renderCategoryDetailView(container) {
-            let catProducts = products.filter(p => p.category === selectedCategory);
-            container.innerHTML = `
-                <div class="mb-6 flex items-center justify-between">
-                    <button onclick="goHome()" class="text-sm bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded font-semibold">&larr; Back to Home</button>
-                    <h2 class="text-2xl font-bold text-blue-900 uppercase">Category: ${selectedCategory}</h2>
-                    <span></span>
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="fullCategoryGrid"></div>
-            `;
-            renderProductCards(catProducts, document.getElementById('fullCategoryGrid'));
-        }
-
-        function openServiceDetail(serviceKey) {
-            currentView = 'service';
-            selectedServiceKey = serviceKey;
-            renderMainContent();
-            window.scrollTo({top: 0, behavior: 'smooth'});
-        }
-
-        function renderServiceDetailView(container) {
-            let titles = { web: "Web Design & E-Commerce Solutions", construction: "Construction & Engineering Consultant", marketing: "Digital Marketing & Ads Management" };
-            let title = titles[selectedServiceKey] || "Professional Service";
-            let content = servicePosts[selectedServiceKey] || "Details coming soon.";
-
-            container.innerHTML = `
-                <div class="mb-6">
-                    <button onclick="goHome()" class="text-sm bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded font-semibold">&larr; Back to Shop</button>
-                </div>
-                <div class="bg-white p-8 rounded-2xl shadow-sm border max-w-4xl mx-auto space-y-4">
-                    <h1 class="text-3xl font-extrabold text-blue-900">${title}</h1>
-                    <div class="border-b pb-4"></div>
-                    <p class="text-gray-700 text-base leading-relaxed whitespace-pre-line">${sanitizeInput(content)}</p>
-                    <div class="pt-6">
-                        <a href="https://wa.me/94783366466?text=I%20am%20interested%20in%20your%20service:%20${encodeURIComponent(title)}" target="_blank" class="inline-block bg-green-600 hover:bg-green-700 text-white font-medium px-6 py-3 rounded-lg shadow transition">
-                            <i class="fa-brands fa-whatsapp text-lg mr-2"></i> Inquire via WhatsApp
-                        </a>
-                    </div>
-                </div>
-            `;
-        }
-
-        function renderProductCards(prods, targetElement) {
-            targetElement.innerHTML = '';
-            if (prods.length === 0) {
-                targetElement.innerHTML = `<p class="col-span-full text-center text-gray-500 py-6">No products found.</p>`;
-                return;
-            }
-            prods.forEach(p => {
-                const card = document.createElement('div');
-                card.className = "bg-white border rounded-xl overflow-hidden shadow-sm hover:shadow-md transition flex flex-col justify-between";
-                card.innerHTML = `
-                    <div>
-                        <img src="${sanitizeInput(p.image)}" alt="${sanitizeInput(p.name)}" class="w-full h-48 object-cover">
-                        <div class="p-4">
-                            <span class="text-xs font-semibold text-blue-600 uppercase">${sanitizeInput(p.category)}</span>
-                            <h3 class="font-bold text-gray-900 mt-1 mb-2">${sanitizeInput(p.name)}</h3>
-                            <p class="text-gray-900 font-bold">LKR ${p.price.toLocaleString()}</p>
-                        </div>
-                    </div>
-                    <div class="p-4 pt-0">
-                        <button onclick="addToCart(${p.id})" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg text-sm font-medium transition">
-                            Add to Cart
-                        </button>
-                    </div>
-                `;
-                targetElement.appendChild(card);
-            });
-        }
-
-        document.getElementById('searchInput').addEventListener('input', (e) => {
-            searchQuery = sanitizeInput(e.target.value);
-            currentView = 'home';
-            renderMainContent();
-        });
-        document.getElementById('mobileSearchInput').addEventListener('input', (e) => {
-            searchQuery = sanitizeInput(e.target.value);
-            currentView = 'home';
-            renderMainContent();
-        });
-
-        function addToCart(id) {
-            const product = products.find(p => p.id === id);
-            const existing = cart.find(item => item.id === id);
-            if(existing) {
-                existing.qty++;
-            } else {
-                cart.push({ ...product, qty: 1 });
-            }
-            updateCartUI();
-            showCartPopup(product);
-        }
-
-        function showCartPopup(addedProduct) {
-            document.getElementById('popupItemName').textContent = `${addedProduct.name} (LKR ${addedProduct.price.toLocaleString()}) has been added to your cart.`;
-            const suggestionsContainer = document.getElementById('popupSuggestions');
-            suggestionsContainer.innerHTML = '';
-            products.filter(p => p.id !== addedProduct.id).slice(0, 3).forEach(s => {
-                const div = document.createElement('div');
-                div.className = "border rounded p-2 text-center cursor-pointer hover:bg-gray-50 flex flex-col justify-between";
-                div.innerHTML = `
-                    <img src="${s.image}" class="w-full h-16 object-cover rounded mb-1">
-                    <p class="text-xs font-semibold truncate">${s.name}</p>
-                    <p class="text-xs text-blue-600 font-bold">LKR ${s.price}</p>
-                    <button onclick="addToCart(${s.id})" class="mt-1 bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white text-xs py-1 rounded font-medium">+ Add</button>
-                `;
-                suggestionsContainer.appendChild(div);
-            });
-            document.getElementById('cartPopupModal').classList.remove('hidden');
-        }
-
-        function closeCartPopup() { document.getElementById('cartPopupModal').classList.add('hidden'); }
-        function toggleCart() { document.getElementById('cartDrawer').classList.toggle('hidden'); }
-
-        function updateQuantity(id, change) {
-            const item = cart.find(i => i.id === id);
-            if(item) {
-                item.qty += change;
-                if(item.qty <= 0) { cart = cart.filter(i => i.id !== id); }
-            }
-            updateCartUI();
-        }
-
-        function updateCartUI() {
-            const countEl = document.getElementById('cartCount');
-            const container = document.getElementById('cartItemsContainer');
-            const subtotalEl = document.getElementById('cartSubtotal');
-            const totalEl = document.getElementById('cartTotal');
-
-            const totalCount = cart.reduce((sum, item) => sum + item.qty, 0);
-            countEl.textContent = totalCount;
-
-            if(cart.length === 0) {
-                container.innerHTML = `<p class="text-center text-gray-500 py-8">Your cart is empty.</p>`;
-                subtotalEl.textContent = "LKR 0";
-                totalEl.textContent = "LKR 0";
-                return;
-            }
-
-            container.innerHTML = '';
-            let subtotal = 0;
-
-        cart.forEach(item => {
-                subtotal += item.price * item.qty;
-                const div = document.createElement('div');
-                div.className = "flex items-center justify-between border-b pb-3";
-                div.innerHTML = `
-                    <div class="flex items-center gap-3">
-                        <img src="${item.image}" class="w-12 h-12 object-cover rounded">
-                        <div>
-                            <h4 class="text-sm font-semibold">${item.name}</h4>
-                            <p class="text-xs text-gray-500">LKR ${item.price.toLocaleString()} x ${item.qty}</p>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <button onclick="updateQuantity(${item.id}, -1)" class="px-2 py-1 bg-gray-200 rounded text-xs font-bold">-</button>
-                        <span class="text-sm font-medium">${item.qty}</span>
-                        <button onclick="updateQuantity(${item.id}, 1)" class="px-2 py-1 bg-gray-200 rounded text-xs font-bold">+</button>
-                    </div>
-                `;
-                container.appendChild(div);
-            });
-
-            subtotalEl.textContent = `LKR ${subtotal.toLocaleString()}`;
-            let finalTotal = subtotal;
-            if(appliedDiscount > 0) {
-                let discountAmt = (subtotal * appliedDiscount) / 100;
-                document.getElementById('discountRow').classList.remove('hidden');
-                document.getElementById('cartDiscount').textContent = `- LKR ${discountAmt.toLocaleString()} (${appliedDiscount}%)`;
-                finalTotal = subtotal - discountAmt;
-            } else {
-                document.getElementById('discountRow').classList.add('hidden');
-            }
-            totalEl.textContent = `LKR ${finalTotal.toLocaleString()}`;
-        }
-
-        function applyPromoCode() {
-            const codeInput = document.getElementById('promoCodeInput').value.trim().toUpperCase();
-            const msgEl = document.getElementById('promoMessage');
-            if(codeInput === activePromo.code) {
-                appliedDiscount = activePromo.discountPercent;
-                msgEl.textContent = `Promo applied successfully! ${appliedDiscount}% OFF.`;
-                updateCartUI();
-            } else {
-                msgEl.textContent = "Invalid promo code!";
-                msgEl.className = "text-xs text-red-600 font-medium";
-            }
-        }
-
-        function checkoutWhatsApp() {
-            if(cart.length === 0) { alert("Your cart is empty!"); return; }
-            const name = sanitizeInput(document.getElementById('customerName').value.trim());
-            const phone = sanitizeInput(document.getElementById('customerPhone').value.trim());
-            const address = sanitizeInput(document.getElementById('customerAddress').value.trim());
-
-            if(!name || !phone || !address) { alert("Please fill in all delivery details."); return; }
-
-            let message = `*New Order - Leopis Digital*%0A*Name:* ${name}%0A*Phone:* ${phone}%0A*Address:* ${address}%0A%0A*Ordered Items:*%0A`;
-            let subtotal = 0;
-            cart.forEach(item => {
-                message += `- ${item.name} (x${item.qty}) : LKR ${(item.price * item.qty).toLocaleString()}%0A`;
-                subtotal += item.price * item.qty;
-            });
-
-            let finalTotal = subtotal;
-            if(appliedDiscount > 0) {
-                let discountAmt = (subtotal * appliedDiscount) / 100;
-                finalTotal = subtotal - discountAmt;
-                message += `%0A*Discount Applied:* ${appliedDiscount}%`;
-            }
-
-            message += `%0A*Total Amount (Cash on Delivery):* LKR ${finalTotal.toLocaleString()}`;
-            const url = `https://wa.me/94783366466?text=${message}`;
-            
-            deliveredCount++;
-            document.getElementById('orderDeliveredDisplay').textContent = deliveredCount.toLocaleString();
-            cart = [];
-            updateCartUI();
-            toggleCart();
-            window.open(url, '_blank');
-        }
-
-        function openAdminLogin() { document.getElementById('adminLoginModal').classList.remove('hidden'); }
-        function closeAdminLogin() { document.getElementById('adminLoginModal').classList.add('hidden'); }
-
-        function verifyAdminLogin() {
-            const u = document.getElementById('adminUser').value;
-            const p = document.getElementById('adminPass').value;
-            if(u === "Leopis" && p === "Leopis@1988") {
-                closeAdminLogin();
-                openAdminDashboard();
-            } else { alert("Invalid Admin Credentials!"); }
-        }
-
-        function openAdminDashboard() {
-            document.getElementById('editLogoUrl').value = logoUrl;
-            document.getElementById('editVisitCount').value = visitCount;
-            document.getElementById('editDeliveredCount').value = deliveredCount;
-            document.getElementById('editPromoText').value = promoText;
-            document.getElementById('editPromoCode').value = activePromo.code;
-            document.getElementById('editPromoDiscount').value = activePromo.discountPercent;
-            renderAdminProductList();
-            document.getElementById('adminDashboardModal').classList.remove('hidden');
-        }
-
-        function closeAdminDashboard() { document.getElementById('adminDashboardModal').classList.add('hidden'); }
-
-        function saveAdminSettings() {
-            logoUrl = sanitizeInput(document.getElementById('editLogoUrl').value.trim()) || "logo.png";
-            visitCount = parseInt(document.getElementById('editVisitCount').value) || visitCount;
-            deliveredCount = parseInt(document.getElementById('editDeliveredCount').value) || deliveredCount;
-            promoText = sanitizeInput(document.getElementById('editPromoText').value);
-            activePromo.code = sanitizeInput(document.getElementById('editPromoCode').value).toUpperCase();
-            activePromo.discountPercent = parseFloat(document.getElementById('editPromoDiscount').value) || 0;
-
-            document.getElementById('siteLogoImg').src = logoUrl;
-            document.getElementById('visitCountDisplay').textContent = visitCount.toLocaleString();
-            document.getElementById('orderDeliveredDisplay').textContent = deliveredCount.toLocaleString();
-            document.getElementById('promoBannerText').textContent = promoText;
-            alert("Admin settings & Logo updated successfully!");
-        }
-
-        function saveServicePost() {
-            let key = document.getElementById('serviceSelectEdit').value;
-            let val = document.getElementById('servicePostContent').value;
-            if(val.trim() !== '') { servicePosts[key] = sanitizeInput(val); alert("Service post updated successfully!"); }
-        }
-
-        function addSingleProduct() {
-            let name = sanitizeInput(document.getElementById('singleProdName').value.trim());
-            let cat = sanitizeInput(document.getElementById('singleProdCat').value.trim() || "Gadgets");
-            let price = parseFloat(document.getElementById('singleProdPrice').value) || 1000;
-            let image = sanitizeInput(document.getElementById('singleProdImage').value.trim() || "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=500&q=80");
-
-            if(!name) { alert("Please enter product name."); return; }
-
-            let newId = products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 1;
-            products.push({ id: newId, name, category: cat, price, image });
-            renderMainContent();
-            renderAdminProductList();
-            alert("Product added successfully!");
-            document.getElementById('singleProdName').value = '';
-            document.getElementById('singleProdPrice').value = '';
-            document.getElementById('singleProdImage').value = '';
-        }
-
-        function renderAdminProductList() {
-            const listEl = document.getElementById('adminProductList');
-            listEl.innerHTML = '';
-            products.forEach(p => {
-                const div = document.createElement('div');
-                div.className = "flex justify-between items-center bg-gray-50 p-1.5 rounded border";
-                div.innerHTML = `
-                    <span class="font-medium truncate max-w-[180px]">${p.name} - LKR ${p.price}</span>
-                    <div class="flex gap-2">
-                        <button onclick="editProductPrice(${p.id})" class="bg-blue-500 text-white px-2 py-0.5 rounded text-[10px]">Edit Rate</button>
-                        <button onclick="deleteProduct(${p.id})" class="bg-red-500 text-white px-2 py-0.5 rounded text-[10px]">Delete</button>
-                    </div>
-                `;
-                listEl.appendChild(div);
-            });
-        }
-
-        function editProductPrice(id) {
-            const p = products.find(item => item.id === id);
-            const newPrice = prompt(`Enter new price for ${p.name}:`, p.price);
-            if(newPrice !== null && !isNaN(newPrice)) {
-                p.price = parseFloat(newPrice);
-                renderMainContent();
-                renderAdminProductList();
-                alert("Product rate updated successfully!");
-            }
-        }
-
-        function deleteProduct(id) {
-            if(confirm("Are you sure you want to delete this product?")) {
-                products = products.filter(p => p.id !== id);
-                renderMainContent();
-                renderAdminProductList();
-            }
-        }
-
-        function processExcelUpload() {
-            const fileInput = document.getElementById('excelFileUpload');
-            if(fileInput.files.length === 0) { alert("Please select an Excel file first."); return; }
-            const file = fileInput.files[0];
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                try {
-                    const data = new Uint8Array(e.target.result);
-                    const workbook = XLSX.read(data, {type: 'array'});
-                    const firstSheetName = workbook.SheetNames[0];
-                    const worksheet = workbook.Sheets[firstSheetName];
-                    const json = XLSX.utils.sheet_to_json(worksheet);
-                    
-                    if(json && json.length > 0) {
-                        let addedCount = 0;
-                        json.forEach(item => {
-                            let name = sanitizeInput(item.name || "New Product");
-                            let category = sanitizeInput(item.category || "Gadgets");
-                            let price = parseFloat(item.price) || 1000;
-                            let image = sanitizeInput(item.image || "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=500&q=80");
-
-                            let exists = products.some(p => p.name.toLowerCase() === name.toLowerCase() && p.price === price);
-                            if(!exists) {
-                                let newId = products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 1;
-                                products.push({ id: newId, name, category, price, image });
-                                addedCount++;
-                            }
-                        });
-
-                        renderMainContent();
-                        renderAdminProductList();
-                        alert(`Excel upload complete! Added ${addedCount} unique products (duplicates skipped).`);
-                    } else { alert("Excel file is empty or formatted incorrectly."); }
-                } catch(err) { alert("Error reading Excel file."); }
-            };
-            reader.readAsArrayBuffer(file);
-        }
-    </script>
-</body>
-</html>
+                                <input type="number" id="editPromoDiscount" placeholder="Discount %" class="w-1/2 p
+                                    
