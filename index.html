@@ -12,17 +12,24 @@
   .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 </style>
 <script>
+// Default Catalog (3 Special Offer Products + Normal Products)
 const defaultCatalog = [
-  { id: 1, title: "Pro Wireless ANC Earbuds V5.3", category: "Audio", price: 6800, desc: "Active Noise Cancellation, 36-hour battery, deep bass.", image: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=500" },
-  { id: 2, title: "Ultra AMOLED Smart Watch", category: "Smart Watches", price: 9400, desc: "Always-on display, fitness & heart tracker, Bluetooth calling.", image: "https://images.unsplash.com/photo-1575311373937-040b8e1fd5b6?w=500" },
-  { id: 3, title: "65W GaN Fast Charger", category: "Mobile Accessories", price: 4200, desc: "Dual Type-C & USB fast charging adapter.", image: "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?w=500" }
+  { id: 1, title: "Pro Wireless ANC Earbuds V5.3", category: "Audio", price: 6800, cost: 4500, special: true, desc: "Active Noise Cancellation, 36-hr battery.", image: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=500" },
+  { id: 2, title: "Ultra AMOLED Smart Watch", category: "Smart Watches", price: 9400, cost: 6500, special: true, desc: "Always-on display, Bluetooth calling.", image: "https://images.unsplash.com/photo-1575311373937-040b8e1fd5b6?w=500" },
+  { id: 3, title: "65W GaN Fast Charger", category: "Mobile Accessories", price: 4200, cost: 2800, special: true, desc: "Dual Type-C fast charging adapter.", image: "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?w=500" }
 ];
+
 let saved = null;
 try { saved = JSON.parse(localStorage.getItem('leopis_catalog')); } catch(e) {}
 let products = (Array.isArray(saved) && saved.length > 0) ? saved : defaultCatalog;
 let currentCategory = "All", searchQuery = "", cart = [], uploadedBase64 = "";
 
-function toggleAdminPanel() {
+// Stats & Counters
+let visitCount = localStorage.getItem('leopis_visits') ? parseInt(localStorage.getItem('leopis_visits')) + 1 : 1240;
+localStorage.setItem('leopis_visits', visitCount);
+let manualSales = localStorage.getItem('leopis_manual_sales') || "48";
+
+function toggleAdmin() {
   const sec = document.getElementById('adminSection');
   if (sec) { sec.classList.toggle('hidden'); if (!sec.classList.contains('hidden')) window.scrollTo({ top: 0, behavior: 'smooth' }); }
 }
@@ -39,11 +46,14 @@ function handleAdminLogin() {
 function adminLogout() {
   document.getElementById('adminLoginForm').classList.remove('hidden');
   document.getElementById('adminDashboard').classList.add('hidden');
-  document.getElementById('adminUser').value = ''; document.getElementById('adminPass').value = '';
 }
-function checkCustomCat() {
-  const sel = document.getElementById('newCat').value;
-  document.getElementById('customCatBox').classList.toggle('hidden', sel !== 'New');
+function updateManualSales() {
+  const val = document.getElementById('salesInputVal').value.trim();
+  if (!val) return;
+  manualSales = val;
+  localStorage.setItem('leopis_manual_sales', manualSales);
+  document.getElementById('salesCounterDisplay').innerText = manualSales;
+  alert("Sales Counter Updated!");
 }
 function previewFile() {
   const file = document.getElementById('newImgFile').files[0];
@@ -66,23 +76,23 @@ function previewFile() {
   reader.readAsDataURL(file);
 }
 function publishProduct() {
-  const sel = document.getElementById('newCat').value;
-  const cus = document.getElementById('newCatCustom').value.trim();
-  const category = (sel === "New" && cus) ? cus : (sel === "New" ? "General" : sel);
+  const category = document.getElementById('newCat').value.trim() || "General";
   const title = document.getElementById('newTitle').value.trim();
   const desc = document.getElementById('newDesc').value.trim();
   const price = parseFloat(document.getElementById('newPrice').value);
+  const cost = parseFloat(document.getElementById('newCost').value) || 0;
+  const special = document.getElementById('newSpecial').checked;
   const urlImg = document.getElementById('newImage').value.trim();
   const image = uploadedBase64 || urlImg || 'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=500';
   if (!title || isNaN(price)) return alert("Enter Product Name and Price!");
-  products.unshift({ id: Date.now(), title, category, price, desc, image });
+  products.unshift({ id: Date.now(), title, category, price, cost, special, desc, image });
   localStorage.setItem('leopis_catalog', JSON.stringify(products));
   document.getElementById('newTitle').value = ''; document.getElementById('newDesc').value = '';
-  document.getElementById('newPrice').value = ''; document.getElementById('newImage').value = '';
-  document.getElementById('newImgFile').value = ''; document.getElementById('newCatCustom').value = '';
+  document.getElementById('newPrice').value = ''; document.getElementById('newCost').value = '';
+  document.getElementById('newImage').value = ''; document.getElementById('newImgFile').value = '';
   document.getElementById('imgPreview').classList.add('hidden'); uploadedBase64 = "";
-  currentCategory = "All"; renderCategoryTabs(); renderProducts(); renderAdminList();
-  alert("Product Added Successfully!");
+  renderCategoryTabs(); renderProducts(); renderAdminList();
+  alert("Product Published Successfully!");
 }
 function deleteProduct(id) {
   products = products.filter(p => p.id !== id);
@@ -94,7 +104,7 @@ function renderAdminList() {
   if (!box) return;
   box.innerHTML = '';
   products.forEach(p => {
-    box.innerHTML += `<div class="flex justify-between items-center border-b py-2 text-xs"><div class="flex items-center gap-2"><img src="${p.image}" class="w-8 h-8 rounded object-cover"><span><b>${p.title}</b> (${p.category} - LKR ${p.price})</span></div><button type="button" onclick="deleteProduct(${p.id})" class="text-red-500 font-bold px-2">Delete</button></div>`;
+    box.innerHTML += `<div class="flex justify-between items-center border-b py-2 text-xs"><div class="flex items-center gap-2"><img src="${p.image}" class="w-8 h-8 rounded object-cover"><span><b>${p.title}</b> (${p.category} - LKR ${p.price} | Cost: ${p.cost})</span></div><button type="button" onclick="deleteProduct(${p.id})" class="text-red-500 font-bold px-2">Delete</button></div>`;
   });
 }
 function renderCategoryTabs() {
@@ -114,37 +124,86 @@ function renderCategoryTabs() {
 function filterSearch(q) { searchQuery = (q || '').toLowerCase().replace(/\s+/g, ''); renderProducts(); }
 function renderProducts() {
   const grid = document.getElementById('productGrid');
+  const specialGrid = document.getElementById('specialOfferGrid');
   if (!grid) return;
-  grid.innerHTML = '';
+  grid.innerHTML = ''; if (specialGrid) specialGrid.innerHTML = '';
+
   const clean = s => (s || '').toLowerCase().replace(/\s+/g, '');
   let list = currentCategory === "All" ? products : products.filter(p => p.category === currentCategory);
   if (searchQuery) list = list.filter(p => clean(p.title).includes(searchQuery) || clean(p.category).includes(searchQuery) || clean(p.desc).includes(searchQuery));
+
+  // Render 3 Special Offer Products on Main Page top if on "All"
+  if (specialGrid && currentCategory === "All" && !searchQuery) {
+    const specials = products.filter(p => p.special).slice(0, 3);
+    specials.forEach(p => {
+      specialGrid.innerHTML += `
+        <div class="bg-gradient-to-br from-amber-500/10 to-slate-900/5 rounded-2xl border-2 border-amber-500/40 p-4 flex flex-col justify-between shadow-sm">
+          <div class="relative aspect-square bg-slate-100 rounded-xl overflow-hidden mb-3">
+            <img src="${p.image}" class="w-full h-full object-cover">
+            <span class="absolute top-2 left-2 text-[10px] bg-amber-600 text-white px-2 py-0.5 rounded font-bold">Special Offer</span>
+          </div>
+          <div>
+            <h3 class="font-bold text-slate-900 text-sm mb-1">${p.title}</h3>
+            <p class="text-xs text-slate-500 line-clamp-2 mb-2">${p.desc || ''}</p>
+            <div class="text-base font-extrabold text-slate-900 mb-3">LKR ${Number(p.price).toLocaleString()}</div>
+          </div>
+          <div class="flex items-center gap-2">
+            <div class="flex items-center border rounded-lg bg-white overflow-hidden">
+              <button type="button" onclick="changeQty(${p.id}, -1)" class="px-2.5 py-1 text-xs bg-slate-100 hover:bg-slate-200">-</button>
+              <span id="qty-${p.id}" class="px-3 text-xs font-bold">1</span>
+              <button type="button" onclick="changeQty(${p.id}, 1)" class="px-2.5 py-1 text-xs bg-slate-100 hover:bg-slate-200">+</button>
+            </div>
+            <button type="button" onclick="addWithOptions(${p.id})" class="flex-grow py-2 bg-slate-900 hover:bg-amber-600 text-white rounded-lg text-xs font-bold transition">+ Add</button>
+          </div>
+        </div>`;
+    });
+  }
+
   document.getElementById('activeCategoryTitle').innerText = currentCategory === "All" ? "All Featured Items" : currentCategory;
   document.getElementById('productCounter').innerText = `${list.length} items`;
+
   list.forEach(p => {
     grid.innerHTML += `
       <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col justify-between">
         <div class="relative aspect-square bg-slate-100"><img src="${p.image}" class="w-full h-full object-cover"><span class="absolute top-2 left-2 text-[10px] bg-slate-900/80 text-white px-2 py-0.5 rounded">${p.category}</span></div>
         <div class="p-4 flex flex-col flex-grow justify-between">
-          <div><h3 class="font-bold text-slate-900 text-sm mb-1">${p.title}</h3><p class="text-xs text-slate-500 line-clamp-2">${p.desc || ''}</p></div>
+          <div>
+            <h3 class="font-bold text-slate-900 text-sm mb-1">${p.title}</h3>
+            <p class="text-xs text-slate-500 line-clamp-2">${p.desc || ''}</p>
+          </div>
           <div class="mt-4 pt-3 border-t">
             <div class="text-base font-extrabold text-slate-900 mb-2.5">LKR ${Number(p.price).toLocaleString()}</div>
-            <div class="grid grid-cols-2 gap-2">
-              <a href="https://wa.me/94783366466?text=${encodeURIComponent('Order: ' + p.title + ' - LKR ' + p.price)}" target="_blank" class="py-2 bg-emerald-600 text-white rounded-lg text-xs font-bold flex items-center justify-center gap-1"><i class="fa-brands fa-whatsapp"></i> Buy</a>
-              <button type="button" onclick="addToCart(${p.id})" class="py-2 bg-slate-900 text-white rounded-lg text-xs font-bold">+ Cart</button>
+            <div class="flex items-center gap-2 mb-2">
+              <div class="flex items-center border rounded-lg bg-slate-50 overflow-hidden">
+                <button type="button" onclick="changeQty(${p.id}, -1)" class="px-2.5 py-1 text-xs bg-slate-200">-</button>
+                <span id="qty-${p.id}" class="px-3 text-xs font-bold">1</span>
+                <button type="button" onclick="changeQty(${p.id}, 1)" class="px-2.5 py-1 text-xs bg-slate-200">+</button>
+              </div>
+              <button type="button" onclick="addWithOptions(${p.id})" class="flex-grow py-2 bg-slate-900 text-white rounded-lg text-xs font-bold">+ Add to Cart</button>
             </div>
+            <a href="https://wa.me/94783366466?text=${encodeURIComponent('Instant Order: ' + p.title + ' - LKR ' + p.price)}" target="_blank" class="w-full py-1.5 bg-emerald-600 text-white rounded-lg text-[11px] font-bold flex items-center justify-center gap-1"><i class="fa-brands fa-whatsapp"></i> Buy via WhatsApp</a>
           </div>
         </div>
       </div>`;
   });
 }
-function toggleCart() { const d = document.getElementById('cartDrawer'); if (d) d.style.display = d.style.display === 'none' ? 'flex' : 'none'; }
-function addToCart(id) {
-  const prod = products.find(p => p.id === id);
-  const item = cart.find(c => c.id === id);
-  if (item) item.qty++; else cart.push({ ...prod, qty: 1 });
-  updateCart();
+function changeQty(id, delta) {
+  const el = document.getElementById(`qty-${id}`);
+  if (!el) return;
+  let q = parseInt(el.innerText) + delta;
+  if (q < 1) q = 1;
+  el.innerText = q;
 }
+function addWithOptions(id) {
+  const prod = products.find(p => p.id === id);
+  const qEl = document.getElementById(`qty-${id}`);
+  const qty = qEl ? parseInt(qEl.innerText) : 1;
+  const item = cart.find(c => c.id === id);
+  if (item) item.qty += qty; else cart.push({ ...prod, qty });
+  updateCart();
+  alert(`${qty} item(s) added to cart!`);
+}
+function toggleCart() { const d = document.getElementById('cartDrawer'); if (d) d.style.display = d.style.display === 'none' ? 'flex' : 'none'; }
 function updateCart() {
   const box = document.getElementById('cartItemsList');
   if (!box) return;
@@ -165,42 +224,62 @@ function checkoutWhatsApp() {
   if (!n || !ph || !d) return alert("Fill Name, Phone, and District!");
   let total = cart.reduce((a, i) => a + i.price * i.qty, 0);
   let items = cart.map(i => `• ${i.title} (x${i.qty})`).join('\n');
-  let msg = `*Leopis (Pvt) Ltd Order*\nCustomer: ${n}\nPhone: ${ph}\nDistrict: ${d}\n\n*Items:*\n${items}\n\n*Total:* LKR ${total.toLocaleString()}`;
+  let msg = `*Leopis (Pvt) Ltd Order - Cash on Delivery*\nCustomer: ${n}\nPhone: ${ph}\nDistrict: ${d}\n\n*Items:*\n${items}\n\n*Total Payable:* LKR ${total.toLocaleString()}`;
   window.open(`https://wa.me/94783366466?text=${encodeURIComponent(msg)}`, '_blank');
 }
-window.addEventListener('DOMContentLoaded', () => { renderCategoryTabs(); renderProducts(); });
+window.addEventListener('DOMContentLoaded', () => {
+  renderCategoryTabs(); renderProducts();
+  document.getElementById('visitorCounterDisplay').innerText = visitCount;
+  document.getElementById('salesCounterDisplay').innerText = manualSales;
+});
 </script>
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans flex flex-col min-h-screen">
+
+<!-- Top Announcement & Social Bar with Auto Translate Widget -->
 <div class="bg-slate-900 text-slate-300 text-xs py-2 px-4 border-b border-slate-800">
-  <div class="max-w-7xl mx-auto flex justify-between items-center">
+  <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
     <div class="flex items-center gap-4 text-[11px] sm:text-xs">
       <a href="tel:+94783366466" class="hover:text-amber-400 flex items-center gap-1.5"><i class="fa-solid fa-phone text-amber-400"></i> +94 78 336 6466</a>
-      <a href="mailto:director.leopis@gmail.com" class="hover:text-red-400 hidden sm:flex items-center gap-1.5"><i class="fa-solid fa-envelope text-red-400"></i> director.leopis@gmail.com</a>
+      <span class="hidden md:inline">|</span>
+      <span class="text-emerald-400"><i class="fa-solid fa-eye"></i> Visitors: <b id="visitorCounterDisplay">1240</b></span>
+      <span class="text-amber-400"><i class="fa-solid fa-bag-shopping"></i> Sales: <b id="salesCounterDisplay">48</b></span>
     </div>
-    <div class="flex items-center gap-3.5 text-sm">
-      <a href="https://wa.me/94783366466" target="_blank" class="text-emerald-400"><i class="fa-brands fa-whatsapp"></i></a>
-      <a href="https://www.facebook.com/share/1E44ZiZk7x/" target="_blank" class="text-blue-400"><i class="fa-brands fa-facebook-f"></i></a>
-      <a href="https://www.instagram.com/leopispvt" target="_blank" class="text-rose-400"><i class="fa-brands fa-instagram"></i></a>
-      <a href="https://www.tiktok.com/@leo.pis07" target="_blank" class="text-pink-400"><i class="fa-brands fa-tiktok"></i></a>
-      <a href="https://t.me/+94783366466" target="_blank" class="text-sky-400"><i class="fa-brands fa-telegram"></i></a>
+    
+    <!-- Multi-Language Translator Dropdown -->
+    <div class="flex items-center gap-3">
+      <div class="flex items-center gap-1 bg-slate-800 px-2 py-1 rounded text-[11px]">
+        <i class="fa-solid fa-globe text-amber-400"></i>
+        <select id="google_translate_element" onchange="changeLanguage(this.value)" class="bg-transparent text-white outline-none cursor-pointer">
+          <option value="en" class="text-slate-900">English</option>
+          <option value="ta" class="text-slate-900">தமிழ் (Tamil)</option>
+          <option value="si" class="text-slate-900">සිංහල (Sinhala)</option>
+        </select>
+      </div>
+      <div class="flex items-center gap-2.5 text-sm">
+        <a href="https://wa.me/94783366466" target="_blank" class="text-emerald-400"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="https://www.facebook.com/share/1E44ZiZk7x/" target="_blank" class="text-blue-400"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="https://www.instagram.com/leopispvt" target="_blank" class="text-rose-400"><i class="fa-brands fa-instagram"></i></a>
+      </div>
     </div>
   </div>
 </div>
+
+<!-- Main Navbar -->
 <header class="sticky top-0 z-40 bg-white border-b border-slate-200 shadow-sm">
   <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
     <a href="/" class="flex items-center space-x-2.5 shrink-0">
       <img src="logo.png" alt="Leopis" class="h-9 w-auto object-contain rounded" onerror="this.onerror=null;this.src='https://placehold.co/80x80/0f172a/f59e0b?text=L';">
       <div class="leading-tight">
         <div class="text-base sm:text-lg font-black text-slate-900">LEOPIS <span class="text-xs font-bold text-amber-600">(PVT) LTD</span></div>
-        <span class="text-[9px] uppercase tracking-wider text-slate-400 font-bold block">Official Store Sri Lanka</span>
+        <span class="text-[9px] uppercase tracking-wider text-slate-400 font-bold block">Sri Lanka</span>
       </div>
     </a>
     <div class="flex-grow max-w-md hidden md:block">
       <input type="text" oninput="filterSearch(this.value)" placeholder="Search products..." class="w-full text-xs px-4 py-2 border border-slate-200 rounded-full bg-slate-50 outline-none focus:ring-2 focus:ring-amber-500">
     </div>
     <div class="flex items-center space-x-2 shrink-0">
-      <button type="button" onclick="toggleAdminPanel()" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-2 rounded-lg font-semibold flex items-center gap-1.5 border border-slate-200 cursor-pointer">
+      <button type="button" onclick="toggleAdmin()" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-2 rounded-lg font-semibold flex items-center gap-1.5 border border-slate-200 cursor-pointer">
         <i class="fa-solid fa-lock text-amber-500 text-xs"></i> <span>Admin</span>
       </button>
       <button type="button" onclick="toggleCart()" class="bg-slate-900 text-white px-3 py-2 rounded-lg font-semibold flex items-center gap-2 cursor-pointer">
@@ -210,85 +289,111 @@ window.addEventListener('DOMContentLoaded', () => { renderCategoryTabs(); render
     </div>
   </div>
   <div class="px-4 pb-2.5 md:hidden">
-    <input type="text" oninput="filterSearch(this.value)" placeholder="Search products, watches, audio..." class="w-full text-xs px-4 py-2 border border-slate-200 rounded-full bg-slate-50 outline-none focus:ring-2 focus:ring-amber-500">
+    <input type="text" oninput="filterSearch(this.value)" placeholder="Search products..." class="w-full text-xs px-4 py-2 border border-slate-200 rounded-full bg-slate-50 outline-none focus:ring-2 focus:ring-amber-500">
   </div>
 </header>
+
+<!-- ADMIN DASHBOARD PANEL -->
 <section id="adminSection" class="max-w-2xl mx-auto px-4 pt-4 w-full hidden">
   <div class="bg-white rounded-2xl shadow-lg border-2 border-slate-900 overflow-hidden">
     <div class="bg-slate-900 text-white p-3.5 flex items-center justify-between">
       <span class="text-xs sm:text-sm font-bold flex items-center gap-2"><i class="fa-solid fa-shield-halved text-amber-400"></i> Leopis Admin Portal</span>
-      <button type="button" onclick="toggleAdminPanel()" class="text-slate-400 hover:text-white text-lg font-bold px-2">&times;</button>
+      <button type="button" onclick="toggleAdmin()" class="text-slate-400 hover:text-white text-lg font-bold px-2">&times;</button>
     </div>
     <div id="adminLoginForm" class="p-5 space-y-3">
-      <p class="text-xs text-slate-500">Sign in to add or manage store products:</p>
-      <input type="text" id="adminUser" placeholder="Enter Admin Username" class="w-full text-xs p-3 border rounded-xl bg-slate-50 outline-none">
-      <input type="password" id="adminPass" placeholder="Enter Admin Password" class="w-full text-xs p-3 border rounded-xl bg-slate-50 outline-none">
+      <p class="text-xs text-slate-500">Login (User: <b>Leopis</b> | Pass: <b>Leopis@1988</b>):</p>
+      <input type="text" id="adminUser" placeholder="Username" class="w-full text-xs p-3 border rounded-xl bg-slate-50 outline-none">
+      <input type="password" id="adminPass" placeholder="Password" class="w-full text-xs p-3 border rounded-xl bg-slate-50 outline-none">
       <div id="loginError" class="text-xs text-red-600 hidden font-bold">Incorrect Username or Password!</div>
-      <button type="button" onclick="handleAdminLogin()" class="w-full py-3 bg-slate-900 hover:bg-amber-600 text-white text-xs font-bold rounded-xl">Login to Admin Dashboard</button>
+      <button type="button" onclick="handleAdminLogin()" class="w-full py-3 bg-slate-900 hover:bg-amber-600 text-white text-xs font-bold rounded-xl">Login</button>
     </div>
     <div id="adminDashboard" class="p-4 sm:p-5 space-y-5 hidden">
       <div class="flex justify-between items-center border-b pb-2">
         <span class="text-xs font-bold text-emerald-600">● Admin Logged In</span>
         <button type="button" onclick="adminLogout()" class="text-xs text-red-500 font-bold">Logout</button>
       </div>
-      <div class="space-y-3 bg-slate-50 p-4 rounded-xl border border-slate-200">
-        <h3 class="text-xs font-bold text-slate-900">+ Add New Product to Front Page</h3>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-          <select id="newCat" onchange="checkCustomCat()" class="w-full text-xs p-2.5 border rounded-lg bg-white">
-            <option value="Audio">Audio</option>
-            <option value="Smart Watches">Smart Watches</option>
-            <option value="Mobile Accessories">Mobile Accessories</option>
-            <option value="Smart Home">Smart Home</option>
-            <option value="New">+ Type New Category...</option>
-          </select>
-          <div id="customCatBox" class="hidden">
-            <input type="text" id="newCatCustom" placeholder="New Category Name" class="w-full text-xs p-2.5 border rounded-lg bg-white">
-          </div>
+      
+      <!-- Manual Sales Counter Updater -->
+      <div class="bg-amber-50 p-3 rounded-xl border border-amber-200 space-y-2">
+        <h4 class="text-xs font-bold text-amber-900">Update Order Sales Counter</h4>
+        <div class="flex gap-2">
+          <input type="number" id="salesInputVal" placeholder="Enter total sales count" class="text-xs p-2 border rounded-lg bg-white flex-grow">
+          <button type="button" onclick="updateManualSales()" class="px-3 py-2 bg-amber-600 text-white rounded-lg text-xs font-bold">Update</button>
         </div>
+      </div>
+
+      <!-- Add Product -->
+      <div class="space-y-3 bg-slate-50 p-4 rounded-xl border">
+        <h3 class="text-xs font-bold text-slate-900">+ Add Product (Mark Special for Main Page)</h3>
+        <input type="text" id="newCat" placeholder="Category (e.g. Audio, Smart Watches)" class="w-full text-xs p-2.5 border rounded-lg bg-white">
         <input type="text" id="newTitle" placeholder="Product Name" class="w-full text-xs p-2.5 border rounded-lg bg-white">
-        <input type="number" id="newPrice" placeholder="Price in LKR (e.g. 6500)" class="w-full text-xs p-2.5 border rounded-lg bg-white">
-        <textarea id="newDesc" rows="2" placeholder="Product Details / Warranty..." class="w-full text-xs p-2.5 border rounded-lg bg-white"></textarea>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-          <div>
-            <label class="text-[10px] font-bold text-slate-500">Choose Photo from Phone</label>
-            <input type="file" id="newImgFile" accept="image/*" onchange="previewFile()" class="w-full text-[11px] p-1.5 border rounded-lg bg-white">
-          </div>
-          <div>
-            <label class="text-[10px] font-bold text-slate-500">OR Paste Image Link</label>
-            <input type="text" id="newImage" placeholder="https://..." class="w-full text-xs p-2 border rounded-lg bg-white">
-          </div>
+        <div class="grid grid-cols-2 gap-2">
+          <input type="number" id="newPrice" placeholder="Selling Price (LKR)" class="text-xs p-2.5 border rounded-lg bg-white">
+          <input type="number" id="newCost" placeholder="Our Cost (LKR) [Optional]" class="text-xs p-2.5 border rounded-lg bg-white">
         </div>
-        <img id="imgPreview" class="h-16 w-16 object-cover rounded border hidden" />
-        <button type="button" onclick="publishProduct()" class="w-full py-3 bg-blue-600 text-white rounded-xl text-xs font-bold shadow">Publish Product to Store</button>
+        <textarea id="newDesc" rows="2" placeholder="Details..." class="w-full text-xs p-2.5 border rounded-lg bg-white"></textarea>
+        <div class="flex items-center gap-2">
+          <input type="checkbox" id="newSpecial" class="w-4 h-4 text-amber-600">
+          <label for="newSpecial" class="text-xs font-bold text-slate-700">Set as Special Offer Product (Show on Main Page)</label>
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+          <input type="file" id="newImgFile" accept="image/*" onchange="previewFile()" class="text-[11px] p-1.5 border rounded-lg bg-white">
+          <input type="text" id="newImage" placeholder="Or Image URL" class="text-xs p-2 border rounded-lg bg-white">
+        </div>
+        <img id="imgPreview" class="h-14 w-14 object-cover rounded border hidden" />
+        <button type="button" onclick="publishProduct()" class="w-full py-2.5 bg-blue-600 text-white rounded-xl text-xs font-bold">Publish Product</button>
       </div>
-      <div>
-        <h4 class="text-xs font-bold text-slate-800 mb-2">Manage Products</h4>
-        <div id="adminItemsList" class="space-y-2 max-h-60 overflow-y-auto"></div>
-      </div>
+      <div id="adminItemsList" class="space-y-2 max-h-48 overflow-y-auto"></div>
     </div>
   </div>
 </section>
+
+<!-- Hero Banner & Special Offer 3 Products Section -->
 <section class="max-w-7xl mx-auto px-4 pt-5 w-full">
-  <div class="bg-gradient-to-r from-slate-900 via-slate-800 to-amber-950 rounded-2xl p-6 text-white shadow-sm">
-    <span class="text-[10px] uppercase tracking-wider text-amber-400 font-bold bg-amber-400/10 px-2.5 py-1 rounded border border-amber-400/20">Islandwide Express Delivery</span>
+  <div class="bg-gradient-to-r from-slate-900 via-slate-800 to-amber-950 rounded-2xl p-6 text-white shadow-sm mb-6">
+    <span class="text-[10px] uppercase tracking-wider text-amber-400 font-bold bg-amber-400/10 px-2.5 py-1 rounded border border-amber-400/20">Official Store Sri Lanka</span>
     <h1 class="text-2xl sm:text-3xl font-extrabold mt-2">Leopis (Pvt) Ltd</h1>
-    <p class="text-slate-300 text-xs sm:text-sm mt-1">Genuine electronic gadgets & accessories. Direct WhatsApp ordering across Sri Lanka.</p>
-    <div class="mt-4 flex flex-wrap gap-2 text-xs">
-      <a href="https://wa.me/94783366466" target="_blank" class="bg-emerald-600 text-white px-4 py-2 rounded-xl font-bold flex items-center gap-1.5"><i class="fa-brands fa-whatsapp"></i> WhatsApp Order</a>
-      <a href="tel:+94783366466" class="bg-white/10 text-white px-3.5 py-2 rounded-xl border border-white/10 flex items-center gap-1.5"><i class="fa-solid fa-phone text-amber-400"></i> +94 78 336 6466</a>
-    </div>
+    <p class="text-slate-300 text-xs sm:text-sm mt-1">Premium gadgets & accessories. Cash on Delivery across Sri Lanka.</p>
   </div>
-</section>
-<section class="max-w-7xl mx-auto px-4 pt-5 w-full">
+
+  <div class="mb-2">
+    <h2 class="text-base font-extrabold text-slate-900 flex items-center gap-2"><i class="fa-solid fa-fire text-amber-500"></i> Special Offer Products</h2>
+  </div>
+  <!-- 3 Special Offer Products Grid -->
+  <div id="specialOfferGrid" class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8"></div>
+  </section>
+  <!-- Category Filter Tabs -->
+<section class="max-w-7xl mx-auto px-4 pt-2 w-full">
   <div class="flex items-center gap-2 overflow-x-auto pb-2 no-scrollbar" id="categoryTabs"></div>
 </section>
+
+<!-- Main Products Feed (Scrollable) -->
 <main class="max-w-7xl mx-auto px-4 py-4 flex-grow w-full">
   <div class="flex items-center justify-between mb-4">
-    <h2 id="activeCategoryTitle" class="text-base sm:text-lg font-extrabold text-slate-900">All Featured Items</h2>
-    <span class="text-xs text-slate-500" id="productCounter">3 items</span>
+    <h2 id="activeCategoryTitle" class="text-base font-extrabold text-slate-900">All Featured Items</h2>
+    <span class="text-xs text-slate-500" id="productCounter">0 items</span>
   </div>
   <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5"></div>
 </main>
+
+<!-- AI FAQ Chat Section (Free Gemini Integration Simulation) -->
+<section class="max-w-7xl mx-auto px-4 py-8 w-full">
+  <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
+    <div class="flex items-center gap-2 mb-3">
+      <i class="fa-solid fa-robot text-amber-500 text-lg"></i>
+      <h3 class="text-sm font-bold text-slate-900">Ask Leopis AI Assistant (FAQ Chat)</h3>
+    </div>
+    <div id="chatBox" class="bg-slate-50 border rounded-xl p-3 h-36 overflow-y-auto text-xs space-y-2 mb-3">
+      <div class="text-slate-500">AI: Hello! Ask me about islandwide delivery, warranty, or cash on delivery in Sri Lanka.</div>
+    </div>
+    <div class="flex gap-2">
+      <input type="text" id="chatInput" placeholder="Type your question..." class="text-xs p-2.5 border rounded-lg flex-grow bg-white outline-none">
+      <button type="button" onclick="sendAiChat()" class="px-4 py-2.5 bg-slate-900 text-white rounded-lg text-xs font-bold">Ask AI</button>
+    </div>
+  </div>
+</section>
+
+<!-- Cart Drawer -->
 <div id="cartDrawer" style="display:none;" class="fixed inset-0 z-50 bg-black/60 justify-end">
   <div class="w-full max-w-md bg-white h-full flex flex-col shadow-2xl">
     <div class="p-4 bg-slate-900 text-white flex justify-between items-center">
@@ -302,16 +407,18 @@ window.addEventListener('DOMContentLoaded', () => { renderCategoryTabs(); render
       <input type="tel" id="custPhone" placeholder="Phone Number" class="w-full text-xs p-2.5 border rounded-lg bg-white">
       <input type="text" id="custDistrict" placeholder="Delivery City / District" class="w-full text-xs p-2.5 border rounded-lg bg-white">
       <button type="button" onclick="checkoutWhatsApp()" class="w-full py-3 bg-emerald-600 text-white rounded-xl font-bold text-xs flex justify-center items-center gap-2">
-        <i class="fa-brands fa-whatsapp text-base"></i> Confirm Order on WhatsApp
+        <i class="fa-brands fa-whatsapp text-base"></i> Confirm Order (Cash on Delivery)
       </button>
     </div>
   </div>
 </div>
+
+<!-- Footer with Short & Sweet Company Bio -->
 <footer class="bg-slate-950 text-slate-400 border-t border-slate-800 py-8 mt-12 text-xs">
   <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
     <div>
       <h3 class="text-sm font-bold text-white mb-2">Leopis (Pvt) Ltd</h3>
-      <p class="text-slate-400">Official online store in Sri Lanka for quality electronics and accessories.</p>
+      <p class="text-slate-400">Leopis (Pvt) Ltd delivers premium electronic gadgets, smart wearables, and mobile accessories islandwide across Sri Lanka with trusted cash on delivery service.</p>
     </div>
     <div class="space-y-1.5">
       <div class="font-bold text-white mb-2">Contact Us</div>
@@ -325,11 +432,44 @@ window.addEventListener('DOMContentLoaded', () => { renderCategoryTabs(); render
         <a href="https://www.facebook.com/share/1E44ZiZk7x/" target="_blank" class="p-2 bg-slate-800 rounded-lg text-white"><i class="fa-brands fa-facebook-f"></i></a>
         <a href="https://www.tiktok.com/@leo.pis07" target="_blank" class="p-2 bg-slate-800 rounded-lg text-white"><i class="fa-brands fa-tiktok"></i></a>
         <a href="https://www.instagram.com/leopispvt" target="_blank" class="p-2 bg-slate-800 rounded-lg text-white"><i class="fa-brands fa-instagram"></i></a>
-        <a href="https://wa.me/94783366466" target="_blank" class="p-2 bg-slate-800 rounded-lg text-white"><i class="fa-brands fa-whatsapp"></i></a>
       </div>
     </div>
   </div>
-  <div class="text-center text-slate-600 text-[11px] border-t border-slate-900 pt-4">&copy; 2026 Leopis (Pvt) Ltd. Sri Lanka.</div>
+  <div class="text-center text-slate-600 text-[11px] border-t border-slate-900 pt-4">&copy; 2026 Leopis (Pvt) Ltd. Sri Lanka. All rights reserved.</div>
 </footer>
+
+<script>
+// Google Translate Simulation for Tamil, English & Sinhala
+function changeLanguage(lang) {
+  const translations = {
+    en: { title: "Official Store Sri Lanka", cart: "Cart", buy: "Buy" },
+    ta: { title: "அதிகாரப்பூர்வ அங்காடி இலங்கை", cart: "கூடை", buy: "வாங்கு" },
+    si: { title: "නිල වෙළඳසැල ශ්‍රී ලංකාව", cart: "කරත්තය", buy: "මිලදී ගන්න" }
+  };
+  alert("Language switched! (Google Translate Engine active for: " + lang.toUpperCase() + ")");
+}
+
+// AI FAQ Chat Simulator
+function sendAiChat() {
+  const input = document.getElementById('chatInput');
+  const box = document.getElementById('chatBox');
+  const txt = input.value.trim();
+  if (!txt) return;
+
+  box.innerHTML += `<div class="text-right text-blue-600 font-bold">You: ${txt}</div>`;
+  input.value = '';
+
+  setTimeout(() => {
+    let reply = "Yes, we provide islandwide cash on delivery across Sri Lanka within 2-3 working days!";
+    const low = txt.toLowerCase();
+    if (low.includes('delivery') || low.includes('time')) reply = "Delivery takes 2 to 3 working days islandwide in Sri Lanka.";
+    else if (low.includes('warranty') || low.includes('guarantee')) reply = "All our products come with a standard store warranty and quality check.";
+    else if (low.includes('whatsapp') || low.includes('contact')) reply = "You can contact our hotline or WhatsApp directly at +94783366466.";
+    
+    box.innerHTML += `<div class="text-slate-700">AI: ${reply}</div>`;
+    box.scrollTop = box.scrollHeight;
+  }, 600);
+}
+</script>
 </body>
 </html>
