@@ -29,8 +29,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 function renderCategories() {
   const cats = [...new Set(ALL_PRODUCTS.map(p => p.category).filter(Boolean))].sort();
   const container = document.getElementById("categoryChips");
-  container.innerHTML = `<button class="chip active" data-cat="all">All</button>` +
+  container.innerHTML = `<button class="chip active" data-cat="all">All Products</button>` +
     cats.map(c => `<button class="chip" data-cat="${c}">${c}</button>`).join("");
+  
   container.querySelectorAll(".chip").forEach(btn => {
     btn.addEventListener("click", () => {
       container.querySelectorAll(".chip").forEach(b => b.classList.remove("active"));
@@ -52,14 +53,14 @@ function renderProducts() {
   const pageItems = filteredProducts.slice(start, start + PER_PAGE);
 
   if (pageItems.length === 0) {
-    grid.innerHTML = `<p style="grid-column:1/-1;text-align:center;color:var(--muted);padding:40px 0;">No products found.</p>`;
+    grid.innerHTML = `<p style="grid-column:1/-1;text-align:center;padding:40px;">No products found.</p>`;
     return;
   }
 
   grid.innerHTML = pageItems.map(p => `
     <article class="product-card">
       <div class="product-img">
-        <img src="${p.image || 'assets/placeholder.png'}" alt="${p.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/400?text=No+Image'">
+        <img src="${p.image || 'assets/placeholder.png'}" alt="${p.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=No+Image'">
       </div>
       <div class="product-body">
         <h3 class="product-name">${p.name}</h3>
@@ -80,7 +81,6 @@ function renderProducts() {
   );
 }
 
-// (மீதமுள்ள பங்க்ஷன்கள் அப்படியே இருக்கும்: renderPagination, initSearchSort, addToCart, etc.)
 function renderPagination() {
   const totalPages = Math.ceil(filteredProducts.length / PER_PAGE);
   const container = document.getElementById("pagination");
@@ -116,22 +116,21 @@ function initSearchSort() {
   const apply = () => {
     const q = search.value.toLowerCase().trim();
     let list = [...ALL_PRODUCTS];
-    if (q) list = list.filter(p =>
-      p.name.toLowerCase().includes(q) ||
-      (p.category || "").toLowerCase().includes(q)
-    );
+    if (q) list = list.filter(p => p.name.toLowerCase().includes(q) || (p.category || "").toLowerCase().includes(q));
+    
     const s = sort.value;
     if (s === "price-asc") list.sort((a, b) => a.price - b.price);
     if (s === "price-desc") list.sort((a, b) => b.price - a.price);
     if (s === "name-asc") list.sort((a, b) => a.name.localeCompare(b.name));
+    
     filteredProducts = list;
     currentPage = 1;
     renderProducts();
     renderPagination();
   };
 
-  search.addEventListener("input", debounce(apply, 250));
-  sort.addEventListener("change", apply);
+  if(search) search.addEventListener("input", debounce(apply, 300));
+  if(sort) sort.addEventListener("change", apply);
 }
 
 function debounce(fn, ms) {
@@ -157,7 +156,7 @@ function updateCartUI() {
   document.getElementById("cartCount").textContent = cart.reduce((s, c) => s + c.qty, 0);
   const itemsEl = document.getElementById("cartItems");
   if (cart.length === 0) {
-    itemsEl.innerHTML = `<p style="color:var(--muted);text-align:center;padding:40px 0;">Your cart is empty.</p>`;
+    itemsEl.innerHTML = `<p style="text-align:center; color:var(--muted); padding:20px;">Your cart is empty.</p>`;
   } else {
     itemsEl.innerHTML = cart.map(c => `
       <div class="cart-item">
@@ -167,9 +166,9 @@ function updateCartUI() {
           <span>${STORE_CONFIG.currency}${(c.price * c.qty).toFixed(2)}</span>
         </div>
         <div class="cart-qty">
-          <button data-id="${c.id}" data-action="dec">−</button>
-          <span>${c.qty}</span>
-          <button data-id="${c.id}" data-action="inc">+</button>
+          <button data-id="${c.id}" data-action="dec" style="border:1px solid #ccc; background:#fff; border-radius:4px; width:24px;">−</button>
+          <span style="margin:0 8px;">${c.qty}</span>
+          <button data-id="${c.id}" data-action="inc" style="border:1px solid #ccc; background:#fff; border-radius:4px; width:24px;">+</button>
         </div>
       </div>
     `).join("");
@@ -212,16 +211,14 @@ function orderViaWhatsApp() {
   });
   const total = cart.reduce((s, c) => s + c.price * c.qty, 0);
   msg += `\n*Total: ${STORE_CONFIG.currency}${total.toFixed(2)}*\n\nPlease confirm availability & delivery.`;
-  const url = `https://wa.me/${STORE_CONFIG.whatsappNumber}?text=${encodeURIComponent(msg)}`;
-  window.open(url, "_blank");
+  window.open(`https://wa.me/${STORE_CONFIG.whatsappNumber}?text=${encodeURIComponent(msg)}`, "_blank");
 }
 
 function quickWhatsApp(id) {
   const p = ALL_PRODUCTS.find(x => x.id == id);
   if (!p) return;
   const msg = `Hi! I'm interested in *${p.name}* (${STORE_CONFIG.currency}${Number(p.price).toFixed(2)}). Is it available?`;
-  const url = `https://wa.me/${STORE_CONFIG.whatsappNumber}?text=${encodeURIComponent(msg)}`;
-  window.open(url, "_blank");
+  window.open(`https://wa.me/${STORE_CONFIG.whatsappNumber}?text=${encodeURIComponent(msg)}`, "_blank");
 }
 
 function populateFooterLinks() {
@@ -233,27 +230,24 @@ function populateFooterLinks() {
   const container = document.getElementById("socialLinks");
   container.innerHTML = Object.entries(STORE_CONFIG.social)
     .filter(([, url]) => url)
-    .map(([platform, url]) =>
-      `<a href="${url}" target="_blank" rel="noopener"><i class="fab ${socialIcons[platform]}"></i></a>`
-    ).join("");
+    .map(([platform, url]) => `<a href="${url}" target="_blank"><i class="fab ${socialIcons[platform]}"></i></a>`).join("");
 }
 
 function initFaqAccordion() {
   const faqs = [
-    { q: "How do I place an order?", a: "Browse products, add to cart, then tap “Checkout on WhatsApp”." },
+    { q: "How do I place an order?", a: "Browse products, add to cart, then tap 'Checkout on WhatsApp'." },
     { q: "Do you deliver island‑wide?", a: "Yes! We deliver to every district. Delivery time is 2–5 working days." },
     { q: "What payment methods do you accept?", a: "Cash on delivery and bank transfer." },
     { q: "Can I track my order?", a: "Yes, you will receive a tracking link on WhatsApp." },
     { q: "Is there a minimum order?", a: "No minimum. Free delivery on orders over LKR 10,000." }
   ];
-  document.getElementById("faqAccordion").innerHTML = faqs.map(f => `
-    <details><summary>${f.q}</summary><p>${f.a}</p></details>
-  `).join("");
+  document.getElementById("faqAccordion").innerHTML = faqs.map(f => `<details><summary>${f.q}</summary><p>${f.a}</p></details>`).join("");
 }
 
 function initMobileMenu() {
   const btn = document.getElementById("hamburger");
   const nav = document.getElementById("mainNav");
-  btn.addEventListener("click", () => nav.classList.toggle("open"));
-  nav.querySelectorAll("a").forEach(a => a.addEventListener("click", () => nav.classList.remove("open")));
-      }
+  if(btn && nav) {
+    btn.addEventListener("click", () => nav.querySelector('.nav-inner').classList.toggle("open"));
+  }
+       }
