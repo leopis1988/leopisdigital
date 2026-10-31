@@ -1,253 +1,134 @@
-let ALL_PRODUCTS = [];
-let filteredProducts = [];
-let currentPage = 1;
-let SITE_SETTINGS = {};
-const PER_PAGE = STORE_CONFIG.productsPerPage;
-let cart = JSON.parse(localStorage.getItem("leopisdigital_cart") || "[]");
+// CONFIGURATION (உங்கள் வாட்ஸ்அப் எண் இங்கே)
+const CONFIG = { whatsappNumber: "94783366466" }; 
 
-document.addEventListener("DOMContentLoaded", async () => {
-  ALL_PRODUCTS = await loadProducts();
-  SITE_SETTINGS = loadSiteSettings(); 
-  
-  filteredProducts = [...ALL_PRODUCTS];
-  
-  document.getElementById("promoText").textContent = SITE_SETTINGS.promoText;
-  document.getElementById("visitCount").textContent = SITE_SETTINGS.visitCount;
-  document.getElementById("orderCount").textContent = SITE_SETTINGS.orderCount;
-  
-  renderCategories();
-  renderProducts();
-  renderPagination();
-  populateFooterLinks();
-  initFaqAccordion();
-  initSearchSort();
-  initCartUI();
-  initMobileMenu();
-  document.getElementById("year").textContent = new Date().getFullYear();
-});
+let storeSettings = JSON.parse(localStorage.getItem('leopis_settings')) || { promo: "🔥 Island-wide delivery available", visits: "12,450", orders: "1,850" };
+let PRODUCTS = JSON.parse(localStorage.getItem('leopis_products')) || [
+  { id: 1, name: "MacBook Pro 14-inch M3", price: 550000, category: "Laptops", image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400", description: "Apple M3 chip, 16GB RAM.", gallery: [] },
+  { id: 2, name: "Dell XPS 13 Plus", price: 420000, category: "Laptops", image: "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?w=400", description: "Intel Core i7, 16GB RAM.", gallery: [] }
+];
 
-function renderCategories() {
-  const cats = [...new Set(ALL_PRODUCTS.map(p => p.category).filter(Boolean))].sort();
-  const container = document.getElementById("categoryChips");
-  container.innerHTML = `<button class="chip active" data-cat="all">All Products</button>` +
-    cats.map(c => `<button class="chip" data-cat="${c}">${c}</button>`).join("");
-  
-  container.querySelectorAll(".chip").forEach(btn => {
-    btn.addEventListener("click", () => {
-      container.querySelectorAll(".chip").forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-      const cat = btn.dataset.cat;
-      filteredProducts = cat === "all"
-        ? [...ALL_PRODUCTS]
-        : ALL_PRODUCTS.filter(p => p.category === cat);
-      currentPage = 1;
-      renderProducts();
-      renderPagination();
-    });
-  });
-}
+let cart = [];
+let activeProduct = null;
 
+// INIT
+document.getElementById('promoText').innerText = storeSettings.promo;
+document.getElementById('visitsCount').innerText = storeSettings.visits;
+document.getElementById('ordersCount').innerText = storeSettings.orders;
+document.getElementById('socialLinks').innerHTML = `
+  <a href="https://facebook.com/leopisdigital" target="_blank"><i class="fab fa-facebook-f"></i></a>
+  <a href="https://wa.me/${CONFIG.whatsappNumber}" target="_blank"><i class="fab fa-whatsapp"></i></a>
+`;
+
+// RENDER PRODUCTS
 function renderProducts() {
-  const grid = document.getElementById("productGrid");
-  const start = (currentPage - 1) * PER_PAGE;
-  const pageItems = filteredProducts.slice(start, start + PER_PAGE);
-
-  if (pageItems.length === 0) {
-    grid.innerHTML = `<p style="grid-column:1/-1;text-align:center;padding:40px;">No products found.</p>`;
-    return;
-  }
-
-  grid.innerHTML = pageItems.map(p => `
+  document.getElementById('productGrid').innerHTML = PRODUCTS.map(p => `
     <article class="product-card">
-      <div class="product-img">
-        <img src="${p.image || 'assets/placeholder.png'}" alt="${p.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=No+Image'">
-      </div>
+      <div class="product-img" onclick="openModal(${p.id})"><img src="${p.image}"></div>
       <div class="product-body">
-        <h3 class="product-name">${p.name}</h3>
-        <div class="product-price">${STORE_CONFIG.currency}${Number(p.price).toFixed(2)}</div>
+        <h3 class="product-name" onclick="openModal(${p.id})">${p.name}</h3>
+        <div class="product-price">LKR ${p.price.toLocaleString()}</div>
         <div class="product-actions">
-          <button class="add-cart-btn" data-id="${p.id}">Add to Cart</button>
-          <button class="wa-quick-btn" data-id="${p.id}"><i class="fab fa-whatsapp"></i></button>
+          <button class="add-cart-btn" onclick="addToCart(${p.id})">Add</button>
+          <button class="wa-quick-btn" onclick="waOrder(${p.id})"><i class="fab fa-whatsapp"></i></button>
         </div>
       </div>
     </article>
-  `).join("");
-
-  grid.querySelectorAll(".add-cart-btn").forEach(btn =>
-    btn.addEventListener("click", () => addToCart(btn.dataset.id))
-  );
-  grid.querySelectorAll(".wa-quick-btn").forEach(btn =>
-    btn.addEventListener("click", () => quickWhatsApp(btn.dataset.id))
-  );
+  `).join('');
 }
 
-function renderPagination() {
-  const totalPages = Math.ceil(filteredProducts.length / PER_PAGE);
-  const container = document.getElementById("pagination");
-  if (totalPages <= 1) { container.innerHTML = ""; return; }
+// MODAL LOGIC
+function openModal(id) {
+  activeProduct = PRODUCTS.find(p => p.id === id);
+  document.getElementById('mImg').src = activeProduct.image;
+  document.getElementById('mTitle').innerText = activeProduct.name;
+  document.getElementById('mPrice').innerText = `LKR ${activeProduct.price.toLocaleString()}`;
+  document.getElementById('mDesc').innerText = activeProduct.description || "No description.";
+  
+  const gallery = activeProduct.gallery || [];
+  const thumbs = document.getElementById('mThumbnails');
+  if (gallery.length > 0) {
+    thumbs.innerHTML = [activeProduct.image, ...gallery].map((img, i) => 
+      `<img src="${img}" class="${i===0?'active':''}" onclick="document.getElementById('mImg').src='${img}'; document.querySelectorAll('.thumbnails img').forEach(t=>t.classList.remove('active')); this.classList.add('active')">`
+    ).join('');
+  } else { thumbs.innerHTML = ''; }
 
-  let html = `<button class="page-btn" ${currentPage === 1 ? "disabled" : ""} data-page="${currentPage - 1}">‹</button>`;
-  for (let i = 1; i <= totalPages; i++) {
-    if (i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) {
-      html += `<button class="page-btn ${i === currentPage ? "active" : ""}" data-page="${i}">${i}</button>`;
-    } else if (i === currentPage - 2 || i === currentPage + 2) {
-      html += `<span style="align-self:center;">…</span>`;
-    }
-  }
-  html += `<button class="page-btn" ${currentPage === totalPages ? "disabled" : ""} data-page="${currentPage + 1}">›</button>`;
-  container.innerHTML = html;
+  document.getElementById('productModal').style.display = 'flex';
+}
+function closeModal() { document.getElementById('productModal').style.display = 'none'; }
+function addToCartFromModal() { addToCart(activeProduct.id); closeModal(); }
+function waOrderFromModal() { waOrder(activeProduct.id); closeModal(); }
 
-  container.querySelectorAll(".page-btn[data-page]").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const page = Number(btn.dataset.page);
-      if (page < 1 || page > totalPages) return;
-      currentPage = page;
-      renderProducts();
-      renderPagination();
-      document.getElementById("shop").scrollIntoView({ behavior: "smooth" });
-    });
-  });
+// FAQ LOGIC
+const faqs = [
+  { q: "How to order?", a: "Add to cart, then click Checkout on WhatsApp." },
+  { q: "Delivery time?", a: "2-5 working days island-wide." },
+  { q: "Payment methods?", a: "Cash on delivery or bank transfer." }
+];
+document.getElementById('faqList').innerHTML = faqs.map((f, i) => `
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(${i})">${f.q} <i class="fas fa-plus"></i></div>
+    <div class="faq-a" id="faq-a-${i}">${f.a}</div>
+  </div>
+`).join('');
+function toggleFaq(i) {
+  const el = document.getElementById(`faq-a-${i}`);
+  el.style.display = el.style.display === 'block' ? 'none' : 'block';
 }
 
-function initSearchSort() {
-  const search = document.getElementById("searchInput");
-  const sort = document.getElementById("sortSelect");
-
-  const apply = () => {
-    const q = search.value.toLowerCase().trim();
-    let list = [...ALL_PRODUCTS];
-    if (q) list = list.filter(p => p.name.toLowerCase().includes(q) || (p.category || "").toLowerCase().includes(q));
-    
-    const s = sort.value;
-    if (s === "price-asc") list.sort((a, b) => a.price - b.price);
-    if (s === "price-desc") list.sort((a, b) => b.price - a.price);
-    if (s === "name-asc") list.sort((a, b) => a.name.localeCompare(b.name));
-    
-    filteredProducts = list;
-    currentPage = 1;
-    renderProducts();
-    renderPagination();
-  };
-
-  if(search) search.addEventListener("input", debounce(apply, 300));
-  if(sort) sort.addEventListener("change", apply);
+// AI LOGIC
+function askAI() {
+  const input = document.getElementById('aiInput');
+  const msg = input.value.trim();
+  if(!msg) return;
+  const box = document.getElementById('aiMessages');
+  box.innerHTML += `<div><b>You:</b> ${msg}</div>`;
+  input.value = '';
+  let reply = "Please contact us on WhatsApp for more details.";
+  if(msg.toLowerCase().includes('delivery')) reply = "We deliver island-wide in 2-5 days.";
+  if(msg.toLowerCase().includes('price')) reply = "Prices are in LKR on each product.";
+  setTimeout(() => {
+    box.innerHTML += `<div style="margin-top:10px; color:var(--primary);"><b>AI:</b> ${reply}</div>`;
+    box.scrollTop = box.scrollHeight;
+  }, 500);
 }
 
-function debounce(fn, ms) {
-  let t; return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); };
-}
-
+// CART & WHATSAPP
 function addToCart(id) {
-  const product = ALL_PRODUCTS.find(p => p.id == id);
-  if (!product) return;
-  const existing = cart.find(c => c.id == id);
+  const p = PRODUCTS.find(x => x.id === id);
+  const existing = cart.find(x => x.id === id);
   if (existing) existing.qty++;
-  else cart.push({ ...product, qty: 1 });
-  persistCart();
-  updateCartUI();
-  openCart();
+  else cart.push({ ...p, qty: 1 });
+  updateCart();
+  document.getElementById('cartDrawer').classList.add('open');
 }
-
-function persistCart() {
-  localStorage.setItem("leopisdigital_cart", JSON.stringify(cart));
-}
-
-function updateCartUI() {
-  document.getElementById("cartCount").textContent = cart.reduce((s, c) => s + c.qty, 0);
-  const itemsEl = document.getElementById("cartItems");
-  if (cart.length === 0) {
-    itemsEl.innerHTML = `<p style="text-align:center; color:var(--muted); padding:20px;">Your cart is empty.</p>`;
-  } else {
-    itemsEl.innerHTML = cart.map(c => `
-      <div class="cart-item">
-        <img src="${c.image || 'https://via.placeholder.com/60'}" alt="${c.name}">
-        <div class="cart-item-info">
-          <strong>${c.name}</strong>
-          <span>${STORE_CONFIG.currency}${(c.price * c.qty).toFixed(2)}</span>
-        </div>
-        <div class="cart-qty">
-          <button data-id="${c.id}" data-action="dec" style="border:1px solid #ccc; background:#fff; border-radius:4px; width:24px;">−</button>
-          <span style="margin:0 8px;">${c.qty}</span>
-          <button data-id="${c.id}" data-action="inc" style="border:1px solid #ccc; background:#fff; border-radius:4px; width:24px;">+</button>
-        </div>
+function updateCart() {
+  document.getElementById('cartCount').innerText = cart.reduce((s, i) => s + i.qty, 0);
+  document.getElementById('cartItems').innerHTML = cart.length ? cart.map(c => `
+    <div style="display:flex; gap:10px; margin-bottom:10px; border-bottom:1px solid #eee; padding-bottom:10px;">
+      <img src="${c.image}" style="width:50px; height:50px; object-fit:contain;">
+      <div style="flex:1;">
+        <b style="font-size:0.8rem;">${c.name}</b><br><span style="color:var(--primary); font-weight:bold;">LKR ${c.price.toLocaleString()}</span>
+        <div style="margin-top:5px;"><button onclick="changeQty(${c.id}, -1)" style="border:1px solid #ccc;">-</button> ${c.qty} <button onclick="changeQty(${c.id}, 1)" style="border:1px solid #ccc;">+</button></div>
       </div>
-    `).join("");
-    itemsEl.querySelectorAll("button[data-action]").forEach(btn => {
-      btn.addEventListener("click", () => {
-        const item = cart.find(c => c.id == btn.dataset.id);
-        if (!item) return;
-        if (btn.dataset.action === "inc") item.qty++;
-        if (btn.dataset.action === "dec") { item.qty--; if (item.qty <= 0) cart = cart.filter(c => c.id != item.id); }
-        persistCart(); updateCartUI();
-      });
-    });
-  }
-  const total = cart.reduce((s, c) => s + c.price * c.qty, 0);
-  document.getElementById("cartTotal").textContent = `${STORE_CONFIG.currency}${total.toFixed(2)}`;
+    </div>
+  `).join('') : "<p>Cart is empty.</p>";
+  document.getElementById('cartTotal').innerText = `LKR ${cart.reduce((s, i) => s + (i.price * i.qty), 0).toLocaleString()}`;
+}
+function changeQty(id, ch) {
+  const item = cart.find(x => x.id === id);
+  if (item) { item.qty += ch; if (item.qty <= 0) cart = cart.filter(x => x.id !== id); updateCart(); }
+}
+function waOrder(id) {
+  const p = PRODUCTS.find(x => x.id === id);
+  window.open(`https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(`Hi! I want to order *${p.name}* (LKR ${p.price.toLocaleString()}).`)}`);
+}
+function checkout() {
+  if (cart.length === 0) return alert("Cart empty!");
+  let msg = "🛒 *New Order*\n\n";
+  cart.forEach((c, i) => msg += `${i+1}. ${c.name} x${c.qty} = LKR ${(c.price*c.qty).toLocaleString()}\n`);
+  msg += `\n*Total: LKR ${cart.reduce((s, i) => s + (i.price * i.qty), 0).toLocaleString()}*`;
+  window.open(`https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(msg)}`);
 }
 
-function openCart() {
-  document.getElementById("cartDrawer").classList.add("open");
-  document.getElementById("overlay").classList.add("show");
-}
-function closeCart() {
-  document.getElementById("cartDrawer").classList.remove("open");
-  document.getElementById("overlay").classList.remove("show");
-}
-
-function initCartUI() {
-  document.getElementById("cartToggle").addEventListener("click", openCart);
-  document.getElementById("cartClose").addEventListener("click", closeCart);
-  document.getElementById("overlay").addEventListener("click", closeCart);
-  document.getElementById("whatsappOrderBtn").addEventListener("click", orderViaWhatsApp);
-  updateCartUI();
-}
-
-function orderViaWhatsApp() {
-  if (cart.length === 0) { alert("Your cart is empty."); return; }
-  let msg = `🛒 *New Order – LeoPis Digital*\n\n`;
-  cart.forEach((c, i) => {
-    msg += `${i + 1}. ${c.name} × ${c.qty} = ${STORE_CONFIG.currency}${(c.price * c.qty).toFixed(2)}\n`;
-  });
-  const total = cart.reduce((s, c) => s + c.price * c.qty, 0);
-  msg += `\n*Total: ${STORE_CONFIG.currency}${total.toFixed(2)}*\n\nPlease confirm availability & delivery.`;
-  window.open(`https://wa.me/${STORE_CONFIG.whatsappNumber}?text=${encodeURIComponent(msg)}`, "_blank");
-}
-
-function quickWhatsApp(id) {
-  const p = ALL_PRODUCTS.find(x => x.id == id);
-  if (!p) return;
-  const msg = `Hi! I'm interested in *${p.name}* (${STORE_CONFIG.currency}${Number(p.price).toFixed(2)}). Is it available?`;
-  window.open(`https://wa.me/${STORE_CONFIG.whatsappNumber}?text=${encodeURIComponent(msg)}`, "_blank");
-}
-
-function populateFooterLinks() {
-  document.getElementById("googleRatingLink").href = STORE_CONFIG.googleRatingUrl;
-  document.getElementById("footerWhatsApp").href = `https://wa.me/${STORE_CONFIG.whatsappNumber}`;
-  document.getElementById("footerEmail").href = `mailto:${STORE_CONFIG.email}`;
-
-  const socialIcons = { facebook: "fa-facebook-f", instagram: "fa-instagram", tiktok: "fa-tiktok", youtube: "fa-youtube" };
-  const container = document.getElementById("socialLinks");
-  container.innerHTML = Object.entries(STORE_CONFIG.social)
-    .filter(([, url]) => url)
-    .map(([platform, url]) => `<a href="${url}" target="_blank"><i class="fab ${socialIcons[platform]}"></i></a>`).join("");
-}
-
-function initFaqAccordion() {
-  const faqs = [
-    { q: "How do I place an order?", a: "Browse products, add to cart, then tap 'Checkout on WhatsApp'." },
-    { q: "Do you deliver island‑wide?", a: "Yes! We deliver to every district. Delivery time is 2–5 working days." },
-    { q: "What payment methods do you accept?", a: "Cash on delivery and bank transfer." },
-    { q: "Can I track my order?", a: "Yes, you will receive a tracking link on WhatsApp." },
-    { q: "Is there a minimum order?", a: "No minimum. Free delivery on orders over LKR 10,000." }
-  ];
-  document.getElementById("faqAccordion").innerHTML = faqs.map(f => `<details><summary>${f.q}</summary><p>${f.a}</p></details>`).join("");
-}
-
-function initMobileMenu() {
-  const btn = document.getElementById("hamburger");
-  const nav = document.getElementById("mainNav");
-  if(btn && nav) {
-    btn.addEventListener("click", () => nav.querySelector('.nav-inner').classList.toggle("open"));
-  }
-       }
+document.getElementById('cartToggle').onclick = () => document.getElementById('cartDrawer').classList.add('open');
+renderProducts();
