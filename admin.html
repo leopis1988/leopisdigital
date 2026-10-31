@@ -3,85 +3,368 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login | LeoPis Digital</title>
+    <title>Admin Dashboard | LeoPis Digital</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- SheetJS for Excel Parsing -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <style>
-        body { font-family: 'Inter', sans-serif; background: #f8fafc; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        :root { --primary: #2563eb; --bg: #f1f5f9; --sidebar: #0f172a; --text: #1e293b; --danger: #ef4444; --success: #10b981; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+        body { background: var(--bg); color: var(--text); display: flex; height: 100vh; overflow: hidden; }
+        
+        /* Login Screen */
+        #loginScreen { position: fixed; inset: 0; background: var(--bg); display: flex; justify-content: center; align-items: center; z-index: 1000; }
         .login-box { background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); width: 100%; max-width: 400px; }
-        h2 { text-align: center; margin-bottom: 20px; color: #1e293b; }
-        label { display: block; margin-bottom: 5px; font-size: 0.9rem; font-weight: 500; color: #64748b; }
-        input { width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; font-family: inherit; }
-        button { width: 100%; padding: 10px; background: #2563eb; color: #fff; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; font-family: inherit; }
-        button:hover { background: #1d4ed8; }
-        .hidden { display: none; }
-        .logout-btn { background: #ef4444; margin-top: 10px; }
-        .logout-btn:hover { background: #dc2626; }
+        .login-box h2 { text-align: center; margin-bottom: 20px; }
+        .login-box input { width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 4px; }
+        .login-box button { width: 100%; padding: 10px; background: var(--primary); color: #fff; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
+
+        /* Dashboard Layout */
+        #dashboard { display: none; width: 100%; height: 100%; }
+        .sidebar { width: 250px; background: var(--sidebar); color: #fff; display: flex; flex-direction: column; }
+        .sidebar h2 { padding: 20px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); font-size: 1.2rem; }
+        .sidebar a { padding: 15px 20px; color: #cbd5e1; text-decoration: none; display: block; cursor: pointer; border-left: 3px solid transparent; }
+        .sidebar a:hover, .sidebar a.active { background: rgba(255,255,255,0.05); color: #fff; border-left-color: var(--primary); }
+        
+        .main-content { flex: 1; padding: 30px; overflow-y: auto; }
+        .section { display: none; }
+        .section.active { display: block; }
+        .card { background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        
+        /* Forms & Tables */
+        input, select, textarea { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 4px; }
+        button.btn { padding: 10px 15px; background: var(--primary); color: #fff; border: none; border-radius: 4px; cursor: pointer; font-weight: 600; }
+        button.btn-danger { background: var(--danger); }
+        button.btn-success { background: var(--success); }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #eee; }
+        th { background: #f8fafc; font-weight: 600; }
+        .img-thumb { width: 40px; height: 40px; object-fit: cover; border-radius: 4px; }
+
+        /* Stats Grid */
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
     </style>
 </head>
 <body>
-    <!-- Login Screen -->
-    <div class="login-box" id="loginBox">
-        <h2>Admin Login</h2>
-        <input type="text" id="username" placeholder="Username">
-        <input type="password" id="password" placeholder="Password">
-        <button onclick="login()">Login</button>
+
+    <!-- LOGIN SCREEN -->
+    <div id="loginScreen">
+        <div class="login-box">
+            <h2>Admin Login</h2>
+            <input type="text" id="username" placeholder="Username (Leopis)">
+            <input type="password" id="password" placeholder="Password (Leopis@1988)">
+            <button onclick="login()">Login</button>
+        </div>
     </div>
-    
-    <!-- Admin Panel (Hidden by default) -->
-    <div class="login-box hidden" id="adminPanel">
-        <h2>Admin Dashboard</h2>
-        
-        <label>Total Website Visits</label>
-        <input type="number" id="editVisits">
-        
-        <label>Total Completed Orders</label>
-        <input type="number" id="editOrders">
-        
-        <button onclick="saveStats()">Save Changes</button>
-        <button onclick="logout()" class="logout-btn">Logout</button>
+
+    <!-- DASHBOARD -->
+    <div id="dashboard">
+        <div class="sidebar">
+            <h2>LeoPis Admin</h2>
+            <a onclick="showSection('dashboardHome')" class="active">Dashboard</a>
+            <a onclick="showSection('productManage')">Product Manager</a>
+            <a onclick="showSection('bulkUpload')">Bulk Upload (Excel/CSV)</a>
+            <a onclick="showSection('githubSettings')">GitHub Settings</a>
+            <a onclick="logout()" style="margin-top:auto; color:#f87171;">Logout</a>
+        </div>
+
+        <div class="main-content">
+            <!-- DASHBOARD HOME -->
+            <div id="dashboardHome" class="section active">
+                <h1>Overview</h1>
+                <div class="stats-grid">
+                    <div class="card">
+                        <h3>Total Visits</h3>
+                        <input type="number" id="editVisits">
+                        <button class="btn" onclick="saveStats()">Update Visits</button>
+                    </div>
+                    <div class="card">
+                        <h3>Total Orders</h3>
+                        <input type="number" id="editOrders">
+                        <button class="btn" onclick="saveStats()">Update Orders</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PRODUCT MANAGER -->
+            <div id="productManage" class="section">
+                <h1>Product Manager</h1>
+                <div class="card">
+                    <h3>Add New Product</h3>
+                    <input type="text" id="pName" placeholder="Product Name">
+                    <input type="number" id="pPrice" placeholder="Price (LKR)">
+                    <input type="text" id="pCategory" placeholder="Category (e.g. Audio, Home)">
+                    <textarea id="pDesc" placeholder="Description"></textarea>
+                    <label>Product Image (Choose from phone/camera)</label>
+                    <input type="file" id="pImage" accept="image/*" onchange="previewImage(event)">
+                    <img id="imgPreview" style="max-width:100px; display:none; margin-bottom:10px;">
+                    <button class="btn btn-success" onclick="addProduct()">Save Product</button>
+                </div>
+
+                <div class="card">
+                    <h3>Current Products</h3>
+                    <table id="productTable">
+                        <thead><tr><th>Image</th><th>Name</th><th>Price</th><th>Category</th><th>Action</th></tr></thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- BULK UPLOAD -->
+            <div id="bulkUpload" class="section">
+                <h1>Bulk Upload (Excel / CSV)</h1>
+                <div class="card">
+                    <p>Upload an Excel (.xlsx, .csv) file. Ensure columns are: <b>Name, Price, Category, Description, ImageURL</b>.</p>
+                    <input type="file" id="excelFile" accept=".xlsx, .xls, .csv">
+                    <button class="btn" onclick="processExcel()">Upload & Extract Data</button>
+                </div>
+                <div class="card">
+                    <h3>Backup & Restore (JSON)</h3>
+                    <button class="btn" onclick="downloadJSON()">Download products.json</button>
+                    <input type="file" id="jsonFile" accept=".json" onchange="uploadJSON(event)" style="margin-top:10px;">
+                </div>
+            </div>
+
+            <!-- GITHUB SETTINGS -->
+            <div id="githubSettings" class="section">
+                <h1>GitHub Auto-Update</h1>
+                <div class="card">
+                    <p>Push your local product database directly to your GitHub repository.</p>
+                    <input type="text" id="ghToken" placeholder="GitHub Personal Access Token (PAT)">
+                    <input type="text" id="ghRepo" placeholder="Username/Repository (e.g. leopis/store)">
+                    <input type="text" id="ghPath" placeholder="File Path (e.g. products.json)">
+                    <button class="btn" onclick="updateGitHub()">Push to GitHub</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
-        // Hidden Security Credentials
         const ADMIN_USER = "Leopis";
         const ADMIN_PASS = "Leopis@1988";
+        
+        // Load Products from LocalStorage
+        let PRODUCTS = JSON.parse(localStorage.getItem('leopis_products_v3')) || [
+            { id: 1, name: "Smart Air Fryer", price: 35000, category: "Home appliance and kitchen", image: "https://images.unsplash.com/photo-1626074353765-517a681e40be?w=400", description: "Digital air fryer for healthy cooking." },
+            { id: 2, name: "Electric Kettle", price: 8500, category: "Electrical items", image: "https://images.unsplash.com/photo-1585032226651-759b368d7246?w=400", description: "Stainless steel fast boiling kettle." }
+        ];
 
+        let currentBase64Image = "";
+
+        // AUTH
         function login() {
             const u = document.getElementById('username').value;
             const p = document.getElementById('password').value;
-            
             if (u === ADMIN_USER && p === ADMIN_PASS) {
-                document.getElementById('loginBox').classList.add('hidden');
-                document.getElementById('adminPanel').classList.remove('hidden');
-                loadStats();
-            } else {
-                alert("Invalid credentials. Please try again.");
-            }
-        }
-
-        function loadStats() {
-            // Load current stats from LocalStorage
-            document.getElementById('editVisits').value = localStorage.getItem('leopis_visits') || 12450;
-            document.getElementById('editOrders').value = localStorage.getItem('leopis_orders') || 1850;
-        }
-
-        function saveStats() {
-            // Save edited stats to LocalStorage
-            const newVisits = document.getElementById('editVisits').value;
-            const newOrders = document.getElementById('editOrders').value;
-            
-            localStorage.setItem('leopis_visits', newVisits);
-            localStorage.setItem('leopis_orders', newOrders);
-            
-            alert("Dashboard statistics updated successfully!");
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'flex';
+                initAdmin();
+            } else { alert("Invalid credentials"); }
         }
 
         function logout() {
-            document.getElementById('adminPanel').classList.add('hidden');
-            document.getElementById('loginBox').classList.remove('hidden');
-            document.getElementById('username').value = '';
-            document.getElementById('password').value = '';
+            location.reload();
+        }
+
+        // NAVIGATION
+        function showSection(id) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.sidebar a').forEach(a => a.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // INIT
+        function initAdmin() {
+            document.getElementById('editVisits').value = localStorage.getItem('leopis_visits') || 12450;
+            document.getElementById('editOrders').value = localStorage.getItem('leopis_orders') || 1850;
+            renderAdminProducts();
+        }
+
+        function saveStats() {
+            localStorage.setItem('leopis_visits', document.getElementById('editVisits').value);
+            localStorage.setItem('leopis_orders', document.getElementById('editOrders').value);
+            alert("Stats updated successfully!");
+        }
+
+        // PRODUCT MANAGEMENT
+        function renderAdminProducts() {
+            const tbody = document.querySelector('#productTable tbody');
+            tbody.innerHTML = PRODUCTS.map(p => `
+                <tr>
+                    <td><img src="${p.image}" class="img-thumb"></td>
+                    <td>${p.name}</td>
+                    <td>LKR ${p.price.toLocaleString()}</td>
+                    <td>${p.category}</td>
+                    <td><button class="btn btn-danger" onclick="deleteProduct(${p.id})">Delete</button></td>
+                </tr>
+            `).join('');
+            // Save to local storage to keep index.html synced
+            localStorage.setItem('leopis_products_v3', JSON.stringify(PRODUCTS));
+        }
+
+        // Handle Phone Image Extraction (Base64)
+        function previewImage(event) {
+            const file = event.target.files[0];
+            if(file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    currentBase64Image = e.target.result;
+                    const img = document.getElementById('imgPreview');
+                    img.src = currentBase64Image;
+                    img.style.display = 'block';
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function addProduct() {
+            const name = document.getElementById('pName').value;
+            const price = parseFloat(document.getElementById('pPrice').value);
+            const category = document.getElementById('pCategory').value;
+            const desc = document.getElementById('pDesc').value;
+            
+            if(!name || !price) return alert("Name and Price are required!");
+            
+            const newProduct = {
+                id: Date.now(),
+                name: name,
+                price: price,
+                category: category || "Other",
+                description: desc,
+                image: currentBase64Image || "https://via.placeholder.com/150"
+            };
+
+            PRODUCTS.push(newProduct);
+            renderAdminProducts();
+            
+            // Reset form
+            document.getElementById('pName').value = '';
+            document.getElementById('pPrice').value = '';
+            document.getElementById('pCategory').value = '';
+            document.getElementById('pDesc').value = '';
+            document.getElementById('pImage').value = '';
+            document.getElementById('imgPreview').style.display = 'none';
+            currentBase64Image = "";
+            alert("Product Added!");
+        }
+
+        function deleteProduct(id) {
+            if(confirm("Are you sure you want to delete this product?")) {
+                PRODUCTS = PRODUCTS.filter(p => p.id !== id);
+                renderAdminProducts();
+            }
+        }
+
+        // BULK EXCEL UPLOAD (Free AI Extraction Simulation)
+        function processExcel() {
+            const fileInput = document.getElementById('excelFile');
+            if (!fileInput.files.length) return alert("Please select an Excel or CSV file.");
+            
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                const data = new Uint8Array(e.target.result);
+                const workbook = XLSX.read(data, {type: 'array'});
+                const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+                const jsonData = XLSX.utils.sheet_to_json(firstSheet);
+                
+                let addedCount = 0;
+                jsonData.forEach(row => {
+                    if(row.Name && row.Price) {
+                        PRODUCTS.push({
+                            id: Date.now() + Math.random(), // Ensure unique ID
+                            name: row.Name,
+                            price: parseFloat(row.Price),
+                            category: row.Category || "Other",
+                            description: row.Description || "",
+                            image: row.ImageURL || "https://via.placeholder.com/150"
+                        });
+                        addedCount++;
+                    }
+                });
+                
+                renderAdminProducts();
+                alert(`AI Extraction Complete! Successfully added ${addedCount} products.`);
+                fileInput.value = '';
+            };
+            reader.readAsArrayBuffer(file);
+        }
+
+        // JSON DOWNLOAD / UPLOAD
+        function downloadJSON() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(PRODUCTS, null, 2));
+            const downloadAnchorNode = document.createElement('a');
+            downloadAnchorNode.setAttribute("href", dataStr);
+            downloadAnchorNode.setAttribute("download", "products.json");
+            document.body.appendChild(downloadAnchorNode);
+            downloadAnchorNode.click();
+            downloadAnchorNode.remove();
+        }
+
+        function uploadJSON(event) {
+            const file = event.target.files[0];
+            if(!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const imported = JSON.parse(e.target.result);
+                    if(Array.isArray(imported)) {
+                        PRODUCTS = imported;
+                        renderAdminProducts();
+                        alert("JSON Data imported successfully!");
+                    }
+                } catch(err) { alert("Invalid JSON file."); }
+            };
+            reader.readAsText(file);
+        }
+
+        // GITHUB DIRECT UPDATE API
+        async function updateGitHub() {
+            const token = document.getElementById('ghToken').value;
+            const repo = document.getElementById('ghRepo').value;
+            const path = document.getElementById('ghPath').value || 'products.json';
+            
+            if(!token || !repo) return alert("Please enter GitHub token and repo details.");
+            
+            const url = `https://api.github.com/repos/${repo}/contents/${path}`;
+            
+            try {
+                // 1. Get current file SHA
+                const getRes = await fetch(url, {
+                    headers: { 'Authorization': `token ${token}` }
+                });
+                let sha = '';
+                if(getRes.status === 200) {
+                    const getData = await getRes.json();
+                    sha = getData.sha;
+                }
+
+                // 2. Commit new file
+                const putRes = await fetch(url, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `token ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        message: 'Admin Update: Products database synced',
+                        content: btoa(JSON.stringify(PRODUCTS, null, 2)), // Base64 encoding
+                        sha: sha ? sha : undefined
+                    })
+                });
+
+                if(putRes.ok) {
+                    alert("Success! Products pushed to GitHub.");
+                } else {
+                    const error = await putRes.json();
+                    alert("GitHub Error: " + error.message);
+                }
+            } catch(err) {
+                alert("Network error: " + err.message);
+            }
         }
     </script>
 </body>
-</html>
+                    </html>
