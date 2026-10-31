@@ -67,17 +67,30 @@
     .add-cart-btn:hover { background: var(--primary); color: #fff; }
     .wa-quick-btn { width: 32px; background: #ecfdf5; color: var(--whatsapp); border: 1px solid #d1fae5; border-radius: 4px; display: grid; place-items: center; font-size: 1rem; }
 
-    /* FAQ & AI */
+    /* FLOATING BUTTONS & CHATBOT */
+    .floating-container { position: fixed; bottom: 20px; right: 20px; z-index: 1000; display: flex; flex-direction: column; gap: 15px; align-items: flex-end; }
+    .fab { width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 30px; color: white; box-shadow: 0 4px 10px rgba(0,0,0,0.2); cursor: pointer; transition: transform 0.2s; }
+    .fab:hover { transform: scale(1.05); }
+    .fab.wa { background-color: var(--whatsapp); }
+    .fab.bot { background-color: #fff; color: #2563eb; border: 2px solid #e2e8f0; }
+    
+    .chat-window { position: fixed; bottom: 90px; right: 20px; width: 350px; max-width: calc(100vw - 40px); background: #fff; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); display: none; flex-direction: column; z-index: 1000; overflow: hidden; border: 1px solid var(--border); }
+    .chat-window.open { display: flex; }
+    .chat-header { background: var(--primary); color: #fff; padding: 15px; display: flex; justify-content: space-between; align-items: center; font-weight: 600; }
+    .chat-body { height: 300px; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; background: #f8fafc; }
+    .chat-msg { padding: 10px 12px; border-radius: 8px; max-width: 85%; font-size: 0.85rem; }
+    .chat-msg.bot { background: #fff; border: 1px solid var(--border); align-self: flex-start; }
+    .chat-msg.user { background: var(--primary); color: #fff; align-self: flex-end; }
+    .chat-input { display: flex; padding: 10px; background: #fff; border-top: 1px solid var(--border); }
+    .chat-input input { flex: 1; padding: 10px; border: 1px solid var(--border); border-radius: 20px; outline: none; }
+    .chat-input button { background: var(--primary); color: #fff; border: none; border-radius: 50%; width: 40px; height: 40px; margin-left: 8px; cursor: pointer; display: flex; justify-content: center; align-items: center; }
+
+    /* FAQ */
     .faq-section { padding: 30px 0; background: #fff; border-top: 1px solid var(--border); }
     .faq-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
     .faq-item { border-bottom: 1px solid var(--border); padding: 10px 0; }
     .faq-q { font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; font-size: 0.9rem; }
     .faq-a { display: none; padding-top: 8px; color: var(--muted); font-size: 0.85rem; }
-    .ai-box { background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 15px; text-align: center; }
-    .ai-messages { height: 120px; overflow-y: auto; background: #fff; border: 1px solid #ddd; margin: 10px 0; padding: 10px; text-align: left; font-size: 0.8rem; }
-    .ai-input-group { display: flex; gap: 5px; }
-    .ai-input-group input { flex: 1; padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 0.8rem; }
-    .ai-input-group button { background: var(--primary); color: #fff; padding: 8px 12px; border-radius: 4px; font-size: 0.8rem; }
 
     /* FOOTER */
     .site-footer { background: var(--dark-bg); color: #94a3b8; padding: 25px 0; text-align: center; font-size: 0.85rem; }
@@ -99,32 +112,12 @@
     .btn-primary { width: 100%; padding: 12px; background: var(--primary); color: #fff; border-radius: 5px; margin-bottom: 10px; font-weight: bold; }
     .btn-whatsapp { width: 100%; padding: 12px; background: var(--whatsapp); color: #fff; border-radius: 5px; font-weight: bold; font-size: 1rem; }
 
-    /* CART DRAWER - FIXED FOR LONG ITEMS */
-    .cart-drawer { 
-      position: fixed; 
-      top: 0; 
-      right: -100%; 
-      width: 100%; 
-      max-width: 350px; 
-      height: 100vh; 
-      height: 100dvh; /* Modern dynamic viewport height for mobile */
-      background: #fff; 
-      z-index: 200; 
-      transition: 0.3s; 
-      display: flex; 
-      flex-direction: column; 
-      box-shadow: -4px 0 15px rgba(0,0,0,0.1); 
-    }
+    /* CART DRAWER */
+    .cart-drawer { position: fixed; top: 0; right: -100%; width: 100%; max-width: 350px; height: 100vh; height: 100dvh; background: #fff; z-index: 1001; transition: 0.3s; display: flex; flex-direction: column; box-shadow: -4px 0 15px rgba(0,0,0,0.1); }
     .cart-drawer.open { right: 0; }
     .cart-header { padding: 15px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; flex-shrink: 0; }
-    .cart-items { flex: 1; padding: 15px; overflow-y: auto; min-height: 0; /* Crucial for flex layouts to scroll properly */ }
-    .cart-footer { 
-      padding: 15px; 
-      padding-bottom: max(15px, env(safe-area-inset-bottom)); /* Fixes iPhone home bar overlap */
-      border-top: 1px solid #eee; 
-      flex-shrink: 0; 
-      background: #fff;
-    }
+    .cart-items { flex: 1; padding: 15px; overflow-y: auto; min-height: 0; }
+    .cart-footer { padding: 15px; padding-bottom: max(15px, env(safe-area-inset-bottom)); border-top: 1px solid #eee; flex-shrink: 0; background: #fff; }
     .btn-checkout { width: 100%; padding: 10px; background: var(--whatsapp); color: #fff; border-radius: 5px; font-weight: bold; font-size: 1rem; }
 
     @media (min-width: 768px) {
@@ -144,12 +137,9 @@
       <span>🛡️ Same-Day Inspection & Return Guarantee</span> &nbsp;|&nbsp;
       <span>💯 100% Genuine Tech & Store Warranty</span> &nbsp;|&nbsp;
       <span>📞 Hotline / WhatsApp: +94 78 336 6466</span> &nbsp;|&nbsp;
-      <!-- Duplicate for smooth looping -->
       <span>🔥 Island-Wide Delivery Available (1–3 Days)</span> &nbsp;|&nbsp;
       <span>💵 Cash on Delivery (COD) Available Island-Wide</span> &nbsp;|&nbsp;
       <span>🛡️ Same-Day Inspection & Return Guarantee</span> &nbsp;|&nbsp;
-      <span>💯 100% Genuine Tech & Store Warranty</span> &nbsp;|&nbsp;
-      <span>📞 Hotline / WhatsApp: +94 78 336 6466</span> &nbsp;|&nbsp;
     </div>
   </div>
   
@@ -171,10 +161,6 @@
     <a href="#">Home</a>
     <a href="#shop">Shop</a>
     <a href="#categoryFilters">Categories</a>
-    <a href="#shop">New Arrivals</a>
-    <a href="https://wa.me/94783366466" target="_blank">Track Order</a>
-    <a href="#faq">FAQ</a>
-    <a href="https://wa.me/94783366466" target="_blank">Contact Us</a>
     <a href="admin.html">Admin</a>
   </nav>
 
@@ -185,7 +171,6 @@
       <div class="stats-row">
         <div class="stat-box"><strong id="visitsCount">12,450</strong><span>Visits</span></div>
         <div class="stat-box"><strong id="ordersCount">1,850</strong><span>Orders</span></div>
-        <!-- Updated Rating -->
         <div class="stat-box"><strong>4.5/5 ⭐⭐⭐⭐</strong><span>Rating</span></div>
       </div>
     </div>
@@ -198,119 +183,125 @@
   <section class="container" id="shop">
     <div class="product-grid" id="productGrid"></div>
   </section>
+
   <section class="faq-section" id="faq">
-  <div class="container faq-grid">
-    <div>
-      <h2 style="margin-bottom:10px;">FAQ</h2>
-      <div id="faqList"></div>
+    <div class="container faq-grid">
+      <div>
+        <h2 style="margin-bottom:10px;">FAQ</h2>
+        <div id="faqList"></div>
+      </div>
     </div>
-    <div class="ai-box">
-      <h3><i class="fas fa-robot"></i> AI Assistant</h3>
-      <div id="aiMessages" class="ai-messages"></div>
-      <div class="ai-input-group">
-        <input type="text" id="aiInput" placeholder="Ask about delivery...">
-        <button onclick="askAI()">Send</button>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <img src="logo.png" alt="LeoPis Digital">
+      <div class="social-links">
+        <a href="https://facebook.com/leopisdigital" target="_blank"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://wa.me/94783366466" target="_blank"><i class="fab fa-whatsapp"></i></a>
+        <a href="mailto:director.leopis@gmail.com"><i class="fas fa-envelope"></i></a>
+      </div>
+      <p>&copy; 2024 LeoPis Digital. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- FLOATING CHATBOT & WHATSAPP -->
+  <div class="chat-window" id="chatWindow">
+    <div class="chat-header">
+      <span><i class="fas fa-robot"></i> AI Assistant</span>
+      <button onclick="toggleChat()" style="background:none; color:white; font-size:1.2rem;"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="chat-body" id="chatBody">
+      <div class="chat-msg bot">Hello! How can I help you today? Ask about delivery, products, or returns.</div>
+    </div>
+    <div class="chat-input">
+      <input type="text" id="aiInput" placeholder="Type a message..." onkeypress="if(event.key==='Enter') askAI()">
+      <button onclick="askAI()"><i class="fas fa-paper-plane"></i></button>
+    </div>
+  </div>
+
+  <div class="floating-container">
+    <button class="fab bot" onclick="toggleChat()"><i class="fas fa-robot"></i></button>
+    <a href="https://wa.me/94783366466" target="_blank" class="fab wa"><i class="fab fa-whatsapp"></i></a>
+  </div>
+
+  <!-- PRODUCT MODAL -->
+  <div class="modal-overlay" id="productModal">
+    <div class="modal-content">
+      <button onclick="closeModal()" class="modal-close"><i class="fas fa-times"></i></button>
+      <div class="modal-img-sec">
+        <img id="mImg" src="" style="width:100%; max-height:250px; object-fit:contain;">
+        <div class="thumbnails" id="mThumbnails"></div>
+      </div>
+      <div class="modal-info-sec">
+        <h2 id="mTitle">Product Name</h2>
+        <p id="mPrice">LKR 0</p>
+        <p id="mDesc">Description...</p>
+        <button onclick="addToCartFromModal()" class="btn-primary">Add to Cart</button>
+        <button onclick="waOrderFromModal()" class="btn-whatsapp"><i class="fab fa-whatsapp"></i> Order via WhatsApp</button>
       </div>
     </div>
   </div>
-</section>
 
-<footer class="site-footer">
-  <div class="container">
-    <img src="logo.png" alt="LeoPis Digital">
-    <div class="social-links">
-      <a href="https://facebook.com/leopisdigital" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-      <a href="https://wa.me/94783366466" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-      <a href="mailto:director.leopis@gmail.com" title="Gmail"><i class="fas fa-envelope"></i></a>
+  <!-- CART DRAWER -->
+  <div class="cart-drawer" id="cartDrawer">
+    <div class="cart-header">
+      <h3>Cart</h3><button onclick="document.getElementById('cartDrawer').classList.remove('open')"><i class="fas fa-times"></i></button>
     </div>
-    <p>&copy; 2024 LeoPis Digital. All rights reserved.</p>
-  </div>
-</footer>
-
-<!-- PRODUCT MODAL -->
-<div class="modal-overlay" id="productModal">
-  <div class="modal-content">
-    <button onclick="closeModal()" class="modal-close"><i class="fas fa-times"></i></button>
-    <div class="modal-img-sec">
-      <img id="mImg" src="" style="width:100%; max-height:250px; object-fit:contain;">
-      <div class="thumbnails" id="mThumbnails"></div>
-    </div>
-    <div class="modal-info-sec">
-      <h2 id="mTitle">Product Name</h2>
-      <p id="mPrice">LKR 0</p>
-      <p id="mDesc">Description...</p>
-      <button onclick="addToCartFromModal()" class="btn-primary">Add to Cart</button>
-      <button onclick="waOrderFromModal()" class="btn-whatsapp"><i class="fab fa-whatsapp"></i> Order via WhatsApp</button>
+    <div id="cartItems" class="cart-items"></div>
+    <div class="cart-footer">
+      <h4>Total: <span id="cartTotal">LKR 0</span></h4>
+      <button onclick="checkout()" class="btn-checkout" id="checkoutBtn"><i class="fab fa-whatsapp"></i> Checkout</button>
     </div>
   </div>
-</div>
-
-<!-- CART DRAWER -->
-<div class="cart-drawer" id="cartDrawer">
-  <div class="cart-header">
-    <h3>Cart</h3><button onclick="document.getElementById('cartDrawer').classList.remove('open')"><i class="fas fa-times"></i></button>
-  </div>
-  <div id="cartItems" class="cart-items"></div>
-  <div class="cart-footer">
-    <h4>Total: <span id="cartTotal">LKR 0</span></h4>
-    <button onclick="checkout()" class="btn-checkout" id="checkoutBtn"><i class="fab fa-whatsapp"></i> Checkout</button>
-  </div>
-</div>
 
   <script>
     const CONFIG = { whatsappNumber: "94783366466" }; 
 
-    // Dynamic Stats from LocalStorage (Editable via Admin)
     let visits = parseInt(localStorage.getItem('leopis_visits')) || 12450;
     visits++;
     localStorage.setItem('leopis_visits', visits);
     document.getElementById('visitsCount').innerText = visits.toLocaleString();
-
     let orders = parseInt(localStorage.getItem('leopis_orders')) || 1850;
     document.getElementById('ordersCount').innerText = orders.toLocaleString();
 
+    // Products loaded from Admin
     let PRODUCTS = JSON.parse(localStorage.getItem('leopis_products_v3')) || [
-      { id: 1, name: "Smart Air Fryer", price: 35000, category: "Home appliance and kitchen", image: "https://images.unsplash.com/photo-1626074353765-517a681e40be?w=400", description: "Digital air fryer for healthy cooking.", gallery: [] },
-      { id: 2, name: "Electric Kettle", price: 8500, category: "Electrical items", image: "https://images.unsplash.com/photo-1585032226651-759b368d7246?w=400", description: "Stainless steel fast boiling kettle.", gallery: [] },
-      { id: 3, name: "Wireless Earbuds", price: 15000, category: "Audio & smart gadgets", image: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400", description: "Bluetooth 5.3 with noise cancellation.", gallery: [] },
-      { id: 4, name: "Baby Stroller", price: 25000, category: "Baby care and kids", image: "https://images.unsplash.com/photo-1591088398332-8a7791972843?w=400", description: "Comfortable and safe stroller.", gallery: [] },
-      { id: 5, name: "Yoga Mat", price: 4500, category: "Fashion & Fitness", image: "https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?w=400", description: "Non-slip fitness mat.", gallery: [] }
+      { id: 1, name: "Smart Air Fryer", price: 35000, category: "Home appliance and kitchen", image: "https://images.unsplash.com/photo-1626074353765-517a681e40be?w=400", description: "Digital air fryer for healthy cooking." },
+      { id: 2, name: "Electric Kettle", price: 8500, category: "Electrical items", image: "https://images.unsplash.com/photo-1585032226651-759b368d7246?w=400", description: "Stainless steel fast boiling kettle." }
     ];
 
     let cart = [];
     let activeProduct = null;
     let currentCategory = "All";
     let searchQuery = "";
-    let isSriLanka = true; // Default true, will be checked via IP
-
-    // IP Location Check to restrict ordering to Sri Lanka
-    async function checkIP() {
-      try {
-        const res = await fetch('https://ipapi.co/json/');
-        const data = await res.json();
-        if (data.country_code && data.country_code !== 'LK') {
-          isSriLanka = false;
-          blockForeignOrders();
-        }
-      } catch (e) {
-        console.warn("IP Check failed, allowing default access.");
-      }
+        // Floating Chatbot Logic
+    function toggleChat() {
+      const win = document.getElementById('chatWindow');
+      win.classList.toggle('open');
     }
 
-    function blockForeignOrders() {
-      // Intercept checkout and WhatsApp buttons to block foreign IPs
-      const orderBtns = document.querySelectorAll('.btn-checkout, .wa-quick-btn, .btn-whatsapp, .add-cart-btn');
-      orderBtns.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          alert("Ordering is only available for Sri Lankan IP addresses.");
-        }, true);
-      });
-      document.getElementById('checkoutBtn').innerHTML = "Available in Sri Lanka Only";
+    function askAI() {
+      const input = document.getElementById('aiInput');
+      const msg = input.value.trim();
+      if(!msg) return;
+      
+      const body = document.getElementById('chatBody');
+      body.innerHTML += `<div class="chat-msg user">${msg}</div>`;
+      input.value = '';
+      
+      // Simulated AI Response
+      let reply = "Please contact us on WhatsApp for specific details.";
+      const lower = msg.toLowerCase();
+      if(lower.includes('delivery')) reply = "We deliver island-wide in 1-3 business days via courier.";
+      if(lower.includes('return')) reply = "We offer a Same-Day Inspection & Return guarantee for damaged items.";
+      if(lower.includes('price')) reply = "You can see all current prices on the product cards.";
+      
+      setTimeout(() => {
+        body.innerHTML += `<div class="chat-msg bot">${reply}</div>`;
+        body.scrollTop = body.scrollHeight;
+      }, 600);
     }
-    
-    checkIP();
 
     function renderCategoryFilters() {
       const categories = ["All", ...new Set(PRODUCTS.map(p => p.category || "Other"))];
@@ -363,15 +354,6 @@
       document.getElementById('mTitle').innerText = activeProduct.name;
       document.getElementById('mPrice').innerText = `LKR ${activeProduct.price.toLocaleString()}`;
       document.getElementById('mDesc').innerHTML = activeProduct.description || "No description available.";
-      
-      const gallery = activeProduct.gallery || [];
-      const thumbs = document.getElementById('mThumbnails');
-      if (gallery.length > 0) {
-        thumbs.innerHTML = [activeProduct.image, ...gallery].map((img, i) => 
-          `<img src="${img}" class="${i===0?'active':''}" onclick="document.getElementById('mImg').src='${img}'; document.querySelectorAll('.thumbnails img').forEach(t=>t.classList.remove('active')); this.classList.add('active')">`
-        ).join('');
-      } else { thumbs.innerHTML = ''; }
-      
       document.getElementById('productModal').style.display = 'flex';
     }
     function closeModal() { document.getElementById('productModal').style.display = 'none'; }
@@ -379,12 +361,8 @@
     function waOrderFromModal() { waOrder(activeProduct.id); closeModal(); }
 
     const faqs = [
-      { q: "What is Leopis Digital's return policy?", a: "We operate on a strict Same-Day Inspection & Return Policy to ensure absolute product satisfaction." },
-      { q: "Can I return an item if it is damaged, incorrect, or non-working?", a: "Yes, instantly at your doorstep!<br><br><b>On-the-Spot Courier Return:</b> Inspect your package when the delivery agent arrives. If the item is damaged, incorrect, or doesn't work, hand it straight back to the courier for an immediate return/exchange log.<br><br><b>Same-Day Notice:</b> If you test the product later the same day and find a defect, notify us immediately via WhatsApp or email. We will arrange a priority courier swap for you at zero extra cost." },
-      { q: "Are there any items excluded from returns?", a: "Yes. Because of hygiene and digital licensing, opened software, digital goods, and custom-ordered items cannot be returned unless proven defective upon arrival." },
-      { q: "How fast is delivery?", a: "Orders are processed and dispatched promptly. Standard island-wide delivery takes between 1 to 3 business days depending on your location." },
-      { q: "Can I track my order?", a: "Yes, once your order ships from our warehouse, tracking details and updates will be sent via SMS or WhatsApp." },
-      { q: "How can I contact Leopis Digital customer support?", a: "Our support team is available to assist you with any questions or same-day return requests:<br><br>📞 <b>Hotline / WhatsApp / Telegram:</b> +94 78 336 6466<br>✉️ <b>Email:</b> director.leopis@gmail.com" }
+      { q: "What is Leopis Digital's return policy?", a: "We operate on a strict Same-Day Inspection & Return Policy." },
+      { q: "How fast is delivery?", a: "Standard island-wide delivery takes between 1 to 3 business days." }
     ];
     
     document.getElementById('faqList').innerHTML = faqs.map((f, i) => `
@@ -397,21 +375,6 @@
     function toggleFaq(i) {
       const el = document.getElementById(`faq-a-${i}`);
       el.style.display = el.style.display === 'block' ? 'none' : 'block';
-    }
-
-    function askAI() {
-      const input = document.getElementById('aiInput');
-      const msg = input.value.trim();
-      if(!msg) return;
-      const box = document.getElementById('aiMessages');
-      box.innerHTML += `<div><b>You:</b> ${msg}</div>`;
-      input.value = '';
-      let reply = "Please contact us on WhatsApp for details.";
-      if(msg.toLowerCase().includes('delivery')) reply = "We deliver island-wide in 1-3 days.";
-      setTimeout(() => {
-        box.innerHTML += `<div style="margin-top:10px; color:var(--primary);"><b>AI:</b> ${reply}</div>`;
-        box.scrollTop = box.scrollHeight;
-      }, 500);
     }
 
     function addToCart(id) {
@@ -443,29 +406,23 @@
     }
 
     function waOrder(id) {
-      if (!isSriLanka) return alert("Ordering is only available for Sri Lankan IP addresses.");
       const p = PRODUCTS.find(x => x.id === id);
       window.open(`https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(`Hi! I want to order *${p.name}* (LKR ${p.price.toLocaleString()}).`)}`);
     }
 
     function checkout() {
-      if (!isSriLanka) return alert("Ordering is only available for Sri Lankan IP addresses.");
       if (cart.length === 0) return alert("Cart empty!");
-      
       let msg = "🛒 *New Order*\n\n";
       cart.forEach((c, i) => msg += `${i+1}. ${c.name} x${c.qty} = LKR ${(c.price*c.qty).toLocaleString()}\n`);
       msg += `\n*Total: LKR ${cart.reduce((s, i) => s + (i.price * i.qty), 0).toLocaleString()}*`;
       
-      // Increment total orders in local storage (mock logic)
       let currentOrders = parseInt(localStorage.getItem('leopis_orders')) || 1850;
       localStorage.setItem('leopis_orders', currentOrders + 1);
-
       window.open(`https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(msg)}`);
     }
 
     document.getElementById('cartToggle').onclick = () => document.getElementById('cartDrawer').classList.add('open');
     
-    // Initialize
     renderCategoryFilters();
     renderProducts();
   </script>
