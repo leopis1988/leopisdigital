@@ -5,17 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LeoPis Digital | Premium Tech Store</title>
   
-  <!-- SEO & GEO TAGS -->
-  <meta name="description" content="Buy premium laptops, electronics, and accessories in Sri Lanka. Island-wide fast delivery.">
+  <meta name="description" content="Buy premium laptops, electronics, and accessories in Sri Lanka.">
   <meta name="geo.region" content="LK">
-  <meta name="geo.placename" content="Sri Lanka">
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
-  <!-- INLINE CSS -->
   <style>
     :root {
       --bg: #f8fafc; --surface: #ffffff; --text: #1e293b; --muted: #64748b;
@@ -30,95 +27,97 @@
     button { font-family: inherit; cursor: pointer; }
     .container { width: min(1280px, 96%); margin-inline: auto; }
 
-    /* TOP BAR */
     .top-bar { background: #1e293b; color: #cbd5e1; font-size: 0.8rem; padding: 8px 0; text-align: center; }
     
-    /* HEADER */
     .site-header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 10px 0; position: sticky; top: 0; z-index: 100; }
     .header-inner { display: flex; align-items: center; justify-content: space-between; gap: 15px; }
     
-    /* LOGO */
     .logo img { height: 35px !important; max-width: 120px !important; object-fit: contain !important; }
     
-    /* SEARCH */
     .header-search { flex: 1; display: flex; align-items: center; max-width: 500px; background: #f1f5f9; border: 1px solid var(--border); border-radius: 8px; height: 38px; overflow: hidden; }
     .header-search input { flex: 1; border: none; outline: none; background: transparent; padding: 0 12px; font-size: 0.85rem; }
     .header-search button { background: var(--primary); color: #fff; border: none; padding: 0 15px; height: 100%; }
     
-    /* NAV */
     .main-nav { background: var(--dark-bg); color: #fff; }
     .nav-inner { display: flex; gap: 20px; padding: 10px 0; overflow-x: auto; white-space: nowrap; }
     .main-nav a { font-size: 0.85rem; font-weight: 500; color: #cbd5e1; }
-    .main-nav a:hover { color: #fff; }
 
-    /* HERO */
     .hero { background: var(--dark-bg); color: #fff; padding: 30px 0; text-align: center; }
     .hero h1 { font-size: 1.8rem; margin-bottom: 10px; }
-    .hero p { color: #94a3b8; font-size: 0.9rem; margin-bottom: 15px; }
+    .hero p { color: #94a3b8; font-size: 0.9rem; }
 
-    /* CATEGORY */
     .category-section { background: var(--surface); padding: 10px 0; border-bottom: 1px solid var(--border); overflow-x: auto; }
     .category-chips { display: flex; gap: 10px; padding: 0 15px; width: max-content; }
     .chip { padding: 6px 16px; border-radius: 20px; border: 1px solid var(--border); background: var(--surface); font-size: 0.8rem; font-weight: 500; white-space: nowrap; }
     .chip.active { background: var(--primary); color: #fff; border-color: var(--primary); }
 
-    /* PRODUCTS */
     .shop-section { padding: 20px 0; }
     .section-head h2 { font-size: 1.2rem; margin-bottom: 15px; }
     .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-    .product-card { background: var(--surface); border-radius: var(--radius); border: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; }
+    .product-card { background: var(--surface); border-radius: var(--radius); border: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; cursor: pointer; transition: 0.2s; }
+    .product-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
     .product-img { aspect-ratio: 1/1; background: #fff; padding: 10px; }
     .product-img img { width: 100%; height: 100%; object-fit: contain; }
     .product-body { padding: 10px; display: flex; flex-direction: column; flex: 1; }
-    .product-name { font-size: 0.85rem; font-weight: 500; margin-bottom: 5px; height: 2.6em; overflow: hidden; }
+    .product-name { font-size: 0.85rem; font-weight: 500; margin-bottom: 5px; height: 2.6em; overflow: hidden; color: #1e293b; }
     .product-price { font-size: 1rem; font-weight: 700; color: var(--primary); margin-bottom: 10px; }
     .product-actions { display: flex; gap: 5px; margin-top: auto; }
     .add-cart-btn { flex: 1; padding: 8px; border-radius: 4px; border: 1px solid var(--primary); background: #fff; color: var(--primary); font-weight: 600; font-size: 0.75rem; }
     .add-cart-btn:hover { background: var(--primary); color: #fff; }
     .wa-quick-btn { width: 32px; background: #ecfdf5; color: var(--whatsapp); border: 1px solid #d1fae5; border-radius: 4px; display: grid; place-items: center; }
 
-    /* FOOTER */
     .site-footer { background: var(--dark-bg); color: #94a3b8; padding: 30px 0; text-align: center; font-size: 0.85rem; }
     .site-footer img { height: 30px; margin: 0 auto 10px; }
+    .social-links { display: flex; justify-content: center; gap: 15px; margin: 15px 0; }
+    .social-links a { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.1); display: grid; place-items: center; color: #fff; }
+
+    /* MODAL CSS (Popup for Product Details) */
+    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 15px; }
+    .modal-content { background: #fff; width: 100%; max-width: 800px; max-height: 90vh; border-radius: 12px; overflow-y: auto; position: relative; display: flex; flex-direction: column; }
+    .modal-close { position: absolute; top: 10px; right: 10px; background: #f1f5f9; border: none; width: 30px; height: 30px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; z-index: 10; }
+    
+    .modal-body { display: flex; flex-direction: column; }
+    @media(min-width: 768px) { .modal-body { flex-direction: row; } }
+    
+    .modal-img-sec { flex: 1; padding: 20px; background: #f8fafc; text-align: center; }
+    .modal-img-sec img { max-height: 300px; margin: 0 auto; object-fit: contain; border-radius: 8px; }
+    .modal-thumbnails { display: flex; justify-content: center; gap: 10px; margin-top: 15px; }
+    .modal-thumbnails img { width: 50px; height: 50px; object-fit: cover; border: 2px solid transparent; cursor: pointer; border-radius: 4px; }
+    .modal-thumbnails img.active { border-color: var(--primary); }
+
+    .modal-details { flex: 1; padding: 25px; }
+    .modal-category { font-size: 0.8rem; color: var(--primary); font-weight: 600; text-transform: uppercase; }
+    .modal-details h2 { font-size: 1.4rem; margin: 5px 0 10px; color: #1e293b; }
+    .modal-price { font-size: 1.5rem; font-weight: 700; color: var(--primary); margin-bottom: 15px; }
+    .modal-desc { font-size: 0.95rem; color: var(--muted); margin-bottom: 20px; line-height: 1.6; }
 
     @media (min-width: 768px) {
       .product-grid { grid-template-columns: repeat(4, 1fr); }
       .hero h1 { font-size: 2.5rem; }
-      .header-inner { flex-wrap: nowrap; }
     }
   </style>
 </head>
 <body>
 
-  <div class="top-bar">
-    🔥 Mega Sale! Island-wide delivery available
-  </div>
+  <div class="top-bar">🔥 Mega Sale! Island-wide delivery available</div>
 
   <header class="site-header">
     <div class="container header-inner">
-      <a href="index.html" class="logo">
-        <img src="logo.png" alt="LeoPis Digital" />
-      </a>
+      <a href="index.html" class="logo"><img src="logo.png" alt="LeoPis Digital" /></a>
       <div class="header-search">
         <input type="search" id="searchInput" placeholder="Search products..." />
         <button><i class="fas fa-search"></i></button>
       </div>
-      <div style="display:flex; gap:15px; align-items:center;">
-        <button id="cartToggle" style="background:none; border:none; font-size:1.2rem; position:relative;">
-          <i class="fas fa-shopping-cart"></i>
-          <span id="cartCount" style="position:absolute; top:-5px; right:-8px; background:var(--primary); color:#fff; font-size:0.6rem; padding:2px 5px; border-radius:50%;">0</span>
-        </button>
-      </div>
+      <button id="cartToggle" style="background:none; border:none; font-size:1.2rem; position:relative;">
+        <i class="fas fa-shopping-cart"></i>
+        <span id="cartCount" style="position:absolute; top:-5px; right:-8px; background:var(--primary); color:#fff; font-size:0.6rem; padding:2px 5px; border-radius:50%;">0</span>
+      </button>
     </div>
   </header>
 
   <nav class="main-nav">
     <div class="container nav-inner">
-      <a href="#">Home</a>
-      <a href="#">Shop</a>
-      <a href="#">Categories</a>
-      <a href="#">FAQ</a>
-      <a href="admin.html">Admin</a>
+      <a href="#">Home</a><a href="#shop">Shop</a><a href="#">Categories</a><a href="#">FAQ</a><a href="admin.html">Admin</a>
     </div>
   </nav>
 
@@ -128,7 +127,8 @@
       <p>Order via WhatsApp in seconds. Fast Island-wide delivery.</p>
     </div>
   </section>
-    <section class="category-section">
+
+  <section class="category-section">
     <div class="category-chips">
       <button class="chip active">All Products</button>
       <button class="chip">Laptops</button>
@@ -137,23 +137,42 @@
     </div>
   </section>
 
-  <section class="shop-section">
+  <section class="shop-section" id="shop">
     <div class="container">
-      <div class="section-head">
-        <h2>Featured Products</h2>
-      </div>
+      <div class="section-head"><h2>Featured Products</h2></div>
       <div class="product-grid" id="productGrid"></div>
     </div>
   </section>
+    <!-- PRODUCT DETAILS MODAL (POPUP) -->
+  <div class="modal-overlay" id="productModal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeProductModal()"><i class="fas fa-times"></i></button>
+      <div class="modal-body">
+        <div class="modal-img-sec">
+          <img id="modalMainImg" src="" alt="Product">
+          <div class="modal-thumbnails" id="modalThumbnails"></div>
+        </div>
+        <div class="modal-details">
+          <span class="modal-category" id="modalCategory"></span>
+          <h2 id="modalTitle"></h2>
+          <div class="modal-price" id="modalPrice"></div>
+          <p class="modal-desc" id="modalDesc"></p>
+          
+          <button class="add-cart-btn" id="modalAddBtn" style="width:100%; padding:12px; font-size:1rem; background:var(--primary); color:#fff;">Add to Cart</button>
+          <button class="add-cart-btn" id="modalWaBtn" style="width:100%; padding:12px; font-size:1rem; margin-top:10px; background:#25d366; color:#fff; border-color:#25d366;"><i class="fab fa-whatsapp"></i> Order via WhatsApp</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <footer class="site-footer">
     <div class="container">
       <img src="logo.png" alt="Logo">
+      <div class="social-links" id="socialLinks"></div>
       <p>&copy; 2024 LeoPis Digital. All rights reserved.</p>
     </div>
   </footer>
 
-  <!-- CART DRAWER -->
   <div id="cartDrawer" style="position:fixed; top:0; right:-100%; width:100%; max-width:350px; height:100vh; background:#fff; z-index:200; box-shadow:-5px 0 15px rgba(0,0,0,0.1); transition:right 0.3s; display:flex; flex-direction:column;">
     <div style="padding:15px; border-bottom:1px solid #eee; display:flex; justify-content:space-between;">
       <h3>Shopping Cart</h3>
@@ -161,40 +180,203 @@
     </div>
     <div id="cartItems" style="flex:1; padding:15px; overflow-y:auto;"></div>
     <div style="padding:15px; border-top:1px solid #eee;">
-      <h4 style="margin-bottom:10px;">Total: <span id="cartTotal">LKR 0.00</span></h4>
-      <button style="width:100%; padding:10px; background:#25d366; color:#fff; border:none; border-radius:5px; font-weight:bold;">Order via WhatsApp</button>
+      <h4 style="margin-bottom:10px; display:flex; justify-content:space-between;">Total: <span id="cartTotal">LKR 0.00</span></h4>
+      <button id="checkoutBtn" style="width:100%; padding:12px; background:#25d366; color:#fff; border:none; border-radius:5px; font-weight:bold;"><i class="fab fa-whatsapp"></i> Checkout</button>
     </div>
   </div>
 
-  <!-- INLINE JS -->
   <script>
+    // ⚠️ உங்கள் வாட்ஸ்அப் எண் மற்றும் சோஷியல் லிங்க்குகள்
+    const CONFIG = {
+      whatsappNumber: "94771234567", 
+      facebook: "https://facebook.com/leopisdigital",
+      instagram: "https://instagram.com/leopisdigital"
+    };
+
+    // ⚠️ ப்ராடக்ட்ஸ் விவரங்கள் (இங்கே description & gallery சேர்க்கவும்)
     const PRODUCTS = [
-      { id: 1, name: "MacBook Pro 14-inch M3", price: 550000, category: "Laptops", image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400" },
-      { id: 2, name: "Dell XPS 13 Plus", price: 420000, category: "Laptops", image: "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?w=400" },
-      { id: 3, name: "Logitech MX Master 3S", price: 28500, category: "Accessories", image: "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=400" },
-      { id: 4, name: "Sony WH-1000XM5", price: 95000, category: "Audio", image: "https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?w=400" }
+      { 
+        id: 1, 
+        name: "MacBook Pro 14-inch M3", 
+        price: 550000, 
+        category: "Laptops", 
+        image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400",
+        description: "Supercharged by M3 Pro or M3 Max chip, MacBook Pro takes speed and capability further than ever. 16GB RAM, 512GB SSD. Perfect for professionals.",
+        gallery: [
+          "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=600",
+          "https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?w=600"
+        ]
+      },
+      { 
+        id: 2, 
+        name: "Dell XPS 13 Plus", 
+        price: 420000, 
+        category: "Laptops", 
+        image: "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?w=400",
+        description: "Premium design with edge-to-edge keyboard, 13th Gen Intel Core i7, 16GB RAM, 1TB SSD. Stunning OLED display.",
+        gallery: []
+      },
+      { 
+        id: 3, 
+        name: "Logitech MX Master 3S", 
+        price: 28500, 
+        category: "Accessories", 
+        image: "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=400",
+        description: "An icon remastered. 8K DPI any-surface tracking, quiet clicks, and MagSpeed scrolling. Ergonomic design for all-day comfort.",
+        gallery: []
+      },
+      { 
+        id: 4, 
+        name: "Sony WH-1000XM5", 
+        price: 95000, 
+        category: "Audio", 
+        image: "https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?w=400",
+        description: "Industry-leading noise cancellation. Magnificent sound quality with two processors controlling 8 microphones. Up to 30-hour battery life.",
+        gallery: []
+      }
     ];
 
+    let cart = [];
+    let currentProductId = null;
+
+    // 1. Render Products
     const grid = document.getElementById('productGrid');
     grid.innerHTML = PRODUCTS.map(p => `
       <article class="product-card">
-        <div class="product-img">
+        <div class="product-img" onclick="openProductModal(${p.id})">
           <img src="${p.image}" alt="${p.name}">
         </div>
         <div class="product-body">
-          <h3 class="product-name">${p.name}</h3>
-          <div class="product-price">LKR ${p.price.toFixed(2)}</div>
+          <h3 class="product-name" onclick="openProductModal(${p.id})">${p.name}</h3>
+          <div class="product-price">LKR ${p.price.toLocaleString()}</div>
           <div class="product-actions">
-            <button class="add-cart-btn" onclick="alert('Added to cart!')">Add to Cart</button>
-            <button class="wa-quick-btn"><i class="fab fa-whatsapp"></i></button>
+            <button class="add-cart-btn" onclick="addToCart(${p.id})">Add to Cart</button>
+            <button class="wa-quick-btn" onclick="quickWhatsApp(${p.id})"><i class="fab fa-whatsapp"></i></button>
           </div>
         </div>
       </article>
     `).join('');
 
+    document.getElementById('socialLinks').innerHTML = `
+      <a href="${CONFIG.facebook}" target="_blank"><i class="fab fa-facebook-f"></i></a>
+      <a href="${CONFIG.instagram}" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a href="https://wa.me/${CONFIG.whatsappNumber}" target="_blank"><i class="fab fa-whatsapp"></i></a>
+    `;
+
+    // 2. Modal Functions (Product Details)
+    function openProductModal(id) {
+      const p = PRODUCTS.find(x => x.id === id);
+      if(!p) return;
+      
+      currentProductId = id;
+      document.getElementById('modalTitle').innerText = p.name;
+      document.getElementById('modalPrice').innerText = `LKR ${p.price.toLocaleString()}`;
+      document.getElementById('modalCategory').innerText = p.category;
+      document.getElementById('modalDesc').innerText = p.description || "No description available.";
+      
+      // Image Logic (Main + Gallery)
+      const allImages = p.gallery && p.gallery.length > 0 ? p.gallery : [p.image];
+      document.getElementById('modalMainImg').src = allImages[0];
+      
+      const thumbContainer = document.getElementById('modalThumbnails');
+      thumbContainer.innerHTML = '';
+      if (allImages.length > 1) {
+        allImages.forEach((img, idx) => {
+          thumbContainer.innerHTML += `<img src="${img}" class="${idx===0?'active':''}" onclick="changeModalImg(this, '${img}')">`;
+        });
+      }
+
+      // Modal Buttons
+      document.getElementById('modalAddBtn').onclick = () => { addToCart(id); closeProductModal(); };
+      document.getElementById('modalWaBtn').onclick = () => { quickWhatsApp(id); };
+
+      document.getElementById('productModal').style.display = 'flex';
+    }
+
+    function changeModalImg(el, src) {
+      document.getElementById('modalMainImg').src = src;
+      document.querySelectorAll('.modal-thumbnails img').forEach(img => img.classList.remove('active'));
+      el.classList.add('active');
+    }
+
+    function closeProductModal() {
+      document.getElementById('productModal').style.display = 'none';
+    }
+    
+    // Close modal if clicked outside
+    document.getElementById('productModal').addEventListener('click', (e) => {
+      if(e.target.id === 'productModal') closeProductModal();
+    });
+
+    // 3. Cart Logic
+    function addToCart(id) {
+      const product = PRODUCTS.find(p => p.id === id);
+      const existing = cart.find(item => item.id === id);
+      if (existing) existing.qty += 1;
+      else cart.push({ ...product, qty: 1 });
+      
+      updateCartUI();
+      openCart();
+    }
+
+    function updateCartUI() {
+      document.getElementById('cartCount').innerText = cart.reduce((sum, item) => sum + item.qty, 0);
+      const cartItems = document.getElementById('cartItems');
+      
+      if (cart.length === 0) {
+        cartItems.innerHTML = '<p style="text-align:center; color:#64748b; margin-top:20px;">Your cart is empty.</p>';
+      } else {
+        cartItems.innerHTML = cart.map(item => `
+          <div style="display:flex; gap:10px; margin-bottom:15px; border-bottom:1px solid #eee; padding-bottom:10px;">
+            <img src="${item.image}" style="width:60px; height:60px; object-fit:contain;">
+            <div style="flex:1;">
+              <h4 style="font-size:0.85rem;">${item.name}</h4>
+              <div style="color:#2563eb; font-weight:bold;">LKR ${item.price.toLocaleString()}</div>
+              <div style="margin-top:5px; display:flex; gap:10px;">
+                <button onclick="changeQty(${item.id}, -1)" style="border:1px solid #ccc; background:#fff; width:24px;">-</button>
+                <span>${item.qty}</span>
+                <button onclick="changeQty(${item.id}, 1)" style="border:1px solid #ccc; background:#fff; width:24px;">+</button>
+              </div>
+            </div>
+          </div>
+        `).join('');
+      }
+      const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+      document.getElementById('cartTotal').innerText = `LKR ${totalPrice.toLocaleString()}`;
+    }
+
+    function changeQty(id, change) {
+      const item = cart.find(i => i.id === id);
+      if(item) {
+        item.qty += change;
+        if(item.qty <= 0) cart = cart.filter(i => i.id !== id);
+        updateCartUI();
+      }
+    }
+
+    // 4. WhatsApp Logic
+    function quickWhatsApp(id) {
+      const p = PRODUCTS.find(x => x.id === id);
+      const msg = `Hi LeoPis! I am interested in *${p.name}* (LKR ${p.price.toLocaleString()}). Is it available?`;
+      window.open(`https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+
+    document.getElementById('checkoutBtn').onclick = () => {
+      if(cart.length === 0) return alert("Your cart is empty!");
+      let msg = "🛒 *New Order - LeoPis Digital*\n\n";
+      cart.forEach((item, index) => {
+        msg += `${index + 1}. ${item.name} x${item.qty} = LKR ${(item.price * item.qty).toLocaleString()}\n`;
+      });
+      const total = cart.reduce((s, i) => s + (i.price * i.qty), 0);
+      msg += `\n*Total: LKR ${total.toLocaleString()}*`;
+      window.open(`https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(msg)}`, '_blank');
+    };
+
+    // 5. Drawer Toggle
     const drawer = document.getElementById('cartDrawer');
     document.getElementById('cartToggle').onclick = () => drawer.style.right = '0';
     document.getElementById('cartClose').onclick = () => drawer.style.right = '-100%';
+    function openCart() { drawer.style.right = '0'; }
   </script>
 </body>
 </html>
