@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LeoPis Digital | Premium Tech Store</title>
   
-  <meta name="description" content="Buy premium laptops, electronics, and accessories in Sri Lanka. Island-wide fast delivery via WhatsApp.">
+  <meta name="description" content="Buy premium electronics, home appliances, and accessories in Sri Lanka. Island-wide fast delivery via WhatsApp.">
   
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
@@ -177,72 +177,74 @@
   <section class="container" id="shop">
     <div class="product-grid" id="productGrid"></div>
   </section>
-    <section class="faq-section" id="faq">
-    <div class="container faq-grid">
-      <div>
-        <h2 style="margin-bottom:10px;">FAQ</h2>
-        <div id="faqList"></div>
-      </div>
-      <div class="ai-box">
-        <h3><i class="fas fa-robot"></i> AI Assistant</h3>
-        <div id="aiMessages" class="ai-messages"></div>
-        <div class="ai-input-group">
-          <input type="text" id="aiInput" placeholder="Ask about delivery...">
-          <button onclick="askAI()">Send</button>
-        </div>
-      </div>
+  <section class="faq-section" id="faq">
+  <div class="container faq-grid">
+    <div>
+      <h2 style="margin-bottom:10px;">FAQ</h2>
+      <div id="faqList"></div>
     </div>
-  </section>
-
-  <footer class="site-footer">
-    <div class="container">
-      <img src="logo.png" alt="LeoPis Digital">
-      <div class="social-links">
-        <a href="https://facebook.com/leopisdigital" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-        <a href="https://wa.me/94783366466" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-        <a href="mailto:director.leopis@gmail.com" title="Gmail"><i class="fas fa-envelope"></i></a>
-      </div>
-      <p>&copy; 2024 LeoPis Digital. All rights reserved.</p>
-    </div>
-  </footer>
-
-  <!-- PRODUCT MODAL -->
-  <div class="modal-overlay" id="productModal">
-    <div class="modal-content">
-      <button onclick="closeModal()" class="modal-close"><i class="fas fa-times"></i></button>
-      <div class="modal-img-sec">
-        <img id="mImg" src="" style="width:100%; max-height:250px; object-fit:contain;">
-        <div class="thumbnails" id="mThumbnails"></div>
-      </div>
-      <div class="modal-info-sec">
-        <h2 id="mTitle">Product Name</h2>
-        <p id="mPrice">LKR 0</p>
-        <p id="mDesc">Description...</p>
-        <button onclick="addToCartFromModal()" class="btn-primary">Add to Cart</button>
-        <button onclick="waOrderFromModal()" class="btn-whatsapp"><i class="fab fa-whatsapp"></i> Order via WhatsApp</button>
+    <div class="ai-box">
+      <h3><i class="fas fa-robot"></i> AI Assistant</h3>
+      <div id="aiMessages" class="ai-messages"></div>
+      <div class="ai-input-group">
+        <input type="text" id="aiInput" placeholder="Ask about delivery...">
+        <button onclick="askAI()">Send</button>
       </div>
     </div>
   </div>
+</section>
 
-  <!-- CART DRAWER -->
-  <div class="cart-drawer" id="cartDrawer">
-    <div class="cart-header">
-      <h3>Cart</h3><button onclick="document.getElementById('cartDrawer').classList.remove('open')"><i class="fas fa-times"></i></button>
+<footer class="site-footer">
+  <div class="container">
+    <img src="logo.png" alt="LeoPis Digital">
+    <div class="social-links">
+      <a href="https://facebook.com/leopisdigital" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://wa.me/94783366466" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+      <a href="mailto:director.leopis@gmail.com" title="Gmail"><i class="fas fa-envelope"></i></a>
     </div>
-    <div id="cartItems" class="cart-items"></div>
-    <div class="cart-footer">
-      <h4>Total: <span id="cartTotal">LKR 0</span></h4>
-      <button onclick="checkout()" class="btn-checkout"><i class="fab fa-whatsapp"></i> Checkout</button>
+    <p>&copy; 2024 LeoPis Digital. All rights reserved.</p>
+  </div>
+</footer>
+
+<!-- PRODUCT MODAL -->
+<div class="modal-overlay" id="productModal">
+  <div class="modal-content">
+    <button onclick="closeModal()" class="modal-close"><i class="fas fa-times"></i></button>
+    <div class="modal-img-sec">
+      <img id="mImg" src="" style="width:100%; max-height:250px; object-fit:contain;">
+      <div class="thumbnails" id="mThumbnails"></div>
+    </div>
+    <div class="modal-info-sec">
+      <h2 id="mTitle">Product Name</h2>
+      <p id="mPrice">LKR 0</p>
+      <p id="mDesc">Description...</p>
+      <button onclick="addToCartFromModal()" class="btn-primary">Add to Cart</button>
+      <button onclick="waOrderFromModal()" class="btn-whatsapp"><i class="fab fa-whatsapp"></i> Order via WhatsApp</button>
     </div>
   </div>
+</div>
 
+<!-- CART DRAWER -->
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-header">
+    <h3>Cart</h3><button onclick="document.getElementById('cartDrawer').classList.remove('open')"><i class="fas fa-times"></i></button>
+  </div>
+  <div id="cartItems" class="cart-items"></div>
+  <div class="cart-footer">
+    <h4>Total: <span id="cartTotal">LKR 0</span></h4>
+    <button onclick="checkout()" class="btn-checkout"><i class="fab fa-whatsapp"></i> Checkout</button>
+  </div>
+</div>
   <script>
     const CONFIG = { whatsappNumber: "94783366466" }; 
 
-    let PRODUCTS = JSON.parse(localStorage.getItem('leopis_products')) || [
-      { id: 1, name: "MacBook Pro 14-inch M3", price: 550000, category: "Laptops", image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400", description: "Apple M3 chip, 16GB RAM. Supercharged performance.", gallery: [] },
-      { id: 2, name: "Dell XPS 13 Plus", price: 420000, category: "Laptops", image: "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?w=400", description: "Intel Core i7, 16GB RAM. Premium edge-to-edge design.", gallery: [] },
-      { id: 3, name: "Sony WH-1000XM5", price: 95000, category: "Audio", image: "https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?w=400", description: "Industry-leading noise cancellation.", gallery: [] }
+    // இங்கே LocalStorage பெயர் v3 ஆக மாற்றப்பட்டுள்ளது (புதிய கேட்டகிரிகள் தெரிவதற்கு)
+    let PRODUCTS = JSON.parse(localStorage.getItem('leopis_products_v3')) || [
+      { id: 1, name: "Smart Air Fryer", price: 35000, category: "Home appliance and kitchen", image: "https://images.unsplash.com/photo-1626074353765-517a681e40be?w=400", description: "Digital air fryer for healthy cooking.", gallery: [] },
+      { id: 2, name: "Electric Kettle", price: 8500, category: "Electrical items", image: "https://images.unsplash.com/photo-1585032226651-759b368d7246?w=400", description: "Stainless steel fast boiling kettle.", gallery: [] },
+      { id: 3, name: "Wireless Earbuds", price: 15000, category: "Audio & smart gadgets", image: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400", description: "Bluetooth 5.3 with noise cancellation.", gallery: [] },
+      { id: 4, name: "Baby Stroller", price: 25000, category: "Baby care and kids", image: "https://images.unsplash.com/photo-1591088398332-8a7791972843?w=400", description: "Comfortable and safe stroller.", gallery: [] },
+      { id: 5, name: "Yoga Mat", price: 4500, category: "Fashion & Fitness", image: "https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?w=400", description: "Non-slip fitness mat.", gallery: [] }
     ];
 
     let cart = [];
