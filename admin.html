@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin – LeoPis Digital</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/admin.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body class="admin-body">
+
+  <header class="admin-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo logo-3d" aria-label="LeoPis Digital">
+        <span class="logo-inner">
+          <img src="logo.png" alt="LeoPis Digital" class="logo-img" width="150" height="48" />
+        </span>
+        <small class="logo-sub">Admin</small>
+      </a>
+      <a href="index.html" class="btn btn-outline" style="padding:8px 16px;font-size:.85rem;">
+        <i class="fas fa-arrow-left"></i> Back to Store
+      </a>
+    </div>
+  </header>
+
+  <main class="container admin-main">
+    <div class="admin-tabs">
+      <button class="tab-btn active" data-tab="tablePanel"><i class="fas fa-list"></i> Products</button>
+      <button class="tab-btn" data-tab="manualPanel"><i class="fas fa-plus-circle"></i> Add / Edit</button>
+      <button class="tab-btn" data-tab="excelPanel"><i class="fas fa-file-excel"></i> Bulk Excel</button>
+      <button class="tab-btn" data-tab="settingsPanel"><i class="fas fa-cog"></i> Export & Reset</button>
+    </div>
+
+    <section id="tablePanel" class="tab-panel active">
+      <h2>All Products (<span id="productCount"></span>)</h2>
+      <div class="table-wrap">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Image</th><th>Name / ID</th><th>Category</th>
+              <th>Price</th><th>Stock</th><th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="productTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="manualPanel" class="tab-panel">
+      <h2 id="formTitle">Add New Product</h2>
+      <form id="productForm" class="admin-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Product Name *</label>
+            <input type="text" id="pName" required placeholder="e.g. Wireless Earbuds Pro" />
+          </div>
+          <div class="form-group">
+            <label>Price ($) *</label>
+            <input type="number" id="pPrice" step="0.01" required placeholder="29.99" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Category</label>
+            <input type="text" id="pCategory" placeholder="e.g. Electronics" />
+          </div>
+          <div class="form-group">
+            <label>Stock</label>
+            <input type="number" id="pStock" placeholder="0" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Image URL</label>
+          <input type="url" id="pImage" placeholder="https://…" />
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <textarea id="pDesc" rows="3" placeholder="Short description…"></textarea>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save Product</button>
+          <button type="button" class="btn btn-outline" id="cancelEdit">Cancel</button>
+        </div>
+      </form>
+    </section>
+
+    <section id="excelPanel" class="tab-panel">
+      <h2>Bulk Import via Excel</h2>
+      <p style="color:var(--muted);margin-bottom:20px;">
+        Upload an <strong>.xlsx</strong> file. Required columns: <code>Name</code>, <code>Price</code>.
+        Optional: <code>Category</code>, <code>Image</code>, <code>Stock</code>, <code>Description</code>.
+      </p>
+      <div class="excel-upload-box">
+        <input type="file" id="excelFile" accept=".xlsx,.xls" />
+        <button class="btn btn-primary" id="importExcelBtn"><i class="fas fa-upload"></i> Import Excel</button>
+      </div>
+      <div class="sample-download">
+        <a href="#" onclick="downloadSampleExcel();return false;">
+          <i class="fas fa-download"></i> Download Sample Excel Template
+        </a>
+      </div>
+    </section>
+
+    <section id="settingsPanel" class="tab-panel">
+      <h2>Export & Reset</h2>
+      <p style="color:var(--muted);margin-bottom:24px;">
+        After editing, download <code>products.json</code> and commit it to your GitHub repository.
+        The storefront will automatically use the latest data.
+      </p>
+      <div class="settings-actions">
+        <button class="btn btn-primary" id="exportBtn"><i class="fas fa-download"></i> Download products.json</button>
+        <button class="btn btn-outline" id="resetBtn" style="border-color:#ef4444;color:#ef4444;">
+          <i class="fas fa-undo"></i> Reset to products.json
+        </button>
+      </div>
+      <div class="info-box">
+        <h4><i class="fas fa-info-circle"></i> GitHub Workflow</h4>
+        <ol>
+          <li>Edit products here (add, edit, Excel import).</li>
+          <li>Click <strong>Download products.json</strong>.</li>
+          <li>Replace the <code>products.json</code> file in your GitHub repo.</li>
+          <li>Commit & push. GitHub Pages updates automatically.</li>
+        </ol>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/admin.js"></script>
+  <script>
+    function downloadSampleExcel() {
+      const data = [{ Name: "Sample Product", Price: 19.99, Category: "Electronics", Image: "", Stock: 10, Description: "Demo row" }];
+      const ws = XLSX.utils.json_to_sheet(data);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Products");
+      XLSX.writeFile(wb, "sample-products.xlsx");
+    }
+  </script>
+</body>
+</html>
