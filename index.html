@@ -289,9 +289,13 @@
     function waOrderFromModal() { waOrder(activeProduct.id); closeModal(); }
 
     const faqs = [
-      { q: "How to order?", a: "Add to cart, then click Checkout on WhatsApp." },
-      { q: "Delivery time?", a: "2-5 working days island-wide." }
-    ];
+  { q: "What is Leopis Digital's return policy?", a: "We operate on a strict Same-Day Inspection & Return Policy to ensure absolute product satisfaction." },
+  { q: "Can I return an item if it is damaged, incorrect, or non-working?", a: "Yes, instantly at your doorstep!<br><br><b>On-the-Spot Courier Return:</b> Inspect your package when the delivery agent arrives. If the item is damaged, incorrect, or doesn't work, hand it straight back to the courier for an immediate return/exchange log.<br><br><b>Same-Day Notice:</b> If you test the product later the same day and find a defect, notify us immediately via WhatsApp or email. We will arrange a priority courier swap for you at zero extra cost." },
+  { q: "Are there any items excluded from returns?", a: "Yes. Because of hygiene and digital licensing, opened software, digital goods, and custom-ordered items cannot be returned unless proven defective upon arrival." },
+  { q: "How fast is delivery?", a: "Orders are processed and dispatched promptly. Standard island-wide delivery takes between 1 to 3 business days depending on your location." },
+  { q: "Can I track my order?", a: "Yes, once your order ships from our warehouse, tracking details and updates will be sent via SMS or WhatsApp." },
+  { q: "How can I contact Leopis Digital customer support?", a: "Our support team is available to assist you with any questions or same-day return requests:<br><br>📞 <b>Hotline / WhatsApp / Telegram:</b> +94 78 336 6466<br>✉️ <b>Email:</b> director.leopis@gmail.com" }
+];
     document.getElementById('faqList').innerHTML = faqs.map((f, i) => `
       <div class="faq-item">
         <div class="faq-q" onclick="toggleFaq(${i})">${f.q} <i class="fas fa-plus"></i></div>
