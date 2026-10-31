@@ -1,56 +1,56 @@
 [
   {
     "id": "P001",
-    "name": "Wireless Earbuds Pro",
-    "price": 49.99,
-    "category": "Electronics",
-    "image": "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=600&q=80",
-    "stock": 25,
-    "description": "Active noise cancellation, 30h battery life."
+    "name": "MacBook Pro 14-inch M3",
+    "price": 550000.00,
+    "category": "Laptops",
+    "image": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=600&q=80",
+    "stock": 10,
+    "description": "Apple M3 chip, 16GB RAM, 512GB SSD."
   },
   {
     "id": "P002",
-    "name": "Smart Watch Series X",
-    "price": 129.99,
-    "category": "Electronics",
-    "image": "https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=600&q=80",
-    "stock": 12,
-    "description": "AMOLED display, heart-rate & GPS."
+    "name": "Dell XPS 13 Plus",
+    "price": 420000.00,
+    "category": "Laptops",
+    "image": "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?w=600&q=80",
+    "stock": 15,
+    "description": "Intel Core i7, 16GB RAM, 1TB SSD, OLED Display."
   },
   {
     "id": "P003",
-    "name": "Minimalist Leather Wallet",
-    "price": 29.99,
+    "name": "Logitech MX Master 3S",
+    "price": 28500.00,
     "category": "Accessories",
-    "image": "https://images.unsplash.com/photo-1627123424574-724758594e93?w=600&q=80",
-    "stock": 40,
-    "description": "Genuine leather, RFID blocking."
+    "image": "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=600&q=80",
+    "stock": 50,
+    "description": "Wireless performance mouse, 8K DPI."
   },
   {
     "id": "P004",
-    "name": "Portable Bluetooth Speaker",
-    "price": 39.99,
+    "name": "Sony WH-1000XM5 Headphones",
+    "price": 95000.00,
     "category": "Audio",
-    "image": "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=600&q=80",
-    "stock": 18,
-    "description": "Waterproof, 12h playtime, deep bass."
+    "image": "https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?w=600&q=80",
+    "stock": 20,
+    "description": "Industry-leading noise cancellation, 30h battery."
   },
   {
     "id": "P005",
-    "name": "USB-C Fast Charger 65W",
-    "price": 24.99,
-    "category": "Electronics",
-    "image": "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?w=600&q=80",
-    "stock": 50,
-    "description": "GaN technology, compact, multi-device."
+    "name": "ASUS ROG Zephyrus G14",
+    "price": 480000.00,
+    "category": "Gaming Laptops",
+    "image": "https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=600&q=80",
+    "stock": 5,
+    "description": "Ryzen 9, RTX 4060, 16GB RAM, 1TB SSD."
   },
   {
     "id": "P006",
-    "name": "Ergonomic Laptop Stand",
-    "price": 34.99,
-    "category": "Accessories",
-    "image": "https://images.unsplash.com/photo-1625766763788-95dcce9bf5ac?w=600&q=80",
-    "stock": 22,
-    "description": "Aluminium, adjustable height, foldable."
+    "name": "Samsung T7 Portable SSD 1TB",
+    "price": 32000.00,
+    "category": "Storage",
+    "image": "https://images.unsplash.com/photo-1597848212624-a19eb35e2651?w=600&q=80",
+    "stock": 30,
+    "description": "USB 3.2 Gen 2, up to 1050MB/s."
   }
 ]
