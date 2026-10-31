@@ -3,41 +3,48 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="LeoPis Digital – Island‑wide delivery. Shop quality products with fast WhatsApp ordering." />
-  <title>LeoPis Digital | Island‑wide Delivery</title>
+  <title>LeoPis Digital | Premium Tech & Lifestyle</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 <body>
 
-  <!-- PROMO BANNER -->
-  <div class="promo-banner" id="promoBanner">
-    <div class="container promo-inner">
-      <span id="promoText">Loading promotions...</span>
+  <!-- TOP BAR -->
+  <div class="top-bar">
+    <div class="container top-bar-inner">
+      <div class="top-contact">
+        <span><i class="fas fa-phone"></i> +94 77 123 4567</span>
+        <span><i class="fas fa-envelope"></i> hello@leopisdigital.com</span>
+      </div>
+      <div class="top-promo" id="promoBanner">
+        <span id="promoText">🔥 Island-wide delivery available</span>
+      </div>
     </div>
   </div>
 
-  <!-- HEADER WITH SEARCH BAR -->
+  <!-- MAIN HEADER -->
   <header class="site-header">
     <div class="container header-inner">
       
+      <!-- Small 3D Logo -->
       <a href="index.html" class="logo logo-3d" aria-label="LeoPis Digital">
         <span class="logo-inner">
           <img src="logo.png" alt="LeoPis Digital" class="logo-img" />
         </span>
       </a>
 
-      <!-- SEARCH BAR MOVED TO HEADER -->
+      <!-- SEARCH BAR -->
       <div class="header-search">
-        <input type="search" id="searchInput" placeholder="Search products..." />
+        <input type="search" id="searchInput" placeholder="Search for products, brands and more..." />
         <button class="search-btn"><i class="fas fa-search"></i></button>
       </div>
 
       <div class="header-actions">
-        <button class="icon-btn" id="cartToggle" aria-label="Cart">
+        <a href="#" class="action-link"><i class="fas fa-user"></i> <span>Account</span></a>
+        <button class="icon-btn cart-btn" id="cartToggle" aria-label="Cart">
           <i class="fas fa-shopping-cart"></i>
           <span class="cart-count" id="cartCount">0</span>
         </button>
@@ -47,52 +54,56 @@
     </div>
   </header>
 
-  <!-- MOBILE MENU -->
+  <!-- NAVIGATION BAR -->
   <nav class="main-nav" id="mainNav">
-    <a href="#shop">Shop</a>
-    <a href="#categories">Categories</a>
-    <a href="#faq">FAQ</a>
-    <a href="admin.html" class="admin-link">Admin Panel</a>
+    <div class="container nav-inner">
+      <a href="index.html" class="active">Home</a>
+      <a href="#shop">Shop</a>
+      <a href="#categories">Categories</a>
+      <a href="#faq">FAQ</a>
+      <a href="admin.html" class="admin-link">Admin Panel</a>
+    </div>
   </nav>
 
+  <!-- HERO BANNER -->
   <section class="hero">
     <div class="container hero-inner">
-      <div class="hero-text">
-        <span class="badge"><i class="fas fa-truck"></i> Island‑wide Delivery</span>
-        <h1>Shop Premium Products</h1>
-        <p>Fast delivery across Sri Lanka. Order easily via WhatsApp.</p>
-      </div>
-      <div class="hero-stats">
-        <div class="stat-box">
-          <strong id="visitCount">0</strong>
-          <span>Visits</span>
-        </div>
-        <div class="stat-box">
-          <strong id="orderCount">0</strong>
-          <span>Orders Delivered</span>
+      <div class="hero-content">
+        <span class="hero-badge"><i class="fas fa-truck"></i> Fast Island-wide Delivery</span>
+        <h1>Premium Products,<br> Delivered to You.</h1>
+        <p>Order via WhatsApp in seconds. Trusted by hundreds of happy customers.</p>
+        <div class="hero-stats">
+          <div class="stat-item">
+            <strong id="visitCount">0</strong>
+            <span>Visits</span>
+          </div>
+          <div class="stat-item">
+            <strong id="orderCount">0</strong>
+            <span>Orders Delivered</span>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- HORIZONTAL CATEGORIES -->
+  <!-- CATEGORY FILTERS -->
   <section class="category-section" id="categories">
     <div class="container">
       <div class="category-chips" id="categoryChips"></div>
     </div>
   </section>
 
-  <!-- PRODUCTS -->
+  <!-- PRODUCT GRID SECTION -->
   <section class="shop-section" id="shop">
     <div class="container">
-      <div class="section-head shop-head">
-        <h2>Just For You</h2>
+      <div class="section-head">
+        <h2>Featured Products</h2>
         <div class="shop-controls">
           <select id="sortSelect" class="sort-select">
-            <option value="default">Sort: Default</option>
-            <option value="price-asc">Price: Low → High</option>
-            <option value="price-desc">Price: High → Low</option>
-            <option value="name-asc">Name: A → Z</option>
+            <option value="default">Sort by: Default</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+            <option value="name-asc">Name: A to Z</option>
           </select>
         </div>
       </div>
@@ -101,11 +112,12 @@
     </div>
   </section>
 
-  <!-- FAQ & AI -->
+  <!-- FAQ & AI ASSISTANT -->
   <section class="faq-section" id="faq">
     <div class="container faq-inner">
       <div class="faq-text">
         <h2>Frequently Asked Questions</h2>
+        <p>Our AI assistant answers instantly. Or browse common questions below.</p>
         <div class="faq-accordion" id="faqAccordion"></div>
       </div>
       <div class="ai-chat-card">
@@ -113,7 +125,7 @@
           <i class="fas fa-robot"></i>
           <div>
             <strong>LeoPis AI Assistant</strong>
-            <span>Instant answers</span>
+            <span>Online • Instant answers</span>
           </div>
         </div>
         <div class="ai-chat-messages" id="aiMessages">
@@ -134,7 +146,7 @@
         <a href="index.html" class="logo logo-3d logo-footer">
           <span class="logo-inner"><img src="logo.png" alt="Logo" class="logo-img" /></span>
         </a>
-        <p style="margin-top:15px;">Island‑wide delivery. Order via WhatsApp.</p>
+        <p style="margin-top:15px; color:#94a3b8;">Island‑wide delivery. Order via WhatsApp.</p>
       </div>
       <div>
         <h4>Quick Links</h4>
@@ -175,10 +187,9 @@
   </aside>
   <div class="overlay" id="overlay"></div>
 
-  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <script src="js/config.js"></script>
   <script src="js/data.js"></script>
   <script src="js/app.js"></script>
   <script src="js/ai-faq.js"></script>
 </body>
-      </html>
+</html>
