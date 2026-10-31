@@ -1,59 +1,22 @@
-<!-- SEO Meta Tags -->
-<meta name="title" content="LeoPis Digital | Premium Tech Store in Sri Lanka">
-<meta name="description" content="Buy premium laptops, electronics, and accessories in Sri Lanka. Island-wide fast delivery. Order easily via WhatsApp.">
-<meta name="keywords" content="Laptops Sri Lanka, Electronics, WhatsApp Order, LeoPis Digital, Island wide delivery">
-<meta name="robots" content="index, follow">
-<link rel="canonical" href="https://leopisdigital.com/">
-
-<!-- Geo Targeting Tags (Sri Lanka) -->
-<meta name="geo.region" content="LK">
-<meta name="geo.placename" content="Sri Lanka">
-<meta name="geo.position" content="7.8731;80.7718">
-<meta name="ICBM" content="7.8731, 80.7718">
-
-<!-- Open Graph / Facebook / WhatsApp Share -->
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://leopisdigital.com/">
-<meta property="og:title" content="LeoPis Digital | Premium Tech Store">
-<meta property="og:description" content="Order premium products via WhatsApp with island-wide delivery in Sri Lanka.">
-<meta property="og:image" content="https://leopisdigital.com/logo.png">
-
-<!-- Twitter Card -->
-<meta property="twitter:card" content="summary_large_image">
-<meta property="twitter:url" content="https://leopisdigital.com/">
-<meta property="twitter:title" content="LeoPis Digital | Premium Tech Store">
-<meta property="twitter:description" content="Order premium products via WhatsApp with island-wide delivery in Sri Lanka.">
-<meta property="twitter:image" content="https://leopisdigital.com/logo.png">
-
-<!-- Google Structured Data (JSON-LD) for Local Business -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Store",
-  "name": "LeoPis Digital",
-  "image": "https://leopisdigital.com/logo.png",
-  "@id": "https://leopisdigital.com",
-  "url": "https://leopisdigital.com",
-  "telephone": "+94771234567",
-  "priceRange": "LKR",
-  "address": {
-    "@type": "PostalAddress",
-    "addressLocality": "Colombo",
-    "addressCountry": "LK"
-  },
-  "description": "Premium tech and lifestyle products with island-wide delivery in Sri Lanka. Order easily via WhatsApp."
-}
-</script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LeoPis Digital | Premium Tech & Lifestyle</title>
+  
+  <!-- SEO & GEO TAGS -->
+  <meta name="description" content="Buy premium laptops, electronics, and accessories in Sri Lanka. Island-wide fast delivery. Order easily via WhatsApp.">
+  <meta name="geo.region" content="LK">
+  <meta name="geo.placename" content="Sri Lanka">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- THIS IS VERY IMPORTANT -->
   <link rel="stylesheet" href="css/styles.css" />
+  
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 <body>
@@ -65,7 +28,7 @@
         <span><i class="fas fa-phone"></i> +94 77 123 4567</span>
         <span><i class="fas fa-envelope"></i> hello@leopisdigital.com</span>
       </div>
-      <div class="top-promo" id="promoBanner">
+      <div class="top-promo">
         <span id="promoText">🔥 Island-wide delivery available</span>
       </div>
     </div>
@@ -75,8 +38,8 @@
   <header class="site-header">
     <div class="container header-inner">
       
-      <!-- Small 3D Logo -->
-      <a href="index.html" class="logo logo-3d" aria-label="LeoPis Digital">
+      <!-- Logo -->
+      <a href="index.html" class="logo logo-3d">
         <span class="logo-inner">
           <img src="logo.png" alt="LeoPis Digital" class="logo-img" />
         </span>
@@ -84,17 +47,17 @@
 
       <!-- SEARCH BAR -->
       <div class="header-search">
-        <input type="search" id="searchInput" placeholder="Search for products, brands and more..." />
+        <input type="search" id="searchInput" placeholder="Search for products..." />
         <button class="search-btn"><i class="fas fa-search"></i></button>
       </div>
 
       <div class="header-actions">
         <a href="#" class="action-link"><i class="fas fa-user"></i> <span>Account</span></a>
-        <button class="icon-btn cart-btn" id="cartToggle" aria-label="Cart">
+        <button class="icon-btn cart-btn" id="cartToggle">
           <i class="fas fa-shopping-cart"></i>
           <span class="cart-count" id="cartCount">0</span>
         </button>
-        <button class="hamburger" id="hamburger" aria-label="Menu"><i class="fas fa-bars"></i></button>
+        <button class="hamburger" id="hamburger"><i class="fas fa-bars"></i></button>
       </div>
 
     </div>
@@ -163,7 +126,6 @@
     <div class="container faq-inner">
       <div class="faq-text">
         <h2>Frequently Asked Questions</h2>
-        <p>Our AI assistant answers instantly. Or browse common questions below.</p>
         <div class="faq-accordion" id="faqAccordion"></div>
       </div>
       <div class="ai-chat-card">
@@ -171,7 +133,7 @@
           <i class="fas fa-robot"></i>
           <div>
             <strong>LeoPis AI Assistant</strong>
-            <span>Online • Instant answers</span>
+            <span>Online</span>
           </div>
         </div>
         <div class="ai-chat-messages" id="aiMessages">
@@ -189,7 +151,7 @@
   <footer class="site-footer">
     <div class="container footer-grid">
       <div>
-        <a href="index.html" class="logo logo-3d logo-footer">
+        <a href="index.html" class="logo logo-footer">
           <span class="logo-inner"><img src="logo.png" alt="Logo" class="logo-img" /></span>
         </a>
         <p style="margin-top:15px; color:#94a3b8;">Island‑wide delivery. Order via WhatsApp.</p>
@@ -238,4 +200,4 @@
   <script src="js/app.js"></script>
   <script src="js/ai-faq.js"></script>
 </body>
-</html>
+  </html>
