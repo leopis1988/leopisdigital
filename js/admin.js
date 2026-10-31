@@ -1,12 +1,19 @@
 let products = [];
+let siteSettings = {};
 
 document.addEventListener("DOMContentLoaded", async () => {
   products = await loadProducts();
+  siteSettings = loadSiteSettings();
+  
   renderProductTable();
+  loadSettingsForm(); // Load promos & stats into form
+  
   initTabs();
   initManualForm();
   initExcelImport();
+  initSettingsForm(); // Save promos & stats
   initExport();
+  
   document.getElementById("resetBtn").addEventListener("click", async () => {
     if (confirm("Reset to products.json? All local edits will be lost.")) {
       products = await resetProducts();
@@ -40,7 +47,7 @@ function renderProductTable() {
       <td><img src="${p.image || 'https://via.placeholder.com/40'}" style="width:40px;height:40px;object-fit:cover;border-radius:6px;" onerror="this.src='https://via.placeholder.com/40'"></td>
       <td><strong>${p.name}</strong><br><small style="color:#94a3b8;">${p.id}</small></td>
       <td>${p.category || "-"}</td>
-      <td>$${Number(p.price).toFixed(2)}</td>
+      <td>${STORE_CONFIG.currency}${Number(p.price).toFixed(2)}</td>
       <td>${p.stock ?? "∞"}</td>
       <td class="table-actions">
         <button class="btn-icon edit" data-id="${p.id}" title="Edit"><i class="fas fa-pen"></i></button>
@@ -166,6 +173,27 @@ function initExcelImport() {
       fileInput.value = "";
     };
     reader.readAsArrayBuffer(file);
+  });
+}
+
+// ---- NEW: Site Settings Form Logic ----
+function loadSettingsForm() {
+  document.getElementById("sPromo").value = siteSettings.promoText || "";
+  document.getElementById("sVisits").value = siteSettings.visitCount || "";
+  document.getElementById("sOrders").value = siteSettings.orderCount || "";
+}
+
+function initSettingsForm() {
+  const form = document.getElementById("settingsForm");
+  form.addEventListener("submit", e => {
+    e.preventDefault();
+    siteSettings = {
+      promoText: document.getElementById("sPromo").value.trim(),
+      visitCount: document.getElementById("sVisits").value.trim(),
+      orderCount: document.getElementById("sOrders").value.trim()
+    };
+    saveSiteSettings(siteSettings);
+    alert("✅ Settings saved! Go to main page to see changes.");
   });
 }
 
