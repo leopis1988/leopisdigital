@@ -4,6 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin – LeoPis Digital</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css" />
   <link rel="stylesheet" href="css/admin.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
@@ -18,7 +21,7 @@
         </span>
         <small class="logo-sub">Admin</small>
       </a>
-      <a href="index.html" class="btn btn-outline" style="padding:8px 16px;font-size:.85rem;">
+      <a href="index.html" class="btn btn-outline" style="padding:10px 20px;font-size:.85rem;">
         <i class="fas fa-arrow-left"></i> Back to Store
       </a>
     </div>
@@ -29,7 +32,8 @@
       <button class="tab-btn active" data-tab="tablePanel"><i class="fas fa-list"></i> Products</button>
       <button class="tab-btn" data-tab="manualPanel"><i class="fas fa-plus-circle"></i> Add / Edit</button>
       <button class="tab-btn" data-tab="excelPanel"><i class="fas fa-file-excel"></i> Bulk Excel</button>
-      <button class="tab-btn" data-tab="settingsPanel"><i class="fas fa-cog"></i> Export & Reset</button>
+      <button class="tab-btn" data-tab="settingsPanel"><i class="fas fa-cog"></i> Site Settings</button>
+      <button class="tab-btn" data-tab="exportPanel"><i class="fas fa-download"></i> Export</button>
     </div>
 
     <section id="tablePanel" class="tab-panel active">
@@ -56,8 +60,8 @@
             <input type="text" id="pName" required placeholder="e.g. Wireless Earbuds Pro" />
           </div>
           <div class="form-group">
-            <label>Price ($) *</label>
-            <input type="number" id="pPrice" step="0.01" required placeholder="29.99" />
+            <label>Price (LKR) *</label>
+            <input type="number" id="pPrice" step="0.01" required placeholder="2500.00" />
           </div>
         </div>
         <div class="form-row">
@@ -102,11 +106,41 @@
       </div>
     </section>
 
+    <!-- NEW: Site Settings Panel -->
     <section id="settingsPanel" class="tab-panel">
-      <h2>Export & Reset</h2>
+      <h2>Site Settings (Promos & Stats)</h2>
       <p style="color:var(--muted);margin-bottom:24px;">
-        After editing, download <code>products.json</code> and commit it to your GitHub repository.
-        The storefront will automatically use the latest data.
+        Update the top promo banner and trust statistics on the main page.
+      </p>
+      <form id="settingsForm" class="admin-form">
+        <div class="form-group">
+          <label>Promo Banner Text (Top of page)</label>
+          <input type="text" id="sPromo" placeholder="🔥 Mega Sale! Up to 30% off..." />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Total Visits Count</label>
+            <input type="text" id="sVisits" placeholder="15,240" />
+          </div>
+          <div class="form-group">
+            <label>Orders Delivered Count</label>
+            <input type="text" id="sOrders" placeholder="1,850" />
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save Settings</button>
+        </div>
+      </form>
+      <div class="info-box" style="margin-top:24px;">
+        <p>Note: These settings are saved to your browser's LocalStorage. To make them permanent for all visitors, you must click "Export Settings" below and update the code.</p>
+      </div>
+    </section>
+
+    <!-- NEW: Export Panel -->
+    <section id="exportPanel" class="tab-panel">
+      <h2>Export Data</h2>
+      <p style="color:var(--muted);margin-bottom:24px;">
+        Download <code>products.json</code> and commit it to your GitHub repository to update the live site.
       </p>
       <div class="settings-actions">
         <button class="btn btn-primary" id="exportBtn"><i class="fas fa-download"></i> Download products.json</button>
@@ -132,7 +166,7 @@
   <script src="js/admin.js"></script>
   <script>
     function downloadSampleExcel() {
-      const data = [{ Name: "Sample Product", Price: 19.99, Category: "Electronics", Image: "", Stock: 10, Description: "Demo row" }];
+      const data = [{ Name: "Sample Product", Price: 2500.00, Category: "Electronics", Image: "", Stock: 10, Description: "Demo row" }];
       const ws = XLSX.utils.json_to_sheet(data);
       const wb = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(wb, ws, "Products");
@@ -140,4 +174,4 @@
     }
   </script>
 </body>
-</html>
+                                          </html>
