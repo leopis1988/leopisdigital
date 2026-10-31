@@ -4,133 +4,29 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LeoPis Digital | Premium Tech Store</title>
-  
   <meta name="description" content="Buy premium electronics, home appliances, and accessories in Sri Lanka. Island-wide fast delivery via WhatsApp.">
-  
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="theme-color" content="#0f172a">
+
+  <!-- Performance: preconnect to critical origins -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+  <link rel="preconnect" href="https://images.unsplash.com" />
+  <link rel="preconnect" href="https://ipapi.co" />
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
-  <style>
-    :root { --bg: #f8fafc; --surface: #fff; --text: #1e293b; --muted: #64748b; --primary: #2563eb; --whatsapp: #25d366; --border: #e2e8f0; --dark-bg: #0f172a; }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; }
-    img { max-width: 100%; display: block; } a { color: inherit; text-decoration: none; } button { font-family: inherit; cursor: pointer; border: none; }
-    .container { width: min(1280px, 96%); margin-inline: auto; }
-
-    /* RUNNING AD CSS */
-    .top-bar { background: #1e293b; color: #cbd5e1; font-size: 0.85rem; padding: 10px 0; overflow: hidden; white-space: nowrap; position: relative; width: 100%; font-weight: 500; }
-    .marquee-content { display: inline-block; padding-left: 100%; animation: marquee 25s linear infinite; }
-    .marquee-content:hover { animation-play-state: paused; }
-    @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
-
-    /* HEADER */
-    .site-header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 10px 0; position: sticky; top: 0; z-index: 100; }
-    .header-inner { display: flex; align-items: center; justify-content: space-between; gap: 15px; }
-    .logo img { height: 35px !important; width: auto !important; max-width: 120px !important; object-fit: contain !important; }
-    .header-search { flex: 1; display: flex; align-items: center; max-width: 500px; background: #f1f5f9; border: 1px solid var(--border); border-radius: 8px; height: 38px; overflow: hidden; }
-    .header-search input { flex: 1; border: none; outline: none; background: transparent; padding: 0 12px; font-size: 0.85rem; }
-    .header-search button { background: var(--primary); color: #fff; padding: 0 15px; height: 100%; }
-    .cart-btn { background: none; font-size: 1.2rem; position: relative; }
-    #cartCount { position: absolute; top: -5px; right: -8px; background: var(--primary); color: #fff; font-size: 0.6rem; padding: 2px 5px; border-radius: 50%; }
-    
-    /* NAVIGATION BAR */
-    .main-nav { background: var(--dark-bg); color: #fff; padding: 10px 0; display: flex; gap: 20px; overflow-x: auto; white-space: nowrap; }
-    .main-nav::-webkit-scrollbar { display: none; }
-    .main-nav a { font-size: 0.85rem; color: #cbd5e1; font-weight: 500; }
-
-    /* HERO */
-    .hero { background: var(--dark-bg); color: #fff; padding: 25px 0; text-align: center; }
-    .hero h1 { font-size: 1.5rem; margin-bottom: 5px; }
-    .hero p { font-size: 0.9rem; color: #94a3b8; }
-    .stats-row { display: flex; justify-content: center; gap: 15px; margin-top: 15px; }
-    .stat-box { background: rgba(255,255,255,0.1); padding: 8px 15px; border-radius: 8px; }
-    .stat-box strong { display: block; font-size: 1rem; color: #38bdf8; }
-    .stat-box span { font-size: 0.7rem; color: #94a3b8; }
-
-    /* CATEGORY FILTERS */
-    .category-sec { margin-top: 15px; margin-bottom: 10px; }
-    .category-filters { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 5px; }
-    .category-filters::-webkit-scrollbar { display: none; }
-    .filter-chip { padding: 6px 16px; border-radius: 20px; border: 1px solid var(--border); background: #fff; font-weight: 500; font-size: 0.85rem; color: var(--muted); white-space: nowrap; }
-    .filter-chip.active { background: var(--primary); color: #fff; border-color: var(--primary); }
-
-    /* PRODUCTS */
-    .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 10px 0 30px; }
-    .product-card { background: var(--surface); border-radius: 8px; border: 1px solid var(--border); display: flex; flex-direction: column; cursor: pointer; transition: 0.2s; overflow: hidden; }
-    .product-img { aspect-ratio: 1/1; padding: 10px; background: #fff; }
-    .product-img img { width: 100%; height: 100%; object-fit: contain; }
-    .product-body { padding: 10px; display: flex; flex-direction: column; flex: 1; }
-    .product-name { font-size: 0.85rem; font-weight: 500; margin-bottom: 5px; height: 2.6em; overflow: hidden; color: var(--text); }
-    .product-price { font-size: 1rem; font-weight: 700; color: var(--primary); margin-bottom: 10px; }
-    .product-actions { display: flex; gap: 5px; margin-top: auto; }
-    .add-cart-btn { flex: 1; padding: 8px; border-radius: 4px; border: 1px solid var(--primary); background: #fff; color: var(--primary); font-weight: 600; font-size: 0.75rem; }
-    .add-cart-btn:hover { background: var(--primary); color: #fff; }
-    .wa-quick-btn { width: 32px; background: #ecfdf5; color: var(--whatsapp); border: 1px solid #d1fae5; border-radius: 4px; display: grid; place-items: center; font-size: 1rem; }
-
-    /* FLOATING BUTTONS & CHATBOT */
-    .floating-container { position: fixed; bottom: 20px; right: 20px; z-index: 1000; display: flex; flex-direction: column; gap: 15px; align-items: flex-end; }
-    .fab { width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 30px; color: white; box-shadow: 0 4px 10px rgba(0,0,0,0.2); cursor: pointer; transition: transform 0.2s; }
-    .fab:hover { transform: scale(1.05); }
-    .fab.wa { background-color: var(--whatsapp); }
-    .fab.bot { background-color: #fff; color: #2563eb; border: 2px solid #e2e8f0; }
-    
-    .chat-window { position: fixed; bottom: 90px; right: 20px; width: 350px; max-width: calc(100vw - 40px); background: #fff; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); display: none; flex-direction: column; z-index: 1000; overflow: hidden; border: 1px solid var(--border); }
-    .chat-window.open { display: flex; }
-    .chat-header { background: var(--primary); color: #fff; padding: 15px; display: flex; justify-content: space-between; align-items: center; font-weight: 600; }
-    .chat-body { height: 300px; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; background: #f8fafc; }
-    .chat-msg { padding: 10px 12px; border-radius: 8px; max-width: 85%; font-size: 0.85rem; }
-    .chat-msg.bot { background: #fff; border: 1px solid var(--border); align-self: flex-start; }
-    .chat-msg.user { background: var(--primary); color: #fff; align-self: flex-end; }
-    .chat-input { display: flex; padding: 10px; background: #fff; border-top: 1px solid var(--border); }
-    .chat-input input { flex: 1; padding: 10px; border: 1px solid var(--border); border-radius: 20px; outline: none; }
-    .chat-input button { background: var(--primary); color: #fff; border: none; border-radius: 50%; width: 40px; height: 40px; margin-left: 8px; cursor: pointer; display: flex; justify-content: center; align-items: center; }
-
-    /* FAQ */
-    .faq-section { padding: 30px 0; background: #fff; border-top: 1px solid var(--border); }
-    .faq-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
-    .faq-item { border-bottom: 1px solid var(--border); padding: 10px 0; }
-    .faq-q { font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; font-size: 0.9rem; }
-    .faq-a { display: none; padding-top: 8px; color: var(--muted); font-size: 0.85rem; }
-
-    /* FOOTER */
-    .site-footer { background: var(--dark-bg); color: #94a3b8; padding: 25px 0; text-align: center; font-size: 0.85rem; }
-    .site-footer img { height: 30px !important; margin: 0 auto 10px; }
-    .social-links { display: flex; justify-content: center; gap: 15px; margin: 15px 0; }
-    .social-links a { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.1); display: grid; place-items: center; color: #fff; font-size: 1.1rem; transition: 0.2s; }
-    .social-links a:hover { background: var(--primary); }
-
-    /* MODAL & CART */
-    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 15px; }
-    .modal-content { background: #fff; width: 100%; max-width: 800px; max-height: 90vh; border-radius: 8px; overflow-y: auto; position: relative; display: flex; flex-direction: column; padding: 20px; }
-    .modal-close { position: absolute; right: 10px; top: 10px; font-size: 1.2rem; background: #f1f5f9; width: 30px; height: 30px; border-radius: 50%; z-index: 10; }
-    .thumbnails { display: flex; gap: 10px; margin-top: 10px; justify-content: center; }
-    .thumbnails img { width: 45px; height: 45px; object-fit: cover; border: 2px solid transparent; cursor: pointer; border-radius: 4px; }
-    .thumbnails img.active { border-color: var(--primary); }
-    .modal-info-sec h2 { font-size: 1.2rem; margin-bottom: 5px; margin-top:10px; }
-    .modal-info-sec p:nth-of-type(1) { font-size: 1.2rem; color: var(--primary); font-weight: bold; margin-bottom: 10px; }
-    .modal-info-sec p:nth-of-type(2) { font-size: 0.9rem; color: var(--muted); margin-bottom: 20px; line-height: 1.5; }
-    .btn-primary { width: 100%; padding: 12px; background: var(--primary); color: #fff; border-radius: 5px; margin-bottom: 10px; font-weight: bold; }
-    .btn-whatsapp { width: 100%; padding: 12px; background: var(--whatsapp); color: #fff; border-radius: 5px; font-weight: bold; font-size: 1rem; }
-
-    /* CART DRAWER */
-    .cart-drawer { position: fixed; top: 0; right: -100%; width: 100%; max-width: 350px; height: 100vh; height: 100dvh; background: #fff; z-index: 1001; transition: 0.3s; display: flex; flex-direction: column; box-shadow: -4px 0 15px rgba(0,0,0,0.1); }
-    .cart-drawer.open { right: 0; }
-    .cart-header { padding: 15px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; flex-shrink: 0; }
-    .cart-items { flex: 1; padding: 15px; overflow-y: auto; min-height: 0; }
-    .cart-footer { padding: 15px; padding-bottom: max(15px, env(safe-area-inset-bottom)); border-top: 1px solid #eee; flex-shrink: 0; background: #fff; }
-    .btn-checkout { width: 100%; padding: 10px; background: var(--whatsapp); color: #fff; border-radius: 5px; font-weight: bold; font-size: 1rem; }
-
-    @media (min-width: 768px) {
-      .product-grid { grid-template-columns: repeat(4, 1fr); }
-      .faq-grid { grid-template-columns: 1fr 1fr; }
-      .modal-content { flex-direction: row; gap: 20px; }
-      .hero h1 { font-size: 2rem; }
-    }
-  </style>
+  <!-- Our styles -->
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
-  <div class="top-bar">
+  <!-- ─── TOP MARQUEE BAR ─── -->
+  <div class="top-bar" aria-hidden="true">
     <div class="marquee-content">
       <span>🔥 Island-Wide Delivery Available (1–3 Days)</span> &nbsp;|&nbsp;
       <span>💵 Cash on Delivery (COD) Available Island-Wide</span> &nbsp;|&nbsp;
@@ -140,291 +36,152 @@
       <span>🔥 Island-Wide Delivery Available (1–3 Days)</span> &nbsp;|&nbsp;
       <span>💵 Cash on Delivery (COD) Available Island-Wide</span> &nbsp;|&nbsp;
       <span>🛡️ Same-Day Inspection & Return Guarantee</span> &nbsp;|&nbsp;
+      <span>💯 100% Genuine Tech & Store Warranty</span> &nbsp;|&nbsp;
+      <span>📞 Hotline / WhatsApp: +94 78 336 6466</span> &nbsp;|&nbsp;
     </div>
   </div>
-  
+
+  <!-- ─── HEADER ─── -->
   <header class="site-header">
     <div class="container header-inner">
-      <a href="#" class="logo"><img src="logo.png" alt="LeoPis Digital" /></a>
+      <a href="#" class="logo" aria-label="LeoPis Digital Home">
+        <img src="logo.png" alt="LeoPis Digital" width="120" height="35" />
+      </a>
       <div class="header-search">
-        <input type="search" id="searchInput" placeholder="Search products..." onkeyup="searchProducts()" />
-        <button><i class="fas fa-search"></i></button>
+        <input
+          type="search"
+          id="searchInput"
+          placeholder="Search products..."
+          autocomplete="off"
+          aria-label="Search products"
+        />
+        <button type="button" aria-label="Search"><i class="fas fa-search"></i></button>
       </div>
-      <button id="cartToggle" class="cart-btn">
+      <button id="cartToggle" class="cart-btn" aria-label="Open cart">
         <i class="fas fa-shopping-cart"></i>
         <span id="cartCount">0</span>
       </button>
     </div>
   </header>
-  
-  <nav class="main-nav container">
+
+  <!-- ─── NAV ─── -->
+  <nav class="main-nav container" aria-label="Primary">
     <a href="#">Home</a>
     <a href="#shop">Shop</a>
     <a href="#categoryFilters">Categories</a>
+    <a href="#shop">New Arrivals</a>
+    <a href="https://wa.me/94783366466" target="_blank" rel="noopener">Track Order</a>
+    <a href="#faq">FAQ</a>
+    <a href="https://wa.me/94783366466" target="_blank" rel="noopener">Contact Us</a>
     <a href="admin.html">Admin</a>
   </nav>
 
+  <!-- ─── HERO ─── -->
   <section class="hero">
     <div class="container">
       <h1>LeoPis Digital</h1>
       <p>Premium Tech Store in Sri Lanka</p>
       <div class="stats-row">
-        <div class="stat-box"><strong id="visitsCount">12,450</strong><span>Visits</span></div>
-        <div class="stat-box"><strong id="ordersCount">1,850</strong><span>Orders</span></div>
+        <div class="stat-box"><strong id="visitsCount">0</strong><span>Visits</span></div>
+        <div class="stat-box"><strong id="ordersCount">0</strong><span>Orders</span></div>
         <div class="stat-box"><strong>4.5/5 ⭐⭐⭐⭐</strong><span>Rating</span></div>
       </div>
     </div>
   </section>
 
+  <!-- ─── CATEGORY CHIPS ─── -->
   <section class="container category-sec">
     <div class="category-filters" id="categoryFilters"></div>
   </section>
 
+  <!-- ─── PRODUCT GRID ─── -->
   <section class="container" id="shop">
     <div class="product-grid" id="productGrid"></div>
   </section>
 
+  <!-- ─── FAQ + AI ─── -->
   <section class="faq-section" id="faq">
     <div class="container faq-grid">
       <div>
         <h2 style="margin-bottom:10px;">FAQ</h2>
         <div id="faqList"></div>
       </div>
+      <div class="ai-box">
+        <h3><i class="fas fa-robot"></i> AI Assistant</h3>
+        <div id="aiMessages" class="ai-messages" aria-live="polite"></div>
+        <div class="ai-input-group">
+          <input type="text" id="aiInput" placeholder="Ask about delivery..." aria-label="Ask AI assistant" />
+          <button type="button" id="aiSend">Send</button>
+        </div>
+      </div>
     </div>
   </section>
 
+  <!-- ─── FOOTER ─── -->
   <footer class="site-footer">
     <div class="container">
-      <img src="logo.png" alt="LeoPis Digital">
+      <img src="logo.png" alt="LeoPis Digital" width="100" height="30" loading="lazy" />
       <div class="social-links">
-        <a href="https://facebook.com/leopisdigital" target="_blank"><i class="fab fa-facebook-f"></i></a>
-        <a href="https://wa.me/94783366466" target="_blank"><i class="fab fa-whatsapp"></i></a>
-        <a href="mailto:director.leopis@gmail.com"><i class="fas fa-envelope"></i></a>
+        <a href="https://facebook.com/leopisdigital" target="_blank" rel="noopener" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://wa.me/94783366466" target="_blank" rel="noopener" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        <a href="mailto:director.leopis@gmail.com" title="Gmail"><i class="fas fa-envelope"></i></a>
       </div>
       <p>&copy; 2024 LeoPis Digital. All rights reserved.</p>
     </div>
   </footer>
 
-  <!-- FLOATING CHATBOT & WHATSAPP -->
-  <div class="chat-window" id="chatWindow">
+  <!-- ─── FLOATING CHATBOT + WHATSAPP ─── -->
+  <div class="chat-window" id="chatWindow" role="dialog" aria-label="AI chat">
     <div class="chat-header">
       <span><i class="fas fa-robot"></i> AI Assistant</span>
-      <button onclick="toggleChat()" style="background:none; color:white; font-size:1.2rem;"><i class="fas fa-times"></i></button>
+      <button type="button" id="chatClose" aria-label="Close chat"><i class="fas fa-times"></i></button>
     </div>
     <div class="chat-body" id="chatBody">
       <div class="chat-msg bot">Hello! How can I help you today? Ask about delivery, products, or returns.</div>
     </div>
     <div class="chat-input">
-      <input type="text" id="aiInput" placeholder="Type a message..." onkeypress="if(event.key==='Enter') askAI()">
-      <button onclick="askAI()"><i class="fas fa-paper-plane"></i></button>
+      <input type="text" id="chatInput" placeholder="Type a message..." aria-label="Chat message" />
+      <button type="button" id="chatSend" aria-label="Send"><i class="fas fa-paper-plane"></i></button>
     </div>
   </div>
 
   <div class="floating-container">
-    <button class="fab bot" onclick="toggleChat()"><i class="fas fa-robot"></i></button>
-    <a href="https://wa.me/94783366466" target="_blank" class="fab wa"><i class="fab fa-whatsapp"></i></a>
+    <button type="button" class="fab bot" id="chatToggle" aria-label="Open chat"><i class="fas fa-robot"></i></button>
+    <a href="https://wa.me/94783366466" target="_blank" rel="noopener" class="fab wa" aria-label="Chat on WhatsApp"><i class="fab fa-whatsapp"></i></a>
   </div>
 
-  <!-- PRODUCT MODAL -->
-  <div class="modal-overlay" id="productModal">
+  <!-- ─── PRODUCT MODAL ─── -->
+  <div class="modal-overlay" id="productModal" role="dialog" aria-modal="true">
     <div class="modal-content">
-      <button onclick="closeModal()" class="modal-close"><i class="fas fa-times"></i></button>
+      <button type="button" class="modal-close" id="modalClose" aria-label="Close"><i class="fas fa-times"></i></button>
       <div class="modal-img-sec">
-        <img id="mImg" src="" style="width:100%; max-height:250px; object-fit:contain;">
+        <img id="mImg" src="" alt="" width="400" height="250" />
         <div class="thumbnails" id="mThumbnails"></div>
       </div>
       <div class="modal-info-sec">
         <h2 id="mTitle">Product Name</h2>
         <p id="mPrice">LKR 0</p>
         <p id="mDesc">Description...</p>
-        <button onclick="addToCartFromModal()" class="btn-primary">Add to Cart</button>
-        <button onclick="waOrderFromModal()" class="btn-whatsapp"><i class="fab fa-whatsapp"></i> Order via WhatsApp</button>
+        <button type="button" id="mAddBtn" class="btn-primary">Add to Cart</button>
+        <button type="button" id="mWaBtn" class="btn-whatsapp"><i class="fab fa-whatsapp"></i> Order via WhatsApp</button>
       </div>
     </div>
   </div>
 
-  <!-- CART DRAWER -->
-  <div class="cart-drawer" id="cartDrawer">
+  <!-- ─── CART DRAWER ─── -->
+  <div class="cart-drawer" id="cartDrawer" role="dialog" aria-label="Cart">
     <div class="cart-header">
-      <h3>Cart</h3><button onclick="document.getElementById('cartDrawer').classList.remove('open')"><i class="fas fa-times"></i></button>
+      <h3>Cart</h3>
+      <button type="button" id="cartClose" aria-label="Close cart"><i class="fas fa-times"></i></button>
     </div>
     <div id="cartItems" class="cart-items"></div>
     <div class="cart-footer">
       <h4>Total: <span id="cartTotal">LKR 0</span></h4>
-      <button onclick="checkout()" class="btn-checkout" id="checkoutBtn"><i class="fab fa-whatsapp"></i> Checkout</button>
+      <button type="button" id="checkoutBtn" class="btn-checkout"><i class="fab fa-whatsapp"></i> Checkout</button>
     </div>
   </div>
 
-  <script>
-    const CONFIG = { whatsappNumber: "94783366466" }; 
-
-    let visits = parseInt(localStorage.getItem('leopis_visits')) || 12450;
-    visits++;
-    localStorage.setItem('leopis_visits', visits);
-    document.getElementById('visitsCount').innerText = visits.toLocaleString();
-    let orders = parseInt(localStorage.getItem('leopis_orders')) || 1850;
-    document.getElementById('ordersCount').innerText = orders.toLocaleString();
-
-    // Products loaded from Admin
-    let PRODUCTS = JSON.parse(localStorage.getItem('leopis_products_v3')) || [
-      { id: 1, name: "Smart Air Fryer", price: 35000, category: "Home appliance and kitchen", image: "https://images.unsplash.com/photo-1626074353765-517a681e40be?w=400", description: "Digital air fryer for healthy cooking." },
-      { id: 2, name: "Electric Kettle", price: 8500, category: "Electrical items", image: "https://images.unsplash.com/photo-1585032226651-759b368d7246?w=400", description: "Stainless steel fast boiling kettle." }
-    ];
-
-    let cart = [];
-    let activeProduct = null;
-    let currentCategory = "All";
-    let searchQuery = "";
-        // Floating Chatbot Logic
-    function toggleChat() {
-      const win = document.getElementById('chatWindow');
-      win.classList.toggle('open');
-    }
-
-    function askAI() {
-      const input = document.getElementById('aiInput');
-      const msg = input.value.trim();
-      if(!msg) return;
-      
-      const body = document.getElementById('chatBody');
-      body.innerHTML += `<div class="chat-msg user">${msg}</div>`;
-      input.value = '';
-      
-      // Simulated AI Response
-      let reply = "Please contact us on WhatsApp for specific details.";
-      const lower = msg.toLowerCase();
-      if(lower.includes('delivery')) reply = "We deliver island-wide in 1-3 business days via courier.";
-      if(lower.includes('return')) reply = "We offer a Same-Day Inspection & Return guarantee for damaged items.";
-      if(lower.includes('price')) reply = "You can see all current prices on the product cards.";
-      
-      setTimeout(() => {
-        body.innerHTML += `<div class="chat-msg bot">${reply}</div>`;
-        body.scrollTop = body.scrollHeight;
-      }, 600);
-    }
-
-    function renderCategoryFilters() {
-      const categories = ["All", ...new Set(PRODUCTS.map(p => p.category || "Other"))];
-      document.getElementById('categoryFilters').innerHTML = categories.map(c => 
-        `<button class="filter-chip ${c === 'All' ? 'active' : ''}" onclick="filterCategory('${c}', this)">${c}</button>`
-      ).join('');
-    }
-
-    function filterCategory(cat, btn) {
-      currentCategory = cat;
-      document.querySelectorAll('.filter-chip').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      renderProducts();
-    }
-
-    function searchProducts() {
-      searchQuery = document.getElementById('searchInput').value.toLowerCase();
-      renderProducts();
-    }
-
-    function renderProducts() {
-      let filtered = PRODUCTS;
-      if (currentCategory !== "All") filtered = filtered.filter(p => p.category === currentCategory);
-      if (searchQuery) filtered = filtered.filter(p => p.name.toLowerCase().includes(searchQuery));
-
-      const grid = document.getElementById('productGrid');
-      if (filtered.length === 0) {
-        grid.innerHTML = "<p style='grid-column:1/-1; text-align:center; padding:20px;'>No products found.</p>";
-        return;
-      }
-
-      grid.innerHTML = filtered.map(p => `
-        <article class="product-card">
-          <div class="product-img" onclick="openModal(${p.id})"><img src="${p.image}"></div>
-          <div class="product-body">
-            <h3 class="product-name" onclick="openModal(${p.id})">${p.name}</h3>
-            <div class="product-price">LKR ${p.price.toLocaleString()}</div>
-            <div class="product-actions">
-              <button class="add-cart-btn" onclick="addToCart(${p.id})">Add</button>
-              <button class="wa-quick-btn" onclick="waOrder(${p.id})"><i class="fab fa-whatsapp"></i></button>
-            </div>
-          </div>
-        </article>
-      `).join('');
-    }
-
-    function openModal(id) {
-      activeProduct = PRODUCTS.find(p => p.id === id);
-      document.getElementById('mImg').src = activeProduct.image;
-      document.getElementById('mTitle').innerText = activeProduct.name;
-      document.getElementById('mPrice').innerText = `LKR ${activeProduct.price.toLocaleString()}`;
-      document.getElementById('mDesc').innerHTML = activeProduct.description || "No description available.";
-      document.getElementById('productModal').style.display = 'flex';
-    }
-    function closeModal() { document.getElementById('productModal').style.display = 'none'; }
-    function addToCartFromModal() { addToCart(activeProduct.id); closeModal(); }
-    function waOrderFromModal() { waOrder(activeProduct.id); closeModal(); }
-
-    const faqs = [
-      { q: "What is Leopis Digital's return policy?", a: "We operate on a strict Same-Day Inspection & Return Policy." },
-      { q: "How fast is delivery?", a: "Standard island-wide delivery takes between 1 to 3 business days." }
-    ];
-    
-    document.getElementById('faqList').innerHTML = faqs.map((f, i) => `
-      <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(${i})">${f.q} <i class="fas fa-plus"></i></div>
-        <div class="faq-a" id="faq-a-${i}">${f.a}</div>
-      </div>
-    `).join('');
-
-    function toggleFaq(i) {
-      const el = document.getElementById(`faq-a-${i}`);
-      el.style.display = el.style.display === 'block' ? 'none' : 'block';
-    }
-
-    function addToCart(id) {
-      const p = PRODUCTS.find(x => x.id === id);
-      const existing = cart.find(x => x.id === id);
-      if (existing) existing.qty++;
-      else cart.push({ ...p, qty: 1 });
-      updateCart();
-      document.getElementById('cartDrawer').classList.add('open');
-    }
-
-    function updateCart() {
-      document.getElementById('cartCount').innerText = cart.reduce((s, i) => s + i.qty, 0);
-      document.getElementById('cartItems').innerHTML = cart.length ? cart.map(c => `
-        <div style="display:flex; gap:10px; margin-bottom:10px; border-bottom:1px solid #eee; padding-bottom:10px;">
-          <img src="${c.image}" style="width:50px; height:50px; object-fit:contain;">
-          <div style="flex:1;">
-            <b style="font-size:0.8rem;">${c.name}</b><br><span style="color:var(--primary); font-weight:bold;">LKR ${c.price.toLocaleString()}</span>
-            <div style="margin-top:5px;"><button onclick="changeQty(${c.id}, -1)" style="border:1px solid #ccc; width:24px; background:#fff;">-</button> ${c.qty} <button onclick="changeQty(${c.id}, 1)" style="border:1px solid #ccc; width:24px; background:#fff;">+</button></div>
-          </div>
-        </div>
-      `).join('') : "<p>Cart is empty.</p>";
-      document.getElementById('cartTotal').innerText = `LKR ${cart.reduce((s, i) => s + (i.price * i.qty), 0).toLocaleString()}`;
-    }
-
-    function changeQty(id, ch) {
-      const item = cart.find(x => x.id === id);
-      if (item) { item.qty += ch; if (item.qty <= 0) cart = cart.filter(x => x.id !== id); updateCart(); }
-    }
-
-    function waOrder(id) {
-      const p = PRODUCTS.find(x => x.id === id);
-      window.open(`https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(`Hi! I want to order *${p.name}* (LKR ${p.price.toLocaleString()}).`)}`);
-    }
-
-    function checkout() {
-      if (cart.length === 0) return alert("Cart empty!");
-      let msg = "🛒 *New Order*\n\n";
-      cart.forEach((c, i) => msg += `${i+1}. ${c.name} x${c.qty} = LKR ${(c.price*c.qty).toLocaleString()}\n`);
-      msg += `\n*Total: LKR ${cart.reduce((s, i) => s + (i.price * i.qty), 0).toLocaleString()}*`;
-      
-      let currentOrders = parseInt(localStorage.getItem('leopis_orders')) || 1850;
-      localStorage.setItem('leopis_orders', currentOrders + 1);
-      window.open(`https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(msg)}`);
-    }
-
-    document.getElementById('cartToggle').onclick = () => document.getElementById('cartDrawer').classList.add('open');
-    
-    renderCategoryFilters();
-    renderProducts();
-  </script>
+  <!-- Scripts -->
+  <script src="script.js" defer></script>
 </body>
 </html>
