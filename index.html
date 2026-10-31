@@ -1,360 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LeoPis Admin Panel</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <!-- SheetJS for Excel Parsing -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-  <style>
-    :root { --bg: #f1f5f9; --surface: #fff; --text: #1e293b; --primary: #2563eb; --border: #e2e8f0; --danger: #ef4444; --success: #22c55e; }
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
-    body { background: var(--bg); color: var(--text); }
-    .container { max-width: 1100px; margin: 0 auto; padding: 20px; }
-    
-    /* Login */
-    #loginSection { display: flex; justify-content: center; align-items: center; height: 100vh; }
-    .login-box { background: var(--surface); padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); width: 100%; max-width: 400px; }
-    .login-box h2 { text-align: center; margin-bottom: 20px; color: var(--primary); }
-    .form-group { margin-bottom: 15px; }
-    .form-group label { display: block; margin-bottom: 5px; font-size: 0.9rem; font-weight: 500; }
-    .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 5px; font-size: 0.9rem; }
-    .btn { padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer; font-weight: 600; color: #fff; }
-    .btn-primary { background: var(--primary); width: 100%; }
-    .btn-danger { background: var(--danger); }
-    .btn-success { background: var(--success); }
-    
-    /* Dashboard */
-    #dashboardSection { display: none; }
-    .header { background: #0f172a; color: #fff; padding: 15px 0; margin-bottom: 20px; }
-    .header-inner { display: flex; justify-content: space-between; align-items: center; max-width: 1100px; margin: 0 auto; padding: 0 20px; }
-    .tabs { display: flex; gap: 10px; margin-bottom: 20px; overflow-x: auto; }
-    .tab-btn { padding: 10px 20px; background: var(--surface); border: 1px solid var(--border); border-radius: 5px; cursor: pointer; font-weight: 600; white-space: nowrap; }
-    .tab-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
-    .tab-content { display: none; background: var(--surface); padding: 20px; border-radius: 10px; border: 1px solid var(--border); }
-    .tab-content.active { display: block; }
-    
-    /* Stats */
-    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px; }
-    .stat-card { background: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid var(--border); text-align: center; }
-    .stat-card h3 { font-size: 0.9rem; color: #64748b; }
-    .stat-card p { font-size: 1.5rem; font-weight: bold; color: var(--primary); margin-top: 5px; }
-
-    /* Tables */
-    table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-    th, td { padding: 10px; text-align: left; border-bottom: 1px solid var(--border); font-size: 0.9rem; }
-    th { background: #f8fafc; }
-  </style>
-</head>
-<body>
-
-<!-- LOGIN SECTION -->
-<div id="loginSection">
-  <div class="login-box">
-    <h2><i class="fas fa-lock"></i> Admin Login</h2>
-    <div class="form-group">
-      <label>Username</label>
-      <input type="text" id="adminUser" placeholder="Enter Username">
-    </div>
-    <div class="form-group">
-      <label>Password</label>
-      <input type="password" id="adminPass" placeholder="Enter Password">
-    </div>
-    <button class="btn btn-primary" onclick="login()">Secure Login</button>
-  </div>
-</div>
-
-<!-- DASHBOARD SECTION -->
-<div id="dashboardSection">
-  <div class="header">
-    <div class="header-inner">
-      <h2><i class="fas fa-shield-alt"></i> LeoPis Admin</h2>
-      <button class="btn btn-danger" onclick="logout()">Logout</button>
-    </div>
-  </div>
-
-  <div class="container">
-    <div class="tabs">
-      <button class="tab-btn active" onclick="switchTab('overview', this)">Overview</button>
-      <button class="tab-btn" onclick="switchTab('products', this)">Products (Add/Update)</button>
-      <button class="tab-btn" onclick="switchTab('bulk', this)">Bulk Excel Upload</button>
-      <button class="tab-btn" onclick="switchTab('orders', this)">Orders & Reviews</button>
-    </div>
-
-    <!-- OVERVIEW TAB -->
-    <div id="overview" class="tab-content active">
-      <h3>Dashboard Overview</h3>
-      <div class="stats-grid" style="margin-top: 15px;">
-        <div class="stat-card">
-          <h3>Total Visitors</h3>
-          <p id="dashVisits">0</p>
-        </div>
-        <div class="stat-card">
-          <h3>Completed Orders</h3>
-          <p id="dashOrders">0</p>
-        </div>
-        <div class="stat-card">
-          <h3>Total Products</h3>
-          <p id="dashProducts">0</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- PRODUCTS TAB -->
-    <div id="products" class="tab-content">
-      <h3 id="formTitle">Add New Product</h3>
-      <input type="hidden" id="prodId">
-      <div class="form-group">
-        <label>Product Name</label>
-        <input type="text" id="prodName">
-      </div>
-      <div class="form-group">
-        <label>Price (LKR)</label>
-        <input type="number" id="prodPrice">
-      </div>
-      <div class="form-group">
-        <label>Category</label>
-        <input type="text" id="prodCategory" placeholder="e.g. Kitchen, Audio">
-      </div>
-      <div class="form-group">
-        <label>Main Image URL</label>
-        <input type="text" id="prodImage">
-      </div>
-      <div class="form-group">
-        <label>Additional Gallery Images (Comma separated URLs)</label>
-        <textarea id="prodGallery" rows="2"></textarea>
-      </div>
-      <div class="form-group">
-        <label>Description</label>
-        <textarea id="prodDesc" rows="3"></textarea>
-      </div>
-      <div class="form-group">
-        <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
-          <input type="checkbox" id="prodPromo" style="width: auto;"> Add to Special Promotions (Top of Main Page)
-        </label>
-      </div>
-      <button class="btn btn-success" onclick="saveProduct()">Save Product</button>
-      <button class="btn" style="background:#cbd5e1; color:#000;" onclick="resetForm()">Clear</button>
-    </div>
-
-    <!-- BULK EXCEL TAB -->
-    <div id="bulk" class="tab-content">
-      <h3>Bulk Upload via Excel</h3>
-      <p style="margin: 10px 0; font-size: 0.9rem; color: #64748b;">
-        File must be .xlsx or .csv format. Required columns: <b>name, price, category, image, description</b>. 
-        (Optional: <b>isPromo</b> with TRUE/FALSE).
-      </p>
-      <input type="file" id="excelFile" accept=".xlsx, .xls, .csv" style="margin-bottom: 15px;">
-      <button class="btn btn-primary" onclick="uploadExcel()">Process & Upload</button>
-    </div>
-
-    <!-- ORDERS & REVIEWS TAB -->
-    <div id="orders" class="tab-content">
-      <h3>Manage Orders</h3>
-      <div id="ordersList"></div>
-      <hr style="margin: 20px 0; border: 0; border-top: 1px solid #eee;">
-      <h3>Manage Google Reviews</h3>
-      <div class="form-group">
-        <input type="text" id="reviewText" placeholder="Customer Review Text">
-        <input type="number" id="reviewStars" placeholder="Stars (1-5)" style="margin-top: 5px;">
-        <button class="btn btn-primary" style="margin-top: 10px;" onclick="addReview()">Add Review</button>
-      </div>
-      <div id="reviewsList"></div>
-    </div>
-
-  </div>
-</div>
-
-<script>
-  // --- AUTHENTICATION ---
-  function login() {
-    const user = document.getElementById('adminUser').value;
-    const pass = document.getElementById('adminPass').value;
-    
-    // Strictly using the requested credentials
-    if (user === 'Leopis' && pass === 'Leopis@1988') {
-      document.getElementById('loginSection').style.display = 'none';
-      document.getElementById('dashboardSection').style.display = 'block';
-      loadAdminData();
-    } else {
-      alert('Invalid Credentials. Access Denied.');
-    }
-  }
-
-  function logout() {
-    location.reload();
-  }
-
-  function switchTab(tabId, btn) {
-    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById(tabId).classList.add('active');
-    btn.classList.add('active');
-  }
-
-  // --- DATA MANAGEMENT ---
-  let PRODUCTS = JSON.parse(localStorage.getItem('leopis_products_v3')) || [];
-  let ORDERS = JSON.parse(localStorage.getItem('leopis_orders')) || [];
-  let REVIEWS = JSON.parse(localStorage.getItem('leopis_reviews')) || [];
-  let VISITS = parseInt(localStorage.getItem('leopis_visits')) || 12450;
-
-  function loadAdminData() {
-    document.getElementById('dashVisits').innerText = VISITS.toLocaleString();
-    document.getElementById('dashOrders').innerText = ORDERS.length;
-    document.getElementById('dashProducts').innerText = PRODUCTS.length;
-    renderOrders();
-    renderReviews();
-  }
-
-  function saveProduct() {
-    const id = document.getElementById('prodId').value;
-    const newProd = {
-      id: id ? parseInt(id) : Date.now(),
-      name: document.getElementById('prodName').value,
-      price: parseFloat(document.getElementById('prodPrice').value),
-      category: document.getElementById('prodCategory').value,
-      image: document.getElementById('prodImage').value,
-      gallery: document.getElementById('prodGallery').value.split(',').map(s => s.trim()).filter(Boolean),
-      description: document.getElementById('prodDesc').value,
-      isPromo: document.getElementById('prodPromo').checked
-    };
-
-    if (!newProd.name || !newProd.price) return alert("Name and Price are required");
-
-    if (id) {
-      const index = PRODUCTS.findIndex(p => p.id === parseInt(id));
-      PRODUCTS[index] = newProd;
-    } else {
-      PRODUCTS.push(newProd);
-    }
-
-    localStorage.setItem('leopis_products_v3', JSON.stringify(PRODUCTS));
-    alert('Product Saved Successfully!');
-    resetForm();
-    loadAdminData();
-  }
-
-  function resetForm() {
-    document.getElementById('prodId').value = '';
-    document.getElementById('prodName').value = '';
-    document.getElementById('prodPrice').value = '';
-    document.getElementById('prodCategory').value = '';
-    document.getElementById('prodImage').value = '';
-    document.getElementById('prodGallery').value = '';
-    document.getElementById('prodDesc').value = '';
-    document.getElementById('prodPromo').checked = false;
-    document.getElementById('formTitle').innerText = "Add New Product";
-  }
-
-  // --- BULK EXCEL UPLOAD ---
-  function uploadExcel() {
-    const fileInput = document.getElementById('excelFile');
-    if (!fileInput.files.length) return alert('Please select an Excel file');
-
-    const file = fileInput.files[0];
-    const reader = new FileReader();
-
-    reader.onload = function(e) {
-      const data = new Uint8Array(e.target.result);
-      const workbook = XLSX.read(data, { type: 'array' });
-      const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
-      const jsonData = XLSX.utils.sheet_to_json(firstSheet);
-
-      let addedCount = 0;
-      jsonData.forEach(row => {
-        if (row.name && row.price) {
-          PRODUCTS.push({
-            id: Date.now() + Math.random(),
-            name: row.name,
-            price: parseFloat(row.price),
-            category: row.category || 'Other',
-            image: row.image || 'https://via.placeholder.com/400',
-            gallery: [],
-            description: row.description || '',
-            isPromo: row.isPromo === true || String(row.isPromo).toLowerCase() === 'true'
-          });
-          addedCount++;
-        }
-      });
-
-      localStorage.setItem('leopis_products_v3', JSON.stringify(PRODUCTS));
-      alert(`${addedCount} Products uploaded successfully!`);
-      loadAdminData();
-      fileInput.value = '';
-    };
-    reader.readAsArrayBuffer(file);
-  }
-
-  // --- ORDERS & REVIEWS ---
-  function renderOrders() {
-    const container = document.getElementById('ordersList');
-    if (ORDERS.length === 0) {
-      container.innerHTML = '<p>No orders yet.</p>';
-      return;
-    }
-    container.innerHTML = `
-      <table>
-        <tr><th>Order ID</th><th>Items</th><th>Total (LKR)</th><th>Status</th><th>Action</th></tr>
-        ${ORDERS.map((o, i) => `
-          <tr>
-            <td>#${o.id}</td>
-            <td>${o.items.map(it => `${it.name} (x${it.qty})`).join('<br>')}</td>
-            <td>${o.total.toLocaleString()}</td>
-            <td><span style="color: ${o.status === 'Pending' ? 'orange' : 'green'}">${o.status}</span></td>
-            <td><button class="btn btn-primary" style="padding: 5px; font-size: 0.8rem;" onclick="completeOrder(${i})">Mark Complete</button></td>
-          </tr>
-        `).join('')}
-      </table>
-    `;
-  }
-
-  function completeOrder(index) {
-    ORDERS[index].status = 'Completed';
-    localStorage.setItem('leopis_orders', JSON.stringify(ORDERS));
-    renderOrders();
-  }
-
-  function addReview() {
-    const text = document.getElementById('reviewText').value;
-    const stars = parseInt(document.getElementById('reviewStars').value);
-    if (!text || !stars) return alert('Please enter text and stars (1-5)');
-    
-    REVIEWS.push({ text, stars });
-    localStorage.setItem('leopis_reviews', JSON.stringify(REVIEWS));
-    document.getElementById('reviewText').value = '';
-    document.getElementById('reviewStars').value = '';
-    renderReviews();
-  }
-
-  function renderReviews() {
-    const container = document.getElementById('reviewsList');
-    container.innerHTML = REVIEWS.map(r => `
-      <div style="background: #fff; border: 1px solid #eee; padding: 10px; margin-top: 10px; border-radius: 5px;">
-        <div style="color: #fbbf24;">${'★'.repeat(r.stars)}${'☆'.repeat(5-r.stars)}</div>
-        <p style="font-size: 0.9rem; margin-top: 5px;">"${r.text}"</p>
-      </div>
-    `).join('');
-  }
-</script>
-</body>
-</html>
-```
-
----
-
-2. Main Store Code (index.html)
-
-I have reduced the size of the Visits/Orders boxes, added the 3-split banner, implemented the promotions section, and added the live Google Reviews section.
-
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LeoPis Digital | Premium Tech Store</title>
+  
   <meta name="description" content="Buy premium electronics, home appliances, and accessories in Sri Lanka. Island-wide fast delivery via WhatsApp.">
   
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -388,25 +38,14 @@ I have reduced the size of the Visits/Orders boxes, added the 3-split banner, im
     .main-nav::-webkit-scrollbar { display: none; }
     .main-nav a { font-size: 0.85rem; color: #cbd5e1; font-weight: 500; }
 
-    /* 3-SPLIT MODERN BANNER */
-    .modern-banner { background: #e0f2fe; border-bottom: 1px solid #bae6fd; padding: 8px 0; }
-    .banner-split { display: flex; justify-content: space-between; align-items: center; text-align: center; }
-    .banner-part { flex: 1; font-size: 0.8rem; font-weight: 600; color: #0369a1; }
-    .banner-part:not(:last-child) { border-right: 1px solid #bae6fd; }
-    @media(max-width: 600px) { .banner-part { font-size: 0.65rem; } }
-
-    /* HERO & STATS (Reduced Size) */
-    .hero { background: var(--dark-bg); color: #fff; padding: 15px 0; text-align: center; }
-    .hero h1 { font-size: 1.3rem; margin-bottom: 2px; }
-    .hero p { font-size: 0.8rem; color: #94a3b8; }
-    .stats-row { display: flex; justify-content: center; gap: 8px; margin-top: 10px; }
-    .stat-box { background: rgba(255,255,255,0.1); padding: 4px 10px; border-radius: 6px; display: flex; align-items: center; gap: 5px; }
-    .stat-box strong { font-size: 0.8rem; color: #38bdf8; }
-    .stat-box span { font-size: 0.65rem; color: #94a3b8; }
-
-    /* PROMOTIONS */
-    .promo-section { background: #fff7ed; border: 1px solid #ffedd5; border-radius: 8px; margin-top: 15px; padding: 15px; }
-    .promo-title { font-size: 1.1rem; color: #ea580c; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+    /* HERO */
+    .hero { background: var(--dark-bg); color: #fff; padding: 25px 0; text-align: center; }
+    .hero h1 { font-size: 1.5rem; margin-bottom: 5px; }
+    .hero p { font-size: 0.9rem; color: #94a3b8; }
+    .stats-row { display: flex; justify-content: center; gap: 15px; margin-top: 15px; }
+    .stat-box { background: rgba(255,255,255,0.1); padding: 8px 15px; border-radius: 8px; }
+    .stat-box strong { display: block; font-size: 1rem; color: #38bdf8; }
+    .stat-box span { font-size: 0.7rem; color: #94a3b8; }
 
     /* CATEGORY FILTERS */
     .category-sec { margin-top: 15px; margin-bottom: 10px; }
@@ -417,8 +56,7 @@ I have reduced the size of the Visits/Orders boxes, added the 3-split banner, im
 
     /* PRODUCTS */
     .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 10px 0 30px; }
-    .product-card { background: var(--surface); border-radius: 8px; border: 1px solid var(--border); display: flex; flex-direction: column; cursor: pointer; transition: 0.2s; overflow: hidden; position: relative; }
-    .promo-badge { position: absolute; top: 5px; left: 5px; background: #ef4444; color: #fff; font-size: 0.6rem; padding: 2px 6px; border-radius: 4px; font-weight: bold; z-index: 2; }
+    .product-card { background: var(--surface); border-radius: 8px; border: 1px solid var(--border); display: flex; flex-direction: column; cursor: pointer; transition: 0.2s; overflow: hidden; }
     .product-img { aspect-ratio: 1/1; padding: 10px; background: #fff; }
     .product-img img { width: 100%; height: 100%; object-fit: contain; }
     .product-body { padding: 10px; display: flex; flex-direction: column; flex: 1; }
@@ -429,20 +67,21 @@ I have reduced the size of the Visits/Orders boxes, added the 3-split banner, im
     .add-cart-btn:hover { background: var(--primary); color: #fff; }
     .wa-quick-btn { width: 32px; background: #ecfdf5; color: var(--whatsapp); border: 1px solid #d1fae5; border-radius: 4px; display: grid; place-items: center; font-size: 1rem; }
 
-    /* REVIEWS */
-    .reviews-section { padding: 30px 0; background: #fff; border-top: 1px solid var(--border); }
-    .review-card { background: var(--bg); padding: 15px; border-radius: 8px; margin-bottom: 10px; border: 1px solid var(--border); }
-    .stars { color: #fbbf24; margin-bottom: 5px; }
-
     /* FAQ & AI */
-    .faq-section { padding: 30px 0; background: #f8fafc; border-top: 1px solid var(--border); }
+    .faq-section { padding: 30px 0; background: #fff; border-top: 1px solid var(--border); }
     .faq-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
     .faq-item { border-bottom: 1px solid var(--border); padding: 10px 0; }
     .faq-q { font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; font-size: 0.9rem; }
     .faq-a { display: none; padding-top: 8px; color: var(--muted); font-size: 0.85rem; }
-    
+    .ai-box { background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 15px; text-align: center; }
+    .ai-messages { height: 120px; overflow-y: auto; background: #fff; border: 1px solid #ddd; margin: 10px 0; padding: 10px; text-align: left; font-size: 0.8rem; }
+    .ai-input-group { display: flex; gap: 5px; }
+    .ai-input-group input { flex: 1; padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 0.8rem; }
+    .ai-input-group button { background: var(--primary); color: #fff; padding: 8px 12px; border-radius: 4px; font-size: 0.8rem; }
+
     /* FOOTER */
     .site-footer { background: var(--dark-bg); color: #94a3b8; padding: 25px 0; text-align: center; font-size: 0.85rem; }
+    .site-footer img { height: 30px !important; margin: 0 auto 10px; }
     .social-links { display: flex; justify-content: center; gap: 15px; margin: 15px 0; }
     .social-links a { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.1); display: grid; place-items: center; color: #fff; font-size: 1.1rem; transition: 0.2s; }
     .social-links a:hover { background: var(--primary); }
@@ -471,33 +110,31 @@ I have reduced the size of the Visits/Orders boxes, added the 3-split banner, im
       .product-grid { grid-template-columns: repeat(4, 1fr); }
       .faq-grid { grid-template-columns: 1fr 1fr; }
       .modal-content { flex-direction: row; gap: 20px; }
-      .hero h1 { font-size: 1.8rem; }
+      .hero h1 { font-size: 2rem; }
     }
   </style>
 </head>
 <body>
 
-  <!-- 3-SPLIT MODERN BANNER -->
-  <div class="modern-banner">
-    <div class="container banner-split">
-      <div class="banner-part"><i class="fas fa-globe"></i> Leopisdigital.com</div>
-      <div class="banner-part"><i class="fas fa-building"></i> Running by Leopis Pvt Ltd</div>
-      <div class="banner-part"><i class="fas fa-check-circle"></i> 100% Secure & Trusted</div>
-    </div>
-  </div>
-
   <div class="top-bar">
     <div class="marquee-content">
       <span>🔥 Island-Wide Delivery Available (1–3 Days)</span> &nbsp;|&nbsp;
-      <span>💵 Cash on Delivery (COD) Available</span> &nbsp;|&nbsp;
-      <span>🛡️ Same-Day Inspection & Return</span> &nbsp;|&nbsp;
-      <span>💯 100% Genuine Tech</span>
+      <span>💵 Cash on Delivery (COD) Available Island-Wide</span> &nbsp;|&nbsp;
+      <span>🛡️ Same-Day Inspection & Return Guarantee</span> &nbsp;|&nbsp;
+      <span>💯 100% Genuine Tech & Store Warranty</span> &nbsp;|&nbsp;
+      <span>📞 Hotline / WhatsApp: +94 78 336 6466</span> &nbsp;|&nbsp;
+      <!-- Duplicate for smooth looping -->
+      <span>🔥 Island-Wide Delivery Available (1–3 Days)</span> &nbsp;|&nbsp;
+      <span>💵 Cash on Delivery (COD) Available Island-Wide</span> &nbsp;|&nbsp;
+      <span>🛡️ Same-Day Inspection & Return Guarantee</span> &nbsp;|&nbsp;
+      <span>💯 100% Genuine Tech & Store Warranty</span> &nbsp;|&nbsp;
+      <span>📞 Hotline / WhatsApp: +94 78 336 6466</span> &nbsp;|&nbsp;
     </div>
   </div>
   
   <header class="site-header">
     <div class="container header-inner">
-      <a href="#" class="logo"><img src="logo.png" alt="LeoPis Digital" onerror="this.src='https://via.placeholder.com/120x35?text=LeoPis'"/></a>
+      <a href="#" class="logo"><img src="logo.png" alt="LeoPis Digital" /></a>
       <div class="header-search">
         <input type="search" id="searchInput" placeholder="Search products..." onkeyup="searchProducts()" />
         <button><i class="fas fa-search"></i></button>
@@ -509,13 +146,16 @@ I have reduced the size of the Visits/Orders boxes, added the 3-split banner, im
     </div>
   </header>
   
+  <!-- UPDATED NAVIGATION MENU -->
   <nav class="main-nav container">
     <a href="#">Home</a>
     <a href="#shop">Shop</a>
-    <a href="#promotions">Promotions</a>
+    <a href="#categoryFilters">Categories</a>
+    <a href="#shop">New Arrivals</a>
     <a href="https://wa.me/94783366466" target="_blank">Track Order</a>
     <a href="#faq">FAQ</a>
-    <a href="admin.html" style="color:#38bdf8; font-weight:bold;">Admin</a>
+    <a href="https://wa.me/94783366466" target="_blank">Contact Us</a>
+    <a href="admin.html">Admin</a>
   </nav>
 
   <section class="hero">
@@ -523,18 +163,10 @@ I have reduced the size of the Visits/Orders boxes, added the 3-split banner, im
       <h1>LeoPis Digital</h1>
       <p>Premium Tech Store in Sri Lanka</p>
       <div class="stats-row">
-        <div class="stat-box"><strong id="visitsCount">0</strong><span>Visits</span></div>
-        <div class="stat-box"><strong id="ordersCount">0</strong><span>Orders</span></div>
-        <div class="stat-box"><strong>4.9 <i class="fab fa-google"></i></strong><span>Rating</span></div>
+        <div class="stat-box"><strong id="visitsCount">12,450</strong><span>Visits</span></div>
+        <div class="stat-box"><strong id="ordersCount">1,850</strong><span>Orders</span></div>
+        <div class="stat-box"><strong>4.9/5 <i class="fab fa-google"></i></strong><span>Rating</span></div>
       </div>
-    </div>
-  </section>
-
-  <!-- SPECIAL PROMOTIONS SECTION -->
-  <section class="container" id="promotions" style="display: none;">
-    <div class="promo-section">
-      <h2 class="promo-title"><i class="fas fa-fire"></i> Special Promotions</h2>
-      <div class="product-grid" id="promoGrid" style="padding: 0;"></div>
     </div>
   </section>
 
@@ -545,116 +177,85 @@ I have reduced the size of the Visits/Orders boxes, added the 3-split banner, im
   <section class="container" id="shop">
     <div class="product-grid" id="productGrid"></div>
   </section>
-
-  <!-- CUSTOMER REVIEWS SECTION -->
-  <section class="reviews-section">
-    <div class="container">
-      <h2 style="margin-bottom: 15px; text-align: center;"><i class="fab fa-google" style="color: #4285F4;"></i> Customer Feedback</h2>
-      <div id="reviewContainer" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;"></div>
-    </div>
-  </section>
-
   <section class="faq-section" id="faq">
-    <div class="container faq-grid">
-      <div>
-        <h2 style="margin-bottom:10px;">FAQ</h2>
-        <div id="faqList"></div>
-      </div>
-      <div style="background: #fff; padding: 15px; border-radius: 8px; border: 1px solid #eee;">
-        <h3><i class="fas fa-robot"></i> AI Assistant</h3>
-        <div id="aiMessages" class="ai-messages" style="height: 120px; overflow-y: auto; border: 1px solid #ddd; margin: 10px 0; padding: 10px; font-size: 0.8rem;"></div>
-        <div style="display: flex; gap: 5px;">
-          <input type="text" id="aiInput" placeholder="Ask about delivery..." style="flex:1; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
-          <button onclick="askAI()" style="background: var(--primary); color: #fff; padding: 8px 12px; border-radius: 4px;">Send</button>
-        </div>
-      </div>
+  <div class="container faq-grid">
+    <div>
+      <h2 style="margin-bottom:10px;">FAQ</h2>
+      <div id="faqList"></div>
     </div>
-  </section>
-
-  <footer class="site-footer">
-    <div class="container">
-      <div class="social-links">
-        <a href="https://facebook.com/leopisdigital" target="_blank"><i class="fab fa-facebook-f"></i></a>
-        <a href="https://wa.me/94783366466" target="_blank"><i class="fab fa-whatsapp"></i></a>
-        <a href="mailto:director.leopis@gmail.com"><i class="fas fa-envelope"></i></a>
-      </div>
-      <p>&copy; 2024 LeoPis Digital. All rights reserved.</p>
-    </div>
-  </footer>
-
-  <!-- PRODUCT MODAL & CART DRAWER (Same as before) -->
-  <div class="modal-overlay" id="productModal">
-    <div class="modal-content">
-      <button onclick="closeModal()" class="modal-close"><i class="fas fa-times"></i></button>
-      <div class="modal-img-sec">
-        <img id="mImg" src="" style="width:100%; max-height:250px; object-fit:contain;">
-        <div class="thumbnails" id="mThumbnails"></div>
-      </div>
-      <div class="modal-info-sec">
-        <h2 id="mTitle">Product Name</h2>
-        <p id="mPrice">LKR 0</p>
-        <p id="mDesc">Description...</p>
-        <button onclick="addToCartFromModal()" class="btn-primary">Add to Cart</button>
-        <button onclick="waOrderFromModal()" class="btn-whatsapp"><i class="fab fa-whatsapp"></i> Order via WhatsApp</button>
+    <div class="ai-box">
+      <h3><i class="fas fa-robot"></i> AI Assistant</h3>
+      <div id="aiMessages" class="ai-messages"></div>
+      <div class="ai-input-group">
+        <input type="text" id="aiInput" placeholder="Ask about delivery...">
+        <button onclick="askAI()">Send</button>
       </div>
     </div>
   </div>
+</section>
 
-  <div class="cart-drawer" id="cartDrawer">
-    <div class="cart-header">
-      <h3>Cart</h3><button onclick="document.getElementById('cartDrawer').classList.remove('open')"><i class="fas fa-times"></i></button>
+<footer class="site-footer">
+  <div class="container">
+    <img src="logo.png" alt="LeoPis Digital">
+    <div class="social-links">
+      <a href="https://facebook.com/leopisdigital" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://wa.me/94783366466" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+      <a href="mailto:director.leopis@gmail.com" title="Gmail"><i class="fas fa-envelope"></i></a>
     </div>
-    <div id="cartItems" class="cart-items"></div>
-    <div class="cart-footer">
-      <h4>Total: <span id="cartTotal">LKR 0</span></h4>
-      <button onclick="checkout()" class="btn-checkout"><i class="fab fa-whatsapp"></i> Checkout</button>
+    <p>&copy; 2024 LeoPis Digital. All rights reserved.</p>
+  </div>
+</footer>
+
+<!-- PRODUCT MODAL -->
+<div class="modal-overlay" id="productModal">
+  <div class="modal-content">
+    <button onclick="closeModal()" class="modal-close"><i class="fas fa-times"></i></button>
+    <div class="modal-img-sec">
+      <img id="mImg" src="" style="width:100%; max-height:250px; object-fit:contain;">
+      <div class="thumbnails" id="mThumbnails"></div>
+    </div>
+    <div class="modal-info-sec">
+      <h2 id="mTitle">Product Name</h2>
+      <p id="mPrice">LKR 0</p>
+      <p id="mDesc">Description...</p>
+      <button onclick="addToCartFromModal()" class="btn-primary">Add to Cart</button>
+      <button onclick="waOrderFromModal()" class="btn-whatsapp"><i class="fab fa-whatsapp"></i> Order via WhatsApp</button>
     </div>
   </div>
+</div>
 
+<!-- CART DRAWER -->
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-header">
+    <h3>Cart</h3><button onclick="document.getElementById('cartDrawer').classList.remove('open')"><i class="fas fa-times"></i></button>
+  </div>
+  <div id="cartItems" class="cart-items"></div>
+  <div class="cart-footer">
+    <h4>Total: <span id="cartTotal">LKR 0</span></h4>
+    <button onclick="checkout()" class="btn-checkout"><i class="fab fa-whatsapp"></i> Checkout</button>
+  </div>
+</div>
   <script>
     const CONFIG = { whatsappNumber: "94783366466" }; 
 
-    // Load Data (Ensuring default data if empty)
+    // இங்கே LocalStorage பெயர் v3 ஆக மாற்றப்பட்டுள்ளது (புதிய கேட்டகிரிகள் தெரிவதற்கு)
     let PRODUCTS = JSON.parse(localStorage.getItem('leopis_products_v3')) || [
-      { id: 1, name: "Smart Air Fryer", price: 35000, category: "Kitchen", image: "https://images.unsplash.com/photo-1626074353765-517a681e40be?w=400", description: "Digital air fryer for healthy cooking.", gallery: [], isPromo: true },
-      { id: 2, name: "Electric Kettle", price: 8500, category: "Kitchen", image: "https://images.unsplash.com/photo-1585032226651-759b368d7246?w=400", description: "Stainless steel fast boiling kettle.", gallery: [] },
-      { id: 3, name: "Wireless Earbuds", price: 15000, category: "Audio", image: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400", description: "Bluetooth 5.3 with noise cancellation.", gallery: [] }
+      { id: 1, name: "Smart Air Fryer", price: 35000, category: "Home appliance and kitchen", image: "https://images.unsplash.com/photo-1626074353765-517a681e40be?w=400", description: "Digital air fryer for healthy cooking.", gallery: [] },
+      { id: 2, name: "Electric Kettle", price: 8500, category: "Electrical items", image: "https://images.unsplash.com/photo-1585032226651-759b368d7246?w=400", description: "Stainless steel fast boiling kettle.", gallery: [] },
+      { id: 3, name: "Wireless Earbuds", price: 15000, category: "Audio & smart gadgets", image: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400", description: "Bluetooth 5.3 with noise cancellation.", gallery: [] },
+      { id: 4, name: "Baby Stroller", price: 25000, category: "Baby care and kids", image: "https://images.unsplash.com/photo-1591088398332-8a7791972843?w=400", description: "Comfortable and safe stroller.", gallery: [] },
+      { id: 5, name: "Yoga Mat", price: 4500, category: "Fashion & Fitness", image: "https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?w=400", description: "Non-slip fitness mat.", gallery: [] }
     ];
-    
-    // Simulated Stats
-    let VISITS = parseInt(localStorage.getItem('leopis_visits')) || 12450;
-    let ORDERS = JSON.parse(localStorage.getItem('leopis_orders')) || [];
-    
-    // Increment Visit
-    VISITS++;
-    localStorage.setItem('leopis_visits', VISITS);
-    document.getElementById('visitsCount').innerText = VISITS.toLocaleString();
-    document.getElementById('ordersCount').innerText = ORDERS.length;
 
     let cart = [];
     let activeProduct = null;
     let currentCategory = "All";
     let searchQuery = "";
 
-    // Render Reviews
-    let REVIEWS = JSON.parse(localStorage.getItem('leopis_reviews')) || [
-      { text: "Super fast delivery and genuine product!", stars: 5 },
-      { text: "Great customer service via WhatsApp.", stars: 4 }
-    ];
-    document.getElementById('reviewContainer').innerHTML = REVIEWS.map(r => `
-      <div class="review-card">
-        <div class="stars">${'★'.repeat(r.stars)}${'☆'.repeat(5-r.stars)}</div>
-        <p style="font-size: 0.9rem;">"${r.text}"</p>
-        <div style="display: flex; align-items: center; gap: 5px; margin-top: 10px;">
-          <i class="fab fa-google" style="color: #4285F4;"></i> <span style="font-size: 0.7rem; color: #64748b;">Verified Google Review</span>
-        </div>
-      </div>
-    `).join('');
-
     function renderCategoryFilters() {
       const categories = ["All", ...new Set(PRODUCTS.map(p => p.category || "Other"))];
       document.getElementById('categoryFilters').innerHTML = categories.map(c => 
-        `<button class="filter-chip ${c === currentCategory ? 'active' : ''}" onclick="filterCategory('${c}', this)">${c}</button>`
+        `<button class="filter-chip ${c === 'All' ? 'active' : ''}" onclick="filterCategory('${c}', this)">${c}</button>`
       ).join('');
     }
 
@@ -671,18 +272,7 @@ I have reduced the size of the Visits/Orders boxes, added the 3-split banner, im
     }
 
     function renderProducts() {
-      // Render Promotions
-      const promos = PRODUCTS.filter(p => p.isPromo);
-      const promoSection = document.getElementById('promotions');
-      if (promos.length > 0) {
-        promoSection.style.display = 'block';
-        document.getElementById('promoGrid').innerHTML = promos.map(p => generateProductHTML(p)).join('');
-      } else {
-        promoSection.style.display = 'none';
-      }
-
-      // Render Main Grid
-      let filtered = PRODUCTS.filter(p => !p.isPromo); // Exclude promos from main grid to avoid duplication
+      let filtered = PRODUCTS;
       if (currentCategory !== "All") filtered = filtered.filter(p => p.category === currentCategory);
       if (searchQuery) filtered = filtered.filter(p => p.name.toLowerCase().includes(searchQuery));
 
@@ -691,13 +281,9 @@ I have reduced the size of the Visits/Orders boxes, added the 3-split banner, im
         grid.innerHTML = "<p style='grid-column:1/-1; text-align:center; padding:20px;'>No products found.</p>";
         return;
       }
-      grid.innerHTML = filtered.map(p => generateProductHTML(p)).join('');
-    }
 
-    function generateProductHTML(p) {
-      return `
+      grid.innerHTML = filtered.map(p => `
         <article class="product-card">
-          ${p.isPromo ? '<span class="promo-badge">PROMO</span>' : ''}
           <div class="product-img" onclick="openModal(${p.id})"><img src="${p.image}"></div>
           <div class="product-body">
             <h3 class="product-name" onclick="openModal(${p.id})">${p.name}</h3>
@@ -708,10 +294,9 @@ I have reduced the size of the Visits/Orders boxes, added the 3-split banner, im
             </div>
           </div>
         </article>
-      `;
+      `).join('');
     }
 
-    // Modal & Cart logic (Same as before)
     function openModal(id) {
       activeProduct = PRODUCTS.find(p => p.id === id);
       document.getElementById('mImg').src = activeProduct.image;
@@ -732,6 +317,42 @@ I have reduced the size of the Visits/Orders boxes, added the 3-split banner, im
     function closeModal() { document.getElementById('productModal').style.display = 'none'; }
     function addToCartFromModal() { addToCart(activeProduct.id); closeModal(); }
     function waOrderFromModal() { waOrder(activeProduct.id); closeModal(); }
+
+    const faqs = [
+      { q: "What is Leopis Digital's return policy?", a: "We operate on a strict Same-Day Inspection & Return Policy to ensure absolute product satisfaction." },
+      { q: "Can I return an item if it is damaged, incorrect, or non-working?", a: "Yes, instantly at your doorstep!<br><br><b>On-the-Spot Courier Return:</b> Inspect your package when the delivery agent arrives. If the item is damaged, incorrect, or doesn't work, hand it straight back to the courier for an immediate return/exchange log.<br><br><b>Same-Day Notice:</b> If you test the product later the same day and find a defect, notify us immediately via WhatsApp or email. We will arrange a priority courier swap for you at zero extra cost." },
+      { q: "Are there any items excluded from returns?", a: "Yes. Because of hygiene and digital licensing, opened software, digital goods, and custom-ordered items cannot be returned unless proven defective upon arrival." },
+      { q: "How fast is delivery?", a: "Orders are processed and dispatched promptly. Standard island-wide delivery takes between 1 to 3 business days depending on your location." },
+      { q: "Can I track my order?", a: "Yes, once your order ships from our warehouse, tracking details and updates will be sent via SMS or WhatsApp." },
+      { q: "How can I contact Leopis Digital customer support?", a: "Our support team is available to assist you with any questions or same-day return requests:<br><br>📞 <b>Hotline / WhatsApp / Telegram:</b> +94 78 336 6466<br>✉️ <b>Email:</b> director.leopis@gmail.com" }
+    ];
+    
+    document.getElementById('faqList').innerHTML = faqs.map((f, i) => `
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(${i})">${f.q} <i class="fas fa-plus"></i></div>
+        <div class="faq-a" id="faq-a-${i}">${f.a}</div>
+      </div>
+    `).join('');
+
+    function toggleFaq(i) {
+      const el = document.getElementById(`faq-a-${i}`);
+      el.style.display = el.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function askAI() {
+      const input = document.getElementById('aiInput');
+      const msg = input.value.trim();
+      if(!msg) return;
+      const box = document.getElementById('aiMessages');
+      box.innerHTML += `<div><b>You:</b> ${msg}</div>`;
+      input.value = '';
+      let reply = "Please contact us on WhatsApp for details.";
+      if(msg.toLowerCase().includes('delivery')) reply = "We deliver island-wide in 1-3 days.";
+      setTimeout(() => {
+        box.innerHTML += `<div style="margin-top:10px; color:var(--primary);"><b>AI:</b> ${reply}</div>`;
+        box.scrollTop = box.scrollHeight;
+      }, 500);
+    }
 
     function addToCart(id) {
       const p = PRODUCTS.find(x => x.id === id);
@@ -768,36 +389,10 @@ I have reduced the size of the Visits/Orders boxes, added the 3-split banner, im
 
     function checkout() {
       if (cart.length === 0) return alert("Cart empty!");
-      
-      // Save Order to localStorage for Admin Panel
-      const total = cart.reduce((s, i) => s + (i.price * i.qty), 0);
-      const newOrder = { id: Date.now().toString().slice(-6), items: cart, total: total, status: 'Pending' };
-      ORDERS.push(newOrder);
-      localStorage.setItem('leopis_orders', JSON.stringify(ORDERS));
-      
       let msg = "🛒 *New Order*\n\n";
       cart.forEach((c, i) => msg += `${i+1}. ${c.name} x${c.qty} = LKR ${(c.price*c.qty).toLocaleString()}\n`);
-      msg += `\n*Total: LKR ${total.toLocaleString()}*`;
+      msg += `\n*Total: LKR ${cart.reduce((s, i) => s + (i.price * i.qty), 0).toLocaleString()}*`;
       window.open(`https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(msg)}`);
-      
-      cart = [];
-      updateCart();
-      document.getElementById('cartDrawer').classList.remove('open');
-      alert("Order placed! Redirecting to WhatsApp...");
-    }
-        function askAI() {
-      const input = document.getElementById('aiInput');
-      const msg = input.value.trim();
-      if(!msg) return;
-      const box = document.getElementById('aiMessages');
-      box.innerHTML += `<div><b>You:</b> ${msg}</div>`;
-      input.value = '';
-      let reply = "Please contact us on WhatsApp for details.";
-      if(msg.toLowerCase().includes('delivery')) reply = "We deliver island-wide in 1-3 days.";
-      setTimeout(() => {
-        box.innerHTML += `<div style="margin-top:10px; color:var(--primary);"><b>AI:</b> ${reply}</div>`;
-        box.scrollTop = box.scrollHeight;
-      }, 500);
     }
 
     document.getElementById('cartToggle').onclick = () => document.getElementById('cartDrawer').classList.add('open');
