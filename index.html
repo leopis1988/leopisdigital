@@ -5,99 +5,89 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="LeoPis Digital – Island‑wide delivery. Shop quality products with fast WhatsApp ordering." />
   <title>LeoPis Digital | Island‑wide Delivery</title>
-  <!-- Google Fonts for modern look -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 <body>
 
-  <!-- PROMO BANNER (Dynamic from Admin) -->
+  <!-- PROMO BANNER -->
   <div class="promo-banner" id="promoBanner">
     <div class="container promo-inner">
       <span id="promoText">Loading promotions...</span>
     </div>
   </div>
 
+  <!-- HEADER WITH SEARCH BAR -->
   <header class="site-header">
     <div class="container header-inner">
-      <a href="index.html" class="logo logo-3d" aria-label="LeoPis Digital – Home">
+      
+      <a href="index.html" class="logo logo-3d" aria-label="LeoPis Digital">
         <span class="logo-inner">
-          <img src="logo.png" alt="LeoPis Digital" class="logo-img" width="160" height="52" />
+          <img src="logo.png" alt="LeoPis Digital" class="logo-img" />
         </span>
       </a>
-      <nav class="main-nav" id="mainNav">
-        <a href="#shop">Shop</a>
-        <a href="#categories">Categories</a>
-        <a href="#faq">FAQ</a>
-        <a href="admin.html" class="admin-link">Admin</a>
-      </nav>
+
+      <!-- SEARCH BAR MOVED TO HEADER -->
+      <div class="header-search">
+        <input type="search" id="searchInput" placeholder="Search products..." />
+        <button class="search-btn"><i class="fas fa-search"></i></button>
+      </div>
+
       <div class="header-actions">
         <button class="icon-btn" id="cartToggle" aria-label="Cart">
-          <i class="fas fa-shopping-bag"></i>
+          <i class="fas fa-shopping-cart"></i>
           <span class="cart-count" id="cartCount">0</span>
         </button>
         <button class="hamburger" id="hamburger" aria-label="Menu"><i class="fas fa-bars"></i></button>
       </div>
+
     </div>
   </header>
+
+  <!-- MOBILE MENU -->
+  <nav class="main-nav" id="mainNav">
+    <a href="#shop">Shop</a>
+    <a href="#categories">Categories</a>
+    <a href="#faq">FAQ</a>
+    <a href="admin.html" class="admin-link">Admin Panel</a>
+  </nav>
 
   <section class="hero">
     <div class="container hero-inner">
       <div class="hero-text">
         <span class="badge"><i class="fas fa-truck"></i> Island‑wide Delivery</span>
-        <h1>Premium products, <br>delivered to you.</h1>
-        <p>Order via WhatsApp in seconds. Fast, reliable, and trusted across Sri Lanka.</p>
-        <div class="hero-cta">
-          <a href="#shop" class="btn btn-primary">Browse Products</a>
-          <a href="#faq" class="btn btn-outline">Ask AI Assistant</a>
-        </div>
+        <h1>Shop Premium Products</h1>
+        <p>Fast delivery across Sri Lanka. Order easily via WhatsApp.</p>
       </div>
-      <div class="hero-trust">
-        <!-- STATS SECTION (Dynamic from Admin) -->
-        <div class="stats-row">
-          <div class="stat-card">
-            <i class="fas fa-eye"></i>
-            <div>
-              <strong id="visitCount">0</strong>
-              <span>Visits</span>
-            </div>
-          </div>
-          <div class="stat-card">
-            <i class="fas fa-box-open"></i>
-            <div>
-              <strong id="orderCount">0</strong>
-              <span>Orders Delivered</span>
-            </div>
-          </div>
+      <div class="hero-stats">
+        <div class="stat-box">
+          <strong id="visitCount">0</strong>
+          <span>Visits</span>
         </div>
-        <a href="#" id="googleRatingLink" class="trust-card google-trust" target="_blank" rel="noopener">
-          <i class="fab fa-google"></i>
-          <div>
-            <strong>4.9 / 5</strong>
-            <span>Google Rating</span>
-          </div>
-        </a>
+        <div class="stat-box">
+          <strong id="orderCount">0</strong>
+          <span>Orders Delivered</span>
+        </div>
       </div>
     </div>
   </section>
 
+  <!-- HORIZONTAL CATEGORIES -->
   <section class="category-section" id="categories">
     <div class="container">
-      <div class="section-head"><h2>Shop by Category</h2></div>
       <div class="category-chips" id="categoryChips"></div>
     </div>
   </section>
 
+  <!-- PRODUCTS -->
   <section class="shop-section" id="shop">
     <div class="container">
       <div class="section-head shop-head">
-        <h2>All Products</h2>
+        <h2>Just For You</h2>
         <div class="shop-controls">
-          <input type="search" id="searchInput" placeholder="Search products…" class="search-input" />
           <select id="sortSelect" class="sort-select">
             <option value="default">Sort: Default</option>
             <option value="price-asc">Price: Low → High</option>
@@ -111,11 +101,11 @@
     </div>
   </section>
 
+  <!-- FAQ & AI -->
   <section class="faq-section" id="faq">
     <div class="container faq-inner">
       <div class="faq-text">
         <h2>Frequently Asked Questions</h2>
-        <p>Our AI assistant answers instantly. Or browse common questions below.</p>
         <div class="faq-accordion" id="faqAccordion"></div>
       </div>
       <div class="ai-chat-card">
@@ -123,7 +113,7 @@
           <i class="fas fa-robot"></i>
           <div>
             <strong>LeoPis AI Assistant</strong>
-            <span>Online • Instant answers</span>
+            <span>Instant answers</span>
           </div>
         </div>
         <div class="ai-chat-messages" id="aiMessages">
@@ -131,21 +121,20 @@
         </div>
         <form class="ai-chat-form" id="aiForm">
           <input type="text" id="aiInput" placeholder="Type your question…" autocomplete="off" />
-          <button type="submit" aria-label="Send"><i class="fas fa-paper-plane"></i></button>
+          <button type="submit"><i class="fas fa-paper-plane"></i></button>
         </form>
       </div>
     </div>
   </section>
 
+  <!-- FOOTER -->
   <footer class="site-footer">
     <div class="container footer-grid">
       <div>
-        <a href="index.html" class="logo logo-3d logo-footer" aria-label="LeoPis Digital">
-          <span class="logo-inner">
-            <img src="logo.png" alt="LeoPis Digital" class="logo-img" width="150" height="48" />
-          </span>
+        <a href="index.html" class="logo logo-3d logo-footer">
+          <span class="logo-inner"><img src="logo.png" alt="Logo" class="logo-img" /></span>
         </a>
-        <p>Island‑wide delivery. Order via WhatsApp.</p>
+        <p style="margin-top:15px;">Island‑wide delivery. Order via WhatsApp.</p>
       </div>
       <div>
         <h4>Quick Links</h4>
@@ -158,6 +147,7 @@
         <h4>Contact</h4>
         <a href="#" id="footerWhatsApp"><i class="fab fa-whatsapp"></i> WhatsApp Order</a>
         <a href="#" id="footerEmail"><i class="fas fa-envelope"></i> Email Us</a>
+        <a href="#" id="googleRatingLink" target="_blank"><i class="fab fa-google"></i> Google Reviews</a>
       </div>
       <div>
         <h4>Follow Us</h4>
@@ -169,16 +159,17 @@
     </div>
   </footer>
 
+  <!-- CART DRAWER -->
   <aside class="cart-drawer" id="cartDrawer">
     <div class="cart-header">
-      <h3>Your Cart</h3>
-      <button id="cartClose" aria-label="Close"><i class="fas fa-times"></i></button>
+      <h3>Shopping Cart</h3>
+      <button id="cartClose"><i class="fas fa-times"></i></button>
     </div>
     <div class="cart-items" id="cartItems"></div>
     <div class="cart-footer">
       <div class="cart-total">Total: <strong id="cartTotal">LKR 0.00</strong></div>
       <button class="btn btn-whatsapp" id="whatsappOrderBtn">
-        <i class="fab fa-whatsapp"></i> Order via WhatsApp
+        <i class="fab fa-whatsapp"></i> Checkout on WhatsApp
       </button>
     </div>
   </aside>
@@ -190,4 +181,4 @@
   <script src="js/app.js"></script>
   <script src="js/ai-faq.js"></script>
 </body>
-  </html>
+      </html>
