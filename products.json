@@ -1,0 +1,56 @@
+[
+  {
+    "id": "P001",
+    "name": "Wireless Earbuds Pro",
+    "price": 49.99,
+    "category": "Electronics",
+    "image": "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=600&q=80",
+    "stock": 25,
+    "description": "Active noise cancellation, 30h battery life."
+  },
+  {
+    "id": "P002",
+    "name": "Smart Watch Series X",
+    "price": 129.99,
+    "category": "Electronics",
+    "image": "https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=600&q=80",
+    "stock": 12,
+    "description": "AMOLED display, heart-rate & GPS."
+  },
+  {
+    "id": "P003",
+    "name": "Minimalist Leather Wallet",
+    "price": 29.99,
+    "category": "Accessories",
+    "image": "https://images.unsplash.com/photo-1627123424574-724758594e93?w=600&q=80",
+    "stock": 40,
+    "description": "Genuine leather, RFID blocking."
+  },
+  {
+    "id": "P004",
+    "name": "Portable Bluetooth Speaker",
+    "price": 39.99,
+    "category": "Audio",
+    "image": "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=600&q=80",
+    "stock": 18,
+    "description": "Waterproof, 12h playtime, deep bass."
+  },
+  {
+    "id": "P005",
+    "name": "USB-C Fast Charger 65W",
+    "price": 24.99,
+    "category": "Electronics",
+    "image": "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?w=600&q=80",
+    "stock": 50,
+    "description": "GaN technology, compact, multi-device."
+  },
+  {
+    "id": "P006",
+    "name": "Ergonomic Laptop Stand",
+    "price": 34.99,
+    "category": "Accessories",
+    "image": "https://images.unsplash.com/photo-1625766763788-95dcce9bf5ac?w=600&q=80",
+    "stock": 22,
+    "description": "Aluminium, adjustable height, foldable."
+  }
+]
