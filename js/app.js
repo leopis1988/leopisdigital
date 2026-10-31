@@ -1,12 +1,21 @@
 let ALL_PRODUCTS = [];
 let filteredProducts = [];
 let currentPage = 1;
+let SITE_SETTINGS = {};
 const PER_PAGE = STORE_CONFIG.productsPerPage;
 let cart = JSON.parse(localStorage.getItem("leopisdigital_cart") || "[]");
 
 document.addEventListener("DOMContentLoaded", async () => {
   ALL_PRODUCTS = await loadProducts();
+  SITE_SETTINGS = loadSiteSettings(); // Load Stats & Promos
+  
   filteredProducts = [...ALL_PRODUCTS];
+  
+  // Load Dynamic Content
+  document.getElementById("promoText").textContent = SITE_SETTINGS.promoText;
+  document.getElementById("visitCount").textContent = SITE_SETTINGS.visitCount;
+  document.getElementById("orderCount").textContent = SITE_SETTINGS.orderCount;
+  
   renderCategories();
   renderProducts();
   renderPagination();
@@ -44,7 +53,7 @@ function renderProducts() {
   const pageItems = filteredProducts.slice(start, start + PER_PAGE);
 
   if (pageItems.length === 0) {
-    grid.innerHTML = `<p style="grid-column:1/-1;text-align:center;color:var(--muted);padding:40px 0;">No products found.</p>`;
+    grid.innerHTML = `<p style="grid-column:1/-1;text-align:center;color:var(--muted);padding:40px 0;font-weight:600;">No products found.</p>`;
     return;
   }
 
@@ -56,7 +65,7 @@ function renderProducts() {
       </div>
       <div class="product-body">
         <h3 class="product-name">${p.name}</h3>
-        <div class="product-price">$${Number(p.price).toFixed(2)}</div>
+        <div class="product-price">${STORE_CONFIG.currency}${Number(p.price).toFixed(2)}</div>
         <div class="product-actions">
           <button class="add-cart-btn" data-id="${p.id}">Add to Cart</button>
           <button class="wa-quick-btn" data-id="${p.id}" aria-label="Order on WhatsApp"><i class="fab fa-whatsapp"></i></button>
@@ -149,14 +158,14 @@ function updateCartUI() {
   document.getElementById("cartCount").textContent = cart.reduce((s, c) => s + c.qty, 0);
   const itemsEl = document.getElementById("cartItems");
   if (cart.length === 0) {
-    itemsEl.innerHTML = `<p style="color:var(--muted);text-align:center;padding:40px 0;">Your cart is empty.</p>`;
+    itemsEl.innerHTML = `<p style="color:var(--muted);text-align:center;padding:40px 0;font-weight:600;">Your cart is empty.</p>`;
   } else {
     itemsEl.innerHTML = cart.map(c => `
       <div class="cart-item">
         <img src="${c.image || 'https://via.placeholder.com/60'}" alt="${c.name}">
         <div class="cart-item-info">
           <strong>${c.name}</strong>
-          <span>$${(c.price * c.qty).toFixed(2)}</span>
+          <span>${STORE_CONFIG.currency}${(c.price * c.qty).toFixed(2)}</span>
         </div>
         <div class="cart-qty">
           <button data-id="${c.id}" data-action="dec">−</button>
@@ -176,7 +185,7 @@ function updateCartUI() {
     });
   }
   const total = cart.reduce((s, c) => s + c.price * c.qty, 0);
-  document.getElementById("cartTotal").textContent = `$${total.toFixed(2)}`;
+  document.getElementById("cartTotal").textContent = `${STORE_CONFIG.currency}${total.toFixed(2)}`;
 }
 
 function openCart() {
@@ -200,10 +209,10 @@ function orderViaWhatsApp() {
   if (cart.length === 0) { alert("Your cart is empty."); return; }
   let msg = `🛒 *New Order – LeoPis Digital*\n\n`;
   cart.forEach((c, i) => {
-    msg += `${i + 1}. ${c.name} × ${c.qty} = $${(c.price * c.qty).toFixed(2)}\n`;
+    msg += `${i + 1}. ${c.name} × ${c.qty} = ${STORE_CONFIG.currency}${(c.price * c.qty).toFixed(2)}\n`;
   });
   const total = cart.reduce((s, c) => s + c.price * c.qty, 0);
-  msg += `\n*Total: $${total.toFixed(2)}*\n\nPlease confirm availability & delivery.`;
+  msg += `\n*Total: ${STORE_CONFIG.currency}${total.toFixed(2)}*\n\nPlease confirm availability & delivery.`;
   const url = `https://wa.me/${STORE_CONFIG.whatsappNumber}?text=${encodeURIComponent(msg)}`;
   window.open(url, "_blank");
 }
@@ -211,7 +220,7 @@ function orderViaWhatsApp() {
 function quickWhatsApp(id) {
   const p = ALL_PRODUCTS.find(x => x.id == id);
   if (!p) return;
-  const msg = `Hi! I'm interested in *${p.name}* ($${Number(p.price).toFixed(2)}). Is it available?`;
+  const msg = `Hi! I'm interested in *${p.name}* (${STORE_CONFIG.currency}${Number(p.price).toFixed(2)}). Is it available?`;
   const url = `https://wa.me/${STORE_CONFIG.whatsappNumber}?text=${encodeURIComponent(msg)}`;
   window.open(url, "_blank");
 }
@@ -241,7 +250,7 @@ function initFaqAccordion() {
     { q: "Do you deliver island‑wide?", a: "Yes! We deliver to every district. Delivery time is 2–5 working days depending on location." },
     { q: "What payment methods do you accept?", a: "Cash on delivery and bank transfer. Details are confirmed on WhatsApp when you order." },
     { q: "Can I track my order?", a: "Absolutely. After confirming on WhatsApp, you’ll receive a tracking link or SMS update." },
-    { q: "Is there a minimum order?", a: "No minimum – order any quantity. Free delivery on orders over $50." }
+    { q: "Is there a minimum order?", a: "No minimum – order any quantity. Free delivery on orders over LKR 10,000." }
   ];
   document.getElementById("faqAccordion").innerHTML = faqs.map(f => `
     <details><summary>${f.q}</summary><p>${f.a}</p></details>
@@ -253,4 +262,4 @@ function initMobileMenu() {
   const nav = document.getElementById("mainNav");
   btn.addEventListener("click", () => nav.classList.toggle("open"));
   nav.querySelectorAll("a").forEach(a => a.addEventListener("click", () => nav.classList.remove("open")));
-}
+    }
