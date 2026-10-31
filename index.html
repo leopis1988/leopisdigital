@@ -99,11 +99,32 @@
     .btn-primary { width: 100%; padding: 12px; background: var(--primary); color: #fff; border-radius: 5px; margin-bottom: 10px; font-weight: bold; }
     .btn-whatsapp { width: 100%; padding: 12px; background: var(--whatsapp); color: #fff; border-radius: 5px; font-weight: bold; font-size: 1rem; }
 
-    .cart-drawer { position: fixed; top: 0; right: -100%; width: 100%; max-width: 350px; height: 100vh; background: #fff; z-index: 200; transition: 0.3s; display: flex; flex-direction: column; box-shadow: -4px 0 15px rgba(0,0,0,0.1); }
+    /* CART DRAWER - FIXED FOR LONG ITEMS */
+    .cart-drawer { 
+      position: fixed; 
+      top: 0; 
+      right: -100%; 
+      width: 100%; 
+      max-width: 350px; 
+      height: 100vh; 
+      height: 100dvh; /* Modern dynamic viewport height for mobile */
+      background: #fff; 
+      z-index: 200; 
+      transition: 0.3s; 
+      display: flex; 
+      flex-direction: column; 
+      box-shadow: -4px 0 15px rgba(0,0,0,0.1); 
+    }
     .cart-drawer.open { right: 0; }
-    .cart-header { padding: 15px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; }
-    .cart-items { flex: 1; padding: 15px; overflow-y: auto; }
-    .cart-footer { padding: 15px; border-top: 1px solid #eee; }
+    .cart-header { padding: 15px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; flex-shrink: 0; }
+    .cart-items { flex: 1; padding: 15px; overflow-y: auto; min-height: 0; /* Crucial for flex layouts to scroll properly */ }
+    .cart-footer { 
+      padding: 15px; 
+      padding-bottom: max(15px, env(safe-area-inset-bottom)); /* Fixes iPhone home bar overlap */
+      border-top: 1px solid #eee; 
+      flex-shrink: 0; 
+      background: #fff;
+    }
     .btn-checkout { width: 100%; padding: 10px; background: var(--whatsapp); color: #fff; border-radius: 5px; font-weight: bold; font-size: 1rem; }
 
     @media (min-width: 768px) {
@@ -146,7 +167,6 @@
     </div>
   </header>
   
-  <!-- UPDATED NAVIGATION MENU -->
   <nav class="main-nav container">
     <a href="#">Home</a>
     <a href="#shop">Shop</a>
@@ -165,7 +185,8 @@
       <div class="stats-row">
         <div class="stat-box"><strong id="visitsCount">12,450</strong><span>Visits</span></div>
         <div class="stat-box"><strong id="ordersCount">1,850</strong><span>Orders</span></div>
-        <div class="stat-box"><strong>4.9/5 <i class="fab fa-google"></i></strong><span>Rating</span></div>
+        <!-- Updated Rating -->
+        <div class="stat-box"><strong>4.5/5 ⭐⭐⭐⭐</strong><span>Rating</span></div>
       </div>
     </div>
   </section>
@@ -232,13 +253,22 @@
   <div id="cartItems" class="cart-items"></div>
   <div class="cart-footer">
     <h4>Total: <span id="cartTotal">LKR 0</span></h4>
-    <button onclick="checkout()" class="btn-checkout"><i class="fab fa-whatsapp"></i> Checkout</button>
+    <button onclick="checkout()" class="btn-checkout" id="checkoutBtn"><i class="fab fa-whatsapp"></i> Checkout</button>
   </div>
 </div>
+
   <script>
     const CONFIG = { whatsappNumber: "94783366466" }; 
 
-    // இங்கே LocalStorage பெயர் v3 ஆக மாற்றப்பட்டுள்ளது (புதிய கேட்டகிரிகள் தெரிவதற்கு)
+    // Dynamic Stats from LocalStorage (Editable via Admin)
+    let visits = parseInt(localStorage.getItem('leopis_visits')) || 12450;
+    visits++;
+    localStorage.setItem('leopis_visits', visits);
+    document.getElementById('visitsCount').innerText = visits.toLocaleString();
+
+    let orders = parseInt(localStorage.getItem('leopis_orders')) || 1850;
+    document.getElementById('ordersCount').innerText = orders.toLocaleString();
+
     let PRODUCTS = JSON.parse(localStorage.getItem('leopis_products_v3')) || [
       { id: 1, name: "Smart Air Fryer", price: 35000, category: "Home appliance and kitchen", image: "https://images.unsplash.com/photo-1626074353765-517a681e40be?w=400", description: "Digital air fryer for healthy cooking.", gallery: [] },
       { id: 2, name: "Electric Kettle", price: 8500, category: "Electrical items", image: "https://images.unsplash.com/photo-1585032226651-759b368d7246?w=400", description: "Stainless steel fast boiling kettle.", gallery: [] },
@@ -251,6 +281,36 @@
     let activeProduct = null;
     let currentCategory = "All";
     let searchQuery = "";
+    let isSriLanka = true; // Default true, will be checked via IP
+
+    // IP Location Check to restrict ordering to Sri Lanka
+    async function checkIP() {
+      try {
+        const res = await fetch('https://ipapi.co/json/');
+        const data = await res.json();
+        if (data.country_code && data.country_code !== 'LK') {
+          isSriLanka = false;
+          blockForeignOrders();
+        }
+      } catch (e) {
+        console.warn("IP Check failed, allowing default access.");
+      }
+    }
+
+    function blockForeignOrders() {
+      // Intercept checkout and WhatsApp buttons to block foreign IPs
+      const orderBtns = document.querySelectorAll('.btn-checkout, .wa-quick-btn, .btn-whatsapp, .add-cart-btn');
+      orderBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          alert("Ordering is only available for Sri Lankan IP addresses.");
+        }, true);
+      });
+      document.getElementById('checkoutBtn').innerHTML = "Available in Sri Lanka Only";
+    }
+    
+    checkIP();
 
     function renderCategoryFilters() {
       const categories = ["All", ...new Set(PRODUCTS.map(p => p.category || "Other"))];
@@ -383,15 +443,23 @@
     }
 
     function waOrder(id) {
+      if (!isSriLanka) return alert("Ordering is only available for Sri Lankan IP addresses.");
       const p = PRODUCTS.find(x => x.id === id);
       window.open(`https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(`Hi! I want to order *${p.name}* (LKR ${p.price.toLocaleString()}).`)}`);
     }
 
     function checkout() {
+      if (!isSriLanka) return alert("Ordering is only available for Sri Lankan IP addresses.");
       if (cart.length === 0) return alert("Cart empty!");
+      
       let msg = "🛒 *New Order*\n\n";
       cart.forEach((c, i) => msg += `${i+1}. ${c.name} x${c.qty} = LKR ${(c.price*c.qty).toLocaleString()}\n`);
       msg += `\n*Total: LKR ${cart.reduce((s, i) => s + (i.price * i.qty), 0).toLocaleString()}*`;
+      
+      // Increment total orders in local storage (mock logic)
+      let currentOrders = parseInt(localStorage.getItem('leopis_orders')) || 1850;
+      localStorage.setItem('leopis_orders', currentOrders + 1);
+
       window.open(`https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(msg)}`);
     }
 
