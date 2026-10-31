@@ -7,11 +7,10 @@ let cart = JSON.parse(localStorage.getItem("leopisdigital_cart") || "[]");
 
 document.addEventListener("DOMContentLoaded", async () => {
   ALL_PRODUCTS = await loadProducts();
-  SITE_SETTINGS = loadSiteSettings(); // Load Stats & Promos
+  SITE_SETTINGS = loadSiteSettings(); 
   
   filteredProducts = [...ALL_PRODUCTS];
   
-  // Load Dynamic Content
   document.getElementById("promoText").textContent = SITE_SETTINGS.promoText;
   document.getElementById("visitCount").textContent = SITE_SETTINGS.visitCount;
   document.getElementById("orderCount").textContent = SITE_SETTINGS.orderCount;
@@ -53,7 +52,7 @@ function renderProducts() {
   const pageItems = filteredProducts.slice(start, start + PER_PAGE);
 
   if (pageItems.length === 0) {
-    grid.innerHTML = `<p style="grid-column:1/-1;text-align:center;color:var(--muted);padding:40px 0;font-weight:600;">No products found.</p>`;
+    grid.innerHTML = `<p style="grid-column:1/-1;text-align:center;color:var(--muted);padding:40px 0;">No products found.</p>`;
     return;
   }
 
@@ -61,14 +60,13 @@ function renderProducts() {
     <article class="product-card">
       <div class="product-img">
         <img src="${p.image || 'assets/placeholder.png'}" alt="${p.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/400?text=No+Image'">
-        ${p.category ? `<span class="product-cat-tag">${p.category}</span>` : ""}
       </div>
       <div class="product-body">
         <h3 class="product-name">${p.name}</h3>
         <div class="product-price">${STORE_CONFIG.currency}${Number(p.price).toFixed(2)}</div>
         <div class="product-actions">
           <button class="add-cart-btn" data-id="${p.id}">Add to Cart</button>
-          <button class="wa-quick-btn" data-id="${p.id}" aria-label="Order on WhatsApp"><i class="fab fa-whatsapp"></i></button>
+          <button class="wa-quick-btn" data-id="${p.id}"><i class="fab fa-whatsapp"></i></button>
         </div>
       </div>
     </article>
@@ -82,6 +80,7 @@ function renderProducts() {
   );
 }
 
+// (மீதமுள்ள பங்க்ஷன்கள் அப்படியே இருக்கும்: renderPagination, initSearchSort, addToCart, etc.)
 function renderPagination() {
   const totalPages = Math.ceil(filteredProducts.length / PER_PAGE);
   const container = document.getElementById("pagination");
@@ -158,7 +157,7 @@ function updateCartUI() {
   document.getElementById("cartCount").textContent = cart.reduce((s, c) => s + c.qty, 0);
   const itemsEl = document.getElementById("cartItems");
   if (cart.length === 0) {
-    itemsEl.innerHTML = `<p style="color:var(--muted);text-align:center;padding:40px 0;font-weight:600;">Your cart is empty.</p>`;
+    itemsEl.innerHTML = `<p style="color:var(--muted);text-align:center;padding:40px 0;">Your cart is empty.</p>`;
   } else {
     itemsEl.innerHTML = cart.map(c => `
       <div class="cart-item">
@@ -230,27 +229,22 @@ function populateFooterLinks() {
   document.getElementById("footerWhatsApp").href = `https://wa.me/${STORE_CONFIG.whatsappNumber}`;
   document.getElementById("footerEmail").href = `mailto:${STORE_CONFIG.email}`;
 
-  const socialIcons = {
-    facebook: "fa-facebook-f",
-    instagram: "fa-instagram",
-    tiktok: "fa-tiktok",
-    youtube: "fa-youtube"
-  };
+  const socialIcons = { facebook: "fa-facebook-f", instagram: "fa-instagram", tiktok: "fa-tiktok", youtube: "fa-youtube" };
   const container = document.getElementById("socialLinks");
   container.innerHTML = Object.entries(STORE_CONFIG.social)
     .filter(([, url]) => url)
     .map(([platform, url]) =>
-      `<a href="${url}" target="_blank" rel="noopener" aria-label="${platform}"><i class="fab ${socialIcons[platform]}"></i></a>`
+      `<a href="${url}" target="_blank" rel="noopener"><i class="fab ${socialIcons[platform]}"></i></a>`
     ).join("");
 }
 
 function initFaqAccordion() {
   const faqs = [
-    { q: "How do I place an order?", a: "Browse products, add to cart, then tap “Order via WhatsApp”. Your cart details are pre‑filled – just hit send." },
-    { q: "Do you deliver island‑wide?", a: "Yes! We deliver to every district. Delivery time is 2–5 working days depending on location." },
-    { q: "What payment methods do you accept?", a: "Cash on delivery and bank transfer. Details are confirmed on WhatsApp when you order." },
-    { q: "Can I track my order?", a: "Absolutely. After confirming on WhatsApp, you’ll receive a tracking link or SMS update." },
-    { q: "Is there a minimum order?", a: "No minimum – order any quantity. Free delivery on orders over LKR 10,000." }
+    { q: "How do I place an order?", a: "Browse products, add to cart, then tap “Checkout on WhatsApp”." },
+    { q: "Do you deliver island‑wide?", a: "Yes! We deliver to every district. Delivery time is 2–5 working days." },
+    { q: "What payment methods do you accept?", a: "Cash on delivery and bank transfer." },
+    { q: "Can I track my order?", a: "Yes, you will receive a tracking link on WhatsApp." },
+    { q: "Is there a minimum order?", a: "No minimum. Free delivery on orders over LKR 10,000." }
   ];
   document.getElementById("faqAccordion").innerHTML = faqs.map(f => `
     <details><summary>${f.q}</summary><p>${f.a}</p></details>
@@ -262,4 +256,4 @@ function initMobileMenu() {
   const nav = document.getElementById("mainNav");
   btn.addEventListener("click", () => nav.classList.toggle("open"));
   nav.querySelectorAll("a").forEach(a => a.addEventListener("click", () => nav.classList.remove("open")));
-    }
+      }
