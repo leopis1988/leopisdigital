@@ -1,4 +1,5 @@
 const PRODUCT_STORAGE_KEY = "leopisdigital_products";
+const SETTINGS_STORAGE_KEY = "leopisdigital_settings";
 
 async function loadProducts() {
   const stored = localStorage.getItem(PRODUCT_STORAGE_KEY);
@@ -36,4 +37,22 @@ function exportProductsJSON() {
   a.download = "products.json";
   a.click();
   URL.revokeObjectURL(url);
+}
+
+// ---- NEW: Load & Save Site Settings (Promos & Stats) ----
+function loadSiteSettings() {
+  const stored = localStorage.getItem(SETTINGS_STORAGE_KEY);
+  if (stored) {
+    try { return JSON.parse(stored); } catch (e) {}
+  }
+  // Default settings
+  return {
+    promoText: "🔥 Mega Sale! Up to 30% off on all Electronics. Free delivery over LKR 10,000!",
+    visitCount: "15,240",
+    orderCount: "1,850"
+  };
+}
+
+function saveSiteSettings(settings) {
+  localStorage.setItem(SETTINGS_STORAGE_KEY, JSON.stringify(settings));
 }
