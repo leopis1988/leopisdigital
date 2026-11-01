@@ -52,7 +52,7 @@
           type="search"
           id="searchInput"
           placeholder="Search products..."
-          autocomplete="off"
+          autocomplete="on"
           aria-label="Search products"
         />
         <button type="button" aria-label="Search"><i class="fas fa-search"></i></button>
@@ -80,7 +80,7 @@
   <section class="hero">
     <div class="container">
       <h1>LeoPis Digital</h1>
-      <p>Premium Tech Store in Sri Lanka</p>
+      <p>Largest online Store in Sri Lanka</p>
       <div class="stats-row">
         <div class="stat-box"><strong id="visitsCount">0</strong><span>Visits</span></div>
         <div class="stat-box"><strong id="ordersCount">0</strong><span>Orders</span></div>
@@ -93,10 +93,167 @@
   <section class="container category-sec" aria-label="Product categories">
     <div class="category-heading">
       <h2>Shop by Category</h2>
+    
+<section class="shop-by-category">
+  <div class="container">
+    <div class="section-header">
+      <p>Browse</p>
+      <h2>Shop by Category</h2>
     </div>
-    <div class="category-filters" id="categoryFilters"></div>
-  </section>
 
+    <div class="category-grid">
+      <div class="category-card">
+        <div class="icon">📱</div>
+        <h3>Electronics</h3>
+        <p>Phones, laptops, tablets</p>
+      </div>
+
+      <div class="category-card">
+        <div class="icon">👗</div>
+        <h3>Fashion</h3>
+        <p>Men, women, kids wear</p>
+      </div>
+
+      <div class="category-card">
+        <div class="icon">🏠</div>
+        <h3>Home & Living</h3>
+        <p>Furniture, decor, essentials</p>
+      </div>
+
+      <div class="category-card">
+        <div class="icon">💄</div>
+        <h3>Beauty</h3>
+        <p>Skincare, makeup, care</p>
+      </div>
+
+      <div class="category-card">
+        <div class="icon">🛒</div>
+        <h3>Grocery</h3>
+        <p>Daily essentials & snacks</p>
+      </div>
+
+      <div class="category-card">
+        <div class="icon">⚽</div>
+        <h3>Sports</h3>
+        <p>Gear, fitness, outdoor</p>
+      </div>
+
+      <div class="category-card">
+        <div class="icon">📚</div>
+        <h3>Books</h3>
+        <p>Fiction, education, hobbies</p>
+      </div>
+
+      <div class="category-card">
+        <div class="icon">🛋️</div>
+        <h3>Furniture</h3>
+        <p>Comfort for every room</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f7f7f7;
+  }
+
+  .shop-by-category {
+    padding: 60px 20px;
+    background: #fff;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .section-header p {
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #ff6b35;
+    font-weight: 700;
+    margin: 0 0 8px;
+    font-size: 12px;
+  }
+
+  .section-header h2 {
+    font-size: 2.5rem;
+    margin: 0;
+    color: #1d1d1f;
+  }
+
+  .category-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(220px, 1fr));
+    gap: 20px;
+  }
+
+  .category-card {
+    background: linear-gradient(135deg, #fff, #f9f9f9);
+    border: 1px solid #eee;
+    border-radius: 18px;
+    padding: 28px 20px;
+    text-align: center;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
+  }
+
+  .category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+  }
+
+  .icon {
+    width: 72px;
+    height: 72px;
+    margin: 0 auto 16px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: #fff4ef;
+    font-size: 2rem;
+  }
+
+  .category-card h3 {
+    margin: 10px 0 8px;
+    font-size: 1.2rem;
+    color: #1d1d1f;
+  }
+
+  .category-card p {
+    margin: 0;
+    color: #666;
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: 900px) {
+    .category-grid {
+      grid-template-columns: repeat(2, minmax(200px, 1fr));
+    }
+  }
+
+  @media (max-width: 560px) {
+    .category-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .section-header h2 {
+      font-size: 2rem;
+    }
+  }
+</style>
   <!-- ─── PRODUCT GRID ─── -->
   <section class="container" id="shop">
     <div class="product-grid" id="productGrid"></div>
