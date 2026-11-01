@@ -1,347 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LeoPis Digital | Largest Online Store</title>
-  <meta name="description" content="Buy premium electronics, home appliances, and accessories in Sri Lanka. Island-wide fast delivery via WhatsApp.">
-  <meta name="theme-color" content="#0f172a">
-
-  <!-- Performance: preconnect to critical origins -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
-  <link rel="preconnect" href="https://images.unsplash.com" />
-  <link rel="preconnect" href="https://ipapi.co" />
-
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-
-  <!-- Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-
-  <!-- Our styles -->
-  <link rel="stylesheet" href="CSS/styles.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leopis (Pvt) Ltd - Lifestyle & Consumer Electronics</title>
+    <meta name="description" content="Official website of Leopis Digital. Discover our lifestyle products, consumer electronics, and accessories.">
+    <link rel="stylesheet" href="./client/src/index.css">
 </head>
 <body>
+    <div id="root">
+        <!-- Store Header Component -->
+        <header class="store-header">
+            <div class="container">
+                <h1>Leopis (Pvt) Ltd</h1>
+                <p>Hotline: +94783366466 | Email: director.leopis@gmail.com</p>
+            </div>
+        </header>
 
-  <!-- ─── TOP MARQUEE BAR ─── -->
-  <div class="top-bar" aria-hidden="true">
-    <div class="marquee-content">
-      <span>🔥 Island-Wide Delivery Available (1–3 Days)</span> &nbsp;|&nbsp;
-      <span>💵 Cash on Delivery (COD) Available Island-Wide</span> &nbsp;|&nbsp;
-      <span>🛡️ Same-Day Inspection & Return Guarantee</span> &nbsp;|&nbsp;
-      <span>💯 100% Genuine Tech & Store Warranty</span> &nbsp;|&nbsp;
-      <span>📞 Hotline / WhatsApp: +94 78 336 6466</span> &nbsp;|&nbsp;
-      <span>🔥 Island-Wide Delivery Available (1–3 Days)</span> &nbsp;|&nbsp;
-      <span>💵 Cash on Delivery (COD) Available Island-Wide</span> &nbsp;|&nbsp;
-      <span>🛡️ Same-Day Inspection & Return Guarantee</span> &nbsp;|&nbsp;
-      <span>💯 100% Genuine Tech & Store Warranty</span> &nbsp;|&nbsp;
-      <span>📞 Hotline / WhatsApp: +94 78 336 6466</span> &nbsp;|&nbsp;
-    </div>
-  </div>
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <section class="hero-section">
+                <h2>Welcome to Leopis Digital</h2>
+                <p>Your premier destination for modern lifestyle products and consumer electronics in Sri Lanka.</p>
+                <a href="https://leopisdigital.com" class="btn-primary">Visit Main Domain</a>
+            </section>
+        </main>
 
-  <!-- ─── HEADER ─── -->
-  <header class="site-header">
-    <div class="container header-inner">
-      <a href="#" class="logo" aria-label="LeoPis Digital Home">
-        <img src="logo.png" alt="LeoPis Digital" width="120" height="35" />
-      </a>
-      <div class="header-search">
-        <input
-          type="search"
-          id="searchInput"
-          placeholder="Search products..."
-          autocomplete="on"
-          aria-label="Search products"
-        />
-        <button type="button" aria-label="Search"><i class="fas fa-search"></i></button>
-      </div>
-      <button id="cartToggle" class="cart-btn" aria-label="Open cart">
-        <i class="fas fa-shopping-cart"></i>
-        <span id="cartCount">0</span>
-      </button>
-    </div>
-  </header>
-
-  <!-- ─── NAV ─── -->
-  <nav class="main-nav container" aria-label="Primary">
-    <a href="#" class="active">Home</a>
-    <a href="#shop">Shop</a>
-    <a href="#categoryFilters">Categories</a>
-    <a href="#shop">New Arrivals</a>
-    <a href="https://wa.me/94783366466" target="_blank" rel="noopener">Track Order</a>
-    <a href="#faq">FAQ</a>
-    <a href="https://wa.me/94783366466" target="_blank" rel="noopener">Contact Us</a>
-    <a href="admin.html">Admin</a>
-  </nav>
-
-  <!-- ─── HERO ─── -->
-  <section class="hero">
-    <div class="container">
-      <h1>LeoPis Digital</h1>
-      <p>Largest online Store in Sri Lanka</p>
-      <div class="stats-row">
-        <div class="stat-box"><strong id="visitsCount">0</strong><span>Visits</span></div>
-        <div class="stat-box"><strong id="ordersCount">0</strong><span>Orders</span></div>
-        <div class="stat-box"><strong>4.5/5 ⭐⭐⭐⭐</strong><span>Rating</span></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ─── CATEGORY CHIPS ─── -->
-  <section class="container category-sec" aria-label="Product categories">
-    <div class="category-heading">
-      <h2>Shop by Category</h2>
-    
-<section class="shop-by-category">
-  <div class="container">
-    <div class="section-header">
-      <p>Browse</p>
-      <h2>Shop by Category</h2>
+        <!-- Footer -->
+        <footer class="store-footer">
+            <p>&copy; 2026 Leopis (Pvt) Ltd. All rights reserved.</p>
+        </footer>
     </div>
 
-    <div class="category-grid">
-      <div class="category-card">
-        <div class="icon">📱</div>
-        <h3>Electronics</h3>
-        <p>Phones, laptops, tablets</p>
-      </div>
-
-      <div class="category-card">
-        <div class="icon">👗</div>
-        <h3>Fashion</h3>
-        <p>Men, women, kids wear</p>
-      </div>
-
-      <div class="category-card">
-        <div class="icon">🏠</div>
-        <h3>Home & Living</h3>
-        <p>Furniture, decor, essentials</p>
-      </div>
-
-      <div class="category-card">
-        <div class="icon">💄</div>
-        <h3>Beauty</h3>
-        <p>Skincare, makeup, care</p>
-      </div>
-
-      <div class="category-card">
-        <div class="icon">🛒</div>
-        <h3>Grocery</h3>
-        <p>Daily essentials & snacks</p>
-      </div>
-
-      <div class="category-card">
-        <div class="icon">⚽</div>
-        <h3>Sports</h3>
-        <p>Gear, fitness, outdoor</p>
-      </div>
-
-      <div class="category-card">
-        <div class="icon">📚</div>
-        <h3>Books</h3>
-        <p>Fiction, education, hobbies</p>
-      </div>
-
-      <div class="category-card">
-        <div class="icon">🛋️</div>
-        <h3>Furniture</h3>
-        <p>Comfort for every room</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<style>
-  * {
-    box-sizing: border-box;
-  }
-
-  body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #f7f7f7;
-  }
-
-  .shop-by-category {
-    padding: 60px 20px;
-    background: #fff;
-  }
-
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  .section-header {
-    text-align: center;
-    margin-bottom: 30px;
-  }
-
-  .section-header p {
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    color: #ff6b35;
-    font-weight: 700;
-    margin: 0 0 8px;
-    font-size: 12px;
-  }
-
-  .section-header h2 {
-    font-size: 2.5rem;
-    margin: 0;
-    color: #1d1d1f;
-  }
-
-  .category-grid {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(220px, 1fr));
-    gap: 20px;
-  }
-
-  .category-card {
-    background: linear-gradient(135deg, #fff, #f9f9f9);
-    border: 1px solid #eee;
-    border-radius: 18px;
-    padding: 28px 20px;
-    text-align: center;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
-  }
-
-  .category-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
-  }
-
-  .icon {
-    width: 72px;
-    height: 72px;
-    margin: 0 auto 16px;
-    display: grid;
-    place-items: center;
-    border-radius: 50%;
-    background: #fff4ef;
-    font-size: 2rem;
-  }
-
-  .category-card h3 {
-    margin: 10px 0 8px;
-    font-size: 1.2rem;
-    color: #1d1d1f;
-  }
-
-  .category-card p {
-    margin: 0;
-    color: #666;
-    font-size: 0.95rem;
-  }
-
-  @media (max-width: 900px) {
-    .category-grid {
-      grid-template-columns: repeat(2, minmax(200px, 1fr));
-    }
-  }
-
-  @media (max-width: 560px) {
-    .category-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .section-header h2 {
-      font-size: 2rem;
-    }
-  }
-</style>
-  <!-- ─── PRODUCT GRID ─── -->
-  <section class="container" id="shop">
-    <div class="product-grid" id="productGrid"></div>
-  </section>
-
-  <!-- ─── FAQ + AI ─── -->
-  <section class="faq-section" id="faq">
-    <div class="container faq-grid">
-      <div>
-        <h2 style="margin-bottom:10px;">FAQ</h2>
-        <div id="faqList"></div>
-      </div>
-      <div class="ai-box">
-        <h3><i class="fas fa-robot"></i> AI Assistant</h3>
-        <div id="aiMessages" class="ai-messages" aria-live="polite"></div>
-        <div class="ai-input-group">
-          <input type="text" id="aiInput" placeholder="Ask about delivery..." aria-label="Ask AI assistant" />
-          <button type="button" id="aiSend">Send</button>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ─── FOOTER ─── -->
-  <footer class="site-footer">
-    <div class="container">
-      <img src="logo.png" alt="LeoPis Digital" width="100" height="30" loading="lazy" />
-      <div class="social-links">
-        <a href="https://facebook.com/leopisdigital" target="_blank" rel="noopener" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-        <a href="https://wa.me/94783366466" target="_blank" rel="noopener" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-        <a href="mailto:director.leopis@gmail.com" title="Gmail"><i class="fas fa-envelope"></i></a>
-      </div>
-      <p>&copy; 2024 LeoPis Digital. All rights reserved.</p>
-    </div>
-  </footer>
-
-  <!-- ─── FLOATING CHATBOT + WHATSAPP ─── -->
-  <div class="chat-window" id="chatWindow" role="dialog" aria-label="AI chat">
-    <div class="chat-header">
-      <span><i class="fas fa-robot"></i> AI Assistant</span>
-      <button type="button" id="chatClose" aria-label="Close chat"><i class="fas fa-times"></i></button>
-    </div>
-    <div class="chat-body" id="chatBody">
-      <div class="chat-msg bot">Hello! How can I help you today? Ask about delivery, products, or returns.</div>
-    </div>
-    <div class="chat-input">
-      <input type="text" id="chatInput" placeholder="Type a message..." aria-label="Chat message" />
-      <button type="button" id="chatSend" aria-label="Send"><i class="fas fa-paper-plane"></i></button>
-    </div>
-  </div>
-
-  <div class="floating-container">
-    <button type="button" class="fab bot" id="chatToggle" aria-label="Open chat"><i class="fas fa-robot"></i></button>
-    <a href="https://wa.me/94783366466" target="_blank" rel="noopener" class="fab wa" aria-label="Chat on WhatsApp"><i class="fab fa-whatsapp"></i></a>
-  </div>
-
-  <!-- ─── PRODUCT MODAL ─── -->
-  <div class="modal-overlay" id="productModal" role="dialog" aria-modal="true">
-    <div class="modal-content">
-      <button type="button" class="modal-close" id="modalClose" aria-label="Close"><i class="fas fa-times"></i></button>
-      <div class="modal-img-sec">
-        <img id="mImg" src="" alt="" width="400" height="250" />
-        <div class="thumbnails" id="mThumbnails"></div>
-      </div>
-      <div class="modal-info-sec">
-        <h2 id="mTitle">Product Name</h2>
-        <p id="mPrice">LKR 0</p>
-        <p id="mDesc">Description...</p>
-        <button type="button" id="mAddBtn" class="btn-primary">Add to Cart</button>
-        <button type="button" id="mWaBtn" class="btn-whatsapp"><i class="fab fa-whatsapp"></i> Order via WhatsApp</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ─── CART DRAWER ─── -->
-  <div class="cart-drawer" id="cartDrawer" role="dialog" aria-label="Cart">
-    <div class="cart-header">
-      <h3>Cart</h3>
-      <button type="button" id="cartClose" aria-label="Close cart"><i class="fas fa-times"></i></button>
-    </div>
-    <div id="cartItems" class="cart-items"></div>
-    <div class="cart-footer">
-      <h4>Total: <span id="cartTotal">LKR 0</span></h4>
-      <button type="button" id="checkoutBtn" class="btn-checkout"><i class="fab fa-whatsapp"></i> Checkout</button>
-    </div>
-  </div>
-
-  <!-- Scripts -->
-  <script src="script.js" defer></script>
+    <script type="module" src="./client/src/main.tsx"></script>
 </body>
 </html>
