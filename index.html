@@ -1,206 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leopis (Pvt) Ltd - Lifestyle & Consumer Electronics</title>
-    <meta name="description" content="Official website of Leopis Digital. Discover our lifestyle products, consumer electronics, and accessories.">
-    <style>
-        :root {
-            --primary-color: #0f172a;
-            --accent-color: #2563eb;
-            --text-main: #334155;
-            --bg-light: #f8fafc;
-        }
-
-        body {
-            margin: 0;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            color: var(--text-main);
-            background-color: var(--bg-light);
-            line-height: 1.5;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        #root {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            width: 100%;
-        }
-
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 0 1rem;
-        }
-
-        .store-header {
-            background-color: var(--primary-color);
-            color: #ffffff;
-            padding: 1.25rem 1rem;
-            text-align: center;
-        }
-
-        .store-header h1 {
-            margin: 0;
-            font-size: 1.5rem;
-        }
-
-        .store-header p {
-            margin: 0.35rem 0 0;
-            font-size: 0.8rem;
-            color: #94a3b8;
-        }
-
-        .main-content {
-            padding: 1.5rem 1rem;
-            flex: 1;
-            max-width: 800px;
-            width: 100%;
-            margin: 0 auto;
-            box-sizing: border-box;
-        }
-
-        .hero-section {
-            background: #ffffff;
-            padding: 1.5rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.08);
-            text-align: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .hero-section h2 {
-            margin-top: 0;
-            color: var(--primary-color);
-        }
-
-        .btn-primary {
-            display: inline-block;
-            margin-top: 1rem;
-            background-color: var(--accent-color);
-            color: white;
-            padding: 0.6rem 1.25rem;
-            border-radius: 4px;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.9rem;
-        }
-
-        .catalogue-section h3 {
-            text-align: center;
-            margin-bottom: 1rem;
-            color: var(--primary-color);
-        }
-
-        .product-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1rem;
-        }
-
-        @media (min-width: 600px) {
-            .product-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        .product-card {
-            background: #ffffff;
-            border-radius: 8px;
-            padding: 1rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            text-align: center;
-            border: 1px solid #e2e8f0;
-        }
-
-        .product-card img {
-            width: 100%;
-            height: 140px;
-            object-fit: cover;
-            border-radius: 4px;
-            background-color: #e2e8f0;
-        }
-
-        .product-card h4 {
-            margin: 0.75rem 0 0.25rem;
-            font-size: 1rem;
-            color: var(--primary-color);
-        }
-
-        .product-card .price {
-            font-weight: bold;
-            color: var(--accent-color);
-            margin-bottom: 0.75rem;
-            font-size: 0.95rem;
-        }
-
-        .whatsapp-btn {
-            display: block;
-            background-color: #16a34a;
-            color: white;
-            padding: 0.5rem;
-            border-radius: 4px;
-            text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: 500;
-        }
-
-        .store-footer {
-            text-align: center;
-            padding: 1rem 0;
-            background-color: #e2e8f0;
-            color: #64748b;
-            font-size: 0.85rem;
-            margin-top: auto;
-        }
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Leopis Online Store</title>
+<meta name="description" content="Home appliances, kitchen, baby, headphones, fashion and fitness. Cash on delivery across Sri Lanka.">
+<link rel="icon" href="images/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Noto+Sans+Sinhala:wght@400;600&family=Noto+Sans+Tamil:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="root">
-        <!-- Store Header -->
-        <header class="store-header">
-            <div class="container">
-                <h1>Leopis (Pvt) Ltd</h1>
-                <p>Hotline: +94783366466 | Email: director.leopis@gmail.com</p>
-            </div>
-        </header>
+<header class="top">
+  <a class="brand" href="./"><img src="images/logo.jpg" alt="Leopis" width="56" height="56"><span>LEOPIS</span></a>
+  <input id="q" type="search" data-ph="search" autocomplete="off">
+  <div class="langs" role="group" aria-label="Language">
+    <button data-lang="en">EN</button><button data-lang="si">සිං</button><button data-lang="ta">தமி</button>
+  </div>
+  <button id="cartBtn" class="cartbtn"><span data-t="cart"></span> <b id="cartCount">0</b></button>
+</header>
 
-        <!-- Main Content -->
-        <main class="main-content">
-            <section class="hero-section">
-                <h2>Welcome to Leopis Digital</h2>
-                <p>Your premier destination for modern lifestyle products and consumer electronics in Sri Lanka.</p>
-                <a href="https://leopisdigital.com" class="btn-primary">Visit Main Domain</a>
-            </section>
+<section class="hero">
+  <h1 data-t="hero"></h1>
+  <p data-t="sub"></p>
+</section>
 
-            <!-- Featured Catalogue Section -->
-            <section class="catalogue-section">
-                <h3>Featured Catalogue</h3>
-                <div class="product-grid">
-                    <div class="product-card">
-                        <img src="./client/public/assets/catalogue/1-dfEEPJxYMngd-ATfVDyJOo7ZgJHo5bT.webp" alt="Product">
-                        <h4>Consumer Accessory</h4>
-                        <p class="price">LKR 4,500</p>
-                        <a href="https://wa.me/94783366466?text=I%20am%20interested%20in%20Consumer%20Accessory" class="whatsapp-btn" target="_blank">Order via WhatsApp</a>
-                    </div>
-                    <div class="product-card">
-                        <img src="./client/public/assets/catalogue/11d5c9Uz19tctL-dhwBH1Fd_3a7hlhtll.webp" alt="Product">
-                        <h4>Lifestyle Gadget</h4>
-                        <p class="price">LKR 7,900</p>
-                        <a href="https://wa.me/94783366466?text=I%20am%20interested%20in%20Lifestyle%20Gadget" class="whatsapp-btn" target="_blank">Order via WhatsApp</a>
-                    </div>
-                </div>
-            </section>
-        </main>
+<div class="bar">
+  <select id="cat" aria-label="Category"></select>
+  <select id="sort" aria-label="Sort"></select>
+  <span id="count"></span>
+</div>
 
-        <!-- Footer -->
-        <footer class="store-footer">
-            <p>&copy; 2026 Leopis (Pvt) Ltd. All rights reserved.</p>
-        </footer>
-    </div>
+<main id="grid" class="grid"></main>
+<nav id="pager" class="pager"></nav>
+
+<footer>© Leopis Pvt. Ltd. · <span data-t="cod"></span></footer>
+
+<dialog id="cartDlg">
+  <div class="dhead"><h2 data-t="cart"></h2><button id="closeCart" aria-label="Close">✕</button></div>
+  <div id="cartItems"></div>
+  <div class="total"><span data-t="total"></span><b id="cartTotal"></b></div>
+  <div id="checkout">
+    <input id="cName" data-ph="name" autocomplete="name">
+    <input id="cPhone" data-ph="phone" type="tel" autocomplete="tel">
+    <textarea id="cAddr" data-ph="address" rows="3" autocomplete="street-address"></textarea>
+    <p class="note" data-t="cod"></p>
+    <button id="order" class="wa" data-t="order"></button>
+  </div>
+</dialog>
+
+<script src="app.js"></script>
 </body>
 </html>
