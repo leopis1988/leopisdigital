@@ -11,6 +11,15 @@ body {
   color: var(--text-main);
   background-color: var(--bg-light);
   line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 .container {
@@ -22,38 +31,42 @@ body {
 .store-header {
   background-color: var(--primary-color);
   color: #ffffff;
-  padding: 1.5rem 0;
+  padding: 1.25rem 1rem;
   text-align: center;
 }
 
 .store-header h1 {
   margin: 0;
-  font-size: 1.75rem;
+  font-size: 1.5rem;
 }
 
 .store-header p {
-  margin: 0.5rem 0 0;
-  font-size: 0.9rem;
+  margin: 0.35rem 0 0;
+  font-size: 0.8rem;
   color: #94a3b8;
 }
 
 .main-content {
-  padding: 3rem 1rem;
-  text-align: center;
+  padding: 2rem 1rem;
+  flex: 1;
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 
 .hero-section {
-  max-width: 800px;
-  margin: 0 auto;
   background: #ffffff;
-  padding: 2.5rem;
+  padding: 2rem;
   border-radius: 8px;
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  text-align: center;
+  margin-bottom: 2rem;
 }
 
 .btn-primary {
   display: inline-block;
-  margin-top: 1.5rem;
+  margin-top: 1rem;
   background-color: var(--accent-color);
   color: white;
   padding: 0.75rem 1.5rem;
@@ -62,13 +75,66 @@ body {
   font-weight: 500;
 }
 
+.catalogue-section h3 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: var(--primary-color);
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.product-card {
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  text-align: center;
+}
+
+.product-card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.product-card h4 {
+  margin: 0.75rem 0 0.25rem;
+  font-size: 1rem;
+}
+
+.product-card .price {
+  font-weight: bold;
+  color: var(--accent-color);
+  margin-bottom: 0.75rem;
+}
+
+.whatsapp-btn {
+  display: block;
+  background-color: #16a34a;
+  color: white;
+  padding: 0.5rem;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
 .store-footer {
   text-align: center;
-  padding: 1.5rem 0;
+  padding: 1rem 0;
   background-color: #e2e8f0;
   color: #64748b;
   font-size: 0.85rem;
-  position: absolute;
-  bottom: 0;
-  width: 100%;
+  margin-top: auto;
 }
