@@ -3,28 +3,50 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Leopis Online Store</title>
+<title>Leopis Digital | Online Store Sri Lanka</title>
 <meta name="description" content="Home appliances, kitchen, baby, headphones, fashion and fitness. Cash on delivery across Sri Lanka.">
-<link rel="icon" href="images/favicon.png">
+<link rel="icon" href="logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Noto+Sans+Sinhala:wght@400;600&family=Noto+Sans+Tamil:wght@400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<header class="top">
-  <a class="brand" href="./"><img src="images/logo.png" alt="Leopis" width="56" height="56"><span>LEOPIS</span></a>
-  <input id="q" type="search" data-ph="search" autocomplete="off">
+
+<div class="topbar">
+  <span data-t="f2"></span>
   <div class="langs" role="group" aria-label="Language">
     <button data-lang="en">EN</button><button data-lang="si">සිං</button><button data-lang="ta">தமி</button>
   </div>
+</div>
+
+<header class="head">
+  <a class="brand" href="./"><img src="logo.png" alt="Leopis" width="52" height="52"><span>LEOPIS</span></a>
+  <input id="q" type="search" data-ph="search" autocomplete="off">
   <button id="cartBtn" class="cartbtn"><span data-t="cart"></span> <b id="cartCount">0</b></button>
 </header>
 
+<nav id="catNav" class="catnav" aria-label="Categories"></nav>
+
 <section class="hero">
-  <h1 data-t="hero"></h1>
-  <p data-t="sub"></p>
+  <div class="banner main">
+    <h1 data-t="hero"></h1>
+    <p data-t="sub"></p>
+    <button class="cta" data-cat="" data-t="shopnow"></button>
+  </div>
+  <div class="side">
+    <button class="banner tile t1" data-cat="Headphones"><span>Headphones</span></button>
+    <button class="banner tile t2" data-cat="Home Appliances"><span>Home Appliances</span></button>
+  </div>
 </section>
 
+<section class="features">
+  <div><b data-t="f1"></b></div>
+  <div><b data-t="f2"></b></div>
+  <div><b data-t="f3"></b></div>
+  <div><b data-t="f4"></b></div>
+</section>
+
+<h2 id="shop" class="title" data-t="allp"></h2>
 <div class="bar">
   <select id="cat" aria-label="Category"></select>
   <select id="sort" aria-label="Sort"></select>
@@ -34,7 +56,13 @@
 <main id="grid" class="grid"></main>
 <nav id="pager" class="pager"></nav>
 
-<footer>© Leopis Pvt. Ltd. · <span data-t="cod"></span></footer>
+<footer>
+  <div class="fcols">
+    <div><h4>Leopis Digital</h4><p data-t="cod"></p></div>
+    <div><h4>WhatsApp</h4><p><a id="waLink" href="#">Chat with us</a></p></div>
+  </div>
+  <p>© Leopis Pvt. Ltd.</p>
+</footer>
 
 <dialog id="cartDlg">
   <div class="dhead"><h2 data-t="cart"></h2><button id="closeCart" aria-label="Close">✕</button></div>
