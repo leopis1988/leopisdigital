@@ -1,6 +1,6 @@
 /* ====== EDIT THESE ====== */
 const CONFIG = {
-  whatsapp: "94771234567",   // your WhatsApp number: country code + number, no + or spaces
+  whatsapp: "94783366366",   // your WhatsApp number: country code + number, no + or spaces
   currency: "Rs.",
   perPage: 24
 };
