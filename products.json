@@ -1,6 +1,0 @@
-[
- {"id":"LP0001","name":"Electric Kettle","name_si":"","name_ta":"","category":"Home Appliances","price":4500,"old_price":5500,"image":""},
- {"id":"LP0002","name":"Wireless Earbuds","name_si":"","name_ta":"","category":"Headphones","price":6900,"old_price":8500,"image":""},
- {"id":"LP0003","name":"Baby Feeding Bottle","name_si":"","name_ta":"","category":"Baby","price":1800,"old_price":2200,"image":""},
- {"id":"LP0004","name":"Yoga Mat","name_si":"","name_ta":"","category":"Fitness","price":3200,"old_price":3900,"image":""}
-]
