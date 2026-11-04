@@ -1,6 +1,5 @@
 name: Auto Update Product Images
-on:
-  workflow_dispatch: # இதை நாம மேனுவலா கிளிக் பண்ணி ரன் பண்ணலாம்
+on: [workflow_dispatch, push]
 permissions:
   contents: write
 jobs:
