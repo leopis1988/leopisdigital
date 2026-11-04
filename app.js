@@ -1,6 +1,6 @@
 /* ====== EDIT THESE ====== */
 const CONFIG = {
-  whatsapp: "94771234567",   // your WhatsApp number: country code + number, no + or spaces
+  whatsapp: "94783366466",   // your WhatsApp number: country code + number, no + or spaces
   currency: "Rs.",
   perPage: 24,
   realPhotos: false          // change to true after you upload real photos to /images (named CODE.jpg)
