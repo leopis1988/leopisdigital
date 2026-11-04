@@ -1,9 +1,9 @@
 /* ====== EDIT THESE ====== */
 const CONFIG = {
-  whatsapp: "94783366466",   // your WhatsApp number: country code + number, no + or spaces
+  whatsapp: "94783366466",   // WhatsApp எண்: நாட்டுக்குறியீடு + எண், + அல்லது இடைவெளி இல்லாமல்
   currency: "Rs.",
   perPage: 24,
-  realPhotos: false          // change to true after you upload real photos to /images (named CODE.jpg)
+  realPhotos: true           // true = p.image (URL அல்லது local path); false = எப்போதும் SVG placeholder
 };
 /* ======================== */
 
@@ -90,10 +90,21 @@ css.textContent = ".card .img,.card h3{cursor:pointer}.card h3{min-height:2.7em}
   ".wa-big{display:block;text-align:center;text-decoration:none;padding:.85rem;border-radius:10px;background:var(--wa);color:#06220f;font-weight:800}";
 document.head.append(css);
 
+/* ===== புதுப்பிக்கப்பட்டது: image element ===== */
 function imgEl(p) {
-  const i = new Image(); i.loading = "lazy"; i.alt = p.name;
+  const i = new Image();
+  i.loading = "lazy";
+  i.alt = p.name;
+  i.referrerPolicy = "no-referrer";           // hotlink protection-க்கு உதவும்
   i.onerror = () => { i.onerror = null; i.src = placeholder(p); };
-  i.src = (CONFIG.realPhotos && p.image) ? p.image : placeholder(p);
+  const src = (p.image || "").trim();
+  if (src.startsWith("http")) {
+    i.src = src;                              // fetch_images.py-யிலிருந்து web URL
+  } else if (CONFIG.realPhotos && src) {
+    i.src = src;                              // local /images/CODE.jpg
+  } else {
+    i.src = placeholder(p);                   // SVG fallback
+  }
   return i;
 }
 
