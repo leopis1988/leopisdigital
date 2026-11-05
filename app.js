@@ -224,7 +224,7 @@ function sendOrder() {
   window.open(waUrl(msg), "_blank");
 }
 
-fetch("products.json").then(r => r.json()).then(data => {
+fetch("products_final.json").then(r => r.json()).then(data => {
   products = data; data.forEach(p => byId[p.id] = p);
   view = products.slice();
   applyLang();
