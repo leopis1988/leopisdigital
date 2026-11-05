@@ -12,7 +12,7 @@ permissions:
 jobs:
   update-products:
     runs-on: ubuntu-latest
-    timeout-minutes: 15 # Increased slightly because downloading 2000 images takes time
+    timeout-minutes: 60 # <--- நேரத்தை 60 நிமிடங்களாக அதிகரித்துள்ளேன்
 
     steps:
       - name: Checkout Repository
@@ -26,15 +26,15 @@ jobs:
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install pandas openpyxl requests
+          pip install pandas openpyxl ddgs
 
-      - name: Run Script to Process Data and Download Images
+      - name: Run Script to Process Data
         run: python process_products.py
 
-      - name: Commit and Push Everything
+      - name: Commit and Push
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Action"
-          git add images/ products_final.json Products_with_Profit.xlsx
-          git commit -m "Auto-update: Downloaded images, added profit, updated JSON" || exit 0
+          git add products_final.json Products_with_Profit.xlsx
+          git commit -m "Auto-generated products_final.json with real images" || exit 0
           git push
