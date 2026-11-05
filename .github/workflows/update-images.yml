@@ -3,44 +3,38 @@ name: Process Products and Add Profit
 on:
   push:
     paths:
-      - 'products.json' # Runs automatically when you upload a new JSON file
-  workflow_dispatch: # Allows you to run it manually from the Actions tab
+      - 'products.json'
+  workflow_dispatch: 
 
-# This fixes the permission error so the bot can save the Excel file back to your repo
 permissions:
   contents: write
 
 jobs:
   update-products:
     runs-on: ubuntu-latest
+    timeout-minutes: 5 # <-- THIS STOPS THE 25 MINUTE HANG
 
     steps:
-      # 1. Checkout the repository
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      # 2. Setup Python (fixes the Node.js deprecation warning you saw)
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
 
-      # 3. Install required libraries
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install pandas openpyxl
+          pip install --no-cache-dir pandas openpyxl
 
-      # 4. Run the Python Script
       - name: Run Script to Process Data
         run: python process_products.py
 
-      # 5. Save the new Excel file back to GitHub
       - name: Commit and Push the Excel File
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Action"
           git add Products_with_Profit.xlsx
-          # This prevents the action from failing if the file hasn't changed
-          git commit -m "Auto-updated: Added +300 profit and fixed Image URLs" || exit 0
+          git commit -m "Auto-updated: Added +300 profit" || exit 0
           git push
