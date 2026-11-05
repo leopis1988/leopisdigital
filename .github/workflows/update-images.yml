@@ -12,7 +12,7 @@ permissions:
 jobs:
   update-products:
     runs-on: ubuntu-latest
-    timeout-minutes: 5 # <-- THIS STOPS THE 25 MINUTE HANG
+    timeout-minutes: 15 # Increased slightly because downloading 2000 images takes time
 
     steps:
       - name: Checkout Repository
@@ -26,15 +26,15 @@ jobs:
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install --no-cache-dir pandas openpyxl
+          pip install pandas openpyxl requests
 
-      - name: Run Script to Process Data
+      - name: Run Script to Process Data and Download Images
         run: python process_products.py
 
-      - name: Commit and Push the Excel File
+      - name: Commit and Push Everything
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Action"
-          git add Products_with_Profit.xlsx
-          git commit -m "Auto-updated: Added +300 profit" || exit 0
+          git add images/ products_final.json Products_with_Profit.xlsx
+          git commit -m "Auto-update: Downloaded images, added profit, updated JSON" || exit 0
           git push
