@@ -1,7 +1,15 @@
 import json
 import pandas as pd
+import os
+import sys
 
-# Load the JSON file
+# Check if file exists first
+if not os.path.exists('products.json'):
+    print("ERROR: 'products.json' not found in the repository! Please upload it.")
+    sys.exit(1) # Fails the workflow immediately
+
+print("File found. Processing...")
+
 with open('products.json', 'r', encoding='utf-8') as f:
     data = json.load(f)
 
@@ -9,18 +17,15 @@ processed_products = []
 base_url = "https://store.dropy.lk/"
 
 for item in data:
-    # 1. Fix the Image URL
     image_path = item.get('image', '')
     if image_path and not image_path.startswith('http'):
         full_image_url = base_url + image_path
     else:
         full_image_url = image_path
 
-    # 2. Add +300 to the Price
     original_price = item.get('price', 0)
     selling_price = original_price + 300
 
-    # 3. Save the updated data
     processed_products.append({
         "Product ID": item.get('id'),
         "Product Name": item.get('name'),
@@ -31,7 +36,6 @@ for item in data:
         "Description": item.get('description')
     })
 
-# Export to Excel
 df = pd.DataFrame(processed_products)
 df.to_excel("Products_with_Profit.xlsx", index=False)
 
