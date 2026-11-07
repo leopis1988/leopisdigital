@@ -54,8 +54,8 @@ function priceEl(p, cls) {
     d.append(" ", el("s", "was", money(p.oldPrice)), " ", el("span", "off", "🏷️ -" + (p.discount || Math.round((1 - p.price / p.oldPrice) * 100)) + "%"));
   }
   if (isFlash(p)) {
-    const old = el("s", "was", money(p.price)), off = Math.round((1 - pr(p) / p.price) * 100);
-    d.append(" ", old, " ", el("span", "off", "⚡ " + ({en: "Save", si: "ඉතිරිය", ta: "சேமிப்பு"}[lang] || "Save") + " " + money(p.price - pr(p))));
+    const offer = pr(p), original = Math.round(offer / 0.75);
+    d.append(" ", el("s", "was", money(original)), " ", el("span", "off", "🏷️ -25%"));
   }
   return d;
 }
@@ -270,11 +270,17 @@ function sendOrder() {
   window.open(waUrl(msg), "_blank");
 }
 
+function showOfferPopup() {
+  const dlg = $("#offerDlg");
+  if (dlg && flashOn() && !dlg.open) dlg.showModal();
+}
+
 fetch("products_final.json").then(r => r.json()).then(data => {
   products = shuffleAll(data.slice()); data.forEach(p => byId[p.id] = p);
   view = products.slice();
   
 applyLang(); buildFlash(true); buildExtras();
+  setTimeout(showOfferPopup, 450);
   const pid = new URLSearchParams(location.search).get("p"); if (pid && byId[pid]) openDetail(byId[pid]);
 }).catch(() => { $("#grid").append(el("p", "empty", "Could not load products.json")); });
 
@@ -284,6 +290,8 @@ $("#cat").onchange = () => { clearOnly = false; filter(); buildCatNav(); }; $("#
 $("#cartBtn").onclick = () => $("#cartDlg").showModal();
 $("#closeCart").onclick = () => $("#cartDlg").close();
 $("#cartDlg").addEventListener("click", e => { if (e.target.id === "cartDlg") e.target.close(); });
+$("#offerClose").onclick = () => $("#offerDlg").close();
+$("#offerShop").onclick = () => { $("#offerDlg").close(); $("#flash").scrollIntoView({behavior: "smooth"}); };
 $("#order").onclick = sendOrder;
 document.addEventListener("click", e => { const b = e.target.closest("[data-cat]"); if (b) goCat(b.dataset.cat); const dl = e.target.closest("[data-deals]"); if (dl) { $("#cat").value = ""; clearOnly = true; filter(); buildCatNav(); $("#shop").scrollIntoView({behavior: "smooth"}); } });
 $("#waLink").href = waUrl("Hi Leopis");
