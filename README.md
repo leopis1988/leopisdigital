@@ -69,7 +69,7 @@ const FLASH = { end: new Date("2026-11-11T23:59:59+05:30"), factor: 0.5 };
 ## Other settings in `app.js`
 
 - `CONFIG` (top of the file): WhatsApp number, currency, products per page.
-- `const SITE_RATING = 4.8;` – the rating line above the products. Use your real customer feedback score, or set it to `null` to hide it.
+- `const SITE_RATING = null;` – the rating line above the products is hidden until it is backed by real customer feedback. Set it to a verified score only when you have supporting reviews.
 - `const FAQ = { ... }` – FAQ questions and answers in English, Sinhala and Tamil.
 - Scrolling speed of the flash strip: change `55s` in the `.ftrack` style (bigger = slower).
 

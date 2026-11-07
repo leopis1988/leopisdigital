@@ -13,7 +13,7 @@ const T = {
     address:"Delivery address", cod:"Cash on delivery", order:"Order via WhatsApp", empty:"Your cart is empty", none:"No products found",
     remove:"Remove", prev:"Prev", next:"Next", items:"products", s0:"Recommended", s1:"Price: low to high", s2:"Price: high to low", fill:"Please fill in name, phone and address.",
     shopnow:"Shop now", allp:"All products", f1:"Island-wide delivery", f2:"Cash on delivery across Sri Lanka", f3:"Order on WhatsApp", f4:"Quality products",
-    wa:"Real photos & details on WhatsApp", code:"Code", gl:"See photos on Google", sample:"Image shown is a sample. Ask us on WhatsApp for real photos and more details."},
+    wa:"Confirm photo & details on WhatsApp", code:"Code", gl:"See photos on Google", sample:"Product images may be supplier samples and may differ in colour or model. Confirm the exact item, specifications and availability on WhatsApp before ordering."},
   si: {hero:"ඔබේ නිවසට, පවුලට සහ ශරීර යෝග්‍යතාවයට අවශ්‍ය සියල්ල", sub:"ගෘහ උපකරණ, මුළුතැන්ගෙය, ළමා අවශ්‍යතා, හෙඩ්ෆෝන්, ඇඳුම් සහ ෆිට්නස්. ශ්‍රී ලංකාව පුරා බෙදාහරිනු ලැබේ.",
     search:"නිෂ්පාදන සොයන්න", all:"සියලුම ප්‍රවර්ග", cart:"කරත්තය", add:"කරත්තයට එක් කරන්න", total:"මුළු මුදල", name:"ඔබේ නම", phone:"දුරකථන අංකය",
     address:"බෙදාහැරීමේ ලිපිනය", cod:"බඩු ලැබුණු පසු මුදල් ගෙවීම", order:"WhatsApp හරහා ඇණවුම් කරන්න", empty:"කරත්තය හිස්ය", none:"නිෂ්පාදන හමු නොවීය",
@@ -281,14 +281,14 @@ $("#waLink").href = waUrl("Hi Leopis");
 
 
 /* ===== SETTINGS you can change ===== */
-const SITE_RATING = 4.8;   /* store rating line - use your real customer feedback score; set to null to hide */
+const SITE_RATING = null;  /* Hide the rating until it is backed by real customer feedback. */
 const FAQ = {
   en: [
     ["How do I order?", "Add items to your cart, enter your name, phone number and address, then tap the order button. Your order opens in WhatsApp and we confirm it with you."],
     ["How do I pay?", "Payment is cash on delivery."],
     ["What are the 11.11 Flash Deals?", "Selected products have reduced prices until 11 November, 11:59 PM (Sri Lanka time). Prices go back to normal after that."],
-    ["What warranty do products have?", "The warranty is shown on each product. For details on what it covers and how to claim, message us on WhatsApp before you order."],
-    ["Are the photos real?", "Some photos are samples only. Message us on WhatsApp for real photos and more details of any product."],
+    ["What warranty do products have?", "Warranty or replacement coverage varies by product and is shown only where confirmed. Please message us on WhatsApp to confirm coverage before ordering."],
+    ["Are the photos real?", "Some product images are supplier samples and may differ from the exact item. Confirm the photo, model, specifications and availability on WhatsApp before ordering."],
     ["How long does delivery take and what does it cost?", "We confirm delivery time and charges with you on WhatsApp when we confirm your order."],
     ["What if there is a problem with my order?", "Message us on WhatsApp with your order details and we will help you."]
   ],
@@ -296,8 +296,8 @@ const FAQ = {
     ["ඇණවුම් කරන්නේ කෙසේද?", "භාණ්ඩ කරත්තයට එක් කර, ඔබේ නම, දුරකථන අංකය සහ ලිපිනය ඇතුළත් කර ඇණවුම් බොත්තම ඔබන්න. ඇණවුම WhatsApp හි විවෘත වන අතර අපි එය තහවුරු කරන්නෙමු."],
     ["ගෙවන්නේ කෙසේද?", "ගෙවීම බඩු ලැබුණු විට මුදල් ගෙවීමෙනි (Cash on delivery)."],
     ["11.11 ෆ්ලෑෂ් ඩීල්ස් යනු කුමක්ද?", "තෝරාගත් භාණ්ඩ නොවැම්බර් 11 රාත්‍රී 11:59 (ශ්‍රී ලංකා වේලාව) දක්වා අඩු මිලට ලැබේ. ඉන්පසු මිල සාමාන්‍ය තත්ත්වයට පත් වේ."],
-    ["භාණ්ඩවල වගකීම (warranty) කුමක්ද?", "වගකීම සෑම භාණ්ඩයකම පෙන්වා ඇත. එය ආවරණය කරන දේ සහ හිමිකම් කීමේ ක්‍රමය දැනගැනීමට ඇණවුමට පෙර WhatsApp හරහා අපට පණිවිඩයක් එවන්න."],
-    ["පින්තූර සැබෑද?", "සමහර පින්තූර නිදර්ශන පමණි. සැබෑ පින්තූර සහ වැඩි විස්තර සඳහා WhatsApp හරහා අපෙන් විමසන්න."],
+    ["භාණ්ඩවල වගකීම (warranty) කුමක්ද?", "වගකීම හෝ ප්‍රතිස්ථාපන ආවරණය භාණ්ඩය අනුව වෙනස් වන අතර තහවුරු කළ භාණ්ඩ සඳහා පමණක් පෙන්වනු ලැබේ. ඇණවුමට පෙර WhatsApp හරහා ආවරණය තහවුරු කරන්න."],
+    ["පින්තූර සැබෑද?", "සමහර නිෂ්පාදන රූප සැපයුම්කරුගේ නිදර්ශන වන අතර නිවැරදි භාණ්ඩයෙන් වෙනස් විය හැක. ඇණවුමට පෙර WhatsApp හරහා රූපය, ආකෘතිය, විස්තර සහ ලබාගත හැකි බව තහවුරු කරන්න."],
     ["බෙදාහැරීමට කොපමණ කාලයක් ගතවේද, ගාස්තුව කීයද?", "ඔබේ ඇණවුම තහවුරු කරන විට බෙදාහැරීමේ කාලය සහ ගාස්තු WhatsApp හරහා දන්වන්නෙමු."],
     ["ඇණවුමේ ගැටලුවක් ඇත්නම්?", "ඇණවුම් විස්තර සමඟ WhatsApp හරහා අපට පණිවිඩයක් එවන්න, අපි උදව් කරන්නෙමු."]
   ],
@@ -305,8 +305,8 @@ const FAQ = {
     ["எப்படி ஆர்டர் செய்வது?", "பொருட்களை வண்டியில் சேர்த்து, உங்கள் பெயர், தொலைபேசி எண் மற்றும் முகவரியை உள்ளிட்டு ஆர்டர் பொத்தானை அழுத்துங்கள். ஆர்டர் WhatsApp இல் திறக்கும், நாங்கள் உறுதிப்படுத்துவோம்."],
     ["எப்படி பணம் செலுத்துவது?", "பொருள் கிடைக்கும்போது பணம் செலுத்தலாம் (Cash on delivery)."],
     ["11.11 ஃபிளாஷ் டீல்ஸ் என்றால் என்ன?", "தேர்ந்தெடுக்கப்பட்ட பொருட்கள் நவம்பர் 11 இரவு 11:59 (இலங்கை நேரம்) வரை குறைந்த விலையில் கிடைக்கும். அதன் பிறகு விலை வழக்கமான நிலைக்கு திரும்பும்."],
-    ["பொருட்களுக்கு என்ன warranty உள்ளது?", "ஒவ்வொரு பொருளிலும் warranty காட்டப்பட்டுள்ளது. அது எதை உள்ளடக்கும், எப்படி கோருவது என்பதை அறிய ஆர்டர் செய்யும் முன் WhatsApp இல் எங்களுக்கு செய்தி அனுப்புங்கள்."],
-    ["படங்கள் உண்மையானவையா?", "சில படங்கள் மாதிரி மட்டுமே. உண்மையான படங்கள் மற்றும் கூடுதல் விவரங்களுக்கு WhatsApp இல் கேளுங்கள்."],
+    ["பொருட்களுக்கு என்ன warranty உள்ளது?", "உத்தரவாதம் அல்லது மாற்று பாதுகாப்பு பொருளுக்கு ஏற்ப மாறுபடும்; உறுதிப்படுத்தப்பட்ட பொருட்களுக்கு மட்டும் காட்டப்படும். ஆர்டர் செய்வதற்கு முன் WhatsApp இல் உறுதிப்படுத்துங்கள்."],
+    ["படங்கள் உண்மையானவையா?", "சில தயாரிப்பு படங்கள் சப்ளையர் மாதிரிகளாக இருக்கலாம்; சரியான பொருளிலிருந்து மாறுபடலாம். ஆர்டர் செய்வதற்கு முன் WhatsApp இல் படம், மாடல், விவரங்கள் மற்றும் இருப்பை உறுதிப்படுத்துங்கள்."],
     ["டெலிவரிக்கு எவ்வளவு நேரம், கட்டணம் எவ்வளவு?", "உங்கள் ஆர்டரை உறுதிப்படுத்தும்போது டெலிவரி நேரம் மற்றும் கட்டணத்தை WhatsApp இல் தெரிவிப்போம்."],
     ["ஆர்டரில் பிரச்சினை இருந்தால்?", "ஆர்டர் விவரங்களுடன் WhatsApp இல் எங்களுக்கு செய்தி அனுப்புங்கள், நாங்கள் உதவுவோம்."]
   ]

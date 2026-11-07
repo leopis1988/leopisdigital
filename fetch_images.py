@@ -10,6 +10,8 @@ products.json-ஐ படித்து, ஒவ்வொரு தயாரி�
 import json
 import sys
 import time
+from urllib.error import HTTPError, URLError
+from urllib.request import Request, urlopen
 from pathlib import Path
 
 try:
@@ -28,6 +30,17 @@ SAVE_EVERY = 25
 IMG_EXTS = (".jpg", ".jpeg", ".png", ".webp", ".gif", ".bmp", ".avif")
 
 
+def is_valid_image_url(url: str) -> bool:
+    """Accept only reachable URLs that actually return an image."""
+    try:
+        req = Request(url, headers={"User-Agent": "Mozilla/5.0"}, method="GET")
+        with urlopen(req, timeout=12) as response:
+            content_type = (response.headers.get("Content-Type") or "").lower()
+            return response.status == 200 and content_type.startswith("image/")
+    except (HTTPError, URLError, TimeoutError, ValueError):
+        return False
+
+
 def search_image(query: str):
     """query-க்கு நேரடி image URL திருப்பித் தரும், இல்லையெனில் None."""
     try:
@@ -43,13 +56,13 @@ def search_image(query: str):
         if not url.startswith("http"):
             continue
         path = url.split("?")[0].split("#")[0].lower()
-        if path.endswith(IMG_EXTS):
+        if path.endswith(IMG_EXTS) and is_valid_image_url(url):
             return url
 
     # fallback: ஏதேனும் http image URL
     for r in results:
         url = (r.get("image") or "").strip()
-        if url.startswith("http"):
+        if url.startswith("http") and is_valid_image_url(url):
             return url
 
     return None
