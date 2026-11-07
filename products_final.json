@@ -1,27 +1,5 @@
 [
  {
-  "id": "102363",
-  "name": "Tobi Neck & Shoulder Massager",
-  "category": "Health & Beauty",
-  "price": 4930,
-  "image": "",
-  "description": "Helps ease muscle tension so you can relax after a long day. Photo to be confirmed on WhatsApp before ordering.",
-  "oldPrice": 5800,
-  "discount": 15,
-  "badge": "Clearance"
- },
- {
-  "id": "101379",
-  "name": "138kg Movable Base for Washing Machine & Refrigerator",
-  "category": "Home & Storage",
-  "price": 2082,
-  "image": "",
-  "description": "Movable base makes it easy to shift and clean under heavy appliances. Key details: 138kg. Photo to be confirmed on WhatsApp before ordering.",
-  "oldPrice": 2450,
-  "discount": 15,
-  "badge": "Clearance"
- },
- {
   "id": "102309",
   "name": "Scalp Massager",
   "category": "Health & Beauty",
@@ -781,17 +759,6 @@
   "badge": "Clearance"
  },
  {
-  "id": "101160",
-  "name": "Foldable Kids Scooter with Light",
-  "category": "Kids & Toys",
-  "price": 2592,
-  "image": "",
-  "description": "Foldable kids scooter with a light for fun outdoor rides. Photo to be confirmed on WhatsApp before ordering.",
-  "oldPrice": 3050,
-  "discount": 15,
-  "badge": "Clearance"
- },
- {
   "id": "101158",
   "name": "Electric Foot Massager",
   "category": "Health & Beauty",
@@ -930,14 +897,6 @@
   "description": "Makes mopping quicker and easier on your back."
  },
  {
-  "id": "100720",
-  "name": "Sokany Hand Mixer - SK133",
-  "category": "Home Appliances",
-  "price": 2690,
-  "image": "",
-  "description": "Mixes and whisks batter and cream quickly. Photo to be confirmed on WhatsApp before ordering."
- },
- {
   "id": "100650",
   "name": "40Kg Scale",
   "category": "Health & Beauty",
@@ -1016,14 +975,6 @@
   "price": 1150,
   "image": "https://cdn.wallpapersafari.com/8/9/JrXFhx.jpg",
   "description": "Quick drying and styling in the comfort of your home. Key details: 1000W."
- },
- {
-  "id": "100213",
-  "name": "Digital LCD Bathroom Body Scale",
-  "category": "Health & Beauty",
-  "price": 2050,
-  "image": "",
-  "description": "Digital scale with a clear display to track your weight. Photo to be confirmed on WhatsApp before ordering."
  },
  {
   "id": "100192",
