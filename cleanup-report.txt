@@ -1,0 +1,60 @@
+REMOVED DUPLICATE LISTINGS (same product name)
+removed_id | name | removed_price | kept_id | kept_price
+P01166 | 6 Pcs Colorful Knife Set | 1275 | 101869 | 1250
+100266 | TableTop Drum Grater | 2900 | 5-TABLE-TOP-DRUM-GRATER | 2740
+47-MASSAGE-GUN | massage gun | 2540 | P00840 | 2090
+3-V-COMB | v-comb | 2604 | P00233 | 2150
+5-DERMASUCTION-PORE-CLEANING-DEVICE | DermaSuction Pore Cleaning Device | 1630 | P06055 | 1390
+P06350 | 8 In 1 Faucet & Sink Installer | 1150 | 3-8-IN-1-FAUCET-SINK-INSTALLER | 712
+P03598 | Stainless Steel Cleaner | 880 | 3-STAINLESS-STEEL-CLEANER | 680
+AG00001228 | Multipurpose Gas Trolley | 2050 | p08140 | 1900
+AG00000453 | Embossed Ladies Backpack | 2300 | P07418 | 2050
+AG00000435 | 3PCS Travel Wash Bag Set | 1800 | P06890 | 1750
+AG00000311 | 9Layer Shoe Rack | 3050 | P01103 | 3050
+AG00001065 | Document Holder | 1150 | P05325 | 1150
+AG00001125 | 24PCS Repair Tool Kit | 3550 | P07317 | 3400
+AG00000346 | Knife Sharpener | 990 | 3-KNIFE-SHARPENER | 773
+144-3-IN-1-BOTTLE-SET-COLOUR-2-HEAVI | 3 In 1 Bottle Set -Random Colour | 3270 | 144-3-IN-1-BOTTLE-SET-COLOUR-1-HEAVI | 3270
+78-90X98INCH-EGYPT-COTTON-BED-SHEET-AND | 90x98inch Egypt Cotton Bed Sheet & Tow Pillow Cases | 5080 | 78-90X98-INCH-EGYPT-COTTON-BED-SHEET-AND | 4670
+5-ULTRASONIC-PEST-REPELLER | Ultrasonic Pest Repeller | 1110 | 3-ULTRA-SONIC-PEST-REPELLER | 980
+9-RECHARGEABLE-HEADLAMP | Rechargeable Headlamp | 1530 | 3-RECHARGEABLE-HEAD-LAMP | 716
+
+NO IMAGE (fix manually): 75-PINK-RUFFLED-PILLOW-CASES, 3-LARGE-MOUSE-MAT
+
+SHARED-PHOTO VARIANTS (same photo, different colour codes - kept, but better to upload one photo per colour):
+ - 101764, 100964, 100963  (Luxe Round Anti-Blue Light Glass-1043BGD)
+ - 101763, 100920, 100914  (Aviator Anti-Blue Light Glass-1035TP)
+ - 101394, 100993, 100990  (Diamond Kids Sunglass-1048PR)
+ - 101006, 101002  (Trendy Kids Sunglass-1050BPK)
+ - 101000, 100997, 100995  (Bear Kids Sunglass-1049PK)
+ - 100994, 100992, 100991  (Diamond Kids Sunglass-1048BKYW)
+ - 100989, 100985, 100983  (Folding Kids Sunglass-1047GE)
+ - 100986, 100984  (Folding Kids Sunglass-1047BK)
+ - 100982, 100981, 100980, 100977  (2 in 1 Icon Square Photochromic Glass-10)
+ - 100979, 100978  (2 in 1 Icon Square Photochromic Glass-10)
+ - 100973, 100970, 100969  (Opti Round Anti-Blue Light Glass-1044GE)
+ - 100972, 100971, 100968  (Opti Round Anti-Blue Light Glass-1044CL)
+ - 100967, 100962, 100926, 100925, 100924, 100922, 100921  (Opti Round Anti-Blue Light Glass-1044BK)
+ - 100961, 100958  (Over Sized Anti-Blue Light Glass-1042PR)
+ - 100960, 100959, 100957  (Over Sized Anti-Blue Light Glass-1042PK)
+ - 100955, 100954, 100953, 100950  (Urban Retro Anti-Blue Light Glass-1041GR)
+ - 100952, 100951  (Urban Retro Anti-Blue Light Glass-1041BL)
+ - 100946, 100945  (Style Retro Anti-Blue Light Glass-1040CL)
+ - 100939, 100937, 100936, 100935, 100934  (Pro Aviator Anti-Blue Light Glass-1038BS)
+ - 100933, 100932, 100929, 100928, 100898, 100897, 100896  (Vista Square Anti-Blue Light Glass-1037T)
+ - 100927, 100899  (Vista Square Anti-Blue Light Glass-1037B)
+ - 100919, 100917  (Aviator Anti-Blue Light Glass-1035BL)
+ - 100909, 100907, 100906, 100904  (Double Beam Anti-Blue Light Glass-1033TE)
+ - 100902, 100901, 100900  (Cat-Eye Anti-Blue Light Glass-1022GR)
+ - 100894, 100889  (Retro Square Anti-Blue Light Glass-1020G)
+ - 100893, 100892, 100891, 100888  (Retro Square Anti-Blue Light Glass-1020P)
+ - 100887, 100886, 100885, 100884  (Myopia Anti-Blue Light Glass-1019PK)
+ - P00068, P08021  (Electric Water Dispenser)
+ - P00225, 2PPE33  (Adjustable Hot shaper Belt)
+ - P05185, P05189  (Panasonic Battery - AA)
+ - P09153, AG00001329  (Waterproof Phone Pouches)
+ - P08854, P08855  (Ceramic Bowl - Gold Design 82-11)
+ - P05347, P08721  (1 Pc Rice Measuring Cup)
+ - p09170, P07663  (Square Shape Spoon Holder)
+ - P07325, P07327  (Yesink Glass Candy Bowl - TG1027)
+ - 3-TITAN-GEL-GOLD, 3-VIGA-STRONG-SPRAY, 3-BREATHABLE-FALSE-HIP-UNDERPANTS  (Titan Gel Gold)
