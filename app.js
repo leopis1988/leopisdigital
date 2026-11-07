@@ -249,6 +249,15 @@ function renderCart() {
   $("#order").disabled = !count;
 }
 
+/* Give the full catalog a fresh order on every page visit. */
+function shuffleAll(items) {
+  for (let i = items.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [items[i], items[j]] = [items[j], items[i]];
+  }
+  return items;
+}
+
 function sendOrder() {
   const name = $("#cName").value.trim(), phone = $("#cPhone").value.trim(), addr = $("#cAddr").value.trim();
   if (!name || !phone || !addr) { alert(t("fill")); return; }
@@ -262,7 +271,7 @@ function sendOrder() {
 }
 
 fetch("products_final.json").then(r => r.json()).then(data => {
-  products = data; data.forEach(p => byId[p.id] = p);
+  products = shuffleAll(data.slice()); data.forEach(p => byId[p.id] = p);
   view = products.slice();
   
 applyLang(); buildFlash(true); buildExtras();
