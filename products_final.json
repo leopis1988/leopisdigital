@@ -1,5 +1,25 @@
 [
  {
+  "id": "P03598",
+  "name": "Stainless Steel Cleaner",
+  "category": "Kitchen / home appliance",
+  "price": 590,
+  "image": "https://drive.google.com/uc?export=view&id=1oKjJPhLHx01ba46ZAaT4r8ejem8hxSnN",
+  "description": "No description",
+  "warranty": "no warranty",
+  "badge": "New"
+ },
+ {
+  "id": "P00810",
+  "name": "2 in 1 Electric milk frother",
+  "category": "Kitchen Gadgets / Home Appliances",
+  "price": 1200,
+  "image": "https://drive.google.com/uc?export=view&id=189fXhMbddbhcBUzj9epfccZElGDepK3p",
+  "description": "Product Name: USB Speed Adjustable Electric Milk Frother & Coffee Whisk\nCategory: Kitchen Gadgets / Home Appliances\nKey Features:\nDual Interchangeable Whisks: Includes a spring whisk head for perfect milk frothing and a balloon whisk head for mixing eggs, sauces, or protein shakes.  \nUSB Rechargeable: Cordless design powered by a built-in rechargeable battery, complete with a USB charging cable for convenient power-ups anywhere.  \nAdjustable Speed Settings: Multiple speed levels to easily control the frothing and mixing intensity for coffee, lattes, cappuccinos, and hot chocolate.  \nCompact & Ergonomic Design: Sleek black finish with a comfortable grip and an easy-to-use one-touch power button.  \nPackage Includes: 1x Motor Handle, 1x Spring Frother Head, 1x Balloon Whisk Head, and 1x USB Charging Cable",
+  "warranty": "no warranty",
+  "badge": "New"
+ },
+ {
   "id": "P008646",
   "name": "Universal Clip Phone Holder - Pdliisn",
   "category": "vehicle Accessories / motorbike accessories",
@@ -4204,11 +4224,13 @@
  },
  {
   "id": "P05944",
-  "name": "Plush Breathing Teddy Bear",
-  "category": "Kids & Toys",
-  "price": 1850,
-  "image": "https://www.shukanmall.com/product-img/Breathing-Teddy-Bear-Toy-1737178063.jpg",
-  "description": "Soft, cuddly toy that kids will love."
+  "name": "Plush Breathing Teddy Bear (P05944)",
+  "category": "BAby need /",
+  "price": 1470,
+  "image": "https://drive.google.com/uc?export=view&id=1aq6PXl4IPD-XQn7BcLXD1uhd4V8QmTTW",
+  "description": "No description",
+  "warranty": "no warranty",
+  "badge": "New"
  },
  {
   "id": "P07549",
@@ -4775,10 +4797,12 @@
  {
   "id": "P02448",
   "name": "4 In 1 Nursery Book",
-  "category": "Kids & Toys",
-  "price": 1125,
-  "image": "https://static.pw.live/5eb393ee95fab7468a79d189/PW_STORE/e4306295-7283-4841-8862-694975572e60.jpeg",
-  "description": "Gentle, practical essential for babies and parents."
+  "category": "kids / baby",
+  "price": 900,
+  "image": "https://drive.google.com/uc?export=view&id=16zHF67Ltx_7QxGhChEGNO6CvkWnaBfD6",
+  "description": "No description",
+  "warranty": "no warranty",
+  "badge": "New"
  },
  {
   "id": "P04199",
@@ -4935,10 +4959,12 @@
  {
   "id": "P00712",
   "name": "Waist Trainer",
-  "category": "Fashion & Travel",
-  "price": 1400,
-  "image": "https://i.etsystatic.com/38861455/r/il/2bd52b/4579778255/il_1080xN.4579778255_171f.jpg",
-  "description": "Shapewear designed to give a smooth, snug fit under everyday clothes."
+  "category": "ladies / fashion",
+  "price": 1200,
+  "image": "https://drive.google.com/uc?export=view&id=16sGEz13SJfRHxPs1gMuivE99h_uqeGWV",
+  "description": "No description",
+  "warranty": "no warranty",
+  "badge": "New"
  },
  {
   "id": "P04252",
@@ -4961,10 +4987,12 @@
  {
   "id": "P08646",
   "name": "Universal Clip Phone Holder - Pdliisn",
-  "category": "Electronics & Gadgets",
-  "price": 1550,
-  "image": "https://down-ph.img.susercontent.com/file/03a6bb02496eb9c9cb5229d3133c8c5f",
-  "description": "Secure holder that keeps your phone in view and within reach."
+  "category": "vehicle Accessories / motorbike accessories",
+  "price": 1300,
+  "image": "https://drive.google.com/uc?export=view&id=1XCl3e2twIoIZbUNAz0wMFQLV-UAmXI4Q",
+  "description": "no description",
+  "warranty": "no warranty",
+  "badge": "New"
  },
  {
   "id": "P02549",
@@ -5177,10 +5205,12 @@
  {
   "id": "P00110",
   "name": "Solar Wall Lamp 100 Led Light",
-  "category": "Lighting & Solar",
-  "price": 1280,
-  "image": "https://mruniversallighting.co.za/wp-content/uploads/2025/06/Solar-Wall-Lamp-100-LED-SMD-2.jpg",
-  "description": "Bright LED light that is easy to carry and use wherever you need it. Key details: 100 Led."
+  "category": "outdoor / home appliance",
+  "price": 980,
+  "image": "https://drive.google.com/uc?export=view&id=1AAP0P-bfHzT0y_2oEmq2vL1Fs9D04N1t",
+  "description": "No description",
+  "warranty": "no warranty",
+  "badge": "New"
  },
  {
   "id": "P05621",
