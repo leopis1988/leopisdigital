@@ -9,6 +9,7 @@ import re
 import sys
 from pathlib import Path
 from urllib.request import Request, urlopen
+from urllib.parse import parse_qs, urlparse
 
 SHEET_CSV_URL = (
     "https://docs.google.com/spreadsheets/d/"
@@ -37,6 +38,18 @@ def parse_price(value: str) -> int | None:
     return int(digits) if digits else None
 
 
+def normalize_image_url(value: str) -> str:
+    """Convert common Google Drive viewing links into direct image links."""
+    value = (value or "").strip()
+    match = re.search(r"/file/d/([^/]+)", value)
+    if match and "drive.google.com" in value:
+        return f"https://drive.google.com/uc?export=view&id={match.group(1)}"
+    query_id = parse_qs(urlparse(value).query).get("id", [""])[0]
+    if query_id and "drive.google.com" in value and "/drive/folders/" not in value:
+        return f"https://drive.google.com/uc?export=view&id={query_id}"
+    return value
+
+
 def fetch_csv() -> list[list[str]]:
     request = Request(SHEET_CSV_URL, headers={"User-Agent": "Leopis-Sheet-Importer/1.0"})
     with urlopen(request, timeout=30) as response:
@@ -47,7 +60,7 @@ def make_product(row: list[str], indexes: dict[str, int | None]) -> tuple[dict, 
     product_id = cell(row, indexes["id"])
     name = cell(row, indexes["name"])
     price = parse_price(cell(row, indexes["price"]))
-    image = cell(row, indexes["image"])
+    image = normalize_image_url(cell(row, indexes["image"]))
     category = cell(row, indexes["category"]) or "General"
     description = cell(row, indexes["description"])
     warranty = cell(row, indexes["warranty"])
