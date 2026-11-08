@@ -11,6 +11,8 @@ Customers browse products, add to cart, and send the order through **WhatsApp** 
 | `style.css` | Design and colours |
 | `app.js` | All site logic: products, cart, WhatsApp order, languages, 11.11 Flash Deals, rating line, FAQ |
 | `products_final.json` | **The product list the site loads** (name, category, price, image, warranty) |
+| `import_sheet_products.py` | Imports valid `Ready` rows from the Google Sheet |
+| `.github/workflows/import-sheet-products.yml` | Checks the Sheet every 15 minutes and publishes catalog changes |
 | `CNAME` | Custom domain (leopisdigital.com) |
 
 > The site loads `products_final.json`. A file named `products.json` is **not** used.
@@ -20,6 +22,18 @@ Customers browse products, add to cart, and send the order through **WhatsApp** 
 1. Edit or replace `products_final.json` on GitHub (Add file → Upload files → Replace).
 2. Commit and wait about a minute for GitHub Pages to update.
 3. Open the site in a private tab (or hard refresh) to see the change.
+
+## Automatic Google Sheet publishing
+
+The repository checks the connected public Google Sheet every 15 minutes. A row is imported only when its `status` is `Ready` and it contains a product number, name, price, category, description, and an individual image URL. The product number is the unique key: an existing number is replaced, and a new number is added. Invalid rows are skipped and reported in the GitHub Action log. The Sheet is read through its public CSV export, so no Google credentials are stored in GitHub.
+
+Use these headers in the Sheet:
+
+```text
+Product Image | product rate | product name | product number | description | Warranty | merchants | category | status
+```
+
+After a successful import, the website catalog is updated automatically. The importer does not write back to the Sheet; change `Ready` to `Published` manually after confirming the deployment.
 
 ### Product format
 
