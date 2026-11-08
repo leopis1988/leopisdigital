@@ -1,5 +1,25 @@
 [
  {
+  "id": "F_2",
+  "name": "2500 w solar charging Flood light",
+  "category": "Electrical supplies",
+  "price": 4600,
+  "image": "https://drive.google.com/uc?export=view&id=1Hk5rSOZKDbki5YTs_mWTSM6WsmXxOCE5",
+  "description": "​Illuminate large outdoor spaces, workspaces, and campsites with this ultra-bright 2500W Solar Floodlight. Designed for maximum performance and reliability during power cuts, night work, or outdoor adventures, this heavy-duty light covers an expansive area of up to 300\\text{ m}^2.",
+  "warranty": "checking warranty 3 days",
+  "badge": "New"
+ },
+ {
+  "id": "F_1",
+  "name": "200w solar usb emergency lamp",
+  "category": "Electrical supplies",
+  "price": 4970,
+  "image": "https://drive.google.com/uc?export=view&id=1htRz76aWYmUp0u5NzxqWsgcXWY6njkM3",
+  "description": "200W Solar USB Emergency Lamp Kit\nBe prepared for power outages, emergency situations, and outdoor activities with the 200W Solar USB Emergency Lamp Kit. Featuring a high-brightness LED diffuser panel, this portable emergency light produces crisp, clear illumination with an energy-efficient rating of 90 Lm/W and a high color rendering index (\\text{CRI} > 80).  \nKey Features:\nDual Charging Options: Includes a dedicated solar panel module with a long connecting cable, allowing you to charge the lamp using 5V DC solar energy outdoors or via any standard USB port.  \nHigh-Efficiency Lighting: Built with up to 90% energy-saving LED technology, providing dependable backup lighting for living rooms, night stalls, camping tents, and emergency roadside repairs.  \nPortable & Lightweight: Designed for easy transport and rapid setup wherever emergency or portable lighting is needed",
+  "warranty": "checking warranty 3 days",
+  "badge": "New"
+ },
+ {
   "id": "P03598",
   "name": "Stainless Steel Cleaner",
   "category": "Kitchen / home appliance",
@@ -4650,11 +4670,13 @@
  },
  {
   "id": "P08690",
-  "name": "P8807 Sleek Stereo Wireless RGB Headset",
-  "category": "Audio & Smartwatches",
-  "price": 2550,
-  "image": "https://img.freepik.com/premium-photo/sleek-modern-gaming-headset-with-black-overear-design-padded-headband-hexagonal-ear-cups-vibrant-multicolored-led-logo-flexible-microphone-futuristic-stylish-generative-ai_114386-11803.jpg?w=2000",
-  "description": "Comfortable headset for music, calls and gaming."
+  "name": "Sleek Stereo Wireless RGB Headset",
+  "category": "Audio / smart watch",
+  "price": 2390,
+  "image": "https://drive.google.com/uc?export=view&id=1hDuQ1eOU9a7UEfchlud303bMqUVmsMsm",
+  "description": "Specifications:\nModel: P807\nType: Wireless Stereo Headset\nConnectivity: Bluetooth\nColor: Dusty Rose Pink with off-white accents\nLighting: Full-color RGB (Right Earcup)\nWhat's in the Box:\nP807 Wireless Headset\nCharging Cable\nAudio Cable (for wired use, if applicable)\nUser Manual\nIdeal for: Students, gamers, music lovers, and anyone looking for an affordable and stylish wireless headset with a pop of color.",
+  "warranty": "no warranty",
+  "badge": "New"
  },
  {
   "id": "P05995",
