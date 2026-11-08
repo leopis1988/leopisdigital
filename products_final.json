@@ -1,5 +1,15 @@
 [
  {
+  "id": "F_3",
+  "name": "solar interaction wall lamp",
+  "category": "Electrical supplies",
+  "price": 2360,
+  "image": "https://drive.google.com/uc?export=view&id=11Z3VEczTPdHx1t1V5ilOrGrqbADr5uX6",
+  "description": "Upgrade your home's exterior with the Solar-Powered Vintage LED Wall & Sensor Light. Combining classic lantern aesthetics with smart motion-detection technology, this wire-free fixture automatically lights up your pathways, doorways, and patios while harnessing clean energy directly from the sun. Enjoy zero electricity bills, effortless wall mounting, and reliable all-weather security.  Power Source: Solar Charging\nPower Source: Solar Charging\nFeatures: Smart Motion Sensor & Vintage LED Filament\nInstallation: Wall-Mounted",
+  "warranty": "checking warranty 3 days",
+  "badge": "New"
+ },
+ {
   "id": "F_2",
   "name": "2500 w solar charging Flood light",
   "category": "Electrical supplies",
