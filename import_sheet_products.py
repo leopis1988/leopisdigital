@@ -17,6 +17,14 @@ SHEET_CSV_URL = (
 )
 CATALOG = Path("products_final.json")
 IMAGE_DIR = Path("images/sheet")
+# Product IDs intentionally withheld from the public catalog, even if the Sheet row remains Ready.
+EXCLUDED_PRODUCT_IDS = {
+    "45-LACE-COTTON-SAREES",
+    "45-DTF-BEADED-SAREES",
+    "45-SUPER-VOILE-SAREE",
+    "45-DTF-SAREES",
+    "45-RENDA-SAREE",
+}
 
 
 def norm(value: str) -> str:
@@ -132,6 +140,8 @@ def download_sheet_image(product_id: str, image_url: str) -> str:
 
 def make_product(row: list[str], indexes: dict[str, int | None]) -> tuple[dict, str | None]:
     product_id = cell(row, indexes["id"])
+    if product_id in EXCLUDED_PRODUCT_IDS:
+        return {}, None
     name = cell(row, indexes["name"])
     price = parse_price(cell(row, indexes["price"]))
     image = normalize_image_url(cell(row, indexes["image"]))
