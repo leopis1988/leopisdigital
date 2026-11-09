@@ -39,9 +39,28 @@ def parse_price(value: str) -> int | None:
     return int(digits) if digits else None
 
 
-def parse_merchant(value: str) -> str:
-    match = re.search(r"merchant\s*([1-4])", (value or "").lower())
-    return match.group(1) if match else ""
+def parse_merchant(value: str, product_id: str = "", warranty: str = "", image: str = "") -> str:
+    """Map explicit merchant labels and known product-code/source patterns."""
+    text = (value or "").strip().lower()
+    match = re.search(r"merchant\s*([1-4])", text)
+    if match:
+        return match.group(1)
+
+    code = str(product_id or "").strip().upper()
+    normalized_text = re.sub(r"[^a-z0-9]", "", text)
+    normalized_warranty = re.sub(r"[^a-z0-9]", "", (warranty or "").lower())
+    source = f"{text} {(image or '').lower()}"
+    normalized_source = re.sub(r"[^a-z0-9]", "", source)
+
+    if re.fullmatch(r"100\d{3,}", code):
+        return "1"
+    if code.startswith("P0") or re.match(r"^PO\d", code) or re.search(r"\bp[0o]\s*series\b", text):
+        return "2"
+    if "p0series" in normalized_text or "poseries" in normalized_text:
+        return "2"
+    if "fochant" in normalized_source or "forchant" in normalized_source or "checkingwarranty" in normalized_warranty:
+        return "3"
+    return ""
 
 
 def normalize_image_url(value: str) -> str:
@@ -85,7 +104,7 @@ def make_product(row: list[str], indexes: dict[str, int | None]) -> tuple[dict, 
     category = cell(row, indexes["category"]) or "General"
     description = cell(row, indexes["description"])
     warranty = cell(row, indexes["warranty"])
-    merchant = parse_merchant(cell(row, indexes["merchant"]))
+    merchant = parse_merchant(cell(row, indexes["merchant"]), product_id, warranty, image)
     status = norm(cell(row, indexes["status"]))
 
     if status not in {"ready", "publish", "published"}:

@@ -43,6 +43,8 @@ Every product card and product detail view has a **Share product** button. On An
 
 Every product displays its small Merchant 1–4 reference. The `merchants` column accepts an explicit value such as `merchant 4`; products without a numbered assignment use the existing Merchant 2 fallback until their Sheet row is assigned. Delivery is calculated by the number of different merchants in the cart: 1 merchant = Rs. 450 with no discount; 2 merchants = Rs. 900 less Rs. 150 (payable Rs. 750); 3 merchants = Rs. 1,350 less Rs. 300 (payable Rs. 1,050); 4 merchants = Rs. 1,800 less Rs. 450 (payable Rs. 1,350).
 
+The importer also recognizes the confirmed merchant groups: six-digit product codes in the `100xxx` series (for example, `100000` onward) are Merchant 1; `P0`/`PO` series codes are Merchant 2; Fochant/Forchant products and products marked `Checking Warranty` are Merchant 3; and rows explicitly marked `Merchant 4` are Merchant 4. A recent-product badge by itself does not change a product's merchant. Unmatched products keep the existing Merchant 2 fallback. The storefront's `category` field remains the product department, not the merchant number.
+
 ### Product format
 
 ```json
