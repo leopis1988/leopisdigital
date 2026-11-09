@@ -5293,11 +5293,13 @@
  {
   "id": "P00515",
   "name": "Massage Slipper",
-  "category": "Health & Beauty",
-  "price": 2600,
-  "image": "https://florida-academy.edu/wp-content/uploads/2019/11/MassageTherapyFAQs-FloridaAcademy.jpeg",
-  "description": "Massager for relaxing tired muscles after a long day.",
-  "merchant": "2"
+  "category": "Health & Personal Care",
+  "price": 2400,
+  "image": "images/sheet/P00515.jpg",
+  "description": "Adjustable strap for a comfortable fit, acupressure nodes designed to stimulate reflexology points on the soles of the feet, promotes relaxation and daily foot care",
+  "warranty": "no warranty",
+  "merchant": "2",
+  "badge": "New"
  },
  {
   "id": "P06313",
@@ -5643,11 +5645,13 @@
  {
   "id": "P00595",
   "name": "Mini Hot Bag",
-  "category": "Home & Storage",
-  "price": 1220,
-  "image": "https://cf.shopee.ph/file/97510dd294fb4a8fa5f75afc3b1e51c3",
-  "description": "Insulated bag that keeps food warm on the go.",
-  "merchant": "2"
+  "category": "Health & Personal Care",
+  "price": 1020,
+  "image": "images/sheet/P00595.jpg",
+  "description": "Durable natural rubber, ribbed anti-burn surface, leak-proof stopper, ideal for pain relief, muscle relaxation, and warmth.",
+  "warranty": "No warranty",
+  "merchant": "2",
+  "badge": "New"
  },
  {
   "id": "P06948",
