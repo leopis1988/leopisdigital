@@ -316,35 +316,11 @@ function sendOrder() {
   window.open(waUrl(msg), "_blank");
 }
 
-/* The popup text lives in index.html; rename it here so it reads "Leopis Special Promotions". */
-const POPUP_TEXT = [
-  [/11\.11\s*Special Offer/gi, "Leopis Special Promotions"],
-  [/Shop\s*11\.11\s*offers/gi, "Shop special promotions"],
-  [/Selected products have reduced prices until[^.]*\.?/gi, "Selected products are on special promotional prices."],
-  [/Save\s*25\s*%/gi, "Save 15%"],
-  [/^\s*11\.11\s*$/g, "🔥"]
-];
-function brandOfferPopup(d) {
-  d.querySelectorAll("*").forEach(n => {
-    if (n.children.length) return;
-    const o = n.textContent; let s = o;
-    POPUP_TEXT.forEach(([re, to]) => { s = s.replace(re, to); });
-    if (s !== o) n.textContent = s;
-  });
-}
-function showOfferPopup() {
-  const dlg = $("#offerDlg");
-  if (!dlg) return;
-  brandOfferPopup(dlg);
-  if (!dlg.open) dlg.showModal();
-}
-
 fetch("products_final.json").then(r => r.json()).then(data => {
   products = shuffleAll(data.slice()); data.forEach(p => byId[p.id] = p);
   view = products.slice();
   
 applyLang(); buildFlash(true); buildExtras();
-  setTimeout(showOfferPopup, 450);
   const pid = new URLSearchParams(location.search).get("p"); if (pid && byId[pid]) openDetail(byId[pid]);
 }).catch(() => { $("#grid").append(el("p", "empty", "Could not load products.json")); });
 
@@ -354,8 +330,6 @@ $("#cat").onchange = () => { clearOnly = false; filter(); buildCatNav(); }; $("#
 $("#cartBtn").onclick = () => $("#cartDlg").showModal();
 $("#closeCart").onclick = () => $("#cartDlg").close();
 $("#cartDlg").addEventListener("click", e => { if (e.target.id === "cartDlg") e.target.close(); });
-$("#offerClose").onclick = () => $("#offerDlg").close();
-$("#offerShop").onclick = () => { $("#offerDlg").close(); $("#flash").scrollIntoView({behavior: "smooth"}); };
 $("#order").onclick = sendOrder;
 document.addEventListener("click", e => { const b = e.target.closest("[data-cat]"); if (b) goCat(b.dataset.cat); const dl = e.target.closest("[data-deals]"); if (dl) { $("#cat").value = ""; clearOnly = true; filter(); buildCatNav(); $("#shop").scrollIntoView({behavior: "smooth"}); } });
 $("#waLink").href = waUrl("Hi Leopis");
