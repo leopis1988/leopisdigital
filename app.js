@@ -118,7 +118,8 @@ function scoreSearch(p, query, terms) {
 }
 const waUrl = msg => "https://wa.me/" + CONFIG.whatsapp + "?text=" + encodeURIComponent(msg);
 const askMsg = p => "Hi Leopis, I would like real photos and more details for: " + p.name + " (Code " + p.id + "). Price: " + money(pr(p)) + (p.warranty ? " | " + p.warranty : "");
-const productUrl = p => new URL("?p=" + encodeURIComponent(p.id), location.href).href;
+const productSlug = value => String(value || "").normalize("NFKD").replace(/[\u0300-\u036f]/g, "").replace(/&/g, " and ").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "item";
+const productUrl = p => new URL("/products/" + productSlug(p.name) + "--" + productSlug(p.id) + ".html", location.origin).href;
 async function copyProductUrl(url) {
   if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(url);
   const ta = el("textarea", "", url); ta.style.position = "fixed"; ta.style.opacity = "0"; document.body.append(ta); ta.select();
@@ -214,6 +215,7 @@ function placeholder(p) {
 
 const css = document.createElement("style");
 css.textContent = ".card .img,.card h3{cursor:pointer}.card h3{min-height:2.7em}.card .add{width:100%}" +
+  ".product-detail-link{color:inherit;text-decoration:none}.product-detail-link img{display:block;width:100%;height:100%;object-fit:cover}.card h3 .product-detail-link:hover{text-decoration:underline}" +
   ".wa-link{display:block;text-align:center;font-size:.76rem;font-weight:600;color:#128c4a;text-decoration:none;padding:.45rem 0 0;line-height:1.3}" +
   "#detailDlg .dhead h2{font-size:1.05rem}#detailDlg .pd{flex:1;overflow:auto;padding:0 1rem 1rem;display:grid;gap:.7rem;align-content:start}" +
   ".pd-img{aspect-ratio:1;border-radius:14px;overflow:hidden;background:#eef1f6}.pd-img img{width:100%;height:100%;object-fit:cover}" +
@@ -317,8 +319,14 @@ function render() {
   if (!view.length) { grid.append(el("p", "empty", t("none"))); $("#pager").replaceChildren(); return; }
   view.slice(start, start + CONFIG.perPage).forEach(p => {
     const card = el("article", "card"), img = el("div", "img");
-    img.append(imgEl(p)); img.onclick = () => openDetail(p);
-    const info = el("div", "info"), title = el("h3", "", pname(p)); title.onclick = () => openDetail(p);
+    const detailLink = el("a", "product-detail-link"), productHref = productUrl(p);
+    detailLink.href = productHref;
+    detailLink.setAttribute("aria-label", "View " + pname(p) + " details");
+    detailLink.append(imgEl(p));
+    img.append(detailLink);
+    const info = el("div", "info"), title = el("h3", "");
+    const titleLink = el("a", "product-detail-link", pname(p)); titleLink.href = productHref;
+    title.append(titleLink);
     const add = el("button", "add", t("add")); add.onclick = () => addToCart(p.id);
     const share = el("button", "share-btn", "🔗 " + t("share")); share.type = "button"; share.onclick = () => shareProduct(p);
     const wa = el("a", "wa-link", "💬 " + t("wa")); wa.href = waUrl(askMsg(p)); wa.target = "_blank"; wa.rel = "noopener";
