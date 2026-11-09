@@ -9,19 +9,19 @@ const CONFIG = {
 
 const T = {
   en: {hero:"Everything for your home, family and fitness", sub:"Home appliances, kitchen, baby, headphones, fashion and fitness. Delivered across Sri Lanka.",
-    search:"Search products", all:"All categories", cart:"Cart", add:"Add to cart", total:"Total", name:"Your name", phone:"Phone number",
+    search:"Search name, product code, or category…", all:"All categories", cart:"Cart", add:"Add to cart", total:"Total", name:"Your name", phone:"Phone number",
     address:"Delivery address", cod:"Cash on delivery", order:"Order via WhatsApp", empty:"Your cart is empty", none:"No products found",
     remove:"Remove", prev:"Prev", next:"Next", items:"products", s0:"Recommended", s1:"Price: low to high", s2:"Price: high to low", fill:"Please fill in name, phone and address.",
     shopnow:"Shop now", allp:"All products", f1:"Island-wide delivery", f2:"Cash on delivery across Sri Lanka", f3:"Order on WhatsApp", f4:"Quality products",
     wa:"Confirm photo & details on WhatsApp", share:"Share product", copied:"Product link copied", merchant:"Store", code:"Code", gl:"See photos on Google", sample:"Product images may be supplier samples and may differ in colour or model. Confirm the exact item, specifications and availability on WhatsApp before ordering.", sub:"Items", deliv:"Delivery", ddisc:"Delivery discount"},
   si: {hero:"ඔබේ නිවසට, පවුලට සහ ශරීර යෝග්‍යතාවයට අවශ්‍ය සියල්ල", sub:"ගෘහ උපකරණ, මුළුතැන්ගෙය, ළමා අවශ්‍යතා, හෙඩ්ෆෝන්, ඇඳුම් සහ ෆිට්නස්. ශ්‍රී ලංකාව පුරා බෙදාහරිනු ලැබේ.",
-    search:"නිෂ්පාදන සොයන්න", all:"සියලුම ප්‍රවර්ග", cart:"කරත්තය", add:"කරත්තයට එක් කරන්න", total:"මුළු මුදල", name:"ඔබේ නම", phone:"දුරකථන අංකය",
+    search:"නම, නිෂ්පාදන කේතය හෝ ප්‍රවර්ගය අනුව සොයන්න…", all:"සියලුම ප්‍රවර්ග", cart:"කරත්තය", add:"කරත්තයට එක් කරන්න", total:"මුළු මුදල", name:"ඔබේ නම", phone:"දුරකථන අංකය",
     address:"බෙදාහැරීමේ ලිපිනය", cod:"බඩු ලැබුණු පසු මුදල් ගෙවීම", order:"WhatsApp හරහා ඇණවුම් කරන්න", empty:"කරත්තය හිස්ය", none:"නිෂ්පාදන හමු නොවීය",
     remove:"ඉවත් කරන්න", prev:"පෙර", next:"ඊළඟ", items:"නිෂ්පාදන", s0:"නිර්දේශිත", s1:"මිල: අඩු සිට වැඩි", s2:"මිල: වැඩි සිට අඩු", fill:"කරුණාකර නම, දුරකථන අංකය සහ ලිපිනය ඇතුළත් කරන්න.",
     shopnow:"දැන්ම මිලදී ගන්න", allp:"සියලුම නිෂ්පාදන", f1:"රට පුරා බෙදාහැරීම", f2:"ශ්‍රී ලංකාව පුරා බඩු ලැබුණු පසු මුදල් ගෙවීම", f3:"WhatsApp හරහා ඇණවුම්", f4:"ගුණාත්මක නිෂ්පාදන",
     wa:"WhatsApp හරහා සැබෑ ඡායාරූප සහ විස්තර", share:"නිෂ්පාදනය බෙදාගන්න", copied:"නිෂ්පාදන සබැඳිය පිටපත් කළා", merchant:"වෙළඳසැල", code:"කේතය", gl:"Google හි ඡායාරූප බලන්න", sample:"පෙන්වන රූපය නිදර්ශනයකි. සැබෑ ඡායාරූප සහ වැඩි විස්තර සඳහා WhatsApp හරහා අපෙන් අසන්න.", sub:"භාණ්ඩ", deliv:"බෙදාහැරීම", ddisc:"බෙදාහැරීමේ වට්ටම"},
   ta: {hero:"உங்கள் வீடு, குடும்பம் மற்றும் உடற்பயிற்சிக்கு தேவையான அனைத்தும்", sub:"வீட்டு உபகரணங்கள், சமையலறை, குழந்தைப் பொருட்கள், ஹெட்போன்கள், ஆடைகள் மற்றும் உடற்பயிற்சி. இலங்கை முழுவதும் விநியோகம்.",
-    search:"பொருட்களைத் தேடுங்கள்", all:"அனைத்து வகைகள்", cart:"வண்டி", add:"வண்டியில் சேர்", total:"மொத்தம்", name:"உங்கள் பெயர்", phone:"தொலைபேசி எண்",
+    search:"பெயர், தயாரிப்பு குறியீடு அல்லது வகை மூலம் தேடுங்கள்…", all:"அனைத்து வகைகள்", cart:"வண்டி", add:"வண்டியில் சேர்", total:"மொத்தம்", name:"உங்கள் பெயர்", phone:"தொலைபேசி எண்",
     address:"விநியோக முகவரி", cod:"பொருள் கிடைத்ததும் பணம் செலுத்துதல்", order:"WhatsApp மூலம் ஆர்டர் செய்யுங்கள்", empty:"வண்டி காலியாக உள்ளது", none:"பொருட்கள் எதுவும் இல்லை",
     remove:"நீக்கு", prev:"முந்தையது", next:"அடுத்தது", items:"பொருட்கள்", s0:"பரிந்துரைக்கப்பட்டவை", s1:"விலை: குறைவு முதல் அதிகம்", s2:"விலை: அதிகம் முதல் குறைவு", fill:"பெயர், தொலைபேசி எண் மற்றும் முகவரியை நிரப்பவும்.",
     shopnow:"இப்போதே வாங்குங்கள்", allp:"அனைத்து பொருட்கள்", f1:"நாடு முழுவதும் விநியோகம்", f2:"இலங்கை முழுவதும் பொருள் கிடைத்ததும் பணம்", f3:"WhatsApp மூலம் ஆர்டர்", f4:"தரமான பொருட்கள்",
@@ -37,6 +37,81 @@ let lang = store.get("lang", "en"), products = [], byId = {}, view = [], page = 
 const t = k => T[lang][k];
 const money = n => CONFIG.currency + " " + Number(n).toLocaleString("en-US");
 const pname = p => p["name_" + lang] || p.name;
+const searchIndex = new Map();
+const SEARCH_SYNONYMS = {
+  mobile: ["phone", "smartphone"], phone: ["mobile", "smartphone", "cellphone"], smartphone: ["phone", "mobile"],
+  earbuds: ["earphones", "headphones"], earbud: ["earphone", "headphone"], earphones: ["earbuds", "headphones"],
+  headphones: ["headset", "earphones"], headset: ["headphones", "earphones"],
+  torch: ["flashlight"], flashlight: ["torch"], glasses: ["spectacles", "eyewear"], spectacles: ["glasses", "eyewear"],
+  tv: ["television"], television: ["tv"], fridge: ["refrigerator"], refrigerator: ["fridge"],
+  luggage: ["suitcase"], suitcase: ["luggage"]
+};
+function normalizeSearch(value) {
+  return String(value || "").normalize("NFKD").replace(/[\u0300-\u036f]/g, "").toLowerCase()
+    .replace(/&/g, " and ").replace(/[^a-z0-9]+/g, " ").trim();
+}
+function oneEditAway(a, b) {
+  if (Math.abs(a.length - b.length) > 1) return false;
+  let i = 0, j = 0, edits = 0;
+  while (i < a.length && j < b.length) {
+    if (a[i] === b[j]) { i++; j++; continue; }
+    if (++edits > 1) return false;
+    if (a.length > b.length) i++;
+    else if (b.length > a.length) j++;
+    else { i++; j++; }
+  }
+  return edits + ((i < a.length || j < b.length) ? 1 : 0) <= 1;
+}
+function tokenMatches(term, tokens) {
+  const variants = [term, ...(SEARCH_SYNONYMS[term] || [])];
+  if (term.length > 4 && term.endsWith("s")) variants.push(term.slice(0, -1));
+  for (const variant of variants) for (const token of tokens) {
+    if (token === variant || (variant.length > 1 && token.startsWith(variant))) return true;
+    if (variant.length >= 4 && token.length >= 4 && oneEditAway(variant, token)) return true;
+  }
+  return false;
+}
+function buildSearchIndex(items) {
+  searchIndex.clear();
+  items.forEach(p => {
+    const name = normalizeSearch([p.name, p.name_si, p.name_ta].filter(Boolean).join(" "));
+    const category = normalizeSearch(p.category);
+    const description = normalizeSearch(p.description);
+    const code = normalizeSearch(p.id).replace(/\s+/g, "");
+    const all = [name, category, description, normalizeSearch(p.id)].filter(Boolean).join(" ");
+    searchIndex.set(String(p.id), {
+      name, category, code, all,
+      nameCompact: name.replace(/\s+/g, ""), categoryCompact: category.replace(/\s+/g, ""),
+      nameTokens: new Set(name.split(" ").filter(Boolean)),
+      categoryTokens: new Set(category.split(" ").filter(Boolean)),
+      tokens: new Set(all.split(" ").filter(Boolean))
+    });
+  });
+}
+function scoreSearch(p, query, terms) {
+  const index = searchIndex.get(String(p.id));
+  if (!index || !query) return 0;
+  const compact = query.replace(/\s+/g, "");
+  if (index.code === compact) return 1400;
+  let score = 0;
+  if (compact.length >= 3 && index.code.includes(compact)) score += 900;
+  if (index.name === query) score += 1200;
+  else if (index.name.startsWith(query)) score += 850;
+  else if (index.name.includes(query)) score += 650;
+  else if (compact.length >= 4 && index.nameCompact.includes(compact)) score += 550;
+  if (index.category === query) score += 420;
+  else if (index.category.includes(query)) score += 300;
+  else if (compact.length >= 4 && index.categoryCompact.includes(compact)) score += 260;
+  if (index.all.includes(query)) score += 180;
+
+  const nameHits = terms.filter(term => tokenMatches(term, index.nameTokens)).length;
+  const categoryHits = terms.filter(term => tokenMatches(term, index.categoryTokens)).length;
+  const allHits = terms.filter(term => tokenMatches(term, index.tokens)).length;
+  const phraseHit = index.all.includes(query) || index.nameCompact.includes(compact) || index.categoryCompact.includes(compact) || index.code.includes(compact);
+  if (allHits < terms.length && !phraseHit) return 0;
+  score += nameHits * 100 + categoryHits * 70 + allHits * 25;
+  return score || 1;
+}
 const waUrl = msg => "https://wa.me/" + CONFIG.whatsapp + "?text=" + encodeURIComponent(msg);
 const askMsg = p => "Hi Leopis, I would like real photos and more details for: " + p.name + " (Code " + p.id + "). Price: " + money(pr(p)) + (p.warranty ? " | " + p.warranty : "");
 const productUrl = p => new URL("?p=" + encodeURIComponent(p.id), location.href).href;
@@ -212,12 +287,20 @@ function buildCatNav() {
 function goCat(val) { clearOnly = false; $("#cat").value = val; filter(); buildCatNav(); $("#shop").scrollIntoView({behavior: "smooth"}); }
 
 function filter() {
-  const q = $("#q").value.trim().toLowerCase(), c = $("#cat").value, s = $("#sort").value;
-  const qn = q.replace(/[\s_-]+/g, "");
-  view = products.filter(p => (!c || p.category === c) && (!flashOnly || isFlash(p)) && (!clearOnly || p.oldPrice) &&
-    (!q || (h => h.includes(q) || h.replace(/[\s_-]+/g, "").includes(qn))([p.name, p.name_si, p.name_ta, p.category, p.id, p.description].join(" ").toLowerCase())));
-  if (s === "1") view.sort((a, b) => pr(a) - pr(b));
-  if (s === "2") view.sort((a, b) => pr(b) - pr(a));
+  const q = normalizeSearch($("#q").value), terms = q ? q.split(" ").filter(Boolean) : [];
+  const c = $("#cat").value, s = $("#sort").value;
+  const matches = products.filter(p => (!c || p.category === c) && (!flashOnly || isFlash(p)) && (!clearOnly || p.oldPrice));
+  if (q) {
+    const ranked = matches.map(product => ({product, score: scoreSearch(product, q, terms)})).filter(x => x.score > 0);
+    if (s === "1") ranked.sort((a, b) => pr(a.product) - pr(b.product) || b.score - a.score);
+    else if (s === "2") ranked.sort((a, b) => pr(b.product) - pr(a.product) || b.score - a.score);
+    else ranked.sort((a, b) => b.score - a.score);
+    view = ranked.map(x => x.product);
+  } else {
+    view = matches;
+    if (s === "1") view.sort((a, b) => pr(a) - pr(b));
+    if (s === "2") view.sort((a, b) => pr(b) - pr(a));
+  }
   page = 1; render();
 }
 
@@ -318,6 +401,7 @@ function sendOrder() {
 
 fetch("products_final.json").then(r => r.json()).then(data => {
   products = shuffleAll(data.slice()); data.forEach(p => byId[p.id] = p);
+  buildSearchIndex(data);
   view = products.slice();
   
 applyLang(); buildFlash(true); buildExtras();

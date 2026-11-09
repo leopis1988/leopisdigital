@@ -45,6 +45,10 @@ Every product displays its Store 1–5 reference. The `merchants` column accepts
 
 The importer recognizes these groups: six-digit product codes in the `100xxx` series are Merchant 1; `P0`/`PO` series codes are Merchant 2; Fochant/Forchant products and products marked `Checking Warranty` are Merchant 3; rows explicitly marked `Merchant 4` are Merchant 4; unmatched products are Merchant 5. A recent-product badge by itself does not change a product's store. The storefront's `category` field remains the product department, not the store number.
 
+## Category organization and product search
+
+The catalog is organized into 23 standard product departments. Legacy Sheet labels such as `Electrical supplies`, `Hardware /`, and `Personal Care / Beauty Gadgets` are mapped to the appropriate existing department during import, so spelling and capitalization variants do not create separate category pages. Product search builds a local index once after catalog load, searches names, product codes, categories and descriptions, ranks stronger matches first, and supports category terms, common synonyms and simple one-character typos. Search, category filters and price sorting work together without sending queries to an external service.
+
 ### Product format
 
 ```json

@@ -23,6 +23,40 @@ def norm(value: str) -> str:
     return re.sub(r"[^a-z0-9]", "", (value or "").strip().lower())
 
 
+CANONICAL_CATEGORIES = [
+    "Kitchen & Dining", "Health & Beauty", "Home & Storage", "Kids & Toys",
+    "Tools & Hardware", "Eyewear", "Cleaning", "Car & Bike", "Bags & Accessories",
+    "Lighting & Solar", "Bathroom & Laundry", "Chargers & Cables", "Audio & Smartwatches",
+    "Home Appliances", "Electronics & Gadgets", "Party & Stationery", "Clothing & Footwear",
+    "Fashion & Travel", "Groceries & Herbal", "Fitness & Sports", "Phone Accessories",
+    "Jewellery", "Pet Supplies",
+]
+CATEGORY_ALIASES = {norm(category): category for category in CANONICAL_CATEGORIES}
+for alias, category in [
+    ("Commercial Tools & Hardware", "Tools & Hardware"),
+    ("Electrical supplies", "Lighting & Solar"),
+    ("Kitchen / home appliance", "Cleaning"),
+    ("Kitchen Gadgets / Home Appliances", "Home Appliances"),
+    ("vehicle Accessories / motorbike accessories", "Car & Bike"),
+    ("BAby need /", "Kids & Toys"),
+    ("Hardware /", "Tools & Hardware"),
+    ("Home & Living / Home Appliances Accessories", "Home Appliances"),
+    ("Personal Care / Beauty Gadgets", "Health & Beauty"),
+    ("Audio / smart watch", "Audio & Smartwatches"),
+    ("Beauty / fashion", "Health & Beauty"),
+    ("fashion / beauty", "Health & Beauty"),
+    ("kids / baby", "Kids & Toys"),
+    ("ladies / fashion", "Clothing & Footwear"),
+    ("outdoor / home appliance", "Lighting & Solar"),
+]:
+    CATEGORY_ALIASES[norm(alias)] = category
+
+
+def normalize_category(value: str) -> str:
+    label = (value or "").strip()
+    return CATEGORY_ALIASES.get(norm(label), label or "General")
+
+
 def first_index(headers: list[str], names: set[str]) -> int | None:
     for i, header in enumerate(headers):
         if norm(header) in names:
@@ -101,7 +135,7 @@ def make_product(row: list[str], indexes: dict[str, int | None]) -> tuple[dict, 
     name = cell(row, indexes["name"])
     price = parse_price(cell(row, indexes["price"]))
     image = normalize_image_url(cell(row, indexes["image"]))
-    category = cell(row, indexes["category"]) or "General"
+    category = normalize_category(cell(row, indexes["category"]))
     description = cell(row, indexes["description"])
     warranty = cell(row, indexes["warranty"])
     merchant = parse_merchant(cell(row, indexes["merchant"]), product_id, warranty, image)
