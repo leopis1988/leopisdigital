@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - "*.xlsx"
+      - "!web-product-replacements.xlsx"
       - "build_catalog.py"
   workflow_dispatch:
 
