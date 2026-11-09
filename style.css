@@ -59,6 +59,7 @@ button,input,select,textarea{font:inherit;color:inherit}
 .card .info{padding:.85rem;display:flex;flex-direction:column;gap:.35rem;flex:1}
 .card h3{margin:0;font-size:.92rem;font-weight:600;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .card small{color:var(--muted)}
+.merchant-ref{font-size:.68rem;font-weight:800;color:#334155!important;text-transform:uppercase;letter-spacing:.04em}
 .price{font-weight:800;color:var(--red);margin-top:auto}
 .add{margin-top:.4rem;padding:.6rem;border-radius:999px;border:0;background:var(--navy);color:#fff;font-weight:600;cursor:pointer}
 .add:hover{background:var(--red)}

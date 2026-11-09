@@ -39,6 +39,11 @@ def parse_price(value: str) -> int | None:
     return int(digits) if digits else None
 
 
+def parse_merchant(value: str) -> str:
+    match = re.search(r"merchant\s*([1-4])", (value or "").lower())
+    return match.group(1) if match else ""
+
+
 def normalize_image_url(value: str) -> str:
     """Convert common Google Drive viewing links into direct image links."""
     value = (value or "").strip()
@@ -80,6 +85,7 @@ def make_product(row: list[str], indexes: dict[str, int | None]) -> tuple[dict, 
     category = cell(row, indexes["category"]) or "General"
     description = cell(row, indexes["description"])
     warranty = cell(row, indexes["warranty"])
+    merchant = parse_merchant(cell(row, indexes["merchant"]))
     status = norm(cell(row, indexes["status"]))
 
     if status not in {"ready", "publish", "published"}:
@@ -103,6 +109,7 @@ def make_product(row: list[str], indexes: dict[str, int | None]) -> tuple[dict, 
         "image": local_image,
         "description": description,
         "warranty": warranty or "No warranty",
+        "merchant": merchant,
         "badge": "New",
     }
     return product, None
@@ -122,6 +129,7 @@ def main() -> int:
         "id": first_index(headers, {"productnumber", "productid", "id", "sku"}),
         "description": first_index(headers, {"description", "details", "productdescription"}),
         "warranty": first_index(headers, {"warranty", "replacement"}),
+        "merchant": first_index(headers, {"merchant", "merchants", "seller", "supplier"}),
         "category": first_index(headers, {"category", "categary", "catogary"}),
         "status": first_index(headers, {"status", "publish", "ready"}),
     }

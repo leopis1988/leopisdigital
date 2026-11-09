@@ -39,6 +39,10 @@ After a successful import, the website catalog is updated automatically. The imp
 
 Every product card and product detail view has a **Share product** button. On Android and other supported devices it opens the native share sheet, where the customer can choose WhatsApp, Facebook, Messenger, email or another installed app. On browsers without native sharing, it copies a stable product URL such as `https://leopisdigital.com/?p=PRODUCT_CODE`. Opening that link loads the exact product detail.
 
+## Merchant references and delivery charges
+
+Every product displays its small Merchant 1–4 reference. The `merchants` column accepts an explicit value such as `merchant 4`; products without a numbered assignment use the existing Merchant 2 fallback until their Sheet row is assigned. Delivery is calculated by the number of different merchants in the cart: 1 merchant = Rs. 450 with no discount; 2 merchants = Rs. 900 less Rs. 150 (payable Rs. 750); 3 merchants = Rs. 1,350 less Rs. 300 (payable Rs. 1,050); 4 merchants = Rs. 1,800 less Rs. 450 (payable Rs. 1,350).
+
 ### Product format
 
 ```json
