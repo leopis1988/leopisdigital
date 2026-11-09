@@ -13874,7 +13874,7 @@
   "id": "144-22-5W-FAST-CHARGING-POWER-BANK-30000",
   "name": "22.5W Fast Charging Power Bank - 30000mAh",
   "category": "Chargers & Cables",
-  "price": 4790,
+  "price": 8300,
   "image": "https://fochant-prod.s3.ap-southeast-1.amazonaws.com/testfolder/product_image/3527e666aab64c3b22fd7ef330175be2.webp",
   "description": "An ultra-high-capacity 30000mAh fast-charging power bank with 22.5W PD output, integrated carrying strap, digital status display, and multiple output ports for heavy-duty daily charging.\n\nPower through days of heavy travel or emergency outages with the BAGULE AK-301 30000mAh Fast Charging Power Bank. Featuring an ultra-large endurance capacity of 30000mAh, this power unit charges smartphones, tablets, cameras, GPS units, and other digital devices multiple times over. Equipped with 22.5W Power Delivery (PD) fast charging, it delivers high-speed power across multiple USB output ports to charge multiple devices at once. Designed with a built-in lanyard strap for convenient portability, an integrated digital LED screen for real-time power monitoring, and a high-efficiency circuit chip, it offers durable, plug-and-play performance with low standby power consumption.",
   "warranty": "Checking Warranty – 3 Days",
@@ -14369,16 +14369,6 @@
   "description": "Mini WiFi Wireless Security Camera featuring Full HD 1080P video resolution, a 150° wide-angle lens, infrared night vision and motion detection. Supports mobile app remote monitoring, making it suitable for convenient indoor home and office surveillance.\n\nKeep an eye on your surroundings with this Mini WiFi Wireless Security Camera. Designed with a compact and discreet appearance, this camera provides convenient indoor monitoring through compatible mobile devices. Featuring Full HD 1080P video resolution and a 150° wide-angle lens, it captures a broad view of the surrounding area. Its infrared night vision function helps provide visibility in low-light and dark environments. The built-in motion detection feature can identify movement and support motion-triggered alarm notifications and video recording, depending on the app settings and device configuration. With WiFi connectivity and mobile app support, users can remotely monitor the camera…",
   "warranty": "Checking Warranty – 3 Days",
   "base": 1768
- },
- {
-  "id": "144-22-5W-FAST-CHARGING-POWER-BANK",
-  "name": "22.5W Fast Charging Power Bank",
-  "category": "Chargers & Cables",
-  "price": 30500,
-  "image": "https://fochant-prod.s3.ap-southeast-1.amazonaws.com/testfolder/product_image/470a88050346d66df3277185d02c7b33.webp",
-  "description": "A high-capacity 20000mAh (74Wh) fast-charging power bank featuring 22.5W MAX output, digital LED percentage display, multi-port support, and carry-on flight approval.\n\nStay fully powered wherever you go with the BAGULE AK-306 20000mAh Fast Charging Power Bank. Built with high-density Li-Polymer cells, this power bank delivers a massive 20000mAh (74Wh) capacity, making it carry-on flight approved while holding multiple full charges for smartphones, tablets, and mobile devices. Equipped with 22.5W MAX output capability supporting PD and QC fast-charging protocols, it features dual USB-A output ports alongside a Type-C input/output port, allowing you to charge multiple devices simultaneously. The sleek digital LED screen provides precise real-time battery percentage status. Integrated with an intelligent smart chip and multi-layer safety…",
-  "warranty": "Checking Warranty – 3 Days",
-  "base": 30000
  },
  {
   "id": "144-MINI-ALLOY-BLUETOOTH-SPEAKER",
