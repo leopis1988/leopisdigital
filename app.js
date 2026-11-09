@@ -13,19 +13,19 @@ const T = {
     address:"Delivery address", cod:"Cash on delivery", order:"Order via WhatsApp", empty:"Your cart is empty", none:"No products found",
     remove:"Remove", prev:"Prev", next:"Next", items:"products", s0:"Recommended", s1:"Price: low to high", s2:"Price: high to low", fill:"Please fill in name, phone and address.",
     shopnow:"Shop now", allp:"All products", f1:"Island-wide delivery", f2:"Cash on delivery across Sri Lanka", f3:"Order on WhatsApp", f4:"Quality products",
-    wa:"Confirm photo & details on WhatsApp", share:"Share product", copied:"Product link copied", merchant:"Merchant", code:"Code", gl:"See photos on Google", sample:"Product images may be supplier samples and may differ in colour or model. Confirm the exact item, specifications and availability on WhatsApp before ordering.", sub:"Items", deliv:"Delivery", ddisc:"Delivery discount"},
+    wa:"Confirm photo & details on WhatsApp", share:"Share product", copied:"Product link copied", merchant:"Store", code:"Code", gl:"See photos on Google", sample:"Product images may be supplier samples and may differ in colour or model. Confirm the exact item, specifications and availability on WhatsApp before ordering.", sub:"Items", deliv:"Delivery", ddisc:"Delivery discount"},
   si: {hero:"ඔබේ නිවසට, පවුලට සහ ශරීර යෝග්‍යතාවයට අවශ්‍ය සියල්ල", sub:"ගෘහ උපකරණ, මුළුතැන්ගෙය, ළමා අවශ්‍යතා, හෙඩ්ෆෝන්, ඇඳුම් සහ ෆිට්නස්. ශ්‍රී ලංකාව පුරා බෙදාහරිනු ලැබේ.",
     search:"නිෂ්පාදන සොයන්න", all:"සියලුම ප්‍රවර්ග", cart:"කරත්තය", add:"කරත්තයට එක් කරන්න", total:"මුළු මුදල", name:"ඔබේ නම", phone:"දුරකථන අංකය",
     address:"බෙදාහැරීමේ ලිපිනය", cod:"බඩු ලැබුණු පසු මුදල් ගෙවීම", order:"WhatsApp හරහා ඇණවුම් කරන්න", empty:"කරත්තය හිස්ය", none:"නිෂ්පාදන හමු නොවීය",
     remove:"ඉවත් කරන්න", prev:"පෙර", next:"ඊළඟ", items:"නිෂ්පාදන", s0:"නිර්දේශිත", s1:"මිල: අඩු සිට වැඩි", s2:"මිල: වැඩි සිට අඩු", fill:"කරුණාකර නම, දුරකථන අංකය සහ ලිපිනය ඇතුළත් කරන්න.",
     shopnow:"දැන්ම මිලදී ගන්න", allp:"සියලුම නිෂ්පාදන", f1:"රට පුරා බෙදාහැරීම", f2:"ශ්‍රී ලංකාව පුරා බඩු ලැබුණු පසු මුදල් ගෙවීම", f3:"WhatsApp හරහා ඇණවුම්", f4:"ගුණාත්මක නිෂ්පාදන",
-    wa:"WhatsApp හරහා සැබෑ ඡායාරූප සහ විස්තර", share:"නිෂ්පාදනය බෙදාගන්න", copied:"නිෂ්පාදන සබැඳිය පිටපත් කළා", merchant:"වෙළෙන්දා", code:"කේතය", gl:"Google හි ඡායාරූප බලන්න", sample:"පෙන්වන රූපය නිදර්ශනයකි. සැබෑ ඡායාරූප සහ වැඩි විස්තර සඳහා WhatsApp හරහා අපෙන් අසන්න.", sub:"භාණ්ඩ", deliv:"බෙදාහැරීම", ddisc:"බෙදාහැරීමේ වට්ටම"},
+    wa:"WhatsApp හරහා සැබෑ ඡායාරූප සහ විස්තර", share:"නිෂ්පාදනය බෙදාගන්න", copied:"නිෂ්පාදන සබැඳිය පිටපත් කළා", merchant:"වෙළඳසැල", code:"කේතය", gl:"Google හි ඡායාරූප බලන්න", sample:"පෙන්වන රූපය නිදර්ශනයකි. සැබෑ ඡායාරූප සහ වැඩි විස්තර සඳහා WhatsApp හරහා අපෙන් අසන්න.", sub:"භාණ්ඩ", deliv:"බෙදාහැරීම", ddisc:"බෙදාහැරීමේ වට්ටම"},
   ta: {hero:"உங்கள் வீடு, குடும்பம் மற்றும் உடற்பயிற்சிக்கு தேவையான அனைத்தும்", sub:"வீட்டு உபகரணங்கள், சமையலறை, குழந்தைப் பொருட்கள், ஹெட்போன்கள், ஆடைகள் மற்றும் உடற்பயிற்சி. இலங்கை முழுவதும் விநியோகம்.",
     search:"பொருட்களைத் தேடுங்கள்", all:"அனைத்து வகைகள்", cart:"வண்டி", add:"வண்டியில் சேர்", total:"மொத்தம்", name:"உங்கள் பெயர்", phone:"தொலைபேசி எண்",
     address:"விநியோக முகவரி", cod:"பொருள் கிடைத்ததும் பணம் செலுத்துதல்", order:"WhatsApp மூலம் ஆர்டர் செய்யுங்கள்", empty:"வண்டி காலியாக உள்ளது", none:"பொருட்கள் எதுவும் இல்லை",
     remove:"நீக்கு", prev:"முந்தையது", next:"அடுத்தது", items:"பொருட்கள்", s0:"பரிந்துரைக்கப்பட்டவை", s1:"விலை: குறைவு முதல் அதிகம்", s2:"விலை: அதிகம் முதல் குறைவு", fill:"பெயர், தொலைபேசி எண் மற்றும் முகவரியை நிரப்பவும்.",
     shopnow:"இப்போதே வாங்குங்கள்", allp:"அனைத்து பொருட்கள்", f1:"நாடு முழுவதும் விநியோகம்", f2:"இலங்கை முழுவதும் பொருள் கிடைத்ததும் பணம்", f3:"WhatsApp மூலம் ஆர்டர்", f4:"தரமான பொருட்கள்",
-    wa:"WhatsApp மூலம் உண்மையான படங்கள் மற்றும் விவரங்கள்", share:"பொருளைப் பகிரவும்", copied:"பொருள் இணைப்பு நகலெடுக்கப்பட்டது", merchant:"வணிகர்", code:"குறியீடு", gl:"Google இல் படங்களைப் பார்க்க", sample:"காட்டப்படும் படம் மாதிரி மட்டுமே. உண்மையான படங்கள் மற்றும் மேலும் விவரங்களுக்கு WhatsApp இல் கேளுங்கள்.", sub:"பொருட்கள்", deliv:"டெலிவரி", ddisc:"டெலிவரி தள்ளுபடி"}
+    wa:"WhatsApp மூலம் உண்மையான படங்கள் மற்றும் விவரங்கள்", share:"பொருளைப் பகிரவும்", copied:"பொருள் இணைப்பு நகலெடுக்கப்பட்டது", merchant:"கடை", code:"குறியீடு", gl:"Google இல் படங்களைப் பார்க்க", sample:"காட்டப்படும் படம் மாதிரி மட்டுமே. உண்மையான படங்கள் மற்றும் மேலும் விவரங்களுக்கு WhatsApp இல் கேளுங்கள்.", sub:"பொருட்கள்", deliv:"டெலிவரி", ddisc:"டெலிவரி தள்ளுபடி"}
 };
 
 const $ = s => document.querySelector(s);
@@ -72,15 +72,15 @@ function priceEl(p, cls) {
   return d;
 }
 
-/* ===== Delivery fee: depends on how many DIFFERENT merchants are in the cart =====
-   1 merchant = 450 | 2 merchants = 900 - 150 | 3 merchants = 1350 - 300 | 4 merchants = 1800 - 450.
-   Products without a confirmed merchant remain under Merchant 2 until assigned in the Sheet. */
-const DELIVERY = { perMerchant: 450, discount: { 1: 0, 2: 150, 3: 300, 4: 450 }, otherIs: 2 };
-const merchantNo = p => { const m = /(\d)/.exec(String(p.merchant || "")); const n = m ? +m[1] : DELIVERY.otherIs; return n >= 1 && n <= 4 ? n : DELIVERY.otherIs; };
+/* ===== Delivery fee: depends on how many DIFFERENT stores are in the cart =====
+   1 store = 450 | 2 stores = 900 - 100 | 3 stores = 1350 - 300 | 4 stores = 1800 - 450 | 5 stores = 2250 - 800.
+   Every product is assigned to Store 1–5; any missing or invalid value falls back to Store 5. */
+const DELIVERY = { perMerchant: 450, discount: { 1: 0, 2: 100, 3: 300, 4: 450, 5: 800 }, otherIs: 5 };
+const merchantNo = p => { const m = /(\d)/.exec(String(p.merchant || "")); const n = m ? +m[1] : DELIVERY.otherIs; return n >= 1 && n <= 5 ? n : DELIVERY.otherIs; };
 function deliveryFor(ids) {
   const set = new Set();
   ids.forEach(id => { const p = byId[id]; if (p) set.add(merchantNo(p)); });
-  const n = set.size, fee = n * DELIVERY.perMerchant, off = DELIVERY.discount[Math.min(n, 3)] || 0;
+  const n = set.size, fee = n * DELIVERY.perMerchant, off = DELIVERY.discount[n] || 0;
   return { merchants: [...set].sort(), n, fee, off, pay: fee - off };
 }
 const dcss = document.createElement("style");
@@ -270,7 +270,7 @@ function renderCart() {
     plus.onclick = () => addToCart(id);
     q.append(minus, el("span", "", qty), plus);
     const rm = el("button", "rm", t("remove")); rm.onclick = () => { delete cart[id]; saveCart(); renderCart(); };
-    const nm = el("div", "", pname(p)); nm.append(el("br"), el("small", "mtag", "Merchant " + merchantNo(p)));
+    const nm = el("div", "", pname(p)); nm.append(el("br"), el("small", "mtag", "Store " + merchantNo(p)));
     row.append(nm, el("b", "", money(pr(p) * qty)), q, rm);
     box.append(row);
   });
@@ -280,7 +280,7 @@ function renderCart() {
     const sum = el("div", "dsum");
     const line = (a, b, cls) => { const r = el("div", "dl" + (cls ? " " + cls : "")); r.append(el("span", "", a), el("b", "", b)); sum.append(r); };
     line(t("sub"), money(sub));
-    line(t("deliv") + " (M" + dl.merchants.join(" + M") + ")", money(dl.fee));
+    line(t("deliv") + " (Store " + dl.merchants.join(" + Store ") + ")", money(dl.fee));
     if (dl.off) line(t("ddisc"), "− " + money(dl.off), "disc");
     box.append(sum);
   }
@@ -305,12 +305,12 @@ function sendOrder() {
   let sub = 0;
   const lines = ids.map((id, i) => {
     const p = byId[id], qty = cart[id]; sub += pr(p) * qty;
-    return (i + 1) + ") " + p.name + " [" + p.id + "] (Merchant " + merchantNo(p) + ") x" + qty + " = " + money(pr(p) * qty);
+    return (i + 1) + ") " + p.name + " [" + p.id + "] (Store " + merchantNo(p) + ") x" + qty + " = " + money(pr(p) * qty);
   });
   const dl = deliveryFor(ids);
   const msg = ["New order - Leopis", "", "Name: " + name, "Phone: " + phone, "Address: " + addr, "", ...lines, "",
     "Items: " + money(sub),
-    "Delivery (" + dl.n + " merchant" + (dl.n > 1 ? "s" : "") + "): " + money(dl.fee),
+    "Delivery (" + dl.n + " store" + (dl.n > 1 ? "s" : "") + "): " + money(dl.fee),
     ...(dl.off ? ["Delivery discount: -" + money(dl.off)] : []),
     "Total: " + money(sub + dl.pay), "Payment: Cash on delivery"].join("\n");
   window.open(waUrl(msg), "_blank");

@@ -42,7 +42,7 @@ def parse_price(value: str) -> int | None:
 def parse_merchant(value: str, product_id: str = "", warranty: str = "", image: str = "") -> str:
     """Map explicit merchant labels and known product-code/source patterns."""
     text = (value or "").strip().lower()
-    match = re.search(r"merchant\s*([1-4])", text)
+    match = re.search(r"merchant\s*([1-5])", text)
     if match:
         return match.group(1)
 
@@ -60,7 +60,7 @@ def parse_merchant(value: str, product_id: str = "", warranty: str = "", image: 
         return "2"
     if "fochant" in normalized_source or "forchant" in normalized_source or "checkingwarranty" in normalized_warranty:
         return "3"
-    return ""
+    return "5"
 
 
 def normalize_image_url(value: str) -> str:

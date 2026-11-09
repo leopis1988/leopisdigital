@@ -41,9 +41,9 @@ Every product card and product detail view has a **Share product** button. On An
 
 ## Merchant references and delivery charges
 
-Every product displays its small Merchant 1–4 reference. The `merchants` column accepts an explicit value such as `merchant 4`; products without a numbered assignment use the existing Merchant 2 fallback until their Sheet row is assigned. Delivery is calculated by the number of different merchants in the cart: 1 merchant = Rs. 450 with no discount; 2 merchants = Rs. 900 less Rs. 150 (payable Rs. 750); 3 merchants = Rs. 1,350 less Rs. 300 (payable Rs. 1,050); 4 merchants = Rs. 1,800 less Rs. 450 (payable Rs. 1,350).
+Every product displays its Store 1–5 reference. The `merchants` column accepts an explicit value such as `merchant 4`; products not matching Merchant 1–4 rules are assigned to Merchant 5. Delivery is calculated by the number of different stores in the cart: 1 store = Rs. 450 (payable Rs. 450); 2 stores = Rs. 900 less Rs. 100 (payable Rs. 800); 3 stores = Rs. 1,350 less Rs. 300 (payable Rs. 1,050); 4 stores = Rs. 1,800 less Rs. 450 (payable Rs. 1,350); 5 stores = Rs. 2,250 less Rs. 800 (payable Rs. 1,450).
 
-The importer also recognizes the confirmed merchant groups: six-digit product codes in the `100xxx` series (for example, `100000` onward) are Merchant 1; `P0`/`PO` series codes are Merchant 2; Fochant/Forchant products and products marked `Checking Warranty` are Merchant 3; and rows explicitly marked `Merchant 4` are Merchant 4. A recent-product badge by itself does not change a product's merchant. Unmatched products keep the existing Merchant 2 fallback. The storefront's `category` field remains the product department, not the merchant number.
+The importer recognizes these groups: six-digit product codes in the `100xxx` series are Merchant 1; `P0`/`PO` series codes are Merchant 2; Fochant/Forchant products and products marked `Checking Warranty` are Merchant 3; rows explicitly marked `Merchant 4` are Merchant 4; unmatched products are Merchant 5. A recent-product badge by itself does not change a product's store. The storefront's `category` field remains the product department, not the store number.
 
 ### Product format
 
