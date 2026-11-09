@@ -9,7 +9,7 @@ Customers browse products, add to cart, and send the order through **WhatsApp** 
 |---|---|
 | `index.html` | Page structure |
 | `style.css` | Design and colours |
-| `app.js` | All site logic: products, cart, WhatsApp order, languages, 11.11 Flash Deals, rating line, FAQ |
+| `app.js` | All site logic: products, cart, WhatsApp order, share links, languages, 11.11 Flash Deals, rating line, FAQ |
 | `products_final.json` | **The product list the site loads** (name, category, price, image, warranty) |
 | `import_sheet_products.py` | Imports valid `Ready` rows from the Google Sheet |
 | `.github/workflows/import-sheet-products.yml` | Checks the Sheet every 15 minutes and publishes catalog changes |
@@ -34,6 +34,10 @@ Product Image | product rate | product name | product number | description | War
 ```
 
 After a successful import, the website catalog is updated automatically. The importer does not write back to the Sheet; change `Ready` to `Published` manually after confirming the deployment.
+
+## Product sharing
+
+Every product card and product detail view has a **Share product** button. On Android and other supported devices it opens the native share sheet, where the customer can choose WhatsApp, Facebook, Messenger, email or another installed app. On browsers without native sharing, it copies a stable product URL such as `https://leopisdigital.com/?p=PRODUCT_CODE`. Opening that link loads the exact product detail.
 
 ### Product format
 
