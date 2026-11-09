@@ -16,6 +16,7 @@ SHEET_CSV_URL = (
     "1WEaZ1eCtRI3FzvDWwYMhFHRczco8r62nXycqm4gv9Zg/export?format=csv&gid=0"
 )
 CATALOG = Path("products_final.json")
+IMAGE_DIR = Path("images/sheet")
 
 
 def norm(value: str) -> str:
@@ -56,6 +57,21 @@ def fetch_csv() -> list[list[str]]:
         return list(csv.reader(io.TextIOWrapper(response, encoding="utf-8-sig", newline="")))
 
 
+def download_sheet_image(product_id: str, image_url: str) -> str:
+    """Download a Sheet image into the site so browsers do not depend on hotlinks."""
+    request = Request(image_url, headers={"User-Agent": "Leopis-Sheet-Importer/1.0"})
+    with urlopen(request, timeout=45) as response:
+        content = response.read()
+        content_type = (response.headers.get_content_type() or "").lower()
+    if not content or content_type not in {"image/jpeg", "image/png", "image/webp", "image/gif"}:
+        raise ValueError(f"image URL did not return a supported image ({content_type or 'unknown type'})")
+    extension = {"image/jpeg": ".jpg", "image/png": ".png", "image/webp": ".webp", "image/gif": ".gif"}[content_type]
+    IMAGE_DIR.mkdir(parents=True, exist_ok=True)
+    output = IMAGE_DIR / f"{re.sub(r'[^A-Za-z0-9_-]', '_', product_id)}{extension}"
+    output.write_bytes(content)
+    return output.as_posix()
+
+
 def make_product(row: list[str], indexes: dict[str, int | None]) -> tuple[dict, str | None]:
     product_id = cell(row, indexes["id"])
     name = cell(row, indexes["name"])
@@ -74,12 +90,17 @@ def make_product(row: list[str], indexes: dict[str, int | None]) -> tuple[dict, 
     if not re.match(r"^https?://", image) or "/drive/folders/" in image:
         return {}, f"{product_id}: image must be an individual http(s) image URL, not a folder link"
 
+    try:
+        local_image = download_sheet_image(product_id, image)
+    except Exception as exc:
+        return {}, f"{product_id}: could not download image ({exc})"
+
     product = {
         "id": product_id,
         "name": name,
         "category": category,
         "price": price,
-        "image": image,
+        "image": local_image,
         "description": description,
         "warranty": warranty or "No warranty",
         "badge": "New",
