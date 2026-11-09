@@ -39,13 +39,15 @@ const money = n => CONFIG.currency + " " + Number(n).toLocaleString("en-US");
 const pname = p => p["name_" + lang] || p.name;
 const searchIndex = new Map();
 const SEARCH_SYNONYMS = {
-  mobile: ["phone", "smartphone"], phone: ["mobile", "smartphone", "cellphone"], smartphone: ["phone", "mobile"],
+  mobile: ["phone", "smartphone", "cellphone"], phone: ["mobile", "smartphone", "cellphone"], smartphone: ["phone", "mobile"],
+  cellphone: ["phone", "mobile", "smartphone"],
   earbuds: ["earphones", "headphones"], earbud: ["earphone", "headphone"], earphones: ["earbuds", "headphones"],
   headphones: ["headset", "earphones"], headset: ["headphones", "earphones"],
   torch: ["flashlight"], flashlight: ["torch"], glasses: ["spectacles", "eyewear"], spectacles: ["glasses", "eyewear"],
   tv: ["television"], television: ["tv"], fridge: ["refrigerator"], refrigerator: ["fridge"],
   luggage: ["suitcase"], suitcase: ["luggage"]
 };
+const SEARCH_STOP_WORDS = new Set(["a", "an", "and", "are", "buy", "find", "for", "from", "in", "is", "looking", "me", "my", "of", "on", "or", "please", "search", "show", "the", "to", "want", "with"]);
 function normalizeSearch(value) {
   return String(value || "").normalize("NFKD").replace(/[\u0300-\u036f]/g, "").toLowerCase()
     .replace(/&/g, " and ").replace(/[^a-z0-9]+/g, " ").trim();
@@ -108,9 +110,11 @@ function scoreSearch(p, query, terms) {
   const categoryHits = terms.filter(term => tokenMatches(term, index.categoryTokens)).length;
   const allHits = terms.filter(term => tokenMatches(term, index.tokens)).length;
   const phraseHit = index.all.includes(query) || index.nameCompact.includes(compact) || index.categoryCompact.includes(compact) || index.code.includes(compact);
-  if (allHits < terms.length && !phraseHit) return 0;
-  score += nameHits * 100 + categoryHits * 70 + allHits * 25;
-  return score || 1;
+  if (allHits === 0 && !phraseHit) return 0;
+  if (terms.length >= 3 && allHits === 1 && nameHits === 0 && categoryHits === 0 && !phraseHit) return 0;
+  score += nameHits * 180 + categoryHits * 125 + allHits * 55;
+  score += allHits === terms.length ? 260 : -(terms.length - allHits) * 35;
+  return Math.max(1, score);
 }
 const waUrl = msg => "https://wa.me/" + CONFIG.whatsapp + "?text=" + encodeURIComponent(msg);
 const askMsg = p => "Hi Leopis, I would like real photos and more details for: " + p.name + " (Code " + p.id + "). Price: " + money(pr(p)) + (p.warranty ? " | " + p.warranty : "");
@@ -287,7 +291,9 @@ function buildCatNav() {
 function goCat(val) { clearOnly = false; $("#cat").value = val; filter(); buildCatNav(); $("#shop").scrollIntoView({behavior: "smooth"}); }
 
 function filter() {
-  const q = normalizeSearch($("#q").value), terms = q ? q.split(" ").filter(Boolean) : [];
+  const rawTerms = normalizeSearch($("#q").value).split(" ").filter(Boolean);
+  const terms = rawTerms.filter(term => !SEARCH_STOP_WORDS.has(term));
+  const q = (terms.length ? terms : rawTerms).join(" ");
   const c = $("#cat").value, s = $("#sort").value;
   const matches = products.filter(p => (!c || p.category === c) && (!flashOnly || isFlash(p)) && (!clearOnly || p.oldPrice));
   if (q) {
@@ -409,7 +415,24 @@ applyLang(); buildFlash(true); buildExtras();
 }).catch(() => { $("#grid").append(el("p", "empty", "Could not load products.json")); });
 
 document.querySelectorAll(".langs button").forEach(b => b.onclick = () => { lang = b.dataset.lang; store.set("lang", lang); applyLang(); });
-let timer; $("#q").addEventListener("input", () => { clearTimeout(timer); timer = setTimeout(filter, 200); });
+const searchInput = $("#q");
+let timer;
+function submitSearch() {
+  clearTimeout(timer);
+  filter();
+  if (searchInput.value.trim()) {
+    searchInput.blur();
+    $("#shop").scrollIntoView({behavior: "smooth", block: "start"});
+  }
+}
+searchInput.addEventListener("input", () => { clearTimeout(timer); timer = setTimeout(filter, 140); });
+searchInput.addEventListener("keydown", event => {
+  if (event.key !== "Enter" || !searchInput.value.trim()) return;
+  event.preventDefault();
+  submitSearch();
+});
+searchInput.addEventListener("search", submitSearch);
+searchInput.addEventListener("change", submitSearch);
 $("#cat").onchange = () => { clearOnly = false; filter(); buildCatNav(); }; $("#sort").onchange = filter;
 $("#cartBtn").onclick = () => $("#cartDlg").showModal();
 $("#closeCart").onclick = () => $("#cartDlg").close();
