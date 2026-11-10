@@ -41,7 +41,12 @@ def fetch_rows() -> list[list[str]]:
 
 
 def locate_headers(rows: list[list[str]]) -> tuple[int, dict[str, int]]:
-    required = {"product_code": "productcode", "published_rate": "publishedrate", "new_rate": "newrate"}
+    required = {
+        "product_name": "productname",
+        "product_code": "productcode",
+        "published_rate": "publishedrate",
+        "new_rate": "newrate",
+    }
     for row_number, row in enumerate(rows):
         indexes = {key: next((i for i, cell in enumerate(row) if normalize(cell) == label), None)
                    for key, label in required.items()}
@@ -65,8 +70,40 @@ def parse_rate(value: object) -> int | None:
 
 
 def product_code(value: object) -> str:
-    code = re.sub(r"^\s*code\s*:\s*", "", str(value or ""), flags=re.IGNORECASE).strip()
+    code = re.sub(r"^\s*code\s*:?\s*", "", str(value or ""), flags=re.IGNORECASE).strip()
     return code.upper()
+
+
+def tokens(value: object) -> set[str]:
+    return set(re.findall(r"[a-z0-9]+", str(value or "").casefold())) - {"code"}
+
+
+def find_product(
+    catalog: list[dict], by_id: dict[str, dict], code: str, name: str, published: int, new_rate: int
+) -> tuple[dict | None, bool]:
+    exact = by_id.get(code)
+    if exact is not None:
+        return exact, False
+
+    code_tokens = tokens(code)
+    name_tokens = tokens(name)
+    if len(code_tokens) < 2 or len(name_tokens) < 2:
+        return None, False
+
+    candidates = []
+    for item in catalog:
+        item_id_tokens = tokens(item.get("id"))
+        item_name_tokens = tokens(item.get("name"))
+        current = parse_rate(item.get("price"))
+        if (
+            code_tokens <= item_id_tokens
+            and name_tokens <= item_name_tokens
+            and current in {published, new_rate}
+        ):
+            candidates.append(item)
+    if len(candidates) == 1:
+        return candidates[0], True
+    return None, False
 
 
 def text_value(value: object) -> str:
@@ -142,7 +179,8 @@ def update_catalog(rows: list[list[str]], header_row: int, indexes: dict[str, in
         raise ValueError("products_final.json must contain a JSON array.")
     by_id = {str(product.get("id", "")).strip().upper(): product for product in catalog}
     changed = False
-    seen: set[str] = set()
+    seen_codes: set[str] = set()
+    seen_products: set[str] = set()
 
     for row in rows[header_row + 1 :]:
         code_index = indexes["product_code"]
@@ -151,28 +189,35 @@ def update_catalog(rows: list[list[str]], header_row: int, indexes: dict[str, in
         code = product_code(row[code_index])
         if not code:
             continue
+        name_index = indexes["product_name"]
+        name = row[name_index].strip() if name_index < len(row) else ""
         published = parse_rate(row[indexes["published_rate"]] if indexes["published_rate"] < len(row) else "")
         new_rate = parse_rate(row[indexes["new_rate"]] if indexes["new_rate"] < len(row) else "")
         if published is None or new_rate is None:
             print(f"Skipping {code}: published/new rate is blank or not a whole-number price.")
             continue
-        if code in seen:
+        if code in seen_codes:
             raise ValueError(f"Duplicate correction rows found for product code {code}; no catalog write made.")
-        seen.add(code)
-        product = by_id.get(code)
+        seen_codes.add(code)
+        product, used_fallback = find_product(catalog, by_id, code, name, published, new_rate)
         if product is None:
-            print(f"Skipping {code}: no matching product exists in products_final.json.")
+            print(f"Skipping {code!r} ({name!r}): no unique catalog match passed the code/name/rate checks.")
             continue
+        product_id = str(product.get("id", "")).strip().upper()
+        if product_id in seen_products:
+            raise ValueError(f"Duplicate correction rows resolve to product {product_id}; no catalog write made.")
+        seen_products.add(product_id)
         current = parse_rate(product.get("price"))
+        match_note = f" (resolved to {product_id} by code/name/rate)" if used_fallback else ""
         if current == new_rate:
-            print(f"{code}: price is already {new_rate}; no change needed.")
+            print(f"{code}{match_note}: price is already {new_rate}; no change needed.")
         elif current == published:
             product["price"] = new_rate
             changed = True
-            print(f"{code}: price updated from {published} to {new_rate}.")
+            print(f"{code}{match_note}: price updated from {published} to {new_rate}.")
         else:
             print(
-                f"Skipping {code}: catalog price {product.get('price')!r} matches neither "
+                f"Skipping {code}{match_note}: catalog price {product.get('price')!r} matches neither "
                 f"published rate {published} nor new rate {new_rate}."
             )
 
