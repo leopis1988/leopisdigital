@@ -1,5 +1,49 @@
 [
  {
+  "id": "My 5",
+  "name": "Baseus Magnetic Fast Wireless Car Charger Mount (360° Adjustable)",
+  "category": "Mobile & Car Accessories",
+  "price": 9750,
+  "image": "images/sheet/My_5.png",
+  "description": "Upgrade your driving experience with the Baseus Fast Wireless Car Charger. Designed for fast, stable, and stylish wireless power delivery, it features strong built-in magnets to hold your phone firmly in place even on rough roads. With a flexible 360° adjustable viewing angle and multi-layer safety protection, you can navigate hands-free while keeping your device charged without cluttering cords.  \nKey Features:\nFast Wireless Charging: Delivers rapid, efficient wireless charging to compatible smartphones on every trip.  \nUltra-Strong Magnetic Hold: Powerful magnets lock your phone securely into position, resisting vibrations, sharp turns, and sudden braking.  \n360° Adjustable Angle: Smooth rotating head allows easy switching between portrait mode for calls and landscape mode for GPS navigation.  \nSafe & Reliable Operation: Built-in intelligent protection prevents overheating, overcharging, and short circuits to protect both your phone and vehicle.  \nCompact & Minimalist Style: Sleek, modern finish complements your car’s dashboard or air vent without blocking the driver's line of sight.  \nComplete Setup Included: Ships with a secure mounting base and a dedicated USB charging cable for immediate plug-and-play installation",
+  "warranty": "No warranty",
+  "merchant": "5",
+  "badge": "New"
+ },
+ {
+  "id": "My 4",
+  "name": "Xiaomi Mi 50W 20000mAh Fast Charging Power Bank",
+  "category": "Mobile phone Asseceries",
+  "price": 8990,
+  "image": "images/sheet/My_4.png",
+  "description": "Charge more and worry less with the high-capacity Xiaomi Mi 50W 20000mAh Power Bank. Engineered with 50W fast charging and versatile two-way USB-C input/output, it provides long-lasting power for smartphones and mobile devices wherever you go. Built with multi-layer safety safeguards and a sleek matte finish, it delivers fast, dependable performance for daily travel, work, and heavy device use.  \nKey Features:\n50W Ultra-Fast Charging: High-power output significantly reduces charging times for compatible fast-charging smartphones and electronics.  \n20000mAh Massive Capacity: Keeps your gear running for days, providing multiple full charges on a single power bank cycle.  \nTwo-Way USB-C Port: Equipped with a fast USB-C input/output port for rapid power delivery and quick power bank recharging.  \nTriple Port Output: Dual USB-A ports plus a USB-C port allow convenient multi-device charging simultaneously.  \nSafe & Reliable Protection: Integrated circuit protection guards against overheating, short circuits, overcharging, and power surges.  \nPremium Build Quality: Elegant matte black finish engineered for durability, grip, and everyday portability.",
+  "warranty": "No warranty",
+  "merchant": "5",
+  "badge": "New"
+ },
+ {
+  "id": "My 3",
+  "name": "Xiaomi Mi 10000mAh Fast Charging Slim Power Bank",
+  "category": "Mobile phone Asseceries / Gadget",
+  "price": 2990,
+  "image": "images/sheet/My_3.png",
+  "description": "Stay powered anywhere, anytime with the Xiaomi Mi 10000mAh Power Bank. Featuring a slim, lightweight profile and dual USB output ports, this fast-charging portable power bank provides reliable battery backup for smartphones and accessories on the go. Engineered in a pocket-friendly size, it is ideal for travel, work, and daily life.  \nKey Features:\n10000mAh High Capacity: Delivers long-lasting power reserve to keep your devices charged multiple times throughout the day.  \nFast Charging Support: High-efficiency power transfer charges your compatible mobile devices quickly.  \nDual USB Output: Equipped with dual USB ports to charge two devices at the same time.  \nSlim & Lightweight Design: Compact form factor fits neatly into pockets, clutches, and backpacks without adding bulk.  \nEveryday Durability: Sleek, sturdy casing built for commuting, office work, flights, and outdoor adventures.  \nLED Power Indicator: Integrated indicator lights show remaining power status at a glance",
+  "warranty": "No warranty",
+  "merchant": "5",
+  "badge": "New"
+ },
+ {
+  "id": "My 2",
+  "name": "Baseus Elf 65W 20,000mAh Fast Charging Power Bank with Built-in USB-C Cable",
+  "category": "Laptop / mobile Accessories",
+  "price": 22990,
+  "image": "images/sheet/My_2.jpg",
+  "description": "High-capacity, ultra-fast portable power designed for laptops, tablets, and smartphones. The Baseus Elf delivers a massive 65W output with a 20,000mAh battery reserve, featuring a built-in two-way USB-C charging cable and a real-time digital LED battery monitor. Perfect for uninterrupted travel, remote work, and multi-device fast charging.  \nKey Features:\n65W High-Speed Power Delivery: Supplies full-speed PD fast charging suitable for laptops (MacBook, Dell, HP), tablets, and high-end smartphones.  \n20,000mAh Massive Capacity: Keeps your essential gear powered for days—charges smartphones multiple times or fully recharges a laptop on the go.  \nIntegrated USB-C Cable: Built-in heavy-duty USB-C cable doubles as a carrying lanyard, eliminating the need to carry extra cords.  \nSmart Digital LED Display: Precise, real-time percentage readout shows remaining battery status at a glance.  \nMulti-Port Versatility: Dual-way fast charging lets you charge multiple devices simultaneously while recharging the power bank itself at high speeds.\nComprehensive Safety Protection: Built-in safeguards protect against overcharging, over-current, short-circuits, and overheating",
+  "warranty": "No warranty",
+  "merchant": "5",
+  "badge": "New"
+ },
+ {
   "id": "My 1",
   "name": "Baseus Magnetic Wireless Fast Charge Power Bank 20W (10,000mAh)",
   "category": "Mobile phone Asseceries",
@@ -137,7 +181,7 @@
   "id": "102331",
   "name": "220V High-Power Air Blower",
   "category": "Electronics & Gadgets",
-  "price": 3485,
+  "price": 3685,
   "image": "https://image.made-in-china.com/2f0j00DOhcmygMpFbW/Powerful-High-Power-220V-380V-Industrial-Dust-Removal-Air-Blower.jpg",
   "description": "Strong airflow for quick cleaning, drying and dusting jobs. Key details: 220V.",
   "oldPrice": 4100,
