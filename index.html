@@ -36,6 +36,24 @@
       "currenciesAccepted": "LKR",
       "paymentAccepted": "Cash on delivery",
       "areaServed": {"@type": "Country", "name": "Sri Lanka"},
+      "hasShippingService": {
+        "@type": "ShippingService",
+        "@id": "https://leopisdigital.com/#shipping",
+        "name": "Sri Lanka island-wide delivery",
+        "description": "Delivery for a one-store order is Rs. 450. Multi-store orders use the discounted tiers shown at checkout. Delivery timing and address serviceability are confirmed on WhatsApp. See https://leopisdigital.com/delivery.html.",
+        "fulfillmentType": "https://schema.org/FulfillmentTypeDelivery",
+        "shippingConditions": [{
+          "@type": "ShippingConditions",
+          "shippingDestination": {"@type": "DefinedRegion", "addressCountry": "LK"},
+          "shippingRate": {"@type": "MonetaryAmount", "value": 450, "currency": "LKR"}
+        }]
+      },
+      "hasMerchantReturnPolicy": {
+        "@type": "MerchantReturnPolicy",
+        "@id": "https://leopisdigital.com/#return-policy",
+        "applicableCountry": "LK",
+        "merchantReturnLink": "https://leopisdigital.com/returns-warranty.html"
+      },
       "contactPoint": {
         "@type": "ContactPoint",
         "telephone": "+94783366466",
@@ -173,6 +191,7 @@
     <div><h4>Leopis Digital</h4><p>Cash on delivery across Sri Lanka.</p></div>
     <div><h4>WhatsApp</h4><p><a id="waLink" href="#">Chat with us</a></p></div>
   </div>
+  <p><a href="/about.html">About</a> · <a href="/delivery.html">Delivery charges</a> · <a href="/returns-warranty.html">Returns &amp; warranty</a> · <a href="/contact.html">Contact</a></p>
   <p><a href="https://docs.google.com/spreadsheets/d/1nynAxa9BY-9l8c1-yQHKvpldpPfa1mAw1MRMyj1yxPs/edit" target="_blank" rel="noopener noreferrer">Edit product rate corrections in Google Sheets (sign-in and edit permission required)</a></p>
   <p>© Leopis Pvt. Ltd.</p>
 </footer>

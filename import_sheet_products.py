@@ -76,6 +76,20 @@ def cell(row: list[str], index: int | None) -> str:
     return row[index].strip() if index is not None and index < len(row) else ""
 
 
+def normalize_availability(value: str) -> str:
+    key = norm(value)
+    return {
+        "instock": "in_stock",
+        "available": "in_stock",
+        "outofstock": "out_of_stock",
+        "soldout": "out_of_stock",
+        "unavailable": "out_of_stock",
+        "preorder": "pre_order",
+        "backorder": "back_order",
+        "limitedavailability": "limited_availability",
+    }.get(key, "")
+
+
 def parse_price(value: str) -> int | None:
     digits = re.sub(r"[^0-9]", "", value or "")
     return int(digits) if digits else None
@@ -148,6 +162,10 @@ def make_product(row: list[str], indexes: dict[str, int | None]) -> tuple[dict, 
     category = normalize_category(cell(row, indexes["category"]))
     description = cell(row, indexes["description"])
     warranty = cell(row, indexes["warranty"])
+    brand = cell(row, indexes.get("brand"))
+    gtin = cell(row, indexes.get("gtin"))
+    mpn = cell(row, indexes.get("mpn"))
+    raw_availability = cell(row, indexes.get("availability"))
     merchant = parse_merchant(cell(row, indexes["merchant"]), product_id, warranty, image)
     status = norm(cell(row, indexes["status"]))
 
@@ -158,6 +176,9 @@ def make_product(row: list[str], indexes: dict[str, int | None]) -> tuple[dict, 
         return {}, f"{product_id or '[no ID]'}: missing {', '.join(missing)}"
     if not re.match(r"^https?://", image) or "/drive/folders/" in image:
         return {}, f"{product_id}: image must be an individual http(s) image URL, not a folder link"
+    availability = normalize_availability(raw_availability) if raw_availability else ""
+    if raw_availability and not availability:
+        return {}, f"{product_id}: unsupported availability value {raw_availability!r}"
 
     try:
         local_image = download_sheet_image(product_id, image)
@@ -175,6 +196,9 @@ def make_product(row: list[str], indexes: dict[str, int | None]) -> tuple[dict, 
         "merchant": merchant,
         "badge": "New",
     }
+    for key, value in (("brand", brand), ("gtin", gtin), ("mpn", mpn), ("availability", availability)):
+        if value:
+            product[key] = value
     return product, None
 
 
@@ -194,6 +218,10 @@ def main() -> int:
         "warranty": first_index(headers, {"warranty", "replacement"}),
         "merchant": first_index(headers, {"merchant", "merchants", "seller", "supplier"}),
         "category": first_index(headers, {"category", "categary", "catogary"}),
+        "brand": first_index(headers, {"brand", "brandname", "productbrand", "manufacturer", "maker"}),
+        "gtin": first_index(headers, {"gtin", "barcode", "ean", "upc", "eanupc"}),
+        "mpn": first_index(headers, {"mpn", "manufacturerpartnumber", "partnumber"}),
+        "availability": first_index(headers, {"availability", "stockstatus", "stock"}),
         "status": first_index(headers, {"status", "publish", "ready"}),
     }
     required = ["image", "price", "name", "id", "description", "category", "status"]

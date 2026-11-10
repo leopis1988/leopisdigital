@@ -2,6 +2,7 @@
 """Generate crawlable product/category pages and a sitemap from products_final.json."""
 from __future__ import annotations
 
+import csv
 import html
 import json
 import math
@@ -19,6 +20,13 @@ INDEX_PATH = ROOT_DIR / "index.html"
 PRODUCTS_DIR = ROOT_DIR / "products"
 CATEGORIES_DIR = ROOT_DIR / "categories"
 SITEMAP_PATH = ROOT_DIR / "sitemap.xml"
+FEED_PATH = ROOT_DIR / "google-merchant-feed.tsv"
+POLICY_PAGE_URLS = [
+    f"{ROOT}/about.html",
+    f"{ROOT}/delivery.html",
+    f"{ROOT}/returns-warranty.html",
+    f"{ROOT}/contact.html",
+]
 CATEGORY_LINKS_BEGIN = "<!-- SEO_CATEGORY_LINKS_BEGIN -->"
 CATEGORY_LINKS_END = "<!-- SEO_CATEGORY_LINKS_END -->"
 SITEMAP_NS = "http://www.sitemaps.org/schemas/sitemap/0.9"
@@ -187,7 +195,94 @@ def json_ld(data: dict) -> str:
     return '<script type="application/ld+json">' + payload + "</script>"
 
 
-def product_jsonld(product: dict, canonical: str, description: str, image: str, price: Decimal) -> dict:
+def store_policy_jsonld() -> dict:
+    return {
+        "@context": "https://schema.org",
+        "@type": "OnlineStore",
+        "@id": ROOT + "/#store",
+        "name": "Leopis Digital",
+        "legalName": "Leopis (Pvt) Ltd",
+        "url": ROOT + "/",
+        "logo": ROOT + "/logo.png",
+        "telephone": "+94783366466",
+        "currenciesAccepted": "LKR",
+        "paymentAccepted": "Cash on delivery",
+        "areaServed": {"@type": "Country", "name": "Sri Lanka"},
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+94783366466",
+            "contactType": "customer service",
+            "areaServed": "LK",
+            "availableLanguage": ["English", "Sinhala", "Tamil"],
+        },
+        "hasShippingService": {
+            "@type": "ShippingService",
+            "@id": ROOT + "/#shipping",
+            "name": "Sri Lanka island-wide delivery",
+            "description": (
+                "Delivery for a one-store order is Rs. 450. Multi-store orders use the discounted tiers "
+                "shown at checkout. Delivery timing and address serviceability are confirmed on WhatsApp. "
+                "See " + ROOT + "/delivery.html."
+            ),
+            "fulfillmentType": "https://schema.org/FulfillmentTypeDelivery",
+            "shippingConditions": [{
+                "@type": "ShippingConditions",
+                "shippingDestination": {"@type": "DefinedRegion", "addressCountry": "LK"},
+                "shippingRate": {"@type": "MonetaryAmount", "value": 450, "currency": "LKR"},
+            }],
+        },
+        "hasMerchantReturnPolicy": {
+            "@type": "MerchantReturnPolicy",
+            "@id": ROOT + "/#return-policy",
+            "applicableCountry": "LK",
+            "merchantReturnLink": ROOT + "/returns-warranty.html",
+        },
+    }
+
+
+def schema_availability(value: object) -> str | None:
+    normalized = re.sub(r"[^a-z]", "", str(value or "").casefold())
+    values = {
+        "instock": "InStock",
+        "outofstock": "OutOfStock",
+        "preorder": "PreOrder",
+        "backorder": "BackOrder",
+        "limitedavailability": "LimitedAvailability",
+    }
+    return "https://schema.org/" + values[normalized] if normalized in values else None
+
+
+def load_feed_availability() -> dict[str, str]:
+    if not FEED_PATH.exists():
+        return {}
+    with FEED_PATH.open("r", encoding="utf-8-sig", newline="") as stream:
+        reader = csv.DictReader(stream, delimiter="\t")
+        if not reader.fieldnames or not {"id", "availability"}.issubset(reader.fieldnames):
+            return {}
+        return {
+            str(row.get("id", "")).strip(): status
+            for row in reader
+            if (status := schema_availability(row.get("availability")))
+            and str(row.get("id", "")).strip()
+        }
+
+
+def product_jsonld(product: dict, canonical: str, description: str, image: str, price: Decimal,
+                   availability: str | None = None) -> dict:
+    offer = {
+        "@type": "Offer",
+        "url": canonical,
+        "priceCurrency": "LKR",
+        "price": price_schema(price),
+        "seller": {"@id": ROOT + "/#store"},
+        "shippingDetails": {
+            "@type": "OfferShippingDetails",
+            "hasShippingService": {"@id": ROOT + "/#shipping"},
+        },
+        "hasMerchantReturnPolicy": {"@id": ROOT + "/#return-policy"},
+    }
+    if availability:
+        offer["availability"] = availability
     node = {
         "@context": "https://schema.org",
         "@type": "Product",
@@ -195,18 +290,17 @@ def product_jsonld(product: dict, canonical: str, description: str, image: str, 
         "name": one_line(product.get("name")),
         "sku": str(product.get("id", "")),
         "category": one_line(product.get("category", "")),
-        "offers": {
-            "@type": "Offer",
-            "url": canonical,
-            "priceCurrency": "LKR",
-            "price": price_schema(price),
-            "seller": {
-                "@type": "Organization",
-                "name": "Leopis (Pvt) Ltd",
-                "url": ROOT + "/",
-            },
-        },
+        "offers": offer,
     }
+    brand = one_line(product.get("brand", ""))
+    if brand:
+        node["brand"] = {"@type": "Brand", "name": brand}
+    gtin = re.sub(r"\s+", "", str(product.get("gtin", "")))
+    if re.fullmatch(r"\d{8,14}", gtin):
+        node["gtin"] = gtin
+    mpn = one_line(product.get("mpn", ""))
+    if mpn:
+        node["mpn"] = mpn
     if description:
         node["description"] = description
     if image:
@@ -234,7 +328,8 @@ def header_html() -> str:
     return f'''<header class="site-head"><a href="/" aria-label="Leopis Digital home"><img src="/logo.png" alt="Leopis Digital"></a><a href="/">Browse all products in Sri Lanka</a></header>'''
 
 
-def product_page(product: dict, category_urls: dict[str, str]) -> tuple[str, bool, str]:
+def product_page(product: dict, category_urls: dict[str, str],
+                 feed_availability_by_id: dict[str, str]) -> tuple[str, bool, str]:
     name = one_line(product.get("name"))
     heading_name = truncate(name, 80)
     product_id = str(product.get("id", ""))
@@ -246,6 +341,11 @@ def product_page(product: dict, category_urls: dict[str, str]) -> tuple[str, boo
     canonical = f"{ROOT}/products/{slug}.html"
     meta_desc = product_description(product, price)
     img = image_url(product)
+    availability = (
+        schema_availability(product.get("availability"))
+        or feed_availability_by_id.get(product_id)
+        or schema_availability("in_stock")
+    )
     indexable = is_indexable(product)
     robots = "index,follow,max-image-preview:large" if indexable else "noindex,follow"
     head = page_head(product_title(product), meta_desc, canonical, img, "product", robots)
@@ -262,6 +362,24 @@ def product_page(product: dict, category_urls: dict[str, str]) -> tuple[str, boo
         description_block = '<p class="notice">Product details are being confirmed. Ask Leopis to confirm specifications and availability before ordering.</p>'
     warranty = one_line(product.get("warranty"))
     warranty_block = f'<p class="warranty"><strong>Warranty information:</strong> {html.escape(warranty)}</p>' if warranty else ""
+    brand = one_line(product.get("brand", ""))
+    brand_block = f'<p class="code"><strong>Brand:</strong> {html.escape(brand)}</p>' if brand else ""
+    gtin = re.sub(r"\s+", "", str(product.get("gtin", "")))
+    mpn = one_line(product.get("mpn", ""))
+    identifiers = []
+    if re.fullmatch(r"\d{8,14}", gtin):
+        identifiers.append(f'<strong>GTIN:</strong> {html.escape(gtin)}')
+    if mpn:
+        identifiers.append(f'<strong>MPN:</strong> {html.escape(mpn)}')
+    identifiers_block = f'<p class="code">{" &nbsp; ".join(identifiers)}</p>' if identifiers else ""
+    availability_label = {
+        "https://schema.org/InStock": "In stock; please confirm before ordering.",
+        "https://schema.org/OutOfStock": "Currently out of stock; contact us about availability.",
+        "https://schema.org/PreOrder": "Available for pre-order; confirm timing on WhatsApp.",
+        "https://schema.org/BackOrder": "Available on back-order; confirm timing on WhatsApp.",
+        "https://schema.org/LimitedAvailability": "Limited availability; confirm before ordering.",
+    }.get(availability, "Confirm current availability on WhatsApp.")
+    availability_block = f'<p class="code"><strong>Availability:</strong> {html.escape(availability_label)}</p>'
     old_price = product.get("oldPrice")
     old_price_block = ""
     try:
@@ -274,7 +392,8 @@ def product_page(product: dict, category_urls: dict[str, str]) -> tuple[str, boo
     wa_text = f"Hi Leopis, I am interested in {name} (Code {product_id}). Please confirm current availability and delivery charges."
     wa_url = "https://wa.me/94783366466?" + urlencode({"text": wa_text})
     schema = [
-        product_jsonld(product, canonical, description_plain, img, price),
+        store_policy_jsonld(),
+        product_jsonld(product, canonical, description_plain, img, price, availability),
         breadcrumb_jsonld([("Home", ROOT + "/"), (category, cat_url), (name, canonical)]),
     ]
     schema_html = "\n".join(json_ld(node) for node in schema)
@@ -290,12 +409,15 @@ def product_page(product: dict, category_urls: dict[str, str]) -> tuple[str, boo
 <h1>{html.escape(heading_name)}</h1>
 <p class="price">Rs. {html.escape(price_text(price))}{old_price_block}</p>
 <p class="code"><strong>Product code:</strong> {html.escape(product_id)}</p>
+{brand_block}
+{identifiers_block}
 {warranty_block}
+{availability_block}
 {description_block}
 <div class="actions"><a class="button" href="{html.escape(interactive_url, quote=True)}">View and order this product</a><a class="button secondary" href="{html.escape(wa_url, quote=True)}" target="_blank" rel="noopener">Confirm on WhatsApp</a></div>
 </div>
 </article>
-<section class="store-info"><h2>Ordering from Sri Lanka</h2><p>Leopis Digital offers island-wide delivery and cash on delivery. Product availability, exact specifications, warranty and delivery charges can vary; confirm them with the store before ordering.</p><p>WhatsApp: <a href="https://wa.me/94783366466">+94 78 336 6466</a></p><p>Browse more: <a href="{html.escape(cat_url, quote=True)}">{html.escape(category)} in Sri Lanka</a> · <a href="/">All products</a></p></section>
+<section class="store-info"><h2>Ordering from Sri Lanka</h2><p>Leopis Digital offers island-wide delivery and cash on delivery. Delivery for an order from one store is Rs. 450; multi-store carts use the discounted tiers shown on the <a href="/delivery.html">delivery page</a>. Returns and warranty terms are product-specific; see the <a href="/returns-warranty.html">returns and warranty policy</a>.</p><p>Confirm product availability, specifications and timing on WhatsApp. <a href="https://wa.me/94783366466">Chat with Leopis: +94 78 336 6466</a></p><p>Browse more: <a href="{html.escape(cat_url, quote=True)}">{html.escape(category)} in Sri Lanka</a> · <a href="/">All products</a></p></section>
 </main>
 <footer class="footer wrap">Leopis (Pvt) Ltd · Sri Lanka · <a href="/">Leopis Digital</a></footer>
 {schema_html}
@@ -413,11 +535,18 @@ def main() -> None:
 
     PRODUCTS_DIR.mkdir(exist_ok=True)
     CATEGORIES_DIR.mkdir(exist_ok=True)
+    missing_policy_pages = [
+        url.rsplit("/", 1)[-1] for url in POLICY_PAGE_URLS
+        if not (ROOT_DIR / url.rsplit("/", 1)[-1]).is_file()
+    ]
+    if missing_policy_pages:
+        raise RuntimeError("Missing policy pages required for sitemap: " + ", ".join(missing_policy_pages))
+    feed_availability_by_id = load_feed_availability()
     expected_product_names: set[str] = set()
     indexable_urls: list[str] = []
     indexable_count = 0
     for product in products:
-        html_page, indexable, canonical = product_page(product, category_urls)
+        html_page, indexable, canonical = product_page(product, category_urls, feed_availability_by_id)
         filename = product_slug(product) + ".html"
         expected_product_names.add(filename)
         (PRODUCTS_DIR / filename).write_text(html_page, encoding="utf-8")
@@ -443,7 +572,7 @@ def main() -> None:
     remove_stale_html(CATEGORIES_DIR, expected_category_names)
 
     update_home_category_links(category_entries)
-    write_sitemap([ROOT + "/", *category_urls_in_sitemap, *indexable_urls])
+    write_sitemap([ROOT + "/", *POLICY_PAGE_URLS, *category_urls_in_sitemap, *indexable_urls])
     not_indexed = len(products) - indexable_count
     print(
         f"Generated {len(products)} product pages ({indexable_count} indexable, "
