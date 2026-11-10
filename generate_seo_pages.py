@@ -27,6 +27,11 @@ PLACEHOLDERS = {
     "null", "not available", "description not available", "details not available",
 }
 REVIEW_REQUIRED_CATEGORY_TERMS = ("health", "sexual")
+REVIEW_REQUIRED_PRODUCT_TERMS = (
+    "sexual", "erectile", "penis", "libido", "testosterone", "supplement",
+    "weight loss", "blood pressure", "blood sugar", "diabetes", "hypertension",
+    "medicine", "medication", "cure", "treats", "treatment", "pain relief",
+)
 
 PAGE_CSS = """
 :root{color-scheme:light;--ink:#151b2c;--muted:#5d6575;--brand:#111827;--accent:#f6c928;--line:#e4e8ef;--soft:#f6f8fb}
@@ -118,7 +123,13 @@ def image_url(product: dict) -> str:
 
 def is_indexable(product: dict) -> bool:
     category = one_line(product.get("category", "")).casefold()
-    review_required = any(term in category for term in REVIEW_REQUIRED_CATEGORY_TERMS)
+    searchable = " ".join(
+        [one_line(product.get("name", "")), one_line(product.get("description", ""))]
+    ).casefold()
+    sensitive_category = any(term in category for term in REVIEW_REQUIRED_CATEGORY_TERMS)
+    review_required = sensitive_category and any(
+        term in searchable for term in REVIEW_REQUIRED_PRODUCT_TERMS
+    )
     return bool(usable_description(product)) and not review_required
 
 
