@@ -10,21 +10,21 @@ const CONFIG = {
 const T = {
   en: {hero:"Everything for your home, family and fitness", sub:"Home appliances, kitchen, baby, headphones, fashion and fitness. Delivered across Sri Lanka.",
     search:"Search name, product code, or category…", searchAction:"Search", all:"All categories", cart:"Cart", add:"Add to cart", total:"Total", name:"Your name", phone:"Phone number",
-    address:"Delivery address", cod:"Cash on delivery", order:"Order via WhatsApp", empty:"Your cart is empty", none:"No products found",
+    address:"Delivery address", cod:"Cash on delivery", order:"Order via WhatsApp", empty:"Your cart is empty", none:"No products found", viewCart:"View cart", checkout:"Checkout",
     remove:"Remove", prev:"Prev", next:"Next", items:"products", s0:"Recommended", s1:"Price: low to high", s2:"Price: high to low", s3:"Newest first", fill:"Please enter your name, mobile number and delivery address.",
     allSubcategories:"All subcategories", allStores:"All shops", store:"Shop", anyWarranty:"Any warranty status", withWarranty:"Warranty / return listed", noWarranty:"No warranty stated", noWarrantyInfo:"Warranty not listed", payment:"Payment method", codOption:"Cash on delivery", bankOption:"Bank transfer", bankNote:"Choose bank transfer to request payment instructions in WhatsApp. No payment is made on this site.", categoryLabel:"Category", subcategoryLabel:"Subcategory", storeLabel:"Shop", warrantyLabel:"Warranty", sortLabel:"Sort",
     shopnow:"Shop now", allp:"All products", f1:"Island-wide delivery", f2:"Cash on delivery across Sri Lanka", f3:"Order on WhatsApp", f4:"Quality products",
     wa:"Confirm photo & details on WhatsApp", share:"Share product", copied:"Product link copied", merchant:"Shop", code:"Code", gl:"See photos on Google", sample:"Product images may be supplier samples and may differ in colour or model. Confirm the exact item, specifications and availability on WhatsApp before ordering.", sub:"Items", deliv:"Delivery", ddisc:"Delivery discount"},
   si: {hero:"ඔබේ නිවසට, පවුලට සහ ශරීර යෝග්‍යතාවයට අවශ්‍ය සියල්ල", sub:"ගෘහ උපකරණ, මුළුතැන්ගෙය, ළමා අවශ්‍යතා, හෙඩ්ෆෝන්, ඇඳුම් සහ ෆිට්නස්. ශ්‍රී ලංකාව පුරා බෙදාහරිනු ලැබේ.",
     search:"නම, නිෂ්පාදන කේතය හෝ ප්‍රවර්ගය අනුව සොයන්න…", searchAction:"සොයන්න", all:"සියලුම ප්‍රවර්ග", cart:"කරත්තය", add:"කරත්තයට එක් කරන්න", total:"මුළු මුදල", name:"ඔබේ නම", phone:"දුරකථන අංකය",
-    address:"බෙදාහැරීමේ ලිපිනය", cod:"බඩු ලැබුණු පසු මුදල් ගෙවීම", order:"WhatsApp හරහා ඇණවුම් කරන්න", empty:"කරත්තය හිස්ය", none:"නිෂ්පාදන හමු නොවීය",
+    address:"බෙදාහැරීමේ ලිපිනය", cod:"බඩු ලැබුණු පසු මුදල් ගෙවීම", order:"WhatsApp හරහා ඇණවුම් කරන්න", empty:"කරත්තය හිස්ය", none:"නිෂ්පාදන හමු නොවීය", viewCart:"කරත්තය බලන්න", checkout:"ගෙවීමට යන්න",
     remove:"ඉවත් කරන්න", prev:"පෙර", next:"ඊළඟ", items:"නිෂ්පාදන", s0:"නිර්දේශිත", s1:"මිල: අඩු සිට වැඩි", s2:"මිල: වැඩි සිට අඩු", s3:"අලුත්ම පළමුව", fill:"කරුණාකර නම, ජංගම දුරකථන අංකය සහ ලිපිනය ඇතුළත් කරන්න.",
     allSubcategories:"සියලු උපප්‍රවර්ග", allStores:"සියලු වෙළඳසැල්", store:"වෙළඳසැල", anyWarranty:"ඕනෑම වගකීම් තත්ත්වයක්", withWarranty:"වගකීම් / ආපසු භාරගැනීම සඳහන්", noWarranty:"වගකීමක් නොමැති බව සඳහන්", noWarrantyInfo:"වගකීම් තොරතුරු සඳහන් නැත", payment:"ගෙවීමේ ක්‍රමය", codOption:"භාණ්ඩ ලැබුණු පසු මුදල් ගෙවීම", bankOption:"බැංකු මාරු කිරීම", bankNote:"බැංකු මාරු කිරීම තෝරන්න; ගෙවීම් උපදෙස් WhatsApp හරහා ඉල්ලන්න. මෙම වෙබ් අඩවියේ ගෙවීමක් සිදු නොවේ.", categoryLabel:"ප්‍රවර්ගය", subcategoryLabel:"උපප්‍රවර්ගம்", storeLabel:"වෙළඳසැල", warrantyLabel:"වගකීම", sortLabel:"පිළිවෙළ",
     shopnow:"දැන්ම මිලදී ගන්න", allp:"සියලුම නිෂ්පාදන", f1:"රට පුරා බෙදාහැරීම", f2:"ශ්‍රී ලංකාව පුරා බඩු ලැබුණු පසු මුදල් ගෙවීම", f3:"WhatsApp හරහා ඇණවුම්", f4:"ගුණාත්මක නිෂ්පාදන",
     wa:"WhatsApp හරහා සැබෑ ඡායාරූප සහ විස්තර", share:"නිෂ්පාදනය බෙදාගන්න", copied:"නිෂ්පාදන සබැඳිය පිටපත් කළා", merchant:"වෙළඳසැල", code:"කේතය", gl:"Google හි ඡායාරූප බලන්න", sample:"පෙන්වන රූපය නිදර්ශනයකි. සැබෑ ඡායාරූප සහ වැඩි විස්තර සඳහා WhatsApp හරහා අපෙන් අසන්න.", sub:"භාණ්ඩ", deliv:"බෙදාහැරීම", ddisc:"බෙදාහැරීමේ වට්ටම"},
   ta: {hero:"உங்கள் வீடு, குடும்பம் மற்றும் உடற்பயிற்சிக்கு தேவையான அனைத்தும்", sub:"வீட்டு உபகரணங்கள், சமையலறை, குழந்தைப் பொருட்கள், ஹெட்போன்கள், ஆடைகள் மற்றும் உடற்பயிற்சி. இலங்கை முழுவதும் விநியோகம்.",
     search:"பெயர், தயாரிப்பு குறியீடு அல்லது வகை மூலம் தேடுங்கள்…", searchAction:"தேடுங்கள்", all:"அனைத்து வகைகள்", cart:"வண்டி", add:"வண்டியில் சேர்", total:"மொத்தம்", name:"உங்கள் பெயர்", phone:"தொலைபேசி எண்",
-    address:"விநியோக முகவரி", cod:"பொருள் கிடைத்ததும் பணம் செலுத்துதல்", order:"WhatsApp மூலம் ஆர்டர் செய்யுங்கள்", empty:"வண்டி காலியாக உள்ளது", none:"பொருட்கள் எதுவும் இல்லை",
+    address:"விநியோக முகவரி", cod:"பொருள் கிடைத்ததும் பணம் செலுத்துதல்", order:"WhatsApp மூலம் ஆர்டர் செய்யுங்கள்", empty:"வண்டி காலியாக உள்ளது", none:"பொருட்கள் எதுவும் இல்லை", viewCart:"வண்டியைப் பார்க்க", checkout:"செலுத்தி முடிக்க",
     remove:"நீக்கு", prev:"முந்தையது", next:"அடுத்தது", items:"பொருட்கள்", s0:"பரிந்துரைக்கப்பட்டவை", s1:"விலை: குறைவு முதல் அதிகம்", s2:"விலை: அதிகம் முதல் குறைவு", s3:"புதியவை முதலில்", fill:"பெயர், கைபேசி எண் மற்றும் விநியோக முகவரியை உள்ளிடவும்.",
     allSubcategories:"அனைத்து துணை வகைகள்", allStores:"அனைத்து கடைகள்", store:"கடை", anyWarranty:"எந்த உத்தரவாத நிலையும்", withWarranty:"உத்தரவாதம் / திருப்பி அளித்தல் குறிப்பிடப்பட்டுள்ளது", noWarranty:"உத்தரவாதம் இல்லை என்று குறிப்பிடப்பட்டுள்ளது", noWarrantyInfo:"உத்தரவாத விவரம் இல்லை", payment:"கட்டண முறை", codOption:"பொருள் கிடைத்ததும் பணம்", bankOption:"வங்கி பரிமாற்றம்", bankNote:"வங்கி பரிமாற்றத்தைத் தேர்ந்தெடுத்து WhatsApp இல் கட்டண விவரங்களைக் கோருங்கள். இந்த தளத்தில் பணம் செலுத்தப்படாது.", categoryLabel:"வகை", subcategoryLabel:"துணை வகை", storeLabel:"கடை", warrantyLabel:"உத்தரவாதம்", sortLabel:"வரிசை",
     shopnow:"இப்போதே வாங்குங்கள்", allp:"அனைத்து பொருட்கள்", f1:"நாடு முழுவதும் விநியோகம்", f2:"இலங்கை முழுவதும் பொருள் கிடைத்ததும் பணம்", f3:"WhatsApp மூலம் ஆர்டர்", f4:"தரமான பொருட்கள்",
@@ -433,6 +433,11 @@ function renderPager() {
 }
 
 function saveCart() { store.set("cart", cart); }
+function showCartDialog(focusCheckout = false) {
+  const dlg = $("#cartDlg");
+  if (!dlg.open) dlg.showModal();
+  if (focusCheckout) requestAnimationFrame(() => { $("#checkout").scrollIntoView({behavior:"smooth", block:"start"}); $("#cName").focus({preventScroll:true}); });
+}
 function addToCart(id) { cart[id] = (cart[id] || 0) + 1; saveCart(); renderCart(); }
 function renderCart() {
   const box = $("#cartItems"); box.replaceChildren();
@@ -463,6 +468,12 @@ function renderCart() {
   $("#cartTotal").textContent = money(sub + dl.pay);
   $("#cartCount").textContent = count;
   $("#order").disabled = !count;
+  const toast = $("#cartToast");
+  if (toast) {
+    toast.hidden = !count;
+    $("#toastCount").textContent = count + " " + t("items");
+    $("#toastTotal").textContent = money(sub + dl.pay);
+  }
 }
 
 function updatePaymentNote() {
@@ -527,9 +538,11 @@ searchInput.addEventListener("change", submitSearch);
 $("#searchBtn").onclick = submitSearch;
 $("#cat").onchange = () => { clearOnly = false; populateSubcategoryOptions(); filter(); buildCatNav(); };
 $("#subcat").onchange = filter; $("#storeFilter").onchange = filter; $("#warrantyFilter").onchange = filter; $("#sort").onchange = filter;
-$("#cartBtn").onclick = () => $("#cartDlg").showModal();
+$("#cartBtn").onclick = () => showCartDialog();
 $("#closeCart").onclick = () => $("#cartDlg").close();
 $("#cartDlg").addEventListener("click", e => { if (e.target.id === "cartDlg") e.target.close(); });
+$("#toastViewCart").onclick = () => showCartDialog();
+$("#toastCheckout").onclick = () => showCartDialog(true);
 $("#order").onclick = sendOrder;
 $("#paymentMethod").onchange = updatePaymentNote;
 document.addEventListener("click", e => { const b = e.target.closest("[data-cat]"); if (b) goCat(b.dataset.cat); const dl = e.target.closest("[data-deals]"); if (dl) { $("#cat").value = ""; clearOnly = true; filter(); buildCatNav(); $("#shop").scrollIntoView({behavior: "smooth"}); } });
