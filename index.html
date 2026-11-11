@@ -210,10 +210,18 @@
   <div id="cartItems"></div>
   <div class="total"><span data-t="total">Total</span><b id="cartTotal"></b></div>
   <div id="checkout">
-    <input id="cName"  placeholder="Your name" autocomplete="name">
-    <input id="cPhone" placeholder="Phone number" type="tel" autocomplete="tel">
-    <textarea id="cAddr" placeholder="Delivery address" rows="3" autocomplete="street-address"></textarea>
-    <p class="note" data-t="cod">Cash on delivery</p>
+    <label for="cName" data-t="name">Your name</label>
+    <input id="cName" data-ph="name" placeholder="Your name" autocomplete="name">
+    <label for="cPhone" data-t="phone">Mobile number</label>
+    <input id="cPhone" data-ph="phone" placeholder="Phone number" type="tel" inputmode="tel" autocomplete="tel">
+    <label for="cAddr" data-t="address">Delivery address</label>
+    <textarea id="cAddr" data-ph="address" placeholder="Delivery address" rows="3" autocomplete="street-address"></textarea>
+    <label for="paymentMethod" data-t="payment">Payment method</label>
+    <select id="paymentMethod">
+      <option value="cod" data-t="codOption">Cash on delivery</option>
+      <option value="bank" data-t="bankOption">Bank transfer</option>
+    </select>
+    <p id="paymentNote" class="note" data-t="cod">Cash on delivery</p>
     <button id="order" class="wa" data-t="order">Order via WhatsApp</button>
   </div>
 </dialog>

@@ -100,14 +100,16 @@ dialog[open]{display:flex;flex-direction:column}
 .dhead button{background:none;border:0;font-size:1.3rem;cursor:pointer}
 
 /* ═══ CART ═══ */
-#cartItems{flex:1;overflow:auto;padding:0 1rem}
+#cartItems{flex:1;min-height:0;overflow:auto;padding:0 1rem}
 .row{display:grid;grid-template-columns:1fr auto;gap:.3rem .75rem;padding:.75rem 0;border-bottom:1px solid var(--line)}
 .row .qty{display:flex;align-items:center;gap:.4rem}
 .row .qty button{width:2rem;height:2rem;border-radius:6px;border:1px solid var(--line);background:#fff;cursor:pointer}
 .row .rm{background:none;border:0;color:var(--red);cursor:pointer;font-size:.8rem;padding:0;text-align:left}
 .total{display:flex;justify-content:space-between;padding:1rem;font-size:1.1rem;border-top:1px solid var(--line)}
-#checkout{display:grid;gap:.6rem;padding:0 1rem 1rem}
-#checkout input,#checkout textarea{padding:.7rem;border-radius:8px;border:1px solid var(--line);width:100%}
+#checkout{display:grid;gap:.45rem;padding:.8rem 1rem max(1rem,env(safe-area-inset-bottom));background:#fff;box-shadow:0 -4px 14px rgba(20,28,43,.08);flex:0 0 auto}
+#checkout label{font-size:.78rem;font-weight:700;color:var(--muted)}
+#checkout input,#checkout textarea,#checkout select{padding:.7rem;border-radius:8px;border:1px solid var(--line);width:100%;background:#fff}
+#checkout .wa{width:100%;min-height:3rem}
 .note{margin:0;color:var(--muted);font-size:.85rem}
 .wa{padding:.85rem;border:0;border-radius:10px;background:var(--wa);color:#06220f;font-weight:800;cursor:pointer}
 .wa:disabled{opacity:.5}
