@@ -11,6 +11,30 @@ CATEGORY_OVERRIDES = [
     (re.compile(r"\b(?:wardrobe|closet organizer|closet organiser)\b", re.I), "Home & Storage"),
 ]
 
+CATEGORY_ALIASES = {
+    "audiospeakers": "Audio & Smartwatches",
+    "audiosmartwatch": "Audio & Smartwatches",
+    "babyneed": "Kids & Toys",
+    "beautyfashion": "Health & Beauty",
+    "commercialtoolshardware": "Tools & Hardware",
+    "computeraccessories": "Electronics & Gadgets",
+    "electricalitems": "Lighting & Solar",
+    "electricalsupplies": "Lighting & Solar",
+    "electronics": "Electronics & Gadgets",
+    "healthandbeauty": "Health & Beauty",
+    "healthpersonalcare": "Health & Beauty",
+    "hardware": "Tools & Hardware",
+    "homelivinghomeappliancesaccessories": "Home Appliances",
+    "kidsbaby": "Kids & Toys",
+    "kitchenhomeappliance": "Cleaning",
+    "kitchengadgetshomeappliances": "Home Appliances",
+    "ladiesfashion": "Clothing & Footwear",
+    "outdoorhomeappliance": "Lighting & Solar",
+    "personalcarebeautygadgets": "Health & Beauty",
+    "securitycamera": "Electronics & Gadgets",
+    "vehicleaccessoriesmotorbikeaccessories": "Car & Bike",
+}
+
 RULES = {
     "Audio & Smartwatches": [
         ("Earbuds & Earphones", r"earbud|earphone|headphone|headset|neckband"),
@@ -180,6 +204,8 @@ RULES = {
 
 def classify_product(category: str, name: str, description: str = "") -> tuple[str, str]:
     category = str(category or "Uncategorized").strip() or "Uncategorized"
+    category_key = re.sub(r"[^a-z0-9]", "", category.casefold())
+    category = CATEGORY_ALIASES.get(category_key, category)
     name = str(name or "").strip()
     description = str(description or "").strip()
     if category.casefold() in {
