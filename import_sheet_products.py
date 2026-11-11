@@ -17,6 +17,7 @@ SHEET_CSV_URL = (
 )
 CATALOG = Path("products_final.json")
 IMAGE_DIR = Path("images/sheet")
+REMOVED_PRODUCT_IDS = Path("removed_product_ids.json")
 # Product IDs intentionally withheld from the public catalog, even if the Sheet row remains Ready.
 EXCLUDED_PRODUCT_IDS = {
     "45-LACE-COTTON-SAREES",
@@ -131,6 +132,16 @@ def normalize_image_url(value: str) -> str:
     return value
 
 
+def removed_product_ids() -> set[str]:
+    """Load exact product IDs removed through the editable Excel control workbook."""
+    if not REMOVED_PRODUCT_IDS.exists():
+        return set()
+    values = json.loads(REMOVED_PRODUCT_IDS.read_text(encoding="utf-8"))
+    if not isinstance(values, list):
+        raise ValueError("removed_product_ids.json must contain a JSON array")
+    return {str(value).strip().upper() for value in values if str(value).strip()}
+
+
 def fetch_csv() -> list[list[str]]:
     request = Request(SHEET_CSV_URL, headers={"User-Agent": "Leopis-Sheet-Importer/1.0"})
     with urlopen(request, timeout=30) as response:
@@ -154,7 +165,7 @@ def download_sheet_image(product_id: str, image_url: str) -> str:
 
 def make_product(row: list[str], indexes: dict[str, int | None]) -> tuple[dict, str | None]:
     product_id = cell(row, indexes["id"])
-    if product_id in EXCLUDED_PRODUCT_IDS:
+    if product_id.upper() in {value.upper() for value in EXCLUDED_PRODUCT_IDS | removed_product_ids()}:
         return {}, None
     name = cell(row, indexes["name"])
     price = parse_price(cell(row, indexes["price"]))

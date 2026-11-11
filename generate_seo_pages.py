@@ -21,6 +21,9 @@ PRODUCTS_DIR = ROOT_DIR / "products"
 CATEGORIES_DIR = ROOT_DIR / "categories"
 SITEMAP_PATH = ROOT_DIR / "sitemap.xml"
 FEED_PATH = ROOT_DIR / "google-merchant-feed.tsv"
+CAMPAIGN_IDS_PATH = ROOT_DIR / "meta_campaign_ids.json"
+FEATURED_PAGE_PATH = ROOT_DIR / "featured-products.html"
+FEATURED_PAGE_URL = f"{ROOT}/featured-products.html"
 POLICY_PAGE_URLS = [
     f"{ROOT}/about.html",
     f"{ROOT}/delivery.html",
@@ -476,6 +479,74 @@ def category_page(category: str, products: list[dict], product_urls: dict[str, s
     return body, canonical if indexable else ""
 
 
+def featured_products_page(products: list[dict], product_urls: dict[str, str]) -> str:
+    canonical = FEATURED_PAGE_URL
+    title = "Featured Products in Sri Lanka | Leopis Digital"
+    description = (
+        "Browse 50 featured products from Leopis Digital in Sri Lanka. View current LKR prices, "
+        "product details, ordering information and island-wide delivery options."
+    )
+    share_image = image_url(products[0]) if products else ROOT + "/logo.png"
+    head = page_head(title, description, canonical, share_image, "website")
+    cards = []
+    item_list = []
+    for position, product in enumerate(products, 1):
+        product_id = str(product["id"])
+        name = one_line(product.get("name"))
+        category = one_line(product.get("category"))
+        price = price_text(price_value(product))
+        url = product_urls[product_id]
+        img = image_url(product)
+        image_block = (
+            f'<img src="{html.escape(img, quote=True)}" alt="{html.escape(name, quote=True)}" loading="lazy">'
+            if img else ""
+        )
+        cards.append(
+            f'<a class="product-card" href="{html.escape(url, quote=True)}">{image_block}'
+            f'<div class="product-card-body"><h2>{html.escape(truncate(name, 80))}</h2>'
+            f'<span class="small">{html.escape(category)} · Code {html.escape(product_id)}</span>'
+            f'<p class="price">Rs. {html.escape(price)}</p>'
+            f'<span class="small">View details and ordering options</span></div></a>'
+        )
+        item_list.append({
+            "@type": "ListItem",
+            "position": position,
+            "name": name,
+            "url": url,
+        })
+
+    schema = json_ld({
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": "Featured Products in Sri Lanka",
+        "url": canonical,
+        "inLanguage": "en-LK",
+        "isPartOf": {"@type": "WebSite", "name": "Leopis Digital", "url": ROOT + "/"},
+        "mainEntity": {
+            "@type": "ItemList",
+            "numberOfItems": len(products),
+            "itemListElement": item_list,
+        },
+    })
+    crumbs = f'<nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> &rsaquo; <span>Featured products</span></nav>'
+    body = f'''{head}
+<body>
+{header_html()}
+<main class="wrap">
+{crumbs}
+<h1>Featured Products in Sri Lanka</h1>
+<p class="category-intro">Explore 50 selected products across home, kitchen, gadgets, lighting, car and family categories. Prices shown are the current prices listed on the Leopis Digital website. Product availability is confirmed when ordering; delivery charges are separate and shown on the <a href="/delivery.html">delivery page</a>.</p>
+<section class="product-grid" aria-label="50 featured products">{''.join(cards)}</section>
+<section class="store-info"><h2>Ordering from Leopis Digital</h2><p>Open any product to check its details and order options. Cash on delivery is available in Sri Lanka. <a href="/delivery.html">See delivery charges</a> · <a href="/returns-warranty.html">Returns and warranty</a> · <a href="/">Browse all products</a>.</p></section>
+</main>
+<footer class="footer wrap">Leopis (Pvt) Ltd · Sri Lanka · <a href="/">Leopis Digital</a></footer>
+{schema}
+</body>
+</html>
+'''
+    return body
+
+
 def update_home_category_links(categories: list[tuple[str, str, int]]) -> None:
     source = INDEX_PATH.read_text(encoding="utf-8")
     if CATEGORY_LINKS_BEGIN not in source or CATEGORY_LINKS_END not in source:
@@ -528,6 +599,17 @@ def main() -> None:
     product_urls = {str(p["id"]): f"{ROOT}/products/{product_slug(p)}.html" for p in products}
     if len(set(product_urls.values())) != len(products):
         raise RuntimeError("Product page slug collision; fix the catalog names or IDs before publishing")
+    campaign_ids = json.loads(CAMPAIGN_IDS_PATH.read_text(encoding="utf-8"))
+    if not isinstance(campaign_ids, list) or len(campaign_ids) != 50 or len(set(map(str, campaign_ids))) != 50:
+        raise RuntimeError("meta_campaign_ids.json must contain exactly 50 unique product IDs")
+    products_by_id = {str(product["id"]): product for product in products}
+    missing_campaign_ids = [str(item) for item in campaign_ids if str(item) not in products_by_id]
+    if missing_campaign_ids:
+        raise RuntimeError("Featured campaign product IDs are missing from the catalog: " + ", ".join(missing_campaign_ids))
+    campaign_products = [products_by_id[str(item)] for item in campaign_ids]
+    nonindexable_campaign_ids = [str(item) for item in campaign_ids if not is_indexable(products_by_id[str(item)])]
+    if nonindexable_campaign_ids:
+        raise RuntimeError("Featured campaign products must have indexable product pages: " + ", ".join(nonindexable_campaign_ids))
     categories = sorted({one_line(p.get("category")) for p in products if one_line(p.get("category"))})
     category_urls = {category: f"{ROOT}/categories/{category_slug(category)}.html" for category in categories}
     if len(set(category_urls.values())) != len(categories):
@@ -572,12 +654,13 @@ def main() -> None:
     remove_stale_html(CATEGORIES_DIR, expected_category_names)
 
     update_home_category_links(category_entries)
-    write_sitemap([ROOT + "/", *POLICY_PAGE_URLS, *category_urls_in_sitemap, *indexable_urls])
+    FEATURED_PAGE_PATH.write_text(featured_products_page(campaign_products, product_urls), encoding="utf-8")
+    write_sitemap([ROOT + "/", *POLICY_PAGE_URLS, FEATURED_PAGE_URL, *category_urls_in_sitemap, *indexable_urls])
     not_indexed = len(products) - indexable_count
     print(
         f"Generated {len(products)} product pages ({indexable_count} indexable, "
         f"{not_indexed} noindex until descriptions/claims are reviewed), "
-        f"{len(categories)} category pages, and sitemap.xml."
+        f"{len(categories)} category pages, a 50-product featured page, and sitemap.xml."
     )
 
 

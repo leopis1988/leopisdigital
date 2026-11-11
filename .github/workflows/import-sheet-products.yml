@@ -4,6 +4,10 @@ on:
   schedule:
     - cron: "*/15 * * * *"
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "web-product-replacements.xlsx"
 
 permissions:
   contents: write
@@ -28,10 +32,13 @@ jobs:
       - name: Install Excel export dependency
         run: python -m pip install openpyxl
 
+      - name: Apply Excel stock actions before product import
+        run: python sync_sheet_corrections.py --prepare
+
       - name: Import Ready products
         run: python import_sheet_products.py
 
-      - name: Sync rate corrections and Excel workbook
+      - name: Apply Excel price, image, and product-detail edits
         run: python sync_sheet_corrections.py
 
       - name: Generate SEO product and category pages
@@ -41,7 +48,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add products_final.json images/sheet web-product-replacements.xlsx index.html app.js sitemap.xml products categories generate_seo_pages.py
+          git add products_final.json images/sheet web-product-replacements.xlsx removed_product_ids.json product_image_overrides.json index.html app.js sitemap.xml products categories generate_seo_pages.py sync_sheet_corrections.py import_sheet_products.py meta_campaign_ids.json featured-products.html
           if git diff --cached --quiet; then
             echo "No catalog changes to commit."
           else
