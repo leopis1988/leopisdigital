@@ -58,6 +58,10 @@ for alias, category in [
     ("kids / baby", "Kids & Toys"),
     ("ladies / fashion", "Clothing & Footwear"),
     ("outdoor / home appliance", "Lighting & Solar"),
+    ("Power bank", "Phone Accessories"),
+    ("Power banks", "Phone Accessories"),
+    ("Rack", "Home & Storage"),
+    ("Racks", "Home & Storage"),
 ]:
     CATEGORY_ALIASES[norm(alias)] = category
 
