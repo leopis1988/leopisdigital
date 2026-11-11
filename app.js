@@ -36,7 +36,28 @@ const store = {
   get(k, d) { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch (e) { return d; } },
   set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
 };
-let lang = store.get("lang", "en"), products = [], catalogOrder = [], catalogPosition = new Map(), newProductIds = new Set(), byId = {}, view = [], page = 1, cart = store.get("cart", {});
+function cleanCart(value) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return {};
+  const source = value.items && typeof value.items === "object" ? value.items : value;
+  return Object.fromEntries(Object.entries(source).filter(([id, qty]) => /^\S+$/.test(String(id)) && Number.isFinite(Number(qty)) && Number(qty) > 0).map(([id, qty]) => [id, Math.floor(Number(qty))]));
+}
+function cartSnapshot(value, updatedAt) { return JSON.stringify({items: cleanCart(value), updatedAt: updatedAt || Date.now()}); }
+function readCartSnapshot(raw) {
+  if (!raw) return null;
+  try {
+    const parsed = JSON.parse(raw);
+    return {items: cleanCart(parsed), updatedAt: Number(parsed && parsed.updatedAt) || 0};
+  } catch (e) { return {items: cleanCart(null), updatedAt: 0}; }
+}
+function loadCart() {
+  const candidates = [];
+  try { candidates.push(readCartSnapshot(localStorage.getItem("cart"))); } catch (e) {}
+  try { candidates.push(readCartSnapshot(sessionStorage.getItem("leopis_cart"))); } catch (e) {}
+  try { const match = document.cookie.match(/(?:^|; )leopis_cart=([^;]*)/); candidates.push(readCartSnapshot(match ? decodeURIComponent(match[1]) : "")); } catch (e) {}
+  const valid = candidates.filter(Boolean).sort((a, b) => b.updatedAt - a.updatedAt);
+  return valid.length ? valid[0].items : {};
+}
+let lang = store.get("lang", "en"), products = [], catalogOrder = [], catalogPosition = new Map(), newProductIds = new Set(), byId = {}, view = [], page = 1, cart = loadCart();
 const t = k => T[lang][k];
 const money = n => CONFIG.currency + " " + Number(n).toLocaleString("en-US");
 const pname = p => p["name_" + lang] || p.name;
@@ -432,7 +453,13 @@ function renderPager() {
   btn(t("next"), page + 1, false, page === pages);
 }
 
-function saveCart() { store.set("cart", cart); }
+function saveCart() {
+  const payload = cartSnapshot(cart);
+  try { localStorage.setItem("cart", payload); } catch (e) {}
+  try { sessionStorage.setItem("leopis_cart", payload); } catch (e) {}
+  try { document.cookie = "leopis_cart=" + encodeURIComponent(payload) + "; Max-Age=2592000; Path=/; SameSite=Lax"; } catch (e) {}
+}
+saveCart();
 function showCartDialog(focusCheckout = false) {
   const dlg = $("#cartDlg");
   if (!dlg.open) dlg.showModal();
