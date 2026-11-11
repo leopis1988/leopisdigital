@@ -88,6 +88,22 @@ def category_slug(category: str) -> str:
     return slugify(category)
 
 
+def unique_category_slugs(categories: list[str]) -> dict[str, str]:
+    """Return stable unique slugs so similar Sheet labels cannot break publishing."""
+    result: dict[str, str] = {}
+    used: set[str] = set()
+    for category in sorted(categories):
+        base = category_slug(category)
+        candidate = base
+        suffix = 2
+        while candidate in used:
+            candidate = f"{base}-{suffix}"
+            suffix += 1
+        result[category] = candidate
+        used.add(candidate)
+    return result
+
+
 def usable_description(product: dict) -> str:
     description = one_line(product.get("description", ""))
     if description.casefold() in PLACEHOLDERS:
@@ -642,9 +658,8 @@ def main() -> None:
     if nonindexable_campaign_ids:
         raise RuntimeError("Featured campaign products must have indexable product pages: " + ", ".join(nonindexable_campaign_ids))
     categories = sorted({one_line(p.get("category")) for p in products if one_line(p.get("category"))})
-    category_urls = {category: f"{ROOT}/categories/{category_slug(category)}.html" for category in categories}
-    if len(set(category_urls.values())) != len(categories):
-        raise RuntimeError("Category page slug collision; fix category names before publishing")
+    category_slugs = unique_category_slugs(categories)
+    category_urls = {category: f"{ROOT}/categories/{category_slugs[category]}.html" for category in categories}
 
     PRODUCTS_DIR.mkdir(exist_ok=True)
     CATEGORIES_DIR.mkdir(exist_ok=True)
@@ -676,7 +691,7 @@ def main() -> None:
     category_urls_in_sitemap: list[str] = []
     for category in categories:
         page, canonical = category_page(category, by_category[category], product_urls, category_urls)
-        filename = category_slug(category) + ".html"
+        filename = category_urls[category].rsplit("/", 1)[-1]
         expected_category_names.add(filename)
         (CATEGORIES_DIR / filename).write_text(page, encoding="utf-8")
         category_entries.append((category, f"/categories/{filename}", len(by_category[category])))
