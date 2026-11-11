@@ -9,21 +9,24 @@ const CONFIG = {
 
 const T = {
   en: {hero:"Everything for your home, family and fitness", sub:"Home appliances, kitchen, baby, headphones, fashion and fitness. Delivered across Sri Lanka.",
-    search:"Search name, product code, or category…", all:"All categories", cart:"Cart", add:"Add to cart", total:"Total", name:"Your name", phone:"Phone number",
+    search:"Search name, product code, or category…", searchAction:"Search", all:"All categories", cart:"Cart", add:"Add to cart", total:"Total", name:"Your name", phone:"Phone number",
     address:"Delivery address", cod:"Cash on delivery", order:"Order via WhatsApp", empty:"Your cart is empty", none:"No products found",
-    remove:"Remove", prev:"Prev", next:"Next", items:"products", s0:"Recommended", s1:"Price: low to high", s2:"Price: high to low", fill:"Please fill in name, phone and address.",
+    remove:"Remove", prev:"Prev", next:"Next", items:"products", s0:"Recommended", s1:"Price: low to high", s2:"Price: high to low", s3:"Newest first", fill:"Please enter your name, mobile number and delivery address.",
+    allSubcategories:"All subcategories", allStores:"All shops", store:"Shop", anyWarranty:"Any warranty status", withWarranty:"Warranty / return listed", noWarranty:"No warranty stated", noWarrantyInfo:"Warranty not listed", payment:"Payment method", codOption:"Cash on delivery", bankOption:"Bank transfer", bankNote:"Choose bank transfer to request payment instructions in WhatsApp. No payment is made on this site.", categoryLabel:"Category", subcategoryLabel:"Subcategory", storeLabel:"Shop", warrantyLabel:"Warranty", sortLabel:"Sort",
     shopnow:"Shop now", allp:"All products", f1:"Island-wide delivery", f2:"Cash on delivery across Sri Lanka", f3:"Order on WhatsApp", f4:"Quality products",
-    wa:"Confirm photo & details on WhatsApp", share:"Share product", copied:"Product link copied", merchant:"Store", code:"Code", gl:"See photos on Google", sample:"Product images may be supplier samples and may differ in colour or model. Confirm the exact item, specifications and availability on WhatsApp before ordering.", sub:"Items", deliv:"Delivery", ddisc:"Delivery discount"},
+    wa:"Confirm photo & details on WhatsApp", share:"Share product", copied:"Product link copied", merchant:"Shop", code:"Code", gl:"See photos on Google", sample:"Product images may be supplier samples and may differ in colour or model. Confirm the exact item, specifications and availability on WhatsApp before ordering.", sub:"Items", deliv:"Delivery", ddisc:"Delivery discount"},
   si: {hero:"ඔබේ නිවසට, පවුලට සහ ශරීර යෝග්‍යතාවයට අවශ්‍ය සියල්ල", sub:"ගෘහ උපකරණ, මුළුතැන්ගෙය, ළමා අවශ්‍යතා, හෙඩ්ෆෝන්, ඇඳුම් සහ ෆිට්නස්. ශ්‍රී ලංකාව පුරා බෙදාහරිනු ලැබේ.",
-    search:"නම, නිෂ්පාදන කේතය හෝ ප්‍රවර්ගය අනුව සොයන්න…", all:"සියලුම ප්‍රවර්ග", cart:"කරත්තය", add:"කරත්තයට එක් කරන්න", total:"මුළු මුදල", name:"ඔබේ නම", phone:"දුරකථන අංකය",
+    search:"නම, නිෂ්පාදන කේතය හෝ ප්‍රවර්ගය අනුව සොයන්න…", searchAction:"සොයන්න", all:"සියලුම ප්‍රවර්ග", cart:"කරත්තය", add:"කරත්තයට එක් කරන්න", total:"මුළු මුදල", name:"ඔබේ නම", phone:"දුරකථන අංකය",
     address:"බෙදාහැරීමේ ලිපිනය", cod:"බඩු ලැබුණු පසු මුදල් ගෙවීම", order:"WhatsApp හරහා ඇණවුම් කරන්න", empty:"කරත්තය හිස්ය", none:"නිෂ්පාදන හමු නොවීය",
-    remove:"ඉවත් කරන්න", prev:"පෙර", next:"ඊළඟ", items:"නිෂ්පාදන", s0:"නිර්දේශිත", s1:"මිල: අඩු සිට වැඩි", s2:"මිල: වැඩි සිට අඩු", fill:"කරුණාකර නම, දුරකථන අංකය සහ ලිපිනය ඇතුළත් කරන්න.",
+    remove:"ඉවත් කරන්න", prev:"පෙර", next:"ඊළඟ", items:"නිෂ්පාදන", s0:"නිර්දේශිත", s1:"මිල: අඩු සිට වැඩි", s2:"මිල: වැඩි සිට අඩු", s3:"අලුත්ම පළමුව", fill:"කරුණාකර නම, ජංගම දුරකථන අංකය සහ ලිපිනය ඇතුළත් කරන්න.",
+    allSubcategories:"සියලු උපප්‍රවර්ග", allStores:"සියලු වෙළඳසැල්", store:"වෙළඳසැල", anyWarranty:"ඕනෑම වගකීම් තත්ත්වයක්", withWarranty:"වගකීම් / ආපසු භාරගැනීම සඳහන්", noWarranty:"වගකීමක් නොමැති බව සඳහන්", noWarrantyInfo:"වගකීම් තොරතුරු සඳහන් නැත", payment:"ගෙවීමේ ක්‍රමය", codOption:"භාණ්ඩ ලැබුණු පසු මුදල් ගෙවීම", bankOption:"බැංකු මාරු කිරීම", bankNote:"බැංකු මාරු කිරීම තෝරන්න; ගෙවීම් උපදෙස් WhatsApp හරහා ඉල්ලන්න. මෙම වෙබ් අඩවියේ ගෙවීමක් සිදු නොවේ.", categoryLabel:"ප්‍රවර්ගය", subcategoryLabel:"උපප්‍රවර්ගம்", storeLabel:"වෙළඳසැල", warrantyLabel:"වගකීම", sortLabel:"පිළිවෙළ",
     shopnow:"දැන්ම මිලදී ගන්න", allp:"සියලුම නිෂ්පාදන", f1:"රට පුරා බෙදාහැරීම", f2:"ශ්‍රී ලංකාව පුරා බඩු ලැබුණු පසු මුදල් ගෙවීම", f3:"WhatsApp හරහා ඇණවුම්", f4:"ගුණාත්මක නිෂ්පාදන",
     wa:"WhatsApp හරහා සැබෑ ඡායාරූප සහ විස්තර", share:"නිෂ්පාදනය බෙදාගන්න", copied:"නිෂ්පාදන සබැඳිය පිටපත් කළා", merchant:"වෙළඳසැල", code:"කේතය", gl:"Google හි ඡායාරූප බලන්න", sample:"පෙන්වන රූපය නිදර්ශනයකි. සැබෑ ඡායාරූප සහ වැඩි විස්තර සඳහා WhatsApp හරහා අපෙන් අසන්න.", sub:"භාණ්ඩ", deliv:"බෙදාහැරීම", ddisc:"බෙදාහැරීමේ වට්ටම"},
   ta: {hero:"உங்கள் வீடு, குடும்பம் மற்றும் உடற்பயிற்சிக்கு தேவையான அனைத்தும்", sub:"வீட்டு உபகரணங்கள், சமையலறை, குழந்தைப் பொருட்கள், ஹெட்போன்கள், ஆடைகள் மற்றும் உடற்பயிற்சி. இலங்கை முழுவதும் விநியோகம்.",
-    search:"பெயர், தயாரிப்பு குறியீடு அல்லது வகை மூலம் தேடுங்கள்…", all:"அனைத்து வகைகள்", cart:"வண்டி", add:"வண்டியில் சேர்", total:"மொத்தம்", name:"உங்கள் பெயர்", phone:"தொலைபேசி எண்",
+    search:"பெயர், தயாரிப்பு குறியீடு அல்லது வகை மூலம் தேடுங்கள்…", searchAction:"தேடுங்கள்", all:"அனைத்து வகைகள்", cart:"வண்டி", add:"வண்டியில் சேர்", total:"மொத்தம்", name:"உங்கள் பெயர்", phone:"தொலைபேசி எண்",
     address:"விநியோக முகவரி", cod:"பொருள் கிடைத்ததும் பணம் செலுத்துதல்", order:"WhatsApp மூலம் ஆர்டர் செய்யுங்கள்", empty:"வண்டி காலியாக உள்ளது", none:"பொருட்கள் எதுவும் இல்லை",
-    remove:"நீக்கு", prev:"முந்தையது", next:"அடுத்தது", items:"பொருட்கள்", s0:"பரிந்துரைக்கப்பட்டவை", s1:"விலை: குறைவு முதல் அதிகம்", s2:"விலை: அதிகம் முதல் குறைவு", fill:"பெயர், தொலைபேசி எண் மற்றும் முகவரியை நிரப்பவும்.",
+    remove:"நீக்கு", prev:"முந்தையது", next:"அடுத்தது", items:"பொருட்கள்", s0:"பரிந்துரைக்கப்பட்டவை", s1:"விலை: குறைவு முதல் அதிகம்", s2:"விலை: அதிகம் முதல் குறைவு", s3:"புதியவை முதலில்", fill:"பெயர், கைபேசி எண் மற்றும் விநியோக முகவரியை உள்ளிடவும்.",
+    allSubcategories:"அனைத்து துணை வகைகள்", allStores:"அனைத்து கடைகள்", store:"கடை", anyWarranty:"எந்த உத்தரவாத நிலையும்", withWarranty:"உத்தரவாதம் / திருப்பி அளித்தல் குறிப்பிடப்பட்டுள்ளது", noWarranty:"உத்தரவாதம் இல்லை என்று குறிப்பிடப்பட்டுள்ளது", noWarrantyInfo:"உத்தரவாத விவரம் இல்லை", payment:"கட்டண முறை", codOption:"பொருள் கிடைத்ததும் பணம்", bankOption:"வங்கி பரிமாற்றம்", bankNote:"வங்கி பரிமாற்றத்தைத் தேர்ந்தெடுத்து WhatsApp இல் கட்டண விவரங்களைக் கோருங்கள். இந்த தளத்தில் பணம் செலுத்தப்படாது.", categoryLabel:"வகை", subcategoryLabel:"துணை வகை", storeLabel:"கடை", warrantyLabel:"உத்தரவாதம்", sortLabel:"வரிசை",
     shopnow:"இப்போதே வாங்குங்கள்", allp:"அனைத்து பொருட்கள்", f1:"நாடு முழுவதும் விநியோகம்", f2:"இலங்கை முழுவதும் பொருள் கிடைத்ததும் பணம்", f3:"WhatsApp மூலம் ஆர்டர்", f4:"தரமான பொருட்கள்",
     wa:"WhatsApp மூலம் உண்மையான படங்கள் மற்றும் விவரங்கள்", share:"பொருளைப் பகிரவும்", copied:"பொருள் இணைப்பு நகலெடுக்கப்பட்டது", merchant:"கடை", code:"குறியீடு", gl:"Google இல் படங்களைப் பார்க்க", sample:"காட்டப்படும் படம் மாதிரி மட்டுமே. உண்மையான படங்கள் மற்றும் மேலும் விவரங்களுக்கு WhatsApp இல் கேளுங்கள்.", sub:"பொருட்கள்", deliv:"டெலிவரி", ddisc:"டெலிவரி தள்ளுபடி"}
 };
@@ -33,7 +36,7 @@ const store = {
   get(k, d) { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch (e) { return d; } },
   set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
 };
-let lang = store.get("lang", "en"), products = [], byId = {}, view = [], page = 1, cart = store.get("cart", {});
+let lang = store.get("lang", "en"), products = [], catalogOrder = [], catalogPosition = new Map(), newProductIds = new Set(), byId = {}, view = [], page = 1, cart = store.get("cart", {});
 const t = k => T[lang][k];
 const money = n => CONFIG.currency + " " + Number(n).toLocaleString("en-US");
 const pname = p => p["name_" + lang] || p.name;
@@ -45,9 +48,12 @@ const SEARCH_SYNONYMS = {
   headphones: ["headset", "earphones"], headset: ["headphones", "earphones"],
   torch: ["flashlight"], flashlight: ["torch"], glasses: ["spectacles", "eyewear"], spectacles: ["glasses", "eyewear"],
   tv: ["television"], television: ["tv"], fridge: ["refrigerator"], refrigerator: ["fridge"],
-  luggage: ["suitcase"], suitcase: ["luggage"]
+  luggage: ["suitcase"], suitcase: ["luggage"], wireless: ["bluetooth"], bluetooth: ["wireless"],
+  shaver: ["trimmer"], trimmer: ["shaver"], blender: ["mixer"], mixer: ["blender"],
+  organizer: ["organiser"], organiser: ["organizer"], adapter: ["adaptor"], adaptor: ["adapter"],
+  handbag: ["purse"], purse: ["handbag"], spectacles: ["eyeglasses"], eyeglasses: ["spectacles"]
 };
-const SEARCH_STOP_WORDS = new Set(["a", "an", "and", "are", "buy", "find", "for", "from", "in", "is", "looking", "me", "my", "of", "on", "or", "please", "search", "show", "the", "to", "want", "with"]);
+const SEARCH_STOP_WORDS = new Set(["a", "an", "and", "are", "best", "buy", "cheapest", "find", "for", "from", "in", "is", "lanka", "looking", "me", "my", "online", "of", "on", "or", "please", "price", "product", "products", "search", "shop", "show", "sri", "the", "to", "want", "with"]);
 function normalizeSearch(value) {
   return String(value || "").normalize("NFKD").replace(/[\u0300-\u036f]/g, "").toLowerCase()
     .replace(/&/g, " and ").replace(/[^a-z0-9]+/g, " ").trim();
@@ -64,12 +70,12 @@ function oneEditAway(a, b) {
   }
   return edits + ((i < a.length || j < b.length) ? 1 : 0) <= 1;
 }
-function tokenMatches(term, tokens) {
+function tokenMatches(term, tokens, allowFuzzy = false) {
   const variants = [term, ...(SEARCH_SYNONYMS[term] || [])];
   if (term.length > 4 && term.endsWith("s")) variants.push(term.slice(0, -1));
   for (const variant of variants) for (const token of tokens) {
     if (token === variant || (variant.length > 1 && token.startsWith(variant))) return true;
-    if (variant.length >= 4 && token.length >= 4 && oneEditAway(variant, token)) return true;
+    if (allowFuzzy && variant.length >= 5 && token.length >= 5 && oneEditAway(variant, token)) return true;
   }
   return false;
 }
@@ -82,39 +88,42 @@ function buildSearchIndex(items) {
     const code = normalizeSearch(p.id).replace(/\s+/g, "");
     const all = [name, category, description, normalizeSearch(p.id)].filter(Boolean).join(" ");
     searchIndex.set(String(p.id), {
-      name, category, code, all,
+      name, category, subcategory: normalizeSearch(p.subcategory), code, all,
       nameCompact: name.replace(/\s+/g, ""), categoryCompact: category.replace(/\s+/g, ""),
       nameTokens: new Set(name.split(" ").filter(Boolean)),
       categoryTokens: new Set(category.split(" ").filter(Boolean)),
-      tokens: new Set(all.split(" ").filter(Boolean))
+      subcategoryTokens: new Set(normalizeSearch(p.subcategory).split(" ").filter(Boolean)),
+      tokens: new Set((all + " " + normalizeSearch(p.subcategory)).split(" ").filter(Boolean))
     });
   });
 }
-function scoreSearch(p, query, terms) {
+function scoreSearch(p, query, terms, allowFuzzy = false) {
   const index = searchIndex.get(String(p.id));
   if (!index || !query) return 0;
   const compact = query.replace(/\s+/g, "");
   if (index.code === compact) return 1400;
   let score = 0;
-  if (compact.length >= 3 && index.code.includes(compact)) score += 900;
+  if (compact.length >= 3 && index.code.includes(compact)) score += 1000;
   if (index.name === query) score += 1200;
-  else if (index.name.startsWith(query)) score += 850;
-  else if (index.name.includes(query)) score += 650;
-  else if (compact.length >= 4 && index.nameCompact.includes(compact)) score += 550;
-  if (index.category === query) score += 420;
-  else if (index.category.includes(query)) score += 300;
-  else if (compact.length >= 4 && index.categoryCompact.includes(compact)) score += 260;
-  if (index.all.includes(query)) score += 180;
-
-  const nameHits = terms.filter(term => tokenMatches(term, index.nameTokens)).length;
-  const categoryHits = terms.filter(term => tokenMatches(term, index.categoryTokens)).length;
-  const allHits = terms.filter(term => tokenMatches(term, index.tokens)).length;
-  const phraseHit = index.all.includes(query) || index.nameCompact.includes(compact) || index.categoryCompact.includes(compact) || index.code.includes(compact);
-  if (allHits === 0 && !phraseHit) return 0;
-  if (terms.length >= 3 && allHits === 1 && nameHits === 0 && categoryHits === 0 && !phraseHit) return 0;
-  score += nameHits * 180 + categoryHits * 125 + allHits * 55;
-  score += allHits === terms.length ? 260 : -(terms.length - allHits) * 35;
-  return Math.max(1, score);
+  else if (index.name.startsWith(query)) score += 900;
+  else if (index.name.includes(query)) score += 720;
+  else if (compact.length >= 4 && index.nameCompact.includes(compact)) score += 600;
+  if (index.category === query) score += 500;
+  else if (index.category.includes(query)) score += 360;
+  else if (index.subcategory.includes(query)) score += 420;
+  const nameHits = terms.filter(term => tokenMatches(term, index.nameTokens, allowFuzzy)).length;
+  const categoryHits = terms.filter(term => tokenMatches(term, index.categoryTokens, allowFuzzy)).length;
+  const subcategoryHits = terms.filter(term => tokenMatches(term, index.subcategoryTokens, allowFuzzy)).length;
+  const descTokens = new Set(normalizeSearch(p.description).split(" ").filter(Boolean));
+  const descriptionHits = terms.filter(term => tokenMatches(term, descTokens, allowFuzzy)).length;
+  const relevantHits = Math.max(nameHits, categoryHits + subcategoryHits, nameHits + subcategoryHits);
+  const exactPhrase = index.name.includes(query) || index.nameCompact.includes(compact) || index.category.includes(query) || index.categoryCompact.includes(compact) || index.subcategory.includes(query) || index.code.includes(compact);
+  if (!exactPhrase && relevantHits === 0 && descriptionHits === 0) return 0;
+  if (terms.length > 1 && !exactPhrase && relevantHits < Math.ceil(terms.length * 0.6)) return 0;
+  if (terms.length > 2 && relevantHits < 2 && !exactPhrase) return 0;
+  score += nameHits * 240 + subcategoryHits * 200 + categoryHits * 150 + descriptionHits * 30;
+  score += relevantHits === terms.length ? 300 : -(terms.length - relevantHits) * 100;
+  return Math.max(0, score);
 }
 const waUrl = msg => "https://wa.me/" + CONFIG.whatsapp + "?text=" + encodeURIComponent(msg);
 const askMsg = p => "Hi Leopis, I would like real photos and more details for: " + p.name + " (Code " + p.id + "). Price: " + money(pr(p)) + (p.warranty ? " | " + p.warranty : "");
@@ -143,7 +152,7 @@ function el(tag, cls, text) { const e = document.createElement(tag); if (cls) e.
    Prices come straight from the JSON: price = what the customer pays, oldPrice = crossed-out market price. */
 const isFlash = p => p.oldPrice != null && p.oldPrice > p.price;
 const pr = p => p.price;
-let flashOnly = false, clearOnly = false;
+let flashOnly = false, clearOnly = false, newOnly = false;
 function priceEl(p, cls) {
   const d = el("div", cls, money(pr(p)));
   if (p.oldPrice) {
@@ -277,10 +286,46 @@ function applyLang() {
   cat.replaceChildren(new Option(t("all"), ""));
   [...new Set(products.map(p => p.category))].sort().forEach(c => cat.add(new Option(c, c)));
   cat.value = cur;
-  const s = $("#sort"), sv = s.value || "0";
-  s.replaceChildren(new Option(t("s0"), "0"), new Option(t("s1"), "1"), new Option(t("s2"), "2"));
-  s.value = sv;
-  buildCatNav(); render(); renderCart(); buildRows();
+  const sort = $("#sort"), sortValue = sort.value || "0";
+  sort.replaceChildren(new Option(t("s0"), "0"), new Option(t("s1"), "1"), new Option(t("s2"), "2"), new Option(t("s3"), "3"));
+  sort.value = sortValue;
+  const storeFilter = $("#storeFilter"), storeValue = storeFilter.value;
+  storeFilter.replaceChildren(new Option(t("allStores"), ""));
+  [1, 2, 3, 4, 5].forEach(n => storeFilter.add(new Option(t("store") + " " + n, String(n))));
+  storeFilter.value = storeValue;
+  const warranty = $("#warrantyFilter"), warrantyValue = warranty.value;
+  warranty.replaceChildren(new Option(t("anyWarranty"), ""), new Option(t("withWarranty"), "listed"), new Option(t("noWarranty"), "none"), new Option(t("noWarrantyInfo"), "missing"));
+  warranty.value = warrantyValue;
+  populateSubcategoryOptions();
+  buildCategoryGrid();
+  buildCatNav(); render(); renderCart(); buildRows(); updatePaymentNote();
+}
+
+function subcategoryKey(product) { return product.category + " :: " + (product.subcategory || "Other"); }
+function populateSubcategoryOptions() {
+  const select = $("#subcat"); if (!select) return;
+  const previous = select.value, category = $("#cat").value;
+  select.replaceChildren(new Option(t("allSubcategories"), ""));
+  const scoped = products.filter(p => !category || p.category === category);
+  const keys = [...new Set(scoped.map(subcategoryKey))].sort((a, b) => a.localeCompare(b));
+  keys.forEach(key => {
+    const [cat, sub] = key.split(" :: ");
+    select.add(new Option(category ? sub : cat + " · " + sub, key));
+  });
+  select.value = keys.includes(previous) ? previous : "";
+}
+
+function buildCategoryGrid() {
+  const grid = $("#catGrid"); if (!grid) return;
+  grid.replaceChildren();
+  const categories = [...new Set(products.map(p => p.category))].sort();
+  categories.forEach(category => {
+    const items = products.filter(p => p.category === category);
+    const tile = el("button", "cat-tile"), title = el("b", "", category);
+    const subcats = [...new Set(items.map(p => p.subcategory || "Other"))].filter(x => x !== "Other").slice(0, 3);
+    tile.append(title, el("small", "", items.length + " " + t("items") + (subcats.length ? " · " + subcats.join(" · ") : "")));
+    tile.onclick = () => goCat(category); grid.append(tile);
+  });
 }
 
 function buildCatNav() {
@@ -290,22 +335,56 @@ function buildCatNav() {
   mk(t("all"), "");
   [...new Set(products.map(p => p.category))].sort().forEach(c => mk(c, c));
 }
-function goCat(val) { clearOnly = false; $("#cat").value = val; filter(); buildCatNav(); $("#shop").scrollIntoView({behavior: "smooth"}); }
+function goCat(val) {
+  clearOnly = false; flashOnly = false; newOnly = false;
+  if (val === "New Arrivals") { newOnly = true; $("#cat").value = ""; $("#q").value = ""; $("#sort").value = "3"; }
+  else if (val === "Trending") { flashOnly = true; $("#cat").value = ""; $("#q").value = ""; }
+  else { $("#cat").value = val; $("#q").value = ""; $("#sort").value = "0"; }
+  $("#subcat").value = ""; $("#storeFilter").value = ""; $("#warrantyFilter").value = "";
+  populateSubcategoryOptions(); filter(); buildCatNav(); $("#shop").scrollIntoView({behavior: "smooth"});
+}
+
+function warrantyStatus(product) {
+  const value = String(product.warranty || "").trim();
+  if (!value) return "missing";
+  if (/^no\s+warranty$/i.test(value)) return "none";
+  return "listed";
+}
+function createdTime(product) {
+  const value = Date.parse(product.addedAt || product.createdAt || "");
+  return Number.isFinite(value) ? value : 0;
+}
+function hashForDay(value, day) {
+  let h = 2166136261;
+  const text = day + "|" + String(value);
+  for (let i = 0; i < text.length; i++) { h ^= text.charCodeAt(i); h = Math.imul(h, 16777619); }
+  return h >>> 0;
+}
+function homeOrder(items) {
+  const recent = items.filter(p => newProductIds.has(String(p.id)))
+    .sort((a, b) => createdTime(b) - createdTime(a) || (catalogPosition.get(String(a.id)) ?? 0) - (catalogPosition.get(String(b.id)) ?? 0));
+  const freshIds = new Set(recent.map(p => String(p.id)));
+  const day = new Date().toISOString().slice(0, 10);
+  const rest = items.filter(p => !freshIds.has(String(p.id))).sort((a, b) => hashForDay(a.id, day) - hashForDay(b.id, day));
+  return [...recent, ...rest];
+}
 
 function filter() {
   const rawTerms = normalizeSearch($("#q").value).split(" ").filter(Boolean);
   const terms = rawTerms.filter(term => !SEARCH_STOP_WORDS.has(term));
-  const q = (terms.length ? terms : rawTerms).join(" ");
-  const c = $("#cat").value, s = $("#sort").value;
-  const matches = products.filter(p => (!c || p.category === c) && (!flashOnly || isFlash(p)) && (!clearOnly || p.oldPrice));
+  const q = terms.join(" ");
+  const c = $("#cat").value, sub = $("#subcat").value, merchant = $("#storeFilter").value, warranty = $("#warrantyFilter").value, s = $("#sort").value;
+  const [subCategory, subName] = sub ? sub.split(" :: ") : ["", ""];
+  const matches = products.filter(p => (!c || p.category === c) && (!sub || (p.category === subCategory && (p.subcategory || "Other") === subName)) && (!merchant || String(merchantNo(p)) === merchant) && (!warranty || warrantyStatus(p) === warranty) && (!flashOnly || isFlash(p)) && (!newOnly || newProductIds.has(String(p.id))) && (!clearOnly || p.oldPrice));
   if (q) {
-    const ranked = matches.map(product => ({product, score: scoreSearch(product, q, terms)})).filter(x => x.score > 0);
+    let ranked = matches.map(product => ({product, score: scoreSearch(product, q, terms)})).filter(x => x.score > 0);
+    if (!ranked.length && terms.length === 1 && terms[0].length >= 5) ranked = matches.map(product => ({product, score: scoreSearch(product, q, terms, true)})).filter(x => x.score > 0);
     if (s === "1") ranked.sort((a, b) => pr(a.product) - pr(b.product) || b.score - a.score);
     else if (s === "2") ranked.sort((a, b) => pr(b.product) - pr(a.product) || b.score - a.score);
-    else ranked.sort((a, b) => b.score - a.score);
+    else ranked.sort((a, b) => b.score - a.score || createdTime(b.product) - createdTime(a.product));
     view = ranked.map(x => x.product);
   } else {
-    view = matches;
+    view = (s === "3" ? matches.slice().sort((a, b) => createdTime(b) - createdTime(a) || (catalogPosition.get(String(a.id)) ?? 0) - (catalogPosition.get(String(b.id)) ?? 0)) : homeOrder(matches));
     if (s === "1") view.sort((a, b) => pr(a) - pr(b));
     if (s === "2") view.sort((a, b) => pr(b) - pr(a));
   }
@@ -330,7 +409,7 @@ function render() {
     const add = el("button", "add", t("add")); add.onclick = () => addToCart(p.id);
     const share = el("button", "share-btn", "🔗 " + t("share")); share.type = "button"; share.onclick = () => shareProduct(p);
     const wa = el("a", "wa-link", "💬 " + t("wa")); wa.href = waUrl(askMsg(p)); wa.target = "_blank"; wa.rel = "noopener";
-    info.append(el("small", "merchant-ref", t("merchant") + " " + merchantNo(p)), title, el("small", "code", t("code") + ": " + p.id), el("small", "", p.category), priceEl(p, "price"));
+    info.append(el("small", "merchant-ref", t("merchant") + " " + merchantNo(p)), title, el("small", "code", t("code") + ": " + p.id), el("small", "product-taxonomy", p.category + " · " + (p.subcategory || "Other")), priceEl(p, "price"));
     if (p.warranty) info.append(el("div", "wty", "🛡️ " + p.warranty));
     info.append(add, share, wa);
     card.append(img, info); grid.append(card);
@@ -386,35 +465,39 @@ function renderCart() {
   $("#order").disabled = !count;
 }
 
-/* Give the full catalog a fresh order on every page visit. */
-function shuffleAll(items) {
-  for (let i = items.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [items[i], items[j]] = [items[j], items[i]];
-  }
-  return items;
+function updatePaymentNote() {
+  const note = $("#paymentNote"), method = $("#paymentMethod");
+  if (note && method) note.textContent = method.value === "bank" ? t("bankNote") : t("cod");
 }
 
 function sendOrder() {
   const name = $("#cName").value.trim(), phone = $("#cPhone").value.trim(), addr = $("#cAddr").value.trim();
   if (!name || !phone || !addr) { alert(t("fill")); return; }
+  const phoneDigits = phone.replace(/\D/g, "");
+  if (phoneDigits.length < 9 || phoneDigits.length > 15) { alert(lang === "si" ? "කරුණාකර වලංගු ජංගම දුරකථන අංකයක් ඇතුළත් කරන්න." : lang === "ta" ? "சரியான கைபேசி எண்ணை உள்ளிடவும்." : "Please enter a valid mobile number."); $("#cPhone").focus(); return; }
   const ids = Object.keys(cart).filter(id => byId[id]);
   let sub = 0;
   const lines = ids.map((id, i) => {
     const p = byId[id], qty = cart[id]; sub += pr(p) * qty;
-    return (i + 1) + ") " + p.name + " [" + p.id + "] (Store " + merchantNo(p) + ") x" + qty + " = " + money(pr(p) * qty);
+    return (i + 1) + ") " + p.name + " [" + p.id + "] (Shop " + merchantNo(p) + ") x" + qty + " = " + money(pr(p) * qty);
   });
   const dl = deliveryFor(ids);
-  const msg = ["New order - Leopis", "", "Name: " + name, "Phone: " + phone, "Address: " + addr, "", ...lines, "",
+  const method = $("#paymentMethod").value;
+  const paymentLine = method === "bank" ? t("bankNote") : t("cod");
+  const msg = ["New order - Leopis", "", "Name: " + name, "Phone: " + phone, "Address: " + addr, "Payment method: " + paymentLine, "", ...lines, "",
     "Items: " + money(sub),
     "Delivery (" + dl.n + " store" + (dl.n > 1 ? "s" : "") + "): " + money(dl.fee),
     ...(dl.off ? ["Delivery discount: -" + money(dl.off)] : []),
-    "Total: " + money(sub + dl.pay), "Payment: Cash on delivery"].join("\n");
+    "Total: " + money(sub + dl.pay)].join("\n");
   window.open(waUrl(msg), "_blank");
 }
 
 fetch("products_final.json").then(r => r.json()).then(data => {
-  products = shuffleAll(data.slice()); data.forEach(p => byId[p.id] = p);
+  catalogOrder = data.slice();
+  catalogPosition = new Map(catalogOrder.map((p, i) => [String(p.id), i]));
+  const recent = data.filter(p => createdTime(p) && Date.now() - createdTime(p) < 30 * 86400000).sort((a, b) => createdTime(b) - createdTime(a));
+  newProductIds = new Set((recent.length ? recent : data.slice(0, 12)).map(p => String(p.id)));
+  products = homeOrder(data.slice()); data.forEach(p => byId[p.id] = p);
   buildSearchIndex(data);
   view = products.slice();
   
@@ -441,11 +524,14 @@ searchInput.addEventListener("keydown", event => {
 });
 searchInput.addEventListener("search", submitSearch);
 searchInput.addEventListener("change", submitSearch);
-$("#cat").onchange = () => { clearOnly = false; filter(); buildCatNav(); }; $("#sort").onchange = filter;
+$("#searchBtn").onclick = submitSearch;
+$("#cat").onchange = () => { clearOnly = false; populateSubcategoryOptions(); filter(); buildCatNav(); };
+$("#subcat").onchange = filter; $("#storeFilter").onchange = filter; $("#warrantyFilter").onchange = filter; $("#sort").onchange = filter;
 $("#cartBtn").onclick = () => $("#cartDlg").showModal();
 $("#closeCart").onclick = () => $("#cartDlg").close();
 $("#cartDlg").addEventListener("click", e => { if (e.target.id === "cartDlg") e.target.close(); });
 $("#order").onclick = sendOrder;
+$("#paymentMethod").onchange = updatePaymentNote;
 document.addEventListener("click", e => { const b = e.target.closest("[data-cat]"); if (b) goCat(b.dataset.cat); const dl = e.target.closest("[data-deals]"); if (dl) { $("#cat").value = ""; clearOnly = true; filter(); buildCatNav(); $("#shop").scrollIntoView({behavior: "smooth"}); } });
 $("#waLink").href = waUrl("Hi Leopis");
 
@@ -455,7 +541,7 @@ const SITE_RATING = null;  /* Hide the rating until it is backed by real custome
 const FAQ = {
   en: [
     ["How do I order?", "Add items to your cart, enter your name, phone number and address, then tap the order button. Your order opens in WhatsApp and we confirm it with you."],
-    ["How do I pay?", "Payment is cash on delivery."],
+    ["How do I pay?", "Choose cash on delivery, or request bank-transfer instructions in WhatsApp. Payment is not made on this website."],
     ["What are Leopis Special Promotions?", "Selected products are offered at special promotional prices, shown with the original price and the discount. Please confirm availability on WhatsApp before ordering."],
     ["What warranty do products have?", "Warranty or replacement coverage varies by product and is shown only where confirmed. Please message us on WhatsApp to confirm coverage before ordering."],
     ["Are the photos real?", "Some product images are supplier samples and may differ from the exact item. Confirm the photo, model, specifications and availability on WhatsApp before ordering."],
@@ -464,7 +550,7 @@ const FAQ = {
   ],
   si: [
     ["ඇණවුම් කරන්නේ කෙසේද?", "භාණ්ඩ කරත්තයට එක් කර, ඔබේ නම, දුරකථන අංකය සහ ලිපිනය ඇතුළත් කර ඇණවුම් බොත්තම ඔබන්න. ඇණවුම WhatsApp හි විවෘත වන අතර අපි එය තහවුරු කරන්නෙමු."],
-    ["ගෙවන්නේ කෙසේද?", "ගෙවීම බඩු ලැබුණු විට මුදල් ගෙවීමෙනි (Cash on delivery)."],
+    ["ගෙවන්නේ කෙසේද?", "බඩු ලැබුණු විට මුදල් ගෙවිය හැකිය; බැංකු මාරු කිරීමේ උපදෙස් WhatsApp හරහා ඉල්ලා සිටිය හැක. මෙම වෙබ් අඩවියේ ගෙවීම් සිදු නොවේ."],
     ["Leopis විශේෂ දීමනා යනු කුමක්ද?", "තෝරාගත් භාණ්ඩ විශේෂ මිලකට පිරිනමන අතර මුල් මිල සහ වට්ටම පෙන්වනු ලැබේ. ඇණවුමට පෙර WhatsApp හරහා ලබාගත හැකි බව තහවුරු කරන්න."],
     ["භාණ්ඩවල වගකීම (warranty) කුමක්ද?", "වගකීම හෝ ප්‍රතිස්ථාපන ආවරණය භාණ්ඩය අනුව වෙනස් වන අතර තහවුරු කළ භාණ්ඩ සඳහා පමණක් පෙන්වනු ලැබේ. ඇණවුමට පෙර WhatsApp හරහා ආවරණය තහවුරු කරන්න."],
     ["පින්තූර සැබෑද?", "සමහර නිෂ්පාදන රූප සැපයුම්කරුගේ නිදර්ශන වන අතර නිවැරදි භාණ්ඩයෙන් වෙනස් විය හැක. ඇණවුමට පෙර WhatsApp හරහා රූපය, ආකෘතිය, විස්තර සහ ලබාගත හැකි බව තහවුරු කරන්න."],
@@ -473,7 +559,7 @@ const FAQ = {
   ],
   ta: [
     ["எப்படி ஆர்டர் செய்வது?", "பொருட்களை வண்டியில் சேர்த்து, உங்கள் பெயர், தொலைபேசி எண் மற்றும் முகவரியை உள்ளிட்டு ஆர்டர் பொத்தானை அழுத்துங்கள். ஆர்டர் WhatsApp இல் திறக்கும், நாங்கள் உறுதிப்படுத்துவோம்."],
-    ["எப்படி பணம் செலுத்துவது?", "பொருள் கிடைக்கும்போது பணம் செலுத்தலாம் (Cash on delivery)."],
+    ["எப்படி பணம் செலுத்துவது?", "பொருள் கிடைக்கும்போது பணம் செலுத்தலாம்; வங்கி பரிமாற்ற வழிமுறைகளை WhatsApp மூலம் கேட்கலாம். இந்த இணையதளத்தில் பணம் செலுத்தப்படாது."],
     ["Leopis சிறப்பு சலுகைகள் என்றால் என்ன?", "தேர்ந்தெடுக்கப்பட்ட பொருட்கள் சிறப்பு விலையில் வழங்கப்படுகின்றன; அசல் விலையும் தள்ளுபடியும் காட்டப்படும். ஆர்டர் செய்வதற்கு முன் WhatsApp இல் இருப்பை உறுதிப்படுத்துங்கள்."],
     ["பொருட்களுக்கு என்ன warranty உள்ளது?", "உத்தரவாதம் அல்லது மாற்று பாதுகாப்பு பொருளுக்கு ஏற்ப மாறுபடும்; உறுதிப்படுத்தப்பட்ட பொருட்களுக்கு மட்டும் காட்டப்படும். ஆர்டர் செய்வதற்கு முன் WhatsApp இல் உறுதிப்படுத்துங்கள்."],
     ["படங்கள் உண்மையானவையா?", "சில தயாரிப்பு படங்கள் சப்ளையர் மாதிரிகளாக இருக்கலாம்; சரியான பொருளிலிருந்து மாறுபடலாம். ஆர்டர் செய்வதற்கு முன் WhatsApp இல் படம், மாடல், விவரங்கள் மற்றும் இருப்பை உறுதிப்படுத்துங்கள்."],
@@ -505,9 +591,10 @@ let flashPick = [], rowPick = null;
 function buildRows() {
   if (!products.length) return;
   if (!rowPick) {
-    const fresh = products.filter(p => /^\d{6}$/.test(p.id)).sort((a, b) => b.id - a.id).slice(0, 12);
-    rowPick = {n: fresh, t: shuffle(products.filter(p => p.oldPrice && !fresh.includes(p))).slice(0, 12)};
+    const fresh = catalogOrder.filter(p => newProductIds.has(String(p.id))).sort((a, b) => createdTime(b) - createdTime(a)).slice(0, 12);
+    rowPick = {n: fresh, t: homeOrder(products.filter(p => p.oldPrice && !fresh.includes(p))).slice(0, 12)};
   }
+  const newSection = $("#new-section"); if (newSection) newSection.hidden = !rowPick.n.length;
   [["#newArrivals", rowPick.n], ["#trending", rowPick.t]].forEach(([sel, list]) => { const b = $(sel); if (b) { b.replaceChildren(); list.forEach(p => b.append(miniCard(p))); } });
 }
 function miniCard(p) {

@@ -12,6 +12,7 @@ import xml.etree.ElementTree as ET
 from decimal import Decimal, InvalidOperation
 from pathlib import Path
 from urllib.parse import quote, urljoin, urlencode
+from product_taxonomy import classify_product
 
 ROOT = "https://leopisdigital.com"
 ROOT_DIR = Path(__file__).resolve().parent
@@ -20,6 +21,7 @@ INDEX_PATH = ROOT_DIR / "index.html"
 PRODUCTS_DIR = ROOT_DIR / "products"
 CATEGORIES_DIR = ROOT_DIR / "categories"
 SITEMAP_PATH = ROOT_DIR / "sitemap.xml"
+CATEGORY_SEO_PATH = ROOT_DIR / "category_seo.json"
 FEED_PATH = ROOT_DIR / "google-merchant-feed.tsv"
 CAMPAIGN_IDS_PATH = ROOT_DIR / "meta_campaign_ids.json"
 FEATURED_PAGE_PATH = ROOT_DIR / "featured-products.html"
@@ -53,7 +55,7 @@ a{color:#174ea6}a:hover{text-decoration-thickness:2px}.wrap{max-width:1080px;mar
 .product{display:grid;grid-template-columns:minmax(240px,440px) 1fr;gap:2rem;align-items:start}.product-image{width:100%;aspect-ratio:1;object-fit:contain;background:var(--soft);border:1px solid var(--line);border-radius:14px}
 .product h1{font-size:clamp(1.7rem,4vw,2.6rem);line-height:1.15;margin:.2rem 0 .8rem}.category{color:var(--muted);font-weight:650}.price{font-size:1.8rem;font-weight:800;margin:.7rem 0}.old-price{font-size:1rem;color:#727987;font-weight:500;margin-left:.4rem}.code,.warranty{font-size:.9rem;color:var(--muted)}.description{white-space:pre-line}.notice{background:#fff8dc;border-left:4px solid var(--accent);padding:.75rem 1rem;border-radius:5px}
 .actions{display:flex;flex-wrap:wrap;gap:.7rem;margin:1.2rem 0}.button{display:inline-block;text-decoration:none;padding:.7rem 1rem;border-radius:9px;background:var(--brand);color:#fff;font-weight:750}.button.secondary{background:#e8f7ee;color:#155b34}.store-info,.category-intro{border-top:1px solid var(--line);margin-top:2rem;padding-top:1rem;color:#384052}
-.product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:1rem;margin-top:1.3rem}.product-card{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:white;color:inherit;text-decoration:none}.product-card img{width:100%;aspect-ratio:1;object-fit:contain;background:var(--soft);display:block}.product-card-body{padding:.7rem}.product-card h2{font-size:1rem;line-height:1.35;margin:.1rem 0 .35rem}.product-card .small{color:var(--muted);font-size:.86rem}.footer{border-top:1px solid var(--line);margin-top:2rem;padding-top:1rem;color:var(--muted);font-size:.9rem}
+.product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:1rem;margin-top:1rem}.product-card{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:white;color:inherit;text-decoration:none;transition:transform .15s,box-shadow .15s}.product-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px #151b2c18}.product-card img{width:100%;aspect-ratio:1;object-fit:contain;background:var(--soft);display:block}.product-card-body{display:grid;gap:.25rem;padding:.7rem}.product-card h3{font-size:1rem;line-height:1.35;margin:.1rem 0 .2rem}.product-card .small{color:var(--muted);font-size:.78rem}.product-card .warranty{color:#126035;font-weight:700}.subcategory-nav{display:flex;flex-wrap:wrap;gap:.5rem;margin:1rem 0 1.5rem}.subcategory-nav a{padding:.45rem .7rem;border:1px solid var(--line);border-radius:999px;background:var(--soft);text-decoration:none;font-size:.88rem}.subcategory-block{margin:2rem 0;scroll-margin-top:1rem}.subcategory-block>h2{font-size:1.35rem;border-bottom:1px solid var(--line);padding-bottom:.45rem}.subcategory-block h2 small{font-size:.82rem;color:var(--muted)}.category-faq{border-top:1px solid var(--line);margin-top:2rem;padding-top:1rem}.category-faq details{margin:.5rem 0;padding:.75rem 1rem;border:1px solid var(--line);border-radius:10px;background:var(--soft)}.category-faq summary{font-weight:700;cursor:pointer}.category-faq p{margin:.55rem 0 0}.footer{border-top:1px solid var(--line);margin-top:2rem;padding-top:1rem;color:var(--muted);font-size:.9rem}
 @media(max-width:680px){.product{grid-template-columns:1fr;gap:1rem}.site-head{align-items:flex-start}.site-head img{height:40px}}
 """
 
@@ -337,6 +339,7 @@ def product_page(product: dict, category_urls: dict[str, str],
     heading_name = truncate(name, 80)
     product_id = str(product.get("id", ""))
     category = one_line(product.get("category"))
+    subcategory = one_line(product.get("subcategory")) or f"Other {category}"
     description = clean_text(product.get("description", ""))
     description_plain = usable_description(product)
     price = price_value(product)
@@ -408,10 +411,10 @@ def product_page(product: dict, category_urls: dict[str, str],
 <article class="product">
 <div>{image_block}</div>
 <div>
-<p class="category">{html.escape(category)} · Sri Lanka</p>
+<p class="category">{html.escape(category)} · {html.escape(subcategory)} · Sri Lanka</p>
 <h1>{html.escape(heading_name)}</h1>
 <p class="price">Rs. {html.escape(price_text(price))}{old_price_block}</p>
-<p class="code"><strong>Product code:</strong> {html.escape(product_id)}</p>
+<p class="code"><strong>Product code:</strong> {html.escape(product_id)} · <strong>Shop:</strong> {html.escape(str(product.get("merchant") or "5"))}</p>
 {brand_block}
 {identifiers_block}
 {warranty_block}
@@ -420,7 +423,7 @@ def product_page(product: dict, category_urls: dict[str, str],
 <div class="actions"><a class="button" href="{html.escape(interactive_url, quote=True)}">View and order this product</a><a class="button secondary" href="{html.escape(wa_url, quote=True)}" target="_blank" rel="noopener">Confirm on WhatsApp</a></div>
 </div>
 </article>
-<section class="store-info"><h2>Ordering from Sri Lanka</h2><p>Leopis Digital offers island-wide delivery and cash on delivery. Delivery for an order from one store is Rs. 450; multi-store carts use the discounted tiers shown on the <a href="/delivery.html">delivery page</a>. Returns and warranty terms are product-specific; see the <a href="/returns-warranty.html">returns and warranty policy</a>.</p><p>Confirm product availability, specifications and timing on WhatsApp. <a href="https://wa.me/94783366466">Chat with Leopis: +94 78 336 6466</a></p><p>Browse more: <a href="{html.escape(cat_url, quote=True)}">{html.escape(category)} in Sri Lanka</a> · <a href="/">All products</a></p></section>
+<section class="store-info"><h2>Ordering from Sri Lanka</h2><p>Leopis Digital offers island-wide delivery and cash on delivery. You may also request bank-transfer instructions through WhatsApp; this website does not take payment. Delivery for an order from one store is Rs. 450; multi-store carts use the discounted tiers shown on the <a href="/delivery.html">delivery page</a>. Returns and warranty terms are product-specific; see the <a href="/returns-warranty.html">returns and warranty policy</a>.</p><p>Confirm product availability, specifications and timing on WhatsApp. <a href="https://wa.me/94783366466">Chat with Leopis: +94 78 336 6466</a></p><p>Browse more: <a href="{html.escape(cat_url, quote=True)}">{html.escape(category)} in Sri Lanka</a> · <a href="/">All products</a></p></section>
 </main>
 <footer class="footer wrap">Leopis (Pvt) Ltd · Sri Lanka · <a href="/">Leopis Digital</a></footer>
 {schema_html}
@@ -431,26 +434,33 @@ def product_page(product: dict, category_urls: dict[str, str],
 
 
 def category_page(category: str, products: list[dict], product_urls: dict[str, str], category_urls: dict[str, str]) -> tuple[str, str]:
-    slug = category_slug(category)
     canonical = category_urls[category]
-    title = truncate(f"{category} in Sri Lanka | Leopis Digital", 60)
-    desc = truncate(
-        f"Browse {category} at Leopis Digital in Sri Lanka. View current LKR prices, product details and ordering options. Island-wide delivery and cash on delivery.",
-        158,
-    )
-    head = page_head(title, desc, canonical, ROOT + "/logo.png", "website")
-    cards = []
+    seo_map = json.loads(CATEGORY_SEO_PATH.read_text(encoding="utf-8")) if CATEGORY_SEO_PATH.exists() else {}
+    seo = seo_map.get(category, {})
+    title = truncate(seo.get("title") or f"{category} in Sri Lanka | Leopis Digital", 60)
+    desc = truncate(seo.get("description") or f"Browse {category} products in Sri Lanka. Compare product names, current prices and listed details.", 158)
+    cards_by_subcategory: dict[str, list[str]] = {}
     for product in products:
         name = one_line(product.get("name"))
         price = price_text(price_value(product))
         url = product_urls[str(product["id"])]
         img = image_url(product)
         img_block = f'<img src="{html.escape(img, quote=True)}" alt="{html.escape(name, quote=True)}" loading="lazy">' if img else ""
-        cards.append(
-            f'<a class="product-card" href="{html.escape(url, quote=True)}">{img_block}<div class="product-card-body"><h2>{html.escape(truncate(name, 80))}</h2><span class="small">Rs. {html.escape(price)} · Product code {html.escape(str(product["id"]))}</span></div></a>'
-        )
+        subcategory = one_line(product.get("subcategory")) or f"Other {category}"
+        warranty = one_line(product.get("warranty"))
+        details = f'<span class="small">Rs. {html.escape(price)} · Shop {html.escape(str(product.get("merchant") or "5"))} · Code {html.escape(str(product["id"]))}</span>'
+        if warranty:
+            details += f'<span class="small warranty">{html.escape(warranty)}</span>'
+        card = f'<a class="product-card" href="{html.escape(url, quote=True)}">{img_block}<div class="product-card-body"><h3>{html.escape(truncate(name, 80))}</h3><span class="small subcategory-label">{html.escape(subcategory)}</span>{details}</div></a>'
+        cards_by_subcategory.setdefault(subcategory, []).append(card)
+    nav, sections = [], []
+    for subcategory in sorted(cards_by_subcategory, key=str.casefold):
+        anchor = "subcategory-" + category_slug(subcategory)
+        count = len(cards_by_subcategory[subcategory])
+        nav.append(f'<a href="#{html.escape(anchor, quote=True)}">{html.escape(subcategory)} <span>({count:,})</span></a>')
+        sections.append(f'<section class="subcategory-block" id="{html.escape(anchor, quote=True)}"><h2>{html.escape(subcategory)} <small>({count:,})</small></h2><div class="product-grid">{"".join(cards_by_subcategory[subcategory])}</div></section>')
     crumbs = f'<nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> &rsaquo; <span>{html.escape(category)}</span></nav>'
-    indexable = not any(term in category.casefold() for term in REVIEW_REQUIRED_CATEGORY_TERMS)
+    indexable = len(products) >= 5 and "sexual" not in category.casefold()
     robots = "index,follow,max-image-preview:large" if indexable else "noindex,follow"
     head = page_head(title, desc, canonical, ROOT + "/logo.png", "website", robots)
     schema = json_ld({
@@ -461,15 +471,23 @@ def category_page(category: str, products: list[dict], product_urls: dict[str, s
         "inLanguage": "en-LK",
         "isPartOf": {"@type": "WebSite", "name": "Leopis Digital", "url": ROOT + "/"},
     })
+    intro = seo.get("intro") or f"Browse {category} products in Sri Lanka. Review each listing for current product details and pricing."
+    h1 = seo.get("h1") or f"{category} in Sri Lanka"
+    questions = seo.get("questions", [])
+    q1 = questions[0] if questions else f"What can I find in {category}?"
+    q2 = questions[1] if len(questions) > 1 else "How can I check a product’s details and warranty?"
+    faq = f'''<section class="category-faq"><h2>Questions about {html.escape(category)}</h2><details><summary>{html.escape(q1)}</summary><p>{html.escape(intro)} Browse the product groups below to see the current listings.</p></details><details><summary>{html.escape(q2)}</summary><p>Each product card shows its current listed price and shop number. Open a product page to review its description and any warranty information currently provided, then contact Leopis to confirm details before ordering.</p></details></section>'''
     body = f'''{head}
 <body>
 {header_html()}
 <main class="wrap">
 {crumbs}
-<h1>{html.escape(category)} in Sri Lanka</h1>
-<p class="category-intro">Browse current {html.escape(category)} products from Leopis Digital. Prices are shown in Sri Lankan rupees. Confirm current availability, exact specifications and delivery charges with the store before ordering. Island-wide delivery and cash on delivery are available.</p>
-<p>{len(products):,} products in this category.</p>
-<section class="product-grid" aria-label="{html.escape(category, quote=True)} products">{''.join(cards)}</section>
+<h1>{html.escape(h1)}</h1>
+<p class="category-intro">{html.escape(intro)}</p>
+<p>{len(products):,} products · Browse by subcategory, shop number and listed warranty.</p>
+<nav class="subcategory-nav" aria-label="Browse {html.escape(category, quote=True)} subcategories">{''.join(nav)}</nav>
+{''.join(sections)}
+{faq}
 </main>
 <footer class="footer wrap">Leopis (Pvt) Ltd · Sri Lanka · <a href="/">All products</a></footer>
 {schema}
@@ -595,6 +613,19 @@ def main() -> None:
     ids = [str(p.get("id", "")) for p in products]
     if any(not item for item in ids) or len(ids) != len(set(ids)):
         raise RuntimeError("Catalog product IDs must be present and unique")
+
+    catalog_changed = False
+    for product in products:
+        category, subcategory = classify_product(
+            product.get("category", ""), product.get("name", ""), product.get("description", "")
+        )
+        if product.get("category") != category or product.get("subcategory") != subcategory:
+            product["category"] = category
+            product["subcategory"] = subcategory
+            catalog_changed = True
+    if catalog_changed:
+        CATALOG_PATH.write_text(json.dumps(products, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+        print("Updated product category and subcategory taxonomy in products_final.json.")
 
     product_urls = {str(p["id"]): f"{ROOT}/products/{product_slug(p)}.html" for p in products}
     if len(set(product_urls.values())) != len(products):

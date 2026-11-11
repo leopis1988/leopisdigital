@@ -8,6 +8,7 @@ import json
 import re
 import sys
 import zipfile
+from datetime import datetime, timezone
 from pathlib import Path
 from urllib.request import Request, urlopen
 from urllib.parse import parse_qs, urlparse
@@ -311,9 +312,13 @@ def main() -> int:
     added, replaced = [], []
     for product_id, product in ready.items():
         if product_id in by_id:
+            previous = data[by_id[product_id]]
+            if previous.get("addedAt"):
+                product["addedAt"] = previous["addedAt"]
             data[by_id[product_id]] = product
             replaced.append(product_id)
         else:
+            product["addedAt"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
             data.insert(0, product)
             by_id = {str(item.get("id")): i for i, item in enumerate(data)}
             added.append(product_id)
