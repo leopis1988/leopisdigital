@@ -30,7 +30,7 @@ Customers browse products, add to cart, and send the order through **WhatsApp** 
 
 ## Automatic Google Sheet publishing
 
-The repository checks the connected public Google Sheet every 15 minutes. A row is imported only when its `status` is `Ready` and it contains a product number, name, price, category, description, and an individual image URL. The product number is the unique key: an existing number is replaced, and a new number is added. Invalid rows are skipped and reported in the GitHub Action log. The Sheet is read through its public CSV export, so no Google credentials are stored in GitHub.
+The repository checks the connected public Google Sheet every 15 minutes. A row is imported only when its `status` is `Ready` and it contains a product number, name, price, category, description, and an individual image URL (or a Google Drive ZIP containing `main_image.jpg`/another supported image). The importer detects image file signatures, extracts the archive's main photo safely, and stores it with the site. The product number is the unique key: an existing number is replaced, and a new number is added. Invalid rows are skipped and reported in the GitHub Action log. The Sheet is read through its public CSV export, so no Google credentials are stored in GitHub.
 
 Use these headers in the Sheet:
 

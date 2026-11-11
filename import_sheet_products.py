@@ -7,6 +7,7 @@ import io
 import json
 import re
 import sys
+import zipfile
 from pathlib import Path
 from urllib.request import Request, urlopen
 from urllib.parse import parse_qs, urlparse
@@ -148,13 +149,57 @@ def fetch_csv() -> list[list[str]]:
         return list(csv.reader(io.TextIOWrapper(response, encoding="utf-8-sig", newline="")))
 
 
+def supported_image_type(content: bytes) -> str | None:
+    """Detect the supported image formats from file signatures, not HTTP labels."""
+    if content.startswith(b"\xff\xd8\xff"):
+        return "image/jpeg"
+    if content.startswith(b"\x89PNG\r\n\x1a\n"):
+        return "image/png"
+    if content.startswith((b"GIF87a", b"GIF89a")):
+        return "image/gif"
+    if len(content) >= 12 and content[:4] == b"RIFF" and content[8:12] == b"WEBP":
+        return "image/webp"
+    return None
+
+
+def image_from_zip(archive_bytes: bytes) -> tuple[bytes, str] | None:
+    """Select main_image.* (or the first supported image) without extracting archive paths."""
+    try:
+        with zipfile.ZipFile(io.BytesIO(archive_bytes)) as archive:
+            members = [
+                member for member in archive.infolist()
+                if not member.is_dir() and 0 < member.file_size <= 20_000_000
+            ]
+            members.sort(key=lambda member: (
+                0 if Path(member.filename).name.casefold().startswith("main_image") else 1,
+                member.filename.casefold(),
+            ))
+            for member in members:
+                content = archive.read(member)
+                content_type = supported_image_type(content)
+                if content_type:
+                    return content, content_type
+    except (zipfile.BadZipFile, OSError, RuntimeError):
+        return None
+    return None
+
+
 def download_sheet_image(product_id: str, image_url: str) -> str:
     """Download a Sheet image into the site so browsers do not depend on hotlinks."""
     request = Request(image_url, headers={"User-Agent": "Leopis-Sheet-Importer/1.0"})
     with urlopen(request, timeout=45) as response:
         content = response.read()
         content_type = (response.headers.get_content_type() or "").lower()
-    if not content or content_type not in {"image/jpeg", "image/png", "image/webp", "image/gif"}:
+    detected_type = supported_image_type(content)
+    if detected_type:
+        content_type = detected_type
+    elif content.startswith(b"PK\x03\x04"):
+        extracted = image_from_zip(content)
+        if extracted:
+            content, content_type = extracted
+        else:
+            raise ValueError("ZIP file did not contain a supported main image")
+    else:
         raise ValueError(f"image URL did not return a supported image ({content_type or 'unknown type'})")
     extension = {"image/jpeg": ".jpg", "image/png": ".png", "image/webp": ".webp", "image/gif": ".gif"}[content_type]
     IMAGE_DIR.mkdir(parents=True, exist_ok=True)
