@@ -54,8 +54,11 @@ function loadCart() {
   try { candidates.push(readCartSnapshot(localStorage.getItem("cart"))); } catch (e) {}
   try { candidates.push(readCartSnapshot(sessionStorage.getItem("leopis_cart"))); } catch (e) {}
   try { const match = document.cookie.match(/(?:^|; )leopis_cart=([^;]*)/); candidates.push(readCartSnapshot(match ? decodeURIComponent(match[1]) : "")); } catch (e) {}
-  const valid = candidates.filter(Boolean).sort((a, b) => b.updatedAt - a.updatedAt);
-  return valid.length ? valid[0].items : {};
+  const valid = candidates.filter(Boolean);
+  const nonEmpty = valid.filter(item => Object.keys(item.items).length > 0);
+  if (nonEmpty.length) nonEmpty.sort((a, b) => b.updatedAt - a.updatedAt);
+  else valid.sort((a, b) => b.updatedAt - a.updatedAt);
+  return (nonEmpty.length ? nonEmpty : valid).length ? (nonEmpty.length ? nonEmpty : valid)[0].items : {};
 }
 let lang = store.get("lang", "en"), products = [], catalogOrder = [], catalogPosition = new Map(), newProductIds = new Set(), byId = {}, view = [], page = 1, cart = loadCart();
 const t = k => T[lang][k];
@@ -460,6 +463,8 @@ function saveCart() {
   try { document.cookie = "leopis_cart=" + encodeURIComponent(payload) + "; Max-Age=2592000; Path=/; SameSite=Lax"; } catch (e) {}
 }
 saveCart();
+window.addEventListener("pagehide", saveCart);
+window.addEventListener("beforeunload", saveCart);
 function showCartDialog(focusCheckout = false) {
   const dlg = $("#cartDlg");
   if (!dlg.open) dlg.showModal();
