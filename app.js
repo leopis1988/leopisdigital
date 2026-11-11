@@ -473,9 +473,10 @@ function showCartDialog(focusCheckout = false) {
 function addToCart(id) { cart[id] = (cart[id] || 0) + 1; saveCart(); renderCart(); }
 function renderCart() {
   const box = $("#cartItems"); box.replaceChildren();
-  let sub = 0, count = 0;
+  let sub = 0, count = 0, validIds = [];
   Object.entries(cart).forEach(([id, qty]) => {
-    const p = byId[id]; if (!p) { delete cart[id]; return; }
+    const p = byId[id]; if (!p) return;
+    validIds.push(id);
     sub += pr(p) * qty; count += qty;
     const row = el("div", "row"), q = el("div", "qty");
     const minus = el("button", "", "−"), plus = el("button", "", "+");
@@ -488,7 +489,7 @@ function renderCart() {
     box.append(row);
   });
   if (!count) box.append(el("p", "empty", t("empty")));
-  const dl = deliveryFor(Object.keys(cart));
+  const dl = deliveryFor(validIds);
   if (count) {
     const sum = el("div", "dsum");
     const line = (a, b, cls) => { const r = el("div", "dl" + (cls ? " " + cls : "")); r.append(el("span", "", a), el("b", "", b)); sum.append(r); };
