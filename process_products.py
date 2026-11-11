@@ -2,6 +2,7 @@ import json
 import pandas as pd
 import os
 import time
+from pathlib import Path
 try:
     from ddgs import DDGS
 except ImportError:
@@ -9,6 +10,17 @@ except ImportError:
 
 with open('products.json', 'r', encoding='utf-8') as f:
     data = json.load(f)
+
+removed_ids_path = Path('removed_product_ids.json')
+if removed_ids_path.exists():
+    removed_ids = json.loads(removed_ids_path.read_text(encoding='utf-8'))
+    if not isinstance(removed_ids, list):
+        raise ValueError('removed_product_ids.json must contain a JSON array')
+    removed_ids = {str(product_id).strip().upper() for product_id in removed_ids if str(product_id).strip()}
+    before_count = len(data)
+    data = [item for item in data if str(item.get('id', '')).strip().upper() not in removed_ids]
+    if before_count != len(data):
+        print(f'Excluded {before_count - len(data)} persistently removed product(s).')
 
 processed_products = []
 

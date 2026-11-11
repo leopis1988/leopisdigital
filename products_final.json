@@ -682,18 +682,6 @@
   "merchant": "5"
  },
  {
-  "id": "101394",
-  "name": "Diamond Kids Sunglass-1048PR",
-  "category": "Eyewear",
-  "price": 722,
-  "image": "https://ae01.alicdn.com/kf/Se4546ce255f842ed93fea3500bef604aG/Diamond-Crystal-Children-Sunglasses-Fashion-Sparkling-Rhinestone-Kids-Square-Sun-Glasses-Girls-Shades-For-Beach-Travel.jpg",
-  "description": "Fun, lightweight sunglasses designed for kids. Style 1048, colour code PR; ask us on WhatsApp for available colours.",
-  "oldPrice": 850,
-  "discount": 15,
-  "badge": "Clearance",
-  "merchant": "5"
- },
- {
   "id": "101550",
   "name": "Hen Shaped Electric Egg Boiler",
   "category": "Home Appliances",
@@ -1666,282 +1654,6 @@
   "merchant": "1"
  },
  {
-  "id": "101006",
-  "name": "Trendy Kids Sunglass-1050BPK",
-  "category": "Eyewear",
-  "price": 638,
-  "image": "https://ae01.alicdn.com/kf/S6441181f9b2041269a183a38b3d9f3c2f/Fashion-Classic-Trendy-Boys-And-Girls-Children-s-Sunglasses-UV-Protection-Glasses.jpg",
-  "description": "Fun, lightweight sunglasses designed for kids. Style 1050, colour code BPK; ask us on WhatsApp for available colours.",
-  "oldPrice": 750,
-  "discount": 15,
-  "badge": "Clearance",
-  "merchant": "5"
- },
- {
-  "id": "101005",
-  "name": "Trendy Kids Sunglass-1050LT",
-  "category": "Eyewear",
-  "price": 638,
-  "image": "https://down-ph.img.susercontent.com/file/sg-11134201-7rcep-ltnj9bkhq2tiaa",
-  "description": "Fun, lightweight sunglasses designed for kids. Style 1050, colour code LT; ask us on WhatsApp for available colours.",
-  "oldPrice": 750,
-  "discount": 15,
-  "badge": "Clearance",
-  "merchant": "5"
- },
- {
-  "id": "101004",
-  "name": "Trendy Kids Sunglass-1050BG",
-  "category": "Eyewear",
-  "price": 638,
-  "image": "https://ae01.alicdn.com/kf/S4d8cd3bb751a451c94fa9b78c8e66055m.jpg",
-  "description": "Fun, lightweight sunglasses designed for kids. Style 1050, colour code BG; ask us on WhatsApp for available colours.",
-  "oldPrice": 750,
-  "discount": 15,
-  "badge": "Clearance",
-  "merchant": "5"
- },
- {
-  "id": "101003",
-  "name": "Trendy Kids Sunglass-1050OR",
-  "category": "Eyewear",
-  "price": 638,
-  "image": "https://down-ph.img.susercontent.com/file/sg-11134201-82589-mfwal96yi7ey21",
-  "description": "Fun, lightweight sunglasses designed for kids. Style 1050, colour code OR; ask us on WhatsApp for available colours.",
-  "oldPrice": 750,
-  "discount": 15,
-  "badge": "Clearance",
-  "merchant": "5"
- },
- {
-  "id": "101002",
-  "name": "Trendy Kids Sunglass-1050BL",
-  "category": "Eyewear",
-  "price": 638,
-  "image": "https://ae01.alicdn.com/kf/S6441181f9b2041269a183a38b3d9f3c2f/Fashion-Classic-Trendy-Boys-And-Girls-Children-s-Sunglasses-UV-Protection-Glasses.jpg",
-  "description": "Fun, lightweight sunglasses designed for kids. Style 1050, colour code BL; ask us on WhatsApp for available colours.",
-  "oldPrice": 750,
-  "discount": 15,
-  "badge": "Clearance",
-  "merchant": "5"
- },
- {
-  "id": "101001",
-  "name": "Trendy Kids Sunglass-1050PK",
-  "category": "Eyewear",
-  "price": 638,
-  "image": "https://down-ph.img.susercontent.com/file/sg-11134201-7rdx8-lza8mrq1q0w70b",
-  "description": "Fun, lightweight sunglasses designed for kids. Style 1050, colour code PK; ask us on WhatsApp for available colours.",
-  "oldPrice": 750,
-  "discount": 15,
-  "badge": "Clearance",
-  "merchant": "5"
- },
- {
-  "id": "101000",
-  "name": "Bear Kids Sunglass-1049PK",
-  "category": "Eyewear",
-  "price": 659,
-  "image": "https://cdn.rumilifehome.com/wp-content/uploads/2023/08/f16dc374818a6269d63ee425cd0bd80.jpg",
-  "description": "Fun, lightweight sunglasses designed for kids. Style 1049, colour code PK; ask us on WhatsApp for available colours.",
-  "oldPrice": 775,
-  "discount": 15,
-  "badge": "Clearance",
-  "merchant": "5"
- },
- {
-  "id": "100999",
-  "name": "Bear Kids Sunglass-1049BL",
-  "category": "Eyewear",
-  "price": 659,
-  "image": "https://janandjul.com/wp-content/uploads/GBX-LBL-4.jpg",
-  "description": "Fun, lightweight sunglasses designed for kids. Style 1049, colour code BL; ask us on WhatsApp for available colours.",
-  "oldPrice": 775,
-  "discount": 15,
-  "badge": "Clearance",
-  "merchant": "1"
- },
- {
-  "id": "100998",
-  "name": "Bear Kids Sunglass-1049BR",
-  "category": "Eyewear",
-  "price": 659,
-  "image": "https://down-my.img.susercontent.com/file/b0147772180124bb987afeab4818f046",
-  "description": "Fun, lightweight sunglasses designed for kids. Style 1049, colour code BR; ask us on WhatsApp for available colours.",
-  "oldPrice": 775,
-  "discount": 15,
-  "badge": "Clearance",
-  "merchant": "1"
- },
- {
-  "id": "100997",
-  "name": "Bear Kids Sunglass-1049GE",
-  "category": "Eyewear",
-  "price": 659,
-  "image": "https://cdn.rumilifehome.com/wp-content/uploads/2023/08/f16dc374818a6269d63ee425cd0bd80.jpg",
-  "description": "Fun, lightweight sunglasses designed for kids. Style 1049, colour code GE; ask us on WhatsApp for available colours.",
-  "oldPrice": 775,
-  "discount": 15,
-  "badge": "Clearance",
-  "merchant": "1"
- },
- {
-  "id": "100996",
-  "name": "Bear Kids Sunglass-1049BK",
-  "category": "Eyewear",
-  "price": 659,
-  "image": "https://imagedelivery.net/_ES4-kRCuVWNGrfHn8UtvA/janandjul.com/GBX-BLK-Feature1.jpg/w=800,h=800,fit=crop",
-  "description": "Fun, lightweight sunglasses designed for kids. Style 1049, colour code BK; ask us on WhatsApp for available colours.",
-  "oldPrice": 775,
-  "discount": 15,
-  "badge": "Clearance",
-  "merchant": "1"
- },
- {
-  "id": "100995",
-  "name": "Bear Kids Sunglass-1049BG",
-  "category": "Eyewear",
-  "price": 659,
-  "image": "https://cdn.rumilifehome.com/wp-content/uploads/2023/08/f16dc374818a6269d63ee425cd0bd80.jpg",
-  "description": "Fun, lightweight sunglasses designed for kids. Style 1049, colour code BG; ask us on WhatsApp for available colours.",
-  "oldPrice": 775,
-  "discount": 15,
-  "badge": "Clearance",
-  "merchant": "1"
- },
- {
-  "id": "100994",
-  "name": "Diamond Kids Sunglass-1048BKYW",
-  "category": "Eyewear",
-  "price": 722,
-  "image": "https://www.hjcloseouts.com/wp-content/uploads/2024/11/kidssunglasses.jpg",
-  "description": "Fun, lightweight sunglasses designed for kids. Style 1048, colour code BKYW; ask us on WhatsApp for available colours.",
-  "oldPrice": 850,
-  "discount": 15,
-  "badge": "Clearance",
-  "merchant": "1"
- },
- {
-  "id": "100993",
-  "name": "Diamond Kids Sunglass-1048RD",
-  "category": "Eyewear",
-  "price": 722,
-  "image": "https://ae01.alicdn.com/kf/Se4546ce255f842ed93fea3500bef604aG/Diamond-Crystal-Children-Sunglasses-Fashion-Sparkling-Rhinestone-Kids-Square-Sun-Glasses-Girls-Shades-For-Beach-Travel.jpg",
-  "description": "Fun, lightweight sunglasses designed for kids. Style 1048, colour code RD; ask us on WhatsApp for available colours.",
-  "oldPrice": 850,
-  "discount": 15,
-  "badge": "Clearance",
-  "merchant": "1"
- },
- {
-  "id": "100992",
-  "name": "Diamond Kids Sunglass-1048PK",
-  "category": "Eyewear",
-  "price": 722,
-  "image": "https://www.hjcloseouts.com/wp-content/uploads/2024/11/kidssunglasses.jpg",
-  "description": "Fun, lightweight sunglasses designed for kids. Style 1048, colour code PK; ask us on WhatsApp for available colours.",
-  "oldPrice": 850,
-  "discount": 15,
-  "badge": "Clearance",
-  "merchant": "1"
- },
- {
-  "id": "100991",
-  "name": "Diamond Kids Sunglass-1048BR",
-  "category": "Eyewear",
-  "price": 722,
-  "image": "https://www.hjcloseouts.com/wp-content/uploads/2024/11/kidssunglasses.jpg",
-  "description": "Fun, lightweight sunglasses designed for kids. Style 1048, colour code BR; ask us on WhatsApp for available colours.",
-  "oldPrice": 850,
-  "discount": 15,
-  "badge": "Clearance",
-  "merchant": "1"
- },
- {
-  "id": "100990",
-  "name": "Diamond Kids Sunglass-1048BK",
-  "category": "Eyewear",
-  "price": 722,
-  "image": "https://ae01.alicdn.com/kf/Se4546ce255f842ed93fea3500bef604aG/Diamond-Crystal-Children-Sunglasses-Fashion-Sparkling-Rhinestone-Kids-Square-Sun-Glasses-Girls-Shades-For-Beach-Travel.jpg",
-  "description": "Fun, lightweight sunglasses designed for kids. Style 1048, colour code BK; ask us on WhatsApp for available colours.",
-  "oldPrice": 850,
-  "discount": 15,
-  "badge": "Clearance",
-  "merchant": "1"
- },
- {
-  "id": "100989",
-  "name": "Folding Kids Sunglass-1047GE",
-  "category": "Eyewear",
-  "price": 680,
-  "image": "https://thetintedstory.com/cdn/shop/files/Kids_Foldable-pink-pouch.png?v=1757402144&width=700",
-  "description": "Fun, lightweight sunglasses designed for kids. Style 1047, colour code GE; ask us on WhatsApp for available colours.",
-  "oldPrice": 800,
-  "discount": 15,
-  "badge": "Clearance",
-  "merchant": "1"
- },
- {
-  "id": "100987",
-  "name": "Folding Kids Sunglass-1047OR",
-  "category": "Eyewear",
-  "price": 680,
-  "image": "https://down-sg.img.susercontent.com/file/sg-11134201-7rd40-lusq6g29rh3yaa",
-  "description": "Fun, lightweight sunglasses designed for kids. Style 1047, colour code OR; ask us on WhatsApp for available colours.",
-  "oldPrice": 800,
-  "discount": 15,
-  "badge": "Clearance",
-  "merchant": "1"
- },
- {
-  "id": "100986",
-  "name": "Folding Kids Sunglass-1047BK",
-  "category": "Eyewear",
-  "price": 680,
-  "image": "https://ae01.alicdn.com/kf/Sb70e9f4743924914a329c7cb1fbebbba0/Children-s-Sunglasses-Folding-Sunglasses-Anti-UV-Boys-and-Girls-Sunglasses-Fashion-Big-Kids-Sunglasses.jpg",
-  "description": "Fun, lightweight sunglasses designed for kids. Style 1047, colour code BK; ask us on WhatsApp for available colours.",
-  "oldPrice": 800,
-  "discount": 15,
-  "badge": "Clearance",
-  "merchant": "1"
- },
- {
-  "id": "100985",
-  "name": "Folding Kids Sunglass-1047PK",
-  "category": "Eyewear",
-  "price": 680,
-  "image": "https://thetintedstory.com/cdn/shop/files/Kids_Foldable-pink-pouch.png?v=1757402144&width=700",
-  "description": "Fun, lightweight sunglasses designed for kids. Style 1047, colour code PK; ask us on WhatsApp for available colours.",
-  "oldPrice": 800,
-  "discount": 15,
-  "badge": "Clearance",
-  "merchant": "1"
- },
- {
-  "id": "100984",
-  "name": "Folding Kids Sunglass-1047BL",
-  "category": "Eyewear",
-  "price": 680,
-  "image": "https://ae01.alicdn.com/kf/Sb70e9f4743924914a329c7cb1fbebbba0/Children-s-Sunglasses-Folding-Sunglasses-Anti-UV-Boys-and-Girls-Sunglasses-Fashion-Big-Kids-Sunglasses.jpg",
-  "description": "Fun, lightweight sunglasses designed for kids. Style 1047, colour code BL; ask us on WhatsApp for available colours.",
-  "oldPrice": 800,
-  "discount": 15,
-  "badge": "Clearance",
-  "merchant": "1"
- },
- {
-  "id": "100983",
-  "name": "Folding Kids Sunglass-1047BG",
-  "category": "Eyewear",
-  "price": 680,
-  "image": "https://thetintedstory.com/cdn/shop/files/Kids_Foldable-pink-pouch.png?v=1757402144&width=700",
-  "description": "Fun, lightweight sunglasses designed for kids. Style 1047, colour code BG; ask us on WhatsApp for available colours.",
-  "oldPrice": 800,
-  "discount": 15,
-  "badge": "Clearance",
-  "merchant": "1"
- },
- {
   "id": "100982",
   "name": "2 in 1 Icon Square Photochromic Glass-1046CL",
   "category": "Eyewear",
@@ -2045,90 +1757,6 @@
   "image": "https://down-ph.img.susercontent.com/file/ph-11134201-23030-lmzabjcmniovd6",
   "description": "2-in-1 photochromic lenses that darken in sunlight and clear up indoors. Style 1045, colour code BKSL; ask us on WhatsApp for available colours.",
   "oldPrice": 1750,
-  "discount": 15,
-  "badge": "Clearance",
-  "merchant": "1"
- },
- {
-  "id": "100973",
-  "name": "Opti Round Anti-Blue Light Glass-1044GE",
-  "category": "Eyewear",
-  "price": 1062,
-  "image": "https://vedson.in/storefiles/productfiles/BMP-S1751799/Spike-Round-Blue/Spike-Round-Blue.jpg",
-  "description": "Anti-blue light lenses designed to help reduce eye strain during long screen time. Style 1044, colour code GE; ask us on WhatsApp for available colours.",
-  "oldPrice": 1249,
-  "discount": 15,
-  "badge": "Clearance",
-  "merchant": "1"
- },
- {
-  "id": "100972",
-  "name": "Opti Round Anti-Blue Light Glass-1044CL",
-  "category": "Eyewear",
-  "price": 1062,
-  "image": "https://images.nexusapp.co/assets/88/fe/d3/320208431.jpg",
-  "description": "Anti-blue light lenses designed to help reduce eye strain during long screen time. Style 1044, colour code CL; ask us on WhatsApp for available colours.",
-  "oldPrice": 1249,
-  "discount": 15,
-  "badge": "Clearance",
-  "merchant": "1"
- },
- {
-  "id": "100971",
-  "name": "Opti Round Anti-Blue Light Glass-1044PK",
-  "category": "Eyewear",
-  "price": 1062,
-  "image": "https://images.nexusapp.co/assets/88/fe/d3/320208431.jpg",
-  "description": "Anti-blue light lenses designed to help reduce eye strain during long screen time. Style 1044, colour code PK; ask us on WhatsApp for available colours.",
-  "oldPrice": 1249,
-  "discount": 15,
-  "badge": "Clearance",
-  "merchant": "1"
- },
- {
-  "id": "100970",
-  "name": "Opti Round Anti-Blue Light Glass-1044GR",
-  "category": "Eyewear",
-  "price": 1062,
-  "image": "https://vedson.in/storefiles/productfiles/BMP-S1751799/Spike-Round-Blue/Spike-Round-Blue.jpg",
-  "description": "Anti-blue light lenses designed to help reduce eye strain during long screen time. Style 1044, colour code GR; ask us on WhatsApp for available colours.",
-  "oldPrice": 1249,
-  "discount": 15,
-  "badge": "Clearance",
-  "merchant": "1"
- },
- {
-  "id": "100969",
-  "name": "Opti Round Anti-Blue Light Glass-1044BL",
-  "category": "Eyewear",
-  "price": 1062,
-  "image": "https://vedson.in/storefiles/productfiles/BMP-S1751799/Spike-Round-Blue/Spike-Round-Blue.jpg",
-  "description": "Anti-blue light lenses designed to help reduce eye strain during long screen time. Style 1044, colour code BL; ask us on WhatsApp for available colours.",
-  "oldPrice": 1249,
-  "discount": 15,
-  "badge": "Clearance",
-  "merchant": "1"
- },
- {
-  "id": "100968",
-  "name": "Opti Round Anti-Blue Light Glass-1044TE",
-  "category": "Eyewear",
-  "price": 1062,
-  "image": "https://images.nexusapp.co/assets/88/fe/d3/320208431.jpg",
-  "description": "Anti-blue light lenses designed to help reduce eye strain during long screen time. Style 1044, colour code TE; ask us on WhatsApp for available colours.",
-  "oldPrice": 1249,
-  "discount": 15,
-  "badge": "Clearance",
-  "merchant": "1"
- },
- {
-  "id": "100967",
-  "name": "Opti Round Anti-Blue Light Glass-1044BK",
-  "category": "Eyewear",
-  "price": 1062,
-  "image": "http://img.staticdj.com/9b05675e85c1d2637e46d09efd9b6486.jpeg",
-  "description": "Anti-blue light lenses designed to help reduce eye strain during long screen time. Style 1044, colour code BK; ask us on WhatsApp for available colours.",
-  "oldPrice": 1249,
   "discount": 15,
   "badge": "Clearance",
   "merchant": "1"
@@ -6828,15 +6456,6 @@
   "merchant": "2"
  },
  {
-  "id": "P06112",
-  "name": "Royale Sunglasses - UV400",
-  "category": "Eyewear",
-  "price": 1500,
-  "image": "https://img.joomcdn.net/8b5bb3d5713858c4cf16c869464d9e64f4678110_original.jpeg",
-  "description": "Stylish sunglasses with a comfortable fit for sunny days.",
-  "merchant": "2"
- },
- {
   "id": "P06775",
   "name": "Sneakers Shoe Cleaner Kit",
   "category": "Cleaning",
@@ -7914,15 +7533,6 @@
   "merchant": "2"
  },
  {
-  "id": "P06083",
-  "name": "Polorized Sports Sunglasses",
-  "category": "Eyewear",
-  "price": 1400,
-  "image": "https://i5.walmartimages.com/seo/KALIYADI-Polarized-Sports-Sunglasses-Men-Running-Sunglasses-for-Women-Mens-Sunglasses-Polarized-UV-Protection-Cycling-Driving-Fishing_d7dcd38f-c283-432e-bc26-615cac58774e.6e792d9f24c6313b61009db9ba98bbe2.jpeg",
-  "description": "Stylish sunglasses with a comfortable fit for sunny days.",
-  "merchant": "2"
- },
- {
   "id": "P06168",
   "name": "Jue-Fish Tile Cleaner",
   "category": "Cleaning",
@@ -8721,15 +8331,6 @@
   "price": 1650,
   "image": "https://images.zulacart.com/insecure/fit/1000/1000/sm/0/plain/https://new-asserts.s3.ap-southeast-1.amazonaws.com/42df95/prods/gzJ3rbkXUheU6RbwdURUUlD0sIfBFH9w0JjCOlRZ.jpg@webp",
   "description": "Secure holder that keeps your phone in view and within reach.",
-  "merchant": "2"
- },
- {
-  "id": "P07089",
-  "name": "CC Polorized Luxury Sunglasses",
-  "category": "Eyewear",
-  "price": 2000,
-  "image": "http://www.fashionphile.com/cdn/shop/files/50c39f91ddee734befb94bf3906afbeb.jpg?v=1749709441",
-  "description": "Stylish sunglasses with a comfortable fit for sunny days.",
   "merchant": "2"
  },
  {
@@ -9916,15 +9517,6 @@
   "merchant": "2"
  },
  {
-  "id": "P07229",
-  "name": "1 Pc Party Sunglasses",
-  "category": "Eyewear",
-  "price": 800,
-  "image": "https://image.made-in-china.com/2f0j00HAPcNufDEoqM/One-Piece-Frameless-Metal-Hinge-Purple-Lens-Party-Sunglasses.jpg",
-  "description": "Stylish sunglasses with a comfortable fit for sunny days. Key details: 1 Pc.",
-  "merchant": "2"
- },
- {
   "id": "P07252",
   "name": "Happy Birthday Loot Bags - Large",
   "category": "Party & Stationery",
@@ -10084,15 +9676,6 @@
   "price": 1500,
   "image": "https://ae01.alicdn.com/kf/S3a657e79fb404ecab1f998920836e9c93/16Color-LED-Night-Light-Egg-Shape-Lamp-Remote-Control-Rechargeable-Indoor-Outdoor-Home-Garden-Bar-KTV.jpg",
   "description": "Decorative LED lamp that adds a warm glow to any room.",
-  "merchant": "2"
- },
- {
-  "id": "P08429",
-  "name": "Beach Mens Sunglasses with Pouch",
-  "category": "Eyewear",
-  "price": 1250,
-  "image": "https://eyeglasssupplystore.com/cdn/shop/products/2686e0_1ce34de5323c4ceabc2b4ec22ca45a68_mv2_1800x1800.jpg?v=1679225088",
-  "description": "Stylish sunglasses with a comfortable fit for sunny days.",
   "merchant": "2"
  },
  {
@@ -11551,15 +11134,6 @@
   "price": 3400,
   "image": "https://www.urbanpanda.lk/cdn/shop/files/e0ab9174-88ff-48f5-9538-0e5f3231fc7c.jpg?v=1773815363&width=1445",
   "description": "Handy tool set with the essentials for home repairs and DIY jobs. Key details: 24 Pcs.",
-  "merchant": "2"
- },
- {
-  "id": "P07321",
-  "name": "Yellow Night Sunglasses - UV400",
-  "category": "Eyewear",
-  "price": 1350,
-  "image": "https://down-sg.img.susercontent.com/file/sg-11134201-823p1-mp4imabz3yfjd9",
-  "description": "Stylish sunglasses with a comfortable fit for sunny days.",
   "merchant": "2"
  },
  {
@@ -20814,17 +20388,6 @@
   "merchant": "3"
  },
  {
-  "id": "3-BLACK-GOLD-AVIATOR-SUNGLASSES",
-  "name": "Black Gold Aviator Sunglasses",
-  "category": "Eyewear",
-  "price": 622,
-  "image": "https://fochant-prod.s3.ap-southeast-1.amazonaws.com/testfolder/product_image/e58563c4ca5f4e08ea87d76c21b3384e.webp",
-  "description": "Black Gold Aviator Sunglasses - Military Style Dark Sun Glasses with Gold Metal Frame and UV 400 Protection\n\nSkeleteen Curved UV400 Protected Classic Apparel Sunglasses are the ideal dark sunglasses for driving. They have a gold frame look that makes them appear extra cool. These premium sunglasses are an ideal, stylish way of taking care of a strong sun situation. No matter if you are at the beach, at a pool party, or just hanging out with friends, these are favorites among every kid, teen and adult. They are unisex and look good on girls and boys, men and women. They have adjustable nose pads that can be made to fit any size face and comfortable grips at the ends of the handles to ensure you don't poke yourself. These fake RayBans can also be used as a costume accessory for rock stars from the…",
-  "warranty": "Checking Warranty – 3 Days",
-  "base": 402,
-  "merchant": "3"
- },
- {
   "id": "3-STAIN-REMOVER-POWDER",
   "name": "Stain Remover Powder",
   "category": "Groceries & Herbal",
@@ -21537,17 +21100,6 @@
   "description": "Material The lice comb is made of good quality plastic, and stainless steel, smooth and this comb will not rust or corrode and is easy to clean. KIND TO HAIR The rounded shape of the metal bristles allows the hair to glide easily between them without painful and unpleasant pulling while effectively removing hair from nits.\n\nHIGHLY EFFECTIVE The metal bristles are spaced tightly so that each strand of hair can be carefully inspected, which provides maximum nitcueillage. EASY TO CLEAN Simply wash the comb with warm water and antiseptic disinfectant after use and store once thoroughly dry. PERFECT FOR ANY HAIR TYPE:The comb works easily and perfectly for long and short hair, thin and thick, dry and wet hair. Can be used for children, adults and pets. Classic metal comb to remove lice and eggs. Lice is a medical problem that needs to be taken seriously to keep your child healthy. To avoid the presence of lice, comb the child's hair regularly and carefully. This comb is made of stainless steel.Instructions Before…",
   "warranty": "No Warranty",
   "base": 212,
-  "merchant": "3"
- },
- {
-  "id": "3-BLACK-UNISEX-SUNGLASSES",
-  "name": "Black Unisex Sunglasses",
-  "category": "Eyewear",
-  "price": 654,
-  "image": "https://fochant-prod.s3.ap-southeast-1.amazonaws.com/testfolder/product_image/78b4f9ea9f28be396c2dc2e9e43c7abe.webp",
-  "description": "Polarized sun glasses are specifically designed for effectively eliminate and filter the scattered light in the beam, making the view clear and natural, better perception experience of scenery in the sun compared with non-polarized lens.\n\nPremium Acetate Temples Comfort​: The temples crafted from high - end acetate of our polarized sunglasses not only exude elegance but also prioritize your comfort. The smooth texture of acetate is gentle on the skin behind your ears, eliminating any chafing or irritation. The harmonious blend of the TR frame and acetate temples creates a unique visual appeal that turns heads. Polarized & UV Protection: Our uv sunglasses for women adopt polarized lenses which can offer true color perception by eliminating reflections such as reflected and diffused light. Unbreakable & Durable: With high quality shatterproof TR material, our KANASTAL polarized sports sunglasses for men and women is extremely…",
-  "warranty": "Checking Warranty – 3 Days",
-  "base": 434,
   "merchant": "3"
  },
  {
@@ -24246,17 +23798,6 @@
   "merchant": "3"
  },
  {
-  "id": "3-SMART-WEAR-FASHION-PLONEER-SUNGLASSES",
-  "name": "Smart Wear Fashion Ploneer Sunglasses",
-  "category": "Eyewear",
-  "price": 716,
-  "image": "https://fochant-prod.s3.ap-southeast-1.amazonaws.com/testfolder/product_image/50e652d936bac8a7a9e3e22cb9ec9c7d.webp",
-  "description": "Short Description The perfect combination of sunglasses and bluetooth headsets, ergonomically designed sunglasses fit all face shapes. The frame is heat and cold resistant, flexible and durable, with high strength, suitable for wearing without fatigue for a long time. Intimate voice tips help you to easily operate, drive, travel, outdoor and other perfect choice.\n\nLong Description Condition: 100% Brand New Item Type: Bluetooth Sunglasses Material: ABS+ Glasses Colour: As Pictures Shown Operating Frequency: 2. 4ghz- 2. 480mhz Wireless Connection Range: 10m/ 32. 8ft Transmitting Power: Glass2 Support Headset & Handsfree Profiles Battery Type: Rechargeable Lithium Battery Battery Capacity: 150mAH 3. 7V Audio Decoding Head: 15Bit Size: 12 x8 x 4 cm",
-  "warranty": "Checking Warranty – 3 Days",
-  "base": 496,
-  "merchant": "3"
- },
- {
   "id": "3-ULTRA-HD-MINI-PROJECTOR",
   "name": "Ultra HD Mini Projector",
   "category": "Lighting & Solar",
@@ -25794,17 +25335,6 @@
   "description": "Short Description Colour-RGB (Red, Green, Blue)\n\nLong Description Brand AILBTON Indoor/Outdoor Usage Indoor Special Feature Lighting Decoration Light Source Type Neon LED Power Source DC Light Colour Multicolor Theme Rainbow Occasion Bedroom,Rooftop Style Traditional RESET ENVIRONMENT: Enhance your game, living room or bedroom setting with these stylish neon RGB LED strips. With multiple color combinations, you can create the perfect mood and atmosphere for any occasion Elevate your playroom decor with our neon gaming lights! Our flexible neon LED strips come equipped with music synchronization, allowing the light and frequency to change according to the ambient sound. Perfect for both gamers and streamers, these flexible neon lights…",
   "warranty": "Checking Warranty – 3 Days",
   "base": 895,
-  "merchant": "3"
- },
- {
-  "id": "3-ONE-POWER-READER-SUNGLASS",
-  "name": "One Power Reader Sunglass",
-  "category": "Eyewear",
-  "price": 989,
-  "image": "https://fochant-prod.s3.ap-southeast-1.amazonaws.com/testfolder/product_image/3a420944fd5499e45fab71b815a2a0dc.webp",
-  "description": "Short Description Lenses Color: Transparent Lenses Optical Attribute: Mirror Model Number: glass81 Lens Height: 5cm Coating: EMI Lenses Material: Plastic Lens Width: 5cm Frame Material: Plastic Power: 2.5 Size: 14 x 12 x 3.5cm\n\nLong Description Comfortable use: Even if you wear it all day, its well-designed design and light weight can ensure excellent comfort. Very durable because they are made of high-quality materials. Lightweight and durable: Lightweight frames and plastic lenses with flexible spring hinged legs ensure a comfortable fit without uncomfortable pinching, providing you with a clear visual experience. Multifocus Reading Glasses: The Convenient Set allows you to put a pair of reading glasses in different positions, so you can always wear a pair easily. Multiple uses: Glasses are specifically designed for reading and writing tasks, but they are also very useful for jobs that require more visual work,…",
-  "warranty": "Checking Warranty – 3 Days",
-  "base": 769,
   "merchant": "3"
  },
  {
