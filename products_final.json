@@ -1,5 +1,31 @@
 [
  {
+  "id": "3580",
+  "name": "2Kg Rice Cooker",
+  "category": "Electrical items / Kitchen",
+  "price": 8990,
+  "image": "images/sheet/3580.png",
+  "description": "Cash on delivery / bank transfer / KOKO payment method available. (One year warranty)",
+  "warranty": "1 year warranty",
+  "merchant": "5",
+  "badge": "New",
+  "addedAt": "2026-11-12T17:01:09+00:00",
+  "subcategory": "Other Electrical items / Kitchen"
+ },
+ {
+  "id": "4005",
+  "name": "Rechargeable Drill - 2 Batery",
+  "category": "Electrical / Tools",
+  "price": 6990,
+  "image": "images/sheet/4005.jpg",
+  "description": "rechargeable 2 batteries full case (one Year warranty).  cash on delivery",
+  "warranty": "1 Year warranty",
+  "merchant": "5",
+  "badge": "New",
+  "addedAt": "2026-11-12T17:01:09+00:00",
+  "subcategory": "Other Electrical / Tools"
+ },
+ {
   "id": "567",
   "name": "Super Clean High-Tech Cleaning Compound for Keyboard, Laptop, Mobile",
   "category": "Electronics & Gadgets",
