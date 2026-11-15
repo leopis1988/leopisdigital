@@ -8,7 +8,7 @@
 <meta name="description" content="Shop gadgets and home essentials at Leopis Digital in Sri Lanka. Cash on delivery and island-wide delivery. Confirm product details on WhatsApp.">
 <meta name="robots" content="index,follow,max-image-preview:large">
 <link rel="canonical" href="https://leopisdigital.com/">
-<meta name="theme-color" content="#111827">
+<meta name="theme-color" content="#1558ca">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Leopis Digital">
 <meta property="og:title" content="Leopis Digital | Gadgets &amp; Home Essentials in Sri Lanka">
@@ -97,7 +97,7 @@
 </div>
 
 <header class="head">
-  <a class="brand" href="./"><img src="logo.png" alt="Leopis" height="56"></a>
+  <a class="brand" href="./" aria-label="Leopis Digital home"><img src="logo.png" alt="" height="64"><span class="brand-copy"><strong>Leopis Digital</strong><small>Online shopping in Sri Lanka</small></span></a>
   <input id="q" type="search" data-ph="search" aria-label="Search by product name, code, or category" placeholder="Search name, product code, or category…" autocomplete="off">
   <button id="searchBtn" class="searchbtn" type="button" data-t="searchAction">Search</button>
   <button id="cartBtn" class="cartbtn"><span data-t="cart">Cart</span> <b id="cartCount">0</b></button>
@@ -140,13 +140,8 @@
   <div class="row-scroll" id="trending"></div>
 </section>
 
-<section class="section">
-  <div class="section-head"><h2>Shop by Category</h2></div>
-  <div class="cat-grid" id="catGrid"></div>
-</section>
-
-<section class="seo-category-directory" aria-label="Browse product categories">
-  <h3>Browse all product categories in Sri Lanka</h3>
+<details class="seo-category-directory">
+  <summary><span>Explore all category pages</span><small>Open the full category directory</small></summary>
   <!-- SEO_CATEGORY_LINKS_BEGIN -->
 <nav class="seo-category-links" aria-label="Browse product categories">
 <a href="/categories/audio-and-smartwatches.html">Audio &amp; Smartwatches <span>(90)</span></a>
@@ -176,15 +171,16 @@
 <a href="/categories/tools-and-hardware.html">Tools &amp; Hardware <span>(139)</span></a>
 </nav>
 <!-- SEO_CATEGORY_LINKS_END -->
-</section>
+</details>
 
-<h2 class="title" id="shop">All Products</h2>
+<h2 class="title" id="shop">Browse Products</h2>
+<p class="browse-help">Choose a category first; matching subcategories will then be available.</p>
 <div class="bar">
-  <select id="cat" aria-label="Category"></select>
-  <select id="subcat" aria-label="Subcategory"></select>
-  <select id="storeFilter" aria-label="Shop"></select>
-  <select id="warrantyFilter" aria-label="Warranty"></select>
-  <select id="sort" aria-label="Sort"></select>
+  <label class="filter-field"><span data-t="categoryLabel">Category</span><select id="cat" aria-label="Category"></select></label>
+  <label class="filter-field"><span data-t="subcategoryLabel">Subcategory</span><select id="subcat" aria-label="Subcategory"></select></label>
+  <label class="filter-field"><span data-t="storeLabel">Shop</span><select id="storeFilter" aria-label="Shop"></select></label>
+  <label class="filter-field"><span data-t="warrantyLabel">Warranty</span><select id="warrantyFilter" aria-label="Warranty"></select></label>
+  <label class="filter-field sort-field"><span data-t="sortLabel">Sort</span><select id="sort" aria-label="Sort"></select></label>
   <span id="count"></span>
 </div>
 <main id="grid" class="grid"></main>
