@@ -43,7 +43,8 @@ REVIEW_REQUIRED_CATEGORY_TERMS = ("health", "sexual")
 REVIEW_REQUIRED_PRODUCT_TERMS = (
     "sexual", "erectile", "penis", "libido", "testosterone", "supplement",
     "weight loss", "blood pressure", "blood sugar", "diabetes", "hypertension",
-    "medicine", "medication", "cure", "treats", "treatment", "pain relief",
+    "medicine", "medication", "cure", "cures", "treatment for", "treatment of",
+    "treats diabetes", "treats hypertension", "treats erectile dysfunction", "pain relief",
 )
 
 PAGE_CSS = """
@@ -151,15 +152,37 @@ def image_url(product: dict) -> str:
 
 
 def is_indexable(product: dict) -> bool:
+    name = one_line(product.get("name", ""))
+    if not name or name.casefold() in PLACEHOLDERS:
+        return False
     category = one_line(product.get("category", "")).casefold()
     searchable = " ".join(
-        [one_line(product.get("name", "")), one_line(product.get("description", ""))]
+        [name, one_line(product.get("description", ""))]
     ).casefold()
     sensitive_category = any(term in category for term in REVIEW_REQUIRED_CATEGORY_TERMS)
     review_required = sensitive_category and any(
-        term in searchable for term in REVIEW_REQUIRED_PRODUCT_TERMS
+        re.search(r"(?<!\w)" + re.escape(term).replace(r"\ ", r"\s+") + r"(?!\w)", searchable)
+        for term in REVIEW_REQUIRED_PRODUCT_TERMS
     )
-    return bool(usable_description(product)) and not review_required
+    return not review_required
+
+
+def factual_product_description(product: dict, price: Decimal) -> str:
+    """Use only catalog facts when a product's detailed description is missing."""
+    name = one_line(product.get("name", ""))
+    category = one_line(product.get("category", "product"))
+    subcategory = one_line(product.get("subcategory", ""))
+    merchant = one_line(product.get("merchant", ""))
+    warranty = one_line(product.get("warranty", ""))
+    parts = [f"{name} is listed in {category}" + (f" under {subcategory}" if subcategory else "") + " for customers in Sri Lanka.",
+             f"The current listed price is LKR {price_text(price)}."]
+    if merchant:
+        parts.append(f"This item is listed by Shop {merchant}.")
+    if warranty:
+        parts.append(f"Listed warranty information: {warranty}.")
+    parts.append("Detailed specifications have not been supplied in the catalog; confirm product details and current availability with Leopis Digital before ordering.")
+    parts.append("Island-wide delivery is available in Sri Lanka; ask Leopis Digital to confirm delivery charges.")
+    return " ".join(parts)
 
 
 def product_title(product: dict) -> str:
@@ -357,8 +380,8 @@ def product_page(product: dict, category_urls: dict[str, str],
     category = one_line(product.get("category"))
     subcategory = one_line(product.get("subcategory")) or f"Other {category}"
     description = clean_text(product.get("description", ""))
-    description_plain = usable_description(product)
     price = price_value(product)
+    description_plain = usable_description(product) or factual_product_description(product, price)
     slug = product_slug(product)
     canonical = f"{ROOT}/products/{slug}.html"
     meta_desc = product_description(product, price)
@@ -705,7 +728,7 @@ def main() -> None:
     not_indexed = len(products) - indexable_count
     print(
         f"Generated {len(products)} product pages ({indexable_count} indexable, "
-        f"{not_indexed} noindex until descriptions/claims are reviewed), "
+        f"{not_indexed} noindex for sensitive claims or unusable product titles), "
         f"{len(categories)} category pages, a 50-product featured page, and sitemap.xml."
     )
 
