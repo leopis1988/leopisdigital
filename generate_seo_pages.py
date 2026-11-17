@@ -57,6 +57,10 @@ a{color:#1558ca}a:hover{text-decoration-thickness:2px}.wrap{max-width:1080px;mar
 .product h1{font-size:clamp(1.7rem,4vw,2.6rem);line-height:1.15;margin:.2rem 0 .8rem}.category{color:var(--muted);font-weight:650}.price{font-size:1.8rem;font-weight:800;margin:.7rem 0;color:#b54708}.old-price{font-size:1rem;color:#727987;font-weight:500;margin-left:.4rem}.code,.warranty{font-size:.9rem;color:var(--muted)}.description{white-space:pre-line}.notice{background:#fff5e5;border-left:4px solid var(--accent);padding:.75rem 1rem;border-radius:5px}
 .actions{display:flex;flex-wrap:wrap;gap:.7rem;margin:1.2rem 0}.button{display:inline-block;text-decoration:none;padding:.7rem 1rem;border-radius:9px;background:var(--brand);color:#fff;font-weight:750}.button.secondary{background:#e8f7ee;color:#155b34}.store-info,.category-intro{border-top:1px solid var(--line);margin-top:2rem;padding-top:1rem;color:#384052}
 .product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:1rem;margin-top:1rem}.product-card{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:white;color:inherit;text-decoration:none;transition:transform .15s,box-shadow .15s}.product-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px #151b2c18}.product-card img{width:100%;aspect-ratio:1;object-fit:contain;background:var(--soft);display:block}.product-card-body{display:grid;gap:.25rem;padding:.7rem}.product-card h3{font-size:1rem;line-height:1.35;margin:.1rem 0 .2rem}.product-card .small{color:var(--muted);font-size:.78rem}.product-card .warranty{color:#126035;font-weight:700}.subcategory-nav{display:flex;flex-wrap:wrap;gap:.5rem;margin:1rem 0 1.5rem}.subcategory-nav a{padding:.45rem .7rem;border:1px solid var(--line);border-radius:999px;background:var(--soft);text-decoration:none;font-size:.88rem}.subcategory-block{margin:2rem 0;scroll-margin-top:1rem}.subcategory-block>h2{font-size:1.35rem;border-bottom:1px solid var(--line);padding-bottom:.45rem}.subcategory-block h2 small{font-size:.82rem;color:var(--muted)}.category-faq{border-top:1px solid var(--line);margin-top:2rem;padding-top:1rem}.category-faq details{margin:.5rem 0;padding:.75rem 1rem;border:1px solid var(--line);border-radius:10px;background:var(--soft)}.category-faq summary{font-weight:700;cursor:pointer}.category-faq p{margin:.55rem 0 0}.footer{border-top:1px solid var(--line);margin-top:2rem;padding-top:1rem;color:var(--muted);font-size:.9rem}
+/* Compact sharing controls are sized for touch and keep cards uncluttered. */
+.share-icon{display:inline-grid;place-items:center;flex:0 0 40px;width:40px;height:40px;padding:0;border:1px solid #cfdae9;border-radius:50%;background:rgba(255,255,255,.96);color:var(--brand);box-shadow:0 2px 9px #18263b20;cursor:pointer;touch-action:manipulation}.share-icon svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}.share-icon:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.product-card{position:relative;overflow:hidden}.product-card-link{display:flex;flex-direction:column;min-width:0;color:inherit;text-decoration:none}.product-card>.share-icon{position:absolute;right:.5rem;top:.5rem;z-index:2}.subcategory-heading{display:flex;align-items:center;justify-content:space-between;gap:.65rem}.subcategory-heading h2{margin:.4rem 0;font-size:1.35rem}.category-page-share{display:flex;align-items:center;gap:.5rem;margin:.75rem 0 1rem;color:var(--muted);font-size:.86rem}.share-toast{position:fixed;left:50%;bottom:1rem;z-index:1000;transform:translateX(-50%);padding:.7rem 1rem;border-radius:999px;background:#18263b;color:white;font:600 .9rem/1.2 system-ui,sans-serif;box-shadow:0 6px 22px #0003}
+@media(max-width:680px){.share-icon{width:44px;height:44px;flex-basis:44px}.subcategory-heading{align-items:center}.category-page-share{align-items:flex-start}}
 @media(max-width:680px){.product{grid-template-columns:1fr;gap:1rem}.site-head{align-items:center}.site-head img{height:48px;width:48px;max-width:48px}.site-brand-copy small{font-size:.65rem}}
 """
 
@@ -372,6 +376,17 @@ def header_html() -> str:
     return f'''<header class="site-head"><a class="site-brand" href="/" aria-label="Leopis Digital home"><img src="/logo.png" alt=""><span class="site-brand-copy"><strong>Leopis Digital</strong><small>Online shopping in Sri Lanka</small></span></a><a href="/">Browse all products in Sri Lanka</a></header>'''
 
 
+def share_button(url: str, title: str, text: str, label: str = "Share") -> str:
+    attrs = " ".join(
+        f'{key}="{html.escape(value, quote=True)}"'
+        for key, value in (
+            ("data-share-url", url), ("data-share-title", title), ("data-share-text", text)
+        )
+    )
+    aria = html.escape(f"{label}: {title}", quote=True)
+    return f'<button type="button" class="share-icon" {attrs} aria-label="{aria}" title="{aria}"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 16V3m0 0L7.5 7.5M12 3l4.5 4.5M5 12v7h14v-7"/></svg></button>'
+
+
 def product_page(product: dict, category_urls: dict[str, str],
                  feed_availability_by_id: dict[str, str]) -> tuple[str, bool, str]:
     name = one_line(product.get("name"))
@@ -459,12 +474,13 @@ def product_page(product: dict, category_urls: dict[str, str],
 {warranty_block}
 {availability_block}
 {description_block}
-<div class="actions"><a class="button" href="{html.escape(interactive_url, quote=True)}">View and order this product</a><a class="button secondary" href="{html.escape(wa_url, quote=True)}" target="_blank" rel="noopener">Confirm on WhatsApp</a></div>
+<div class="actions"><a class="button" href="{html.escape(interactive_url, quote=True)}">View and order this product</a>{share_button(canonical, name, f"{name} — LKR {price_text(price)} at Leopis Digital Sri Lanka", "Share product")}<a class="button secondary" href="{html.escape(wa_url, quote=True)}" target="_blank" rel="noopener">Confirm on WhatsApp</a></div>
 </div>
 </article>
 <section class="store-info"><h2>Ordering from Sri Lanka</h2><p>Leopis Digital offers island-wide delivery and cash on delivery. You may also request bank-transfer instructions through WhatsApp; this website does not take payment. Delivery for an order from one store is Rs. 450; multi-store carts use the discounted tiers shown on the <a href="/delivery.html">delivery page</a>. Returns and warranty terms are product-specific; see the <a href="/returns-warranty.html">returns and warranty policy</a>.</p><p>Confirm product availability, specifications and timing on WhatsApp. <a href="https://wa.me/94783366466">Chat with Leopis: +94 78 336 6466</a></p><p>Browse more: <a href="{html.escape(cat_url, quote=True)}">{html.escape(category)} in Sri Lanka</a> · <a href="/">All products</a></p></section>
 </main>
 <footer class="footer wrap">Leopis (Pvt) Ltd · Sri Lanka · <a href="/">Leopis Digital</a></footer>
+<script src="/share.js" defer></script>
 {schema_html}
 </body>
 </html>
@@ -490,14 +506,17 @@ def category_page(category: str, products: list[dict], product_urls: dict[str, s
         details = f'<span class="small">Rs. {html.escape(price)} · Shop {html.escape(str(product.get("merchant") or "5"))} · Code {html.escape(str(product["id"]))}</span>'
         if warranty:
             details += f'<span class="small warranty">{html.escape(warranty)}</span>'
-        card = f'<a class="product-card" href="{html.escape(url, quote=True)}">{img_block}<div class="product-card-body"><h3>{html.escape(truncate(name, 80))}</h3><span class="small subcategory-label">{html.escape(subcategory)}</span>{details}</div></a>'
+        product_link = f'<a class="product-card-link" href="{html.escape(url, quote=True)}">{img_block}<div class="product-card-body"><h3>{html.escape(truncate(name, 80))}</h3><span class="small subcategory-label">{html.escape(subcategory)}</span>{details}</div></a>'
+        product_share = share_button(url, name, f"{name} — LKR {price} at Leopis Digital Sri Lanka", "Share product")
+        card = f'<article class="product-card">{product_link}{product_share}</article>'
         cards_by_subcategory.setdefault(subcategory, []).append(card)
     nav, sections = [], []
     for subcategory in sorted(cards_by_subcategory, key=str.casefold):
         anchor = "subcategory-" + category_slug(subcategory)
         count = len(cards_by_subcategory[subcategory])
         nav.append(f'<a href="#{html.escape(anchor, quote=True)}">{html.escape(subcategory)} <span>({count:,})</span></a>')
-        sections.append(f'<section class="subcategory-block" id="{html.escape(anchor, quote=True)}"><h2>{html.escape(subcategory)} <small>({count:,})</small></h2><div class="product-grid">{"".join(cards_by_subcategory[subcategory])}</div></section>')
+        heading_share = share_button(canonical + "#" + anchor, subcategory + " — " + category, f"Browse {subcategory} in {category} at Leopis Digital, Sri Lanka.", "Share subcategory")
+        sections.append(f'<section class="subcategory-block" id="{html.escape(anchor, quote=True)}"><div class="subcategory-heading"><h2>{html.escape(subcategory)} <small>({count:,})</small></h2>{heading_share}</div><div class="product-grid">{"".join(cards_by_subcategory[subcategory])}</div></section>')
     crumbs = f'<nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> &rsaquo; <span>{html.escape(category)}</span></nav>'
     indexable = len(products) >= 5 and "sexual" not in category.casefold()
     robots = "index,follow,max-image-preview:large" if indexable else "noindex,follow"
@@ -523,12 +542,14 @@ def category_page(category: str, products: list[dict], product_urls: dict[str, s
 {crumbs}
 <h1>{html.escape(h1)}</h1>
 <p class="category-intro">{html.escape(intro)}</p>
+<div class="category-page-share"><span>Share this category catalogue</span>{share_button(canonical, category + " in Sri Lanka", f"Browse {category} products at Leopis Digital, Sri Lanka.", "Share category")}</div>
 <p>{len(products):,} products · Browse by subcategory, shop number and listed warranty.</p>
 <nav class="subcategory-nav" aria-label="Browse {html.escape(category, quote=True)} subcategories">{''.join(nav)}</nav>
 {''.join(sections)}
 {faq}
 </main>
 <footer class="footer wrap">Leopis (Pvt) Ltd · Sri Lanka · <a href="/">All products</a></footer>
+<script src="/share.js" defer></script>
 {schema}
 </body>
 </html>
@@ -558,13 +579,15 @@ def featured_products_page(products: list[dict], product_urls: dict[str, str]) -
             f'<img src="{html.escape(img, quote=True)}" alt="{html.escape(name, quote=True)}" loading="lazy">'
             if img else ""
         )
-        cards.append(
-            f'<a class="product-card" href="{html.escape(url, quote=True)}">{image_block}'
+        product_link = (
+            f'<a class="product-card-link" href="{html.escape(url, quote=True)}">{image_block}'
             f'<div class="product-card-body"><h2>{html.escape(truncate(name, 80))}</h2>'
             f'<span class="small">{html.escape(category)} · Code {html.escape(product_id)}</span>'
             f'<p class="price">Rs. {html.escape(price)}</p>'
             f'<span class="small">View details and ordering options</span></div></a>'
         )
+        product_share = share_button(url, name, f"{name} — LKR {price} at Leopis Digital Sri Lanka", "Share product")
+        cards.append(f'<article class="product-card">{product_link}{product_share}</article>')
         item_list.append({
             "@type": "ListItem",
             "position": position,
@@ -597,6 +620,7 @@ def featured_products_page(products: list[dict], product_urls: dict[str, str]) -
 <section class="store-info"><h2>Ordering from Leopis Digital</h2><p>Open any product to check its details and order options. Cash on delivery is available in Sri Lanka. <a href="/delivery.html">See delivery charges</a> · <a href="/returns-warranty.html">Returns and warranty</a> · <a href="/">Browse all products</a>.</p></section>
 </main>
 <footer class="footer wrap">Leopis (Pvt) Ltd · Sri Lanka · <a href="/">Leopis Digital</a></footer>
+<script src="/share.js" defer></script>
 {schema}
 </body>
 </html>

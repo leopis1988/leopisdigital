@@ -169,6 +169,51 @@ async function shareProduct(p) {
     }
   }
 }
+function shareIconButton(label, onClick) {
+  const button = el("button", "share-icon", "");
+  button.type = "button";
+  button.setAttribute("aria-label", label);
+  button.title = label;
+  button.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 16V3m0 0L7.5 7.5M12 3l4.5 4.5M5 12v7h14v-7"/></svg>';
+  button.onclick = onClick;
+  return button;
+}
+function categoryPageUrl(category) {
+  const link = [...document.querySelectorAll(".seo-category-links a")]
+    .find(anchor => (anchor.childNodes[0]?.textContent || "").trim() === category);
+  return new URL(link ? link.getAttribute("href") : "/categories/" + productSlug(category) + ".html", location.origin).href;
+}
+function updateCatalogShareButton() {
+  const button = $("#shareCatalog"), label = $("#shareCatalogLabel");
+  if (!button || !label) return;
+  const category = $("#cat").value, selected = $("#subcat").value;
+  button.disabled = !category;
+  if (selected) {
+    const subcategory = selected.split(" :: ")[1] || "";
+    label.textContent = "Share subcategory";
+    button.setAttribute("aria-label", "Share " + subcategory + " in " + category);
+  } else {
+    label.textContent = "Share category";
+    button.setAttribute("aria-label", category ? "Share " + category + " catalogue" : "Choose a category to share its catalogue");
+  }
+  button.title = button.getAttribute("aria-label");
+}
+async function shareCatalog() {
+  const category = $("#cat").value, selected = $("#subcat").value;
+  if (!category) return;
+  const subcategory = selected ? selected.split(" :: ")[1] : "";
+  const url = categoryPageUrl(category) + (subcategory ? "#subcategory-" + productSlug(subcategory) : "");
+  const title = subcategory ? subcategory + " — " + category : category + " in Sri Lanka";
+  const text = "Browse " + (subcategory ? subcategory + " in " : "") + category + " products at Leopis Digital.";
+  try {
+    if (navigator.share) await navigator.share({title, text, url});
+    else { await copyProductUrl(url); alert("Catalogue link copied"); }
+  } catch (error) {
+    if (error?.name !== "AbortError") {
+      try { await copyProductUrl(url); alert("Catalogue link copied"); } catch (_) {}
+    }
+  }
+}
 function el(tag, cls, text) { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
 
 /* ===== Leopis Special Promotions =====
@@ -289,10 +334,10 @@ function openDetail(p) {
   d.replaceChildren();
   const head = el("div", "dhead"), close = el("button", "", "✕");
   close.setAttribute("aria-label", "Close"); close.onclick = () => d.close();
-  head.append(el("h2", "", pname(p)), close);
+  head.append(el("h2", "", pname(p)), shareIconButton(t("share"), () => shareProduct(p)), close);
   const body = el("div", "pd"), im = el("div", "pd-img"); im.append(imgEl(p));
   const add = el("button", "add", t("add")); add.onclick = () => { addToCart(p.id); d.close(); };
-  const share = el("button", "share-btn", "🔗 " + t("share")); share.type = "button"; share.onclick = () => shareProduct(p);
+  const share = shareIconButton(t("share"), () => shareProduct(p));
   const wa = el("a", "wa-big", "💬 " + t("wa")); wa.href = waUrl(askMsg(p)); wa.target = "_blank"; wa.rel = "noopener";
   const gl = el("a", "wa-link", "🔍 " + t("gl")); gl.href = "https://www.google.com/search?tbm=isch&q=" + encodeURIComponent(p.name); gl.target = "_blank"; gl.rel = "noopener";
   body.append(im, el("small", "merchant-ref", t("merchant") + " " + merchantNo(p)), el("small", "", t("code") + ": " + p.id + " · " + p.category), priceEl(p, "pd-price"),
@@ -336,6 +381,7 @@ function populateSubcategoryOptions() {
     select.add(new Option(category ? sub : cat + " · " + sub, key));
   });
   select.value = keys.includes(previous) ? previous : "";
+  updateCatalogShareButton();
 }
 
 function buildCatNav() {
@@ -417,12 +463,12 @@ function render() {
     const titleLink = el("a", "product-detail-link", pname(p)); titleLink.href = productHref;
     title.append(titleLink);
     const add = el("button", "add", t("add")); add.onclick = () => addToCart(p.id);
-    const share = el("button", "share-btn", "🔗 " + t("share")); share.type = "button"; share.onclick = () => shareProduct(p);
-    const wa = el("a", "wa-link", "💬 " + t("wa")); wa.href = waUrl(askMsg(p)); wa.target = "_blank"; wa.rel = "noopener";
+  const wa = el("a", "wa-link", "💬 " + t("wa")); wa.href = waUrl(askMsg(p)); wa.target = "_blank"; wa.rel = "noopener";
     info.append(el("small", "merchant-ref", t("merchant") + " " + merchantNo(p)), title, el("small", "code", t("code") + ": " + p.id), el("small", "product-taxonomy", p.category + " · " + (p.subcategory || "Other")), priceEl(p, "price"));
     if (p.warranty) info.append(el("div", "wty", "🛡️ " + p.warranty));
-    info.append(add, share, wa);
-    card.append(img, info); grid.append(card);
+  info.append(add, wa);
+  img.append(shareIconButton(t("share"), () => shareProduct(p)));
+  card.append(img, info); grid.append(card);
   });
   renderPager();
 }
@@ -556,7 +602,8 @@ searchInput.addEventListener("search", submitSearch);
 searchInput.addEventListener("change", submitSearch);
 $("#searchBtn").onclick = submitSearch;
 $("#cat").onchange = () => { clearOnly = false; populateSubcategoryOptions(); filter(); buildCatNav(); };
-$("#subcat").onchange = filter; $("#storeFilter").onchange = filter; $("#warrantyFilter").onchange = filter; $("#sort").onchange = filter;
+$("#subcat").onchange = () => { updateCatalogShareButton(); filter(); }; $("#storeFilter").onchange = filter; $("#warrantyFilter").onchange = filter; $("#sort").onchange = filter;
+$("#shareCatalog").onclick = shareCatalog;
 $("#cartBtn").onclick = () => showCartDialog();
 $("#closeCart").onclick = () => $("#cartDlg").close();
 $("#cartDlg").addEventListener("click", e => { if (e.target.id === "cartDlg") e.target.close(); });
