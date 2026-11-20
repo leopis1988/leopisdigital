@@ -1,5 +1,57 @@
 [
  {
+  "id": "P09416",
+  "name": "Car Shape Mobile Stand Holder (P09416)",
+  "category": "Holder",
+  "price": 990,
+  "image": "images/sheet/P09416.jpg",
+  "description": "Ask on WhatsApp",
+  "warranty": "No warranty",
+  "merchant": "2",
+  "badge": "New",
+  "addedAt": "2026-11-20T04:11:23+00:00",
+  "subcategory": "Other Holder"
+ },
+ {
+  "id": "P09418",
+  "name": "6 Ports Extension Power Cord (P09418)",
+  "category": "Lighting & Solar",
+  "price": 1490,
+  "image": "images/sheet/P09418.jpg",
+  "description": "Ask on WhatsApp",
+  "warranty": "checking warranty",
+  "merchant": "2",
+  "badge": "New",
+  "addedAt": "2026-11-20T04:11:23+00:00",
+  "subcategory": "Other Lighting & Solar"
+ },
+ {
+  "id": "P09422",
+  "name": "6 Pcs Self-Adhesive Cable Holder",
+  "category": "cable holder",
+  "price": 640,
+  "image": "images/sheet/P09422.jpg",
+  "description": "ask on WhatsApp",
+  "warranty": "checking warranty",
+  "merchant": "2",
+  "badge": "New",
+  "addedAt": "2026-11-20T04:11:23+00:00",
+  "subcategory": "Other cable holder"
+ },
+ {
+  "id": "P09453",
+  "name": "Stitch Camera-Style Desk Lamp",
+  "category": "Fan",
+  "price": 1390,
+  "image": "images/sheet/P09453.jpg",
+  "description": "Ask on WhatsApp",
+  "warranty": "2 Days checking warranty",
+  "merchant": "2",
+  "badge": "New",
+  "addedAt": "2026-11-20T04:11:23+00:00",
+  "subcategory": "Other Fan"
+ },
+ {
   "id": "P01170",
   "name": "Stuffed Soft Rabbit Toy - Battery Operated (P01170)",
   "category": "Doll",
