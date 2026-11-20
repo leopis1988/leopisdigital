@@ -1,5 +1,44 @@
 [
  {
+  "id": "P09415",
+  "name": "Animal Design Mini Lamp",
+  "category": "Light",
+  "price": 1090,
+  "image": "images/sheet/P09415.jpg",
+  "description": "ask on WhatsApp",
+  "warranty": "2 Days checking warranty",
+  "merchant": "2",
+  "badge": "New",
+  "addedAt": "2026-11-20T08:00:46+00:00",
+  "subcategory": "Other Light"
+ },
+ {
+  "id": "P09456",
+  "name": "Labubu Electronic Piggy Bank",
+  "category": "baby",
+  "price": 990,
+  "image": "images/sheet/P09456.jpg",
+  "description": "ask on WhatsApp",
+  "warranty": "2 Days checking warranty",
+  "merchant": "2",
+  "badge": "New",
+  "addedAt": "2026-11-20T08:00:46+00:00",
+  "subcategory": "Other baby"
+ },
+ {
+  "id": "P09411",
+  "name": "Mini Clip Book Lamp - Rechargeable (P09411)",
+  "category": "lights",
+  "price": 1220,
+  "image": "images/sheet/P09411.jpg",
+  "description": "Ask on WhatsApp",
+  "warranty": "No warranty",
+  "merchant": "2",
+  "badge": "New",
+  "addedAt": "2026-11-20T08:00:46+00:00",
+  "subcategory": "Other lights"
+ },
+ {
   "id": "P09416",
   "name": "Car Shape Mobile Stand Holder (P09416)",
   "category": "Holder",
