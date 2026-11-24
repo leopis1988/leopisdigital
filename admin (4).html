@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex"><title>Leopis Admin</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<style>
+[hidden]{display:none!important}*{box-sizing:border-box}body{margin:0;font:14px system-ui,sans-serif;background:#f3f5f8;color:#1b1f24}
+button,input,select,textarea{font:inherit}input,select,textarea{padding:8px 10px;border:1px solid #c9d0d8;border-radius:8px;background:#fff;max-width:100%}
+button{padding:8px 13px;border:1px solid #c9d0d8;border-radius:8px;background:#fff;cursor:pointer}button.p{background:#0b6b3a;color:#fff;border-color:#0b6b3a}button.d{color:#b3261e;border-color:#e8b4b0}
+#login{max-width:340px;margin:12vh auto;background:#fff;padding:24px;border-radius:14px;display:grid;gap:10px;box-shadow:0 2px 14px #0001}
+nav{position:sticky;top:0;z-index:5;background:#0b6b3a;color:#fff;display:flex;gap:4px;padding:8px 10px;overflow-x:auto;align-items:center}
+nav b{margin-right:8px;white-space:nowrap}nav button{background:none;color:#fff;border:0;white-space:nowrap}nav button.on{background:#fff3;border-radius:8px}
+main{padding:12px;max-width:1300px;margin:auto}.bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;align-items:center}
+.stats{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}.stats div{background:#fff;padding:8px 14px;border-radius:10px}.stats b{display:block;font-size:18px}
+.tw{overflow-x:auto;background:#fff;border-radius:12px}table{border-collapse:collapse;width:100%;min-width:760px}th,td{padding:7px 9px;border-bottom:1px solid #eef0f3;text-align:left;vertical-align:middle}th{background:#f8f9fb;font-size:12px;color:#555}
+td img{width:44px;height:44px;object-fit:cover;border-radius:6px;background:#e9edf0}.nm{max-width:260px}.sm{font-size:12px;color:#777}
+.fl button{padding:3px 7px;margin-right:3px;opacity:.35;border-radius:14px}.fl button.on{opacity:1;background:#e6f4ea;border-color:#0b6b3a}
+.modal{position:fixed;inset:0;background:#0007;z-index:20;display:none;align-items:flex-start;justify-content:center;overflow:auto;padding:14px}.modal.open{display:flex}
+.modal>form{background:#fff;border-radius:14px;padding:16px;width:100%;max-width:720px}.g{display:grid;grid-template-columns:1fr 1fr;gap:8px}.g label{display:grid;gap:3px;font-size:12px;color:#555}.g .w{grid-column:1/-1}
+.g label.c{display:flex;align-items:center;gap:6px;font-size:14px;color:#1b1f24}.g input[type=checkbox]{width:18px;height:18px}
+#toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:#222;color:#fff;padding:10px 16px;border-radius:10px;display:none;z-index:30}#toast.e{background:#b3261e}
+@media(max-width:560px){.g{grid-template-columns:1fr}}
+</style></head><body>
+<form id="login"><h2 style="margin:0">Leopis Admin</h2><input id="em" type="email" placeholder="Email" required autocomplete="username"><input id="pw" type="password" placeholder="Password" required autocomplete="current-password"><button class="p">Sign in</button></form>
+<div id="app" hidden>
+<nav><b>🛠 Leopis</b><button data-t="products" class="on">Products</button><button data-t="categories">Categories</button><button data-t="merchants">Merchants</button><button data-t="promos">Promo codes</button><button data-t="settings">Settings</button><button id="out" style="margin-left:auto">Sign out</button></nav>
+<main id="view"></main></div>
+<div class="modal" id="modal"><form id="pf"></form></div><div id="toast"></div>
+<script>
+const SB=supabase.createClient("https://efnpwdugjmjzqdkgdawa.supabase.co","sb_publishable_8a4trfyL_a-NgMfUsugMEA_By_KsGqM");
+const $=s=>document.querySelector(s),H=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const fixImg=u=>{u=(u||"").trim();const m=u.match(/drive\.google\.com\/(?:file\/d\/|open\?id=|uc\?(?:[^#]*&)?id=|thumbnail\?(?:[^#]*&)?id=)([\w-]{20,})/);return m?"https://drive.google.com/thumbnail?id="+m[1]+"&sz=w1000":u};
+const num=v=>v===""||v==null?null:Number(v);let tt;
+function toast(m,e){const t=$("#toast");t.textContent=m;t.className=e?"e":"";t.style.display="block";clearTimeout(tt);tt=setTimeout(()=>t.style.display="none",3200)}
+const run=async(p,ok)=>{const r=await p;if(r.error){toast(r.error.message,1);return null}if(ok)toast(ok);return r};
+let cats=[],mers=[],tab="products",S={page:0,q:"",cat:"",mer:"",st:"",ps:25,sel:new Set(),rows:[],total:0};
+
+$("#login").onsubmit=async e=>{e.preventDefault();const{error}=await SB.auth.signInWithPassword({email:$("#em").value,password:$("#pw").value});if(error)return toast(error.message,1);enter()};
+$("#out").onclick=async()=>{await SB.auth.signOut();location.reload()};
+async function enter(){const{data:ok}=await SB.rpc("is_admin");if(!ok){await SB.auth.signOut();return toast("This account is not an admin.",1)}
+ $("#login").hidden=true;$("#app").hidden=false;await refs();go("products")}
+async function refs(){cats=(await SB.from("categories").select("*").order("sort_order").order("name")).data||[];mers=(await SB.from("merchants").select("*").order("id")).data||[]}
+document.querySelectorAll("nav [data-t]").forEach(b=>b.onclick=()=>go(b.dataset.t));
+function go(t){tab=t;document.querySelectorAll("nav [data-t]").forEach(b=>b.classList.toggle("on",b.dataset.t===t));({products:pView,categories:cView,merchants:mView,promos:rView,settings:sView})[t]()}
+const opts=(a,v,f)=>a.map(x=>`<option value="${H(f(x)[0])}"${String(f(x)[0])===String(v??"")?" selected":""}>${H(f(x)[1])}</option>`).join("");
+const merOpts=v=>`<option value="">— none —</option>`+opts(mers,v,m=>[m.id,m.id+" · "+m.name]);
+
+/* ---------- PRODUCTS ---------- */
+async function pView(){
+ $("#view").innerHTML=`<div class="stats" id="st"></div><div class="bar"><input id="q" placeholder="Search name or code" value="${H(S.q)}" style="flex:1;min-width:160px">
+ <select id="fc"><option value="">All categories</option>${opts(cats,S.cat,c=>[c.name,c.name])}</select><select id="fm"><option value="">All merchants</option><option value="none">No merchant</option>${opts(mers,S.mer,m=>[m.id,m.id+" · "+m.name])}</select>
+ <select id="fs">${[["","All status"],["active","Active"],["inactive","Hidden"],["pinned","📌 Pinned"],["trending","🔥 Trending"],["new","🆕 New arrival"]].map(o=>`<option value="${o[0]}"${o[0]===S.st?" selected":""}>${o[1]}</option>`).join("")}</select>
+ <button class="p" id="add">+ Add product</button><button id="exp">⬇ CSV</button></div>
+ <div class="bar" id="bulk" hidden><b id="bc"></b><select id="ba"><option value="">Bulk action…</option><option value="act1">Show on site</option><option value="act0">Hide from site</option><option value="pin1">Pin</option><option value="pin0">Unpin</option><option value="tr1">Mark trending</option><option value="tr0">Unmark trending</option><option value="nw1">Mark new arrival</option><option value="nw0">Unmark new arrival</option><option value="mer">Set merchant…</option><option value="cat">Set category…</option><option value="del">Delete</option></select><span id="bv"></span><button class="p" id="bg">Apply</button></div>
+ <div class="tw"><table><thead><tr><th><input type="checkbox" id="all"></th><th></th><th>Product</th><th>Category</th><th>Merchant</th><th>Price</th><th>Flags</th><th></th></tr></thead><tbody id="tb"></tbody></table></div>
+ <div class="bar" style="margin-top:10px"><button id="pv">‹ Prev</button><span id="pi"></span><button id="nx">Next ›</button><select id="ps">${[25,50,100].map(n=>`<option${n===S.ps?" selected":""}>${n}</option>`).join("")}</select></div>`;
+ let t;$("#q").oninput=e=>{clearTimeout(t);t=setTimeout(()=>{S.q=e.target.value;S.page=0;load()},300)};
+ $("#fc").onchange=e=>{S.cat=e.target.value;S.page=0;load()};$("#fm").onchange=e=>{S.mer=e.target.value;S.page=0;load()};$("#fs").onchange=e=>{S.st=e.target.value;S.page=0;load()};
+ $("#ps").onchange=e=>{S.ps=+e.target.value;S.page=0;load()};$("#pv").onclick=()=>{if(S.page>0){S.page--;load()}};$("#nx").onclick=()=>{if((S.page+1)*S.ps<S.total){S.page++;load()}};
+ $("#add").onclick=()=>edit(null);$("#exp").onclick=exportCsv;$("#all").onchange=e=>{S.rows.forEach(r=>e.target.checked?S.sel.add(r.id):S.sel.delete(r.id));draw()};
+ $("#ba").onchange=e=>{const v=e.target.value;$("#bv").innerHTML=v==="mer"?`<select id="bx">${merOpts("")}</select>`:v==="cat"?`<select id="bx">${opts(cats,"",c=>[c.name,c.name])}</select>`:""};$("#bg").onclick=bulk;
+ stats();load()}
+async function stats(){const c=async f=>(await f(SB.from("products").select("id",{count:"exact",head:true}))).count||0;
+ const[a,b,p,t,n]=await Promise.all([c(q=>q),c(q=>q.eq("active",false)),c(q=>q.eq("pinned",true)),c(q=>q.eq("trending",true)),c(q=>q.eq("new_arrival",true))]);
+ $("#st").innerHTML=[["Products",a],["Hidden",b],["📌 Pinned",p],["🔥 Trending",t],["🆕 New",n]].map(x=>`<div>${x[0]}<b>${x[1]}</b></div>`).join("")}
+function filt(q){if(S.q){const s=S.q.replace(/[,()%*]/g," ").trim();q=q.or(`name.ilike.%${s}%,code.ilike.%${s}%`)}
+ if(S.cat)q=q.eq("category",S.cat);if(S.mer==="none")q=q.is("merchant",null);else if(S.mer)q=q.eq("merchant",+S.mer);
+ ({active:()=>q=q.eq("active",true),inactive:()=>q=q.eq("active",false),pinned:()=>q=q.eq("pinned",true),trending:()=>q=q.eq("trending",true),new:()=>q=q.eq("new_arrival",true)})[S.st]?.();return q}
+async function load(){const r=await run(filt(SB.from("products").select("*",{count:"exact"})).order("pinned",{ascending:false}).order("pin_order").order("sort_order").order("id").range(S.page*S.ps,S.page*S.ps+S.ps-1));
+ if(!r)return;S.rows=r.data;S.total=r.count||0;draw()}
+function draw(){const m=Object.fromEntries(mers.map(x=>[x.id,x.name]));
+ $("#tb").innerHTML=S.rows.map(p=>`<tr style="${p.active?"":"opacity:.55"}"><td><input type="checkbox" data-s="${p.id}"${S.sel.has(p.id)?" checked":""}></td>
+ <td><img loading="lazy" src="${H(p.image||"")}" alt=""></td><td class="nm"><b>${H(p.name)}</b><div class="sm">${H(p.code||"")}${p.subcategory?" · "+H(p.subcategory):""}</div></td>
+ <td>${H(p.category||"")}</td><td>${p.merchant?p.merchant+" · "+H(m[p.merchant]||""):"—"}</td>
+ <td>Rs. ${Number(p.price).toLocaleString()}${p.market_price?`<div class="sm"><s>${Number(p.market_price).toLocaleString()}</s> −${p.discount_percent}%</div>`:""}</td>
+ <td class="fl">${[["pinned","📌"],["trending","🔥"],["new_arrival","🆕"],["active","👁"]].map(f=>`<button data-f="${f[0]}" data-id="${p.id}" class="${p[f[0]]?"on":""}" title="${f[0]}">${f[1]}</button>`).join("")}</td>
+ <td style="white-space:nowrap"><button data-e="${p.id}">Edit</button> <button class="d" data-x="${p.id}">✕</button></td></tr>`).join("")||`<tr><td colspan="8" style="padding:30px;text-align:center;color:#777">No products found</td></tr>`;
+ const a=S.page*S.ps;$("#pi").textContent=S.total?`${a+1}–${Math.min(a+S.ps,S.total)} of ${S.total}`:"0";
+ $("#bulk").hidden=!S.sel.size;$("#bc").textContent=S.sel.size+" selected";
+ $("#tb").querySelectorAll("[data-s]").forEach(c=>c.onchange=()=>{c.checked?S.sel.add(+c.dataset.s):S.sel.delete(+c.dataset.s);draw()});
+ $("#tb").querySelectorAll("[data-f]").forEach(b=>b.onclick=async()=>{const p=S.rows.find(x=>x.id==b.dataset.id),v=!p[b.dataset.f];if(await run(SB.from("products").update({[b.dataset.f]:v,updated_at:new Date().toISOString()}).eq("id",p.id))){p[b.dataset.f]=v;draw();stats()}});
+ $("#tb").querySelectorAll("[data-e]").forEach(b=>b.onclick=()=>edit(S.rows.find(x=>x.id==b.dataset.e)));
+ $("#tb").querySelectorAll("[data-x]").forEach(b=>b.onclick=async()=>{if(confirm("Delete this product permanently?")&&await run(SB.from("products").delete().eq("id",+b.dataset.x),"Deleted")){load();stats()}})}
+async function bulk(){const a=$("#ba").value,ids=[...S.sel];if(!a||!ids.length)return;const v=$("#bx")?.value;
+ if(a==="del"){if(!confirm(`Delete ${ids.length} products permanently?`))return;if(await run(SB.from("products").delete().in("id",ids),"Deleted"))S.sel.clear()}
+ else{const u={act1:{active:true},act0:{active:false},pin1:{pinned:true},pin0:{pinned:false},tr1:{trending:true},tr0:{trending:false},nw1:{new_arrival:true},nw0:{new_arrival:false},mer:{merchant:v?+v:null},cat:{category:v}}[a];
+  if(await run(SB.from("products").update({...u,updated_at:new Date().toISOString()}).in("id",ids),"Updated "+ids.length))S.sel.clear()}
+ $("#ba").value="";load();stats()}
+async function exportCsv(){toast("Preparing CSV…");let all=[];for(let f=0;;f+=1000){const r=await run(filt(SB.from("products").select("*")).order("id").range(f,f+999));if(!r)return;all.push(...r.data);if(r.data.length<1000)break}
+ const k=Object.keys(all[0]||{});const esc=v=>`"${String(Array.isArray(v)?v.join("|"):v??"").replace(/"/g,'""')}"`;
+ const b=new Blob(["\ufeff"+[k.join(","),...all.map(r=>k.map(c=>esc(r[c])).join(","))].join("\n")],{type:"text/csv"});const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="products.csv";a.click()}
+
+function edit(p){const n=!p;p=p||{active:true,price:0,discount_percent:0,images:[],sort_order:0,pin_order:0};
+ const f=(k,l,t="text",w)=>`<label class="${w?"w":""}">${l}<input name="${k}" type="${t}" value="${H(p[k]??"")}"${t==="number"?' step="any"':""}></label>`;
+ const ck=(k,l)=>`<label class="c"><input type="checkbox" name="${k}"${p[k]?" checked":""}>${l}</label>`;
+ $("#pf").innerHTML=`<h3 style="margin-top:0">${n?"Add product":"Edit product"}</h3><div class="g">
+ ${f("name","Name *","text",1)}${f("code","Product code")}${f("subcategory","Subcategory")}
+ <label>Category<select name="category"><option value="">— none —</option>${opts(cats,p.category,c=>[c.name,c.name])}</select></label>
+ <label>Merchant<select name="merchant">${merOpts(p.merchant)}</select></label>
+ ${f("price","Selling price (Rs.) *","number")}${f("market_price","Market price (Rs.)","number")}${f("discount_percent","Discount % (auto if blank)","number")}${f("cost","Cost price (Rs.)","number")}
+ ${f("warranty","Warranty")}${f("badge","Badge (e.g. New, Clearance)")}${f("sort_order","Sort order","number")}${f("pin_order","Pin order (low = first)","number")}
+ ${f("image","Main image URL (Google Drive links are converted automatically — share the file as \"Anyone with the link\")","text",1)}<label class="w">More image URLs (one per line)<textarea name="images" rows="2">${H((p.images||[]).join("\n"))}</textarea></label>
+ <label class="w">Description<textarea name="description" rows="3">${H(p.description||"")}</textarea></label>
+ ${f("name_si","Name (Sinhala)")}${f("name_ta","Name (Tamil)")}
+ <label class="w">Description (Sinhala)<textarea name="description_si" rows="2">${H(p.description_si||"")}</textarea></label><label class="w">Description (Tamil)<textarea name="description_ta" rows="2">${H(p.description_ta||"")}</textarea></label>
+ ${ck("active","Show on site")}${ck("featured","Featured")}${ck("pinned","📌 Pinned")}${ck("trending","🔥 Trending")}${ck("new_arrival","🆕 New arrival")}</div>
+ <div class="bar" style="margin:14px 0 0;justify-content:flex-end"><button type="button" id="cx">Cancel</button><button class="p">Save</button></div>`;
+ $("#modal").classList.add("open");$("#cx").onclick=()=>$("#modal").classList.remove("open");
+ $("#pf").onsubmit=async e=>{e.preventDefault();const d=new FormData(e.target),g=k=>(d.get(k)||"").toString().trim(),b=k=>d.get(k)==="on";
+  const o={name:g("name"),code:g("code")||null,subcategory:g("subcategory")||null,category:g("category")||null,merchant:num(g("merchant")),price:num(g("price"))??0,market_price:num(g("market_price")),
+   discount_percent:num(g("discount_percent"))??0,cost:num(g("cost")),warranty:g("warranty")||null,badge:g("badge")||null,sort_order:num(g("sort_order"))??0,pin_order:num(g("pin_order"))??0,
+   image:fixImg(g("image"))||null,images:g("images").split("\n").map(s=>fixImg(s)).filter(Boolean),description:g("description")||null,description_si:g("description_si")||null,description_ta:g("description_ta")||null,
+   name_si:g("name_si")||null,name_ta:g("name_ta")||null,active:b("active"),featured:b("featured"),pinned:b("pinned"),trending:b("trending"),new_arrival:b("new_arrival"),updated_at:new Date().toISOString()};
+  if(!o.name)return toast("Name is required",1);
+  if(o.market_price&&o.market_price>o.price&&!num(g("discount_percent")))o.discount_percent=Math.round((1-o.price/o.market_price)*100);
+  if(!o.market_price)o.discount_percent=0;
+  const r=await run(n?SB.from("products").insert(o):SB.from("products").update(o).eq("id",p.id),"Saved");if(r){$("#modal").classList.remove("open");load();stats()}}}
+
+/* ---------- CATEGORIES ---------- */
+function cView(){$("#view").innerHTML=`<div class="bar"><input id="nc" placeholder="New category name"><button class="p" id="ac">+ Add</button><span class="sm">Renaming a category renames it on all its products. Hidden categories disappear from the site menu.</span></div>
+ <div class="tw"><table><thead><tr><th>Name (heading)</th><th>Sinhala</th><th>Tamil</th><th>Order</th><th>Show</th><th></th></tr></thead><tbody>${cats.map(c=>`<tr data-id="${c.id}">
+ <td><input data-k="name" value="${H(c.name)}"></td><td><input data-k="name_si" value="${H(c.name_si||"")}"></td><td><input data-k="name_ta" value="${H(c.name_ta||"")}"></td>
+ <td><input data-k="sort_order" type="number" value="${c.sort_order}" style="width:70px"></td><td><input data-k="active" type="checkbox"${c.active?" checked":""}></td><td><button class="d" data-del>Delete</button></td></tr>`).join("")}</tbody></table></div>`;
+ $("#ac").onclick=async()=>{const n=$("#nc").value.trim();if(!n)return;if(await run(SB.from("categories").insert({name:n,sort_order:cats.length+1}),"Added")){await refs();cView()}};
+ $("#view").querySelectorAll("tr[data-id]").forEach(tr=>{tr.querySelectorAll("[data-k]").forEach(i=>i.onchange=async()=>{const k=i.dataset.k,v=i.type==="checkbox"?i.checked:i.type==="number"?+i.value:(i.value.trim()||(k==="name"?null:null));
+  if(k==="name"&&!v){toast("Name required",1);return cView()}if(await run(SB.from("categories").update({[k]:v}).eq("id",tr.dataset.id),"Saved"))await refs()});
+  tr.querySelector("[data-del]").onclick=async()=>{if(confirm("Delete this category? Products keep their category text.")&&await run(SB.from("categories").delete().eq("id",tr.dataset.id),"Deleted")){await refs();cView()}}})}
+
+/* ---------- MERCHANTS ---------- */
+function mView(){$("#view").innerHTML=`<p class="sm">Merchants 1–10. Names here appear in the product editor.</p><div class="tw"><table><thead><tr><th>#</th><th>Name</th><th>Active</th></tr></thead><tbody>${mers.map(m=>`<tr data-id="${m.id}"><td>${m.id}</td><td><input data-k="name" value="${H(m.name)}"></td><td><input data-k="active" type="checkbox"${m.active?" checked":""}></td></tr>`).join("")}</tbody></table></div>`;
+ $("#view").querySelectorAll("tr[data-id]").forEach(tr=>tr.querySelectorAll("[data-k]").forEach(i=>i.onchange=async()=>{const v=i.type==="checkbox"?i.checked:i.value.trim();if(i.dataset.k==="name"&&!v)return toast("Name required",1);if(await run(SB.from("merchants").update({[i.dataset.k]:v}).eq("id",tr.dataset.id),"Saved"))await refs()}))}
+
+/* ---------- PROMO CODES ---------- */
+async function rView(){const r=await run(SB.from("promo_codes").select("*").order("created_at",{ascending:false}));if(!r)return;
+ $("#view").innerHTML=`<div class="bar"><input id="pc" placeholder="CODE" style="text-transform:uppercase;width:110px"><select id="pk"><option value="percent">% off</option><option value="fixed">Rs. off</option></select><input id="pvv" type="number" placeholder="Value" style="width:90px"><input id="pm" type="number" placeholder="Min order" style="width:100px"><input id="pe" type="date"><button class="p" id="pa">+ Add code</button></div>
+ <div class="tw"><table><thead><tr><th>Code</th><th>Type</th><th>Value</th><th>Min order</th><th>Expires</th><th>Active</th><th></th></tr></thead><tbody>${r.data.map(c=>`<tr data-c="${H(c.code)}"><td><b>${H(c.code)}</b></td><td>${c.kind}</td><td>${c.value}</td><td>${c.min_order}</td><td>${c.expires_at?c.expires_at.slice(0,10):"—"}</td><td><input type="checkbox" data-a${c.active?" checked":""}></td><td><button class="d" data-d>Delete</button></td></tr>`).join("")||"<tr><td colspan=7 style='padding:24px;text-align:center;color:#777'>No promo codes yet</td></tr>"}</tbody></table></div>`;
+ $("#pa").onclick=async()=>{const code=$("#pc").value.trim().toUpperCase(),v=+$("#pvv").value;if(!code||!(v>0))return toast("Enter a code and a value above 0",1);
+  if(await run(SB.from("promo_codes").insert({code,kind:$("#pk").value,value:v,min_order:+$("#pm").value||0,expires_at:$("#pe").value?$("#pe").value+"T23:59:59+05:30":null}),"Added"))rView()};
+ $("#view").querySelectorAll("tr[data-c]").forEach(tr=>{tr.querySelector("[data-a]").onchange=e=>run(SB.from("promo_codes").update({active:e.target.checked}).eq("code",tr.dataset.c),"Saved");
+  tr.querySelector("[data-d]").onclick=async()=>{if(confirm("Delete this code?")&&await run(SB.from("promo_codes").delete().eq("code",tr.dataset.c),"Deleted"))rView()}})}
+
+/* ---------- SETTINGS ---------- */
+async function sView(){const r=await run(SB.from("settings").select("*").order("key"));if(!r)return;
+ $("#view").innerHTML=`<p class="sm">Site settings (JSON). Edit carefully — invalid JSON is rejected.</p>`+r.data.map(s=>`<div style="background:#fff;border-radius:12px;padding:12px;margin-bottom:10px" data-k="${H(s.key)}"><b>${H(s.key)}</b><textarea rows="5" style="width:100%;margin:6px 0;font-family:monospace">${H(JSON.stringify(s.value,null,2))}</textarea><button class="p">Save</button></div>`).join("");
+ $("#view").querySelectorAll("[data-k]").forEach(d=>d.querySelector("button").onclick=()=>{let v;try{v=JSON.parse(d.querySelector("textarea").value)}catch(e){return toast("Invalid JSON",1)}run(SB.from("settings").upsert({key:d.dataset.k,value:v,updated_at:new Date().toISOString()}),"Saved")})}
+
+SB.auth.getSession().then(({data})=>data.session&&enter());
+</script></body></html>
