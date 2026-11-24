@@ -1,0 +1,23 @@
+{
+ "name": "Leopis Shop",
+ "short_name": "Leopis",
+ "start_url": "mobile.html",
+ "scope": "./",
+ "display": "standalone",
+ "background_color": "#f4f6f8",
+ "theme_color": "#0b6b3a",
+ "icons": [
+  {
+   "src": "logo.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "any"
+  },
+  {
+   "src": "logo.png",
+   "sizes": "192x192",
+   "type": "image/png",
+   "purpose": "any"
+  }
+ ]
+}
