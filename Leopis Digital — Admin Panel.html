@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Leopis Digital — Admin Panel</title>
+  <style>
+    :root { --primary: #1a237e; --accent: #ff6f00; --bg: #f4f6fb; --card: #ffffff; --danger: #d32f2f; --success: #2e7d32; }
+    * { box-sizing: border-box; font-family: system-ui, -apple-system, sans-serif; }
+    body { margin: 0; background: var(--bg); color: #1e293b; }
+    header { background: var(--primary); color: #fff; padding: 14px 18px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 10; }
+    header h1 { margin: 0; font-size: 18px; }
+    .container { max-width: 960px; margin: 18px auto; padding: 0 14px; }
+    .card { background: var(--card); border-radius: 12px; padding: 18px; box-shadow: 0 2px 10px rgba(0,0,0,0.06); margin-bottom: 16px; }
+    .hidden { display: none !important; }
+    label { display: block; font-size: 13px; font-weight: 600; margin: 10px 0 4px; }
+    input, select, textarea { width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; }
+    button { border: none; border-radius: 8px; padding: 10px 16px; font-weight: 600; cursor: pointer; font-size: 14px; }
+    .btn-primary { background: var(--primary); color: #fff; }
+    .btn-accent { background: var(--accent); color: #fff; }
+    .btn-danger { background: var(--danger); color: #fff; }
+    .btn-sm { padding: 6px 10px; font-size: 12px; }
+    .tabs { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+    .tab-btn { background: #e2e8f0; color: #334155; }
+    .tab-btn.active { background: var(--primary); color: #fff; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
+    .item-card { border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px; background: #fff; display: flex; flex-direction: column; gap: 8px; }
+    .item-card img { width: 100%; height: 150px; object-fit: cover; border-radius: 8px; background: #f1f5f9; }
+    .row-actions { display: flex; gap: 8px; margin-top: auto; }
+    .badge { display: inline-block; background: #e0e7ff; color: var(--primary); padding: 2px 8px; border-radius: 99px; font-size: 12px; font-weight: 600; }
+    #statusMsg { padding: 10px; border-radius: 8px; margin-bottom: 12px; font-size: 13px; display: none; }
+    .ok { background: #dcfce7; color: #166534; }
+    .err { background: #fee2e2; color: #991b1b; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Leopis Digital Admin</h1>
+    <button id="logoutBtn" class="btn-accent btn-sm hidden">Logout</button>
+  </header>
+
+  <div class="container">
+    <div id="statusMsg"></div>
+
+    <!-- Login View -->
+    <div id="loginView" class="card" style="max-width:420px;margin:40px auto;">
+      <h2 style="margin-top:0;">Admin Login</h2>
+      <p style="font-size:13px;color:#64748b;">Sign in with your Leopis Admin credentials.</p>
+      <label>Username</label>
+      <input type="text" id="loginEmail" placeholder="Leopis" />
+      <label>Password</label>
+      <input type="password" id="loginPassword" placeholder="Enter password" />
+      <button id="loginBtn" class="btn-primary" style="width:100%;margin-top:14px;">Login to Dashboard</button>
+    </div>
+
+    <!-- Dashboard View -->
+    <div id="dashboardView" class="hidden">
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="productsTab">Products</button>
+        <button class="tab-btn" data-tab="categoriesTab">Categories</button>
+        <button class="tab-btn" data-tab="promotionsTab">Promotions</button>
+      </div>
+
+      <!-- Products Tab -->
+      <div id="productsTab" class="tab-panel">
+        <div class="card">
+          <h3 id="prodFormTitle" style="margin-top:0;">Add New Product</h3>
+          <input type="hidden" id="editProdId" />
+          <label>Product Code (e.g. P09506)</label>
+          <input id="prodCode" placeholder="P09506" />
+          <label>Product Name</label>
+          <input id="prodName" placeholder="Luxury Ladies Gold Watch" />
+          <label>Price (Rs.)</label>
+          <input id="prodPrice" type="number" placeholder="1290" />
+          <label>Category</label>
+          <select id="prodCategory"></select>
+          <label>Image URL (or upload image below)</label>
+          <input id="prodImageUrl" placeholder="https://..." />
+          <input id="prodImageFile" type="file" accept="image/*" style="margin-top:6px;" />
+          <label>Short Description</label>
+          <textarea id="prodDesc" rows="2" placeholder="Checking Warranty + Island-wide COD"></textarea>
+          <div style="display:flex;gap:8px;margin-top:12px;">
+            <button id="saveProdBtn" class="btn-primary">Save Product</button>
+            <button id="cancelEditBtn" class="btn-danger hidden">Cancel Edit</button>
+          </div>
+        </div>
+        <div class="card">
+          <h3 style="margin-top:0;">All Products (Live Synced)</h3>
+          <div id="productsList" class="grid"></div>
+        </div>
+      </div>
+
+      <!-- Categories Tab -->
+      <div id="categoriesTab" class="tab-panel hidden">
+        <div class="card">
+          <h3 style="margin-top:0;">Add Category</h3>
+          <label>Category Name</label>
+          <input id="catName" placeholder="Ladies Watches" />
+          <button id="addCatBtn" class="btn-primary" style="margin-top:12px;">Add Category</button>
+        </div>
+        <div class="card">
+          <h3 style="margin-top:0;">Categories</h3>
+          <div id="categoriesList" class="grid"></div>
+        </div>
+      </div>
+
+      <!-- Promotions Tab -->
+      <div id="promotionsTab" class="tab-panel hidden">
+        <div class="card">
+          <h3 style="margin-top:0;">Add / Update Promotion Banner</h3>
+          <label>Promotion Title (e.g. Flash Sale!)</label>
+          <input id="promoTitle" placeholder="Special Offer: Checking Warranty + COD!" />
+          <label>Promo Code / Highlight Badge</label>
+          <input id="promoBadge" placeholder="UP TO 30% OFF" />
+          <label>Status</label>
+          <select id="promoActive">
+            <option value="true">Active (Show on Website)</option>
+            <option value="false">Hidden</option>
+          </select>
+          <button id="addPromoBtn" class="btn-primary" style="margin-top:12px;">Save Promotion</button>
+        </div>
+        <div class="card">
+          <h3 style="margin-top:0;">Promotions</h3>
+          <div id="promotionsList" class="grid"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase v10 Modular SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    // Direct Leopis Admin Login (SHA-256 verified)
+    import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    // TODO: Replace with YOUR Firebase Project Config from Firebase Console
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT.firebaseapp.com",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_PROJECT.appspot.com",
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const ADMIN_USER = "Leopis";
+    const ADMIN_PASS_HASH = "d2fe32deec8508263276e07b65219a582915d41bbeaf40ff022a2f20d70e33d9";
+    async function sha256(str) {
+      const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(str));
+      return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, "0")).join("");
+    }
+    function setLoggedIn(ok) {
+      document.getElementById("loginView").classList.toggle("hidden", ok);
+      document.getElementById("dashboardView").classList.toggle("hidden", !ok);
+      document.getElementById("logoutBtn").classList.toggle("hidden", !ok);
+      if (ok) sessionStorage.setItem("leopis_admin", "1");
+      else sessionStorage.removeItem("leopis_admin");
+    }
+    if (sessionStorage.getItem("leopis_admin") === "1") setLoggedIn(true);
+    const db = getFirestore(app);
+
+    const statusMsg = document.getElementById("statusMsg");
+    const showStatus = (msg, ok = true) => {
+      statusMsg.textContent = msg;
+      statusMsg.className = ok ? "ok" : "err";
+      statusMsg.style.display = "block";
+      setTimeout(() => (statusMsg.style.display = "none"), 3500);
+    };
+
+    // Tabs
+    document.querySelectorAll(".tab-btn").forEach(btn => {
+      btn.onclick = () => {
+        document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+        document.querySelectorAll(".tab-panel").forEach(p => p.classList.add("hidden"));
+        btn.classList.add("active");
+        document.getElementById(btn.dataset.tab).classList.remove("hidden");
+      };
+    });
+
+    // Auth
+    document.getElementById("loginBtn").onclick = async () => {
+      const user = document.getElementById("loginEmail").value.trim();
+      const pass = document.getElementById("loginPassword").value;
+      const hash = await sha256(pass);
+      if (user === ADMIN_USER && hash === ADMIN_PASS_HASH) {
+        setLoggedIn(true);
+      } else {
+        showStatus("Invalid Username or Password!", false);
+      }
+    };
+    document.getElementById("logoutBtn").onclick = () => setLoggedIn(false);
+
+    // Compress local image to Base64 so no paid storage is needed for small catalogs
+    document.getElementById("prodImageFile").onchange = e => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = ev => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement("canvas");
+          const maxW = 500;
+          const scale = Math.min(1, maxW / img.width);
+          canvas.width = img.width * scale;
+          canvas.height = img.height * scale;
+          canvas.getContext("2d").drawImage(img, 0, 0, canvas.width, canvas.height);
+          document.getElementById("prodImageUrl").value = canvas.toDataURL("image/jpeg", 0.72);
+        };
+        img.src = ev.target.result;
+      };
+      reader.readAsDataURL(file);
+    };
+
+    // Categories CRUD
+    onSnapshot(collection(db, "categories"), snap => {
+      const list = document.getElementById("categoriesList");
+      const sel = document.getElementById("prodCategory");
+      list.innerHTML = "";
+      sel.innerHTML = '<option value="General">General</option>';
+      snap.forEach(d => {
+        const data = d.data();
+        sel.innerHTML += `<option value="${data.name}">${data.name}</option>`;
+        const el = document.createElement("div");
+        el.className = "item-card";
+        el.innerHTML = `<strong>${data.name}</strong><button class="btn-danger btn-sm">Delete</button>`;
+        el.querySelector("button").onclick = () => deleteDoc(doc(db, "categories", d.id));
+        list.appendChild(el);
+      });
+    });
+
+    document.getElementById("addCatBtn").onclick = async () => {
+      const name = document.getElementById("catName").value.trim();
+      if (!name) return;
+      await addDoc(collection(db, "categories"), { name, createdAt: serverTimestamp() });
+      document.getElementById("catName").value = "";
+      showStatus("Category added & synced!");
+    };
+
+    // Products CRUD
+    const resetProdForm = () => {
+      document.getElementById("editProdId").value = "";
+      document.getElementById("prodCode").value = "";
+      document.getElementById("prodName").value = "";
+      document.getElementById("prodPrice").value = "";
+      document.getElementById("prodImageUrl").value = "";
+      document.getElementById("prodDesc").value = "";
+      document.getElementById("prodFormTitle").textContent = "Add New Product";
+      document.getElementById("cancelEditBtn").classList.add("hidden");
+    };
+    document.getElementById("cancelEditBtn").onclick = resetProdForm;
+
+    document.getElementById("saveProdBtn").onclick = async () => {
+      const id = document.getElementById("editProdId").value;
+      const payload = {
+        code: document.getElementById("prodCode").value.trim(),
+        name: document.getElementById("prodName").value.trim(),
+        price: Number(document.getElementById("prodPrice").value || 0),
+        category: document.getElementById("prodCategory").value,
+        image: document.getElementById("prodImageUrl").value.trim(),
+        description: document.getElementById("prodDesc").value.trim(),
+        updatedAt: serverTimestamp()
+      };
+      if (!payload.name || !payload.price) return showStatus("Name and Price are required!", false);
+      if (id) {
+        await updateDoc(doc(db, "products", id), payload);
+        showStatus("Product updated & synced!");
+      } else {
+        await addDoc(collection(db, "products"), payload);
+        showStatus("Product added & synced!");
+      }
+      resetProdForm();
+    };
+
+    onSnapshot(collection(db, "products"), snap => {
+      const list = document.getElementById("productsList");
+      list.innerHTML = "";
+      snap.forEach(d => {
+        const p = d.data();
+        const el = document.createElement("div");
+        el.className = "item-card";
+        el.innerHTML = `
+          <img src="${p.image || ''}" alt="${p.name}" />
+          <div><span class="badge">${p.category || 'General'}</span> <small>${p.code || ''}</small></div>
+          <strong>${p.name}</strong>
+          <div style="color:#1a237e;font-weight:700;">Rs. ${p.price}</div>
+          <div class="row-actions">
+            <button class="btn-primary btn-sm edit-btn">Edit</button>
+            <button class="btn-danger btn-sm del-btn">Delete</button>
+          </div>`;
+        el.querySelector(".edit-btn").onclick = () => {
+          document.getElementById("editProdId").value = d.id;
+          document.getElementById("prodCode").value = p.code || "";
+          document.getElementById("prodName").value = p.name || "";
+          document.getElementById("prodPrice").value = p.price || "";
+          document.getElementById("prodCategory").value = p.category || "General";
+          document.getElementById("prodImageUrl").value = p.image || "";
+          document.getElementById("prodDesc").value = p.description || "";
+          document.getElementById("prodFormTitle").textContent = "Edit Product";
+          document.getElementById("cancelEditBtn").classList.remove("hidden");
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        };
+        el.querySelector(".del-btn").onclick = () => deleteDoc(doc(db, "products", d.id));
+        list.appendChild(el);
+      });
+    });
+
+    // Promotions CRUD
+    document.getElementById("addPromoBtn").onclick = async () => {
+      const title = document.getElementById("promoTitle").value.trim();
+      const badge = document.getElementById("promoBadge").value.trim();
+      const active = document.getElementById("promoActive").value === "true";
+      if (!title) return;
+      await addDoc(collection(db, "promotions"), { title, badge, active, createdAt: serverTimestamp() });
+      document.getElementById("promoTitle").value = "";
+      document.getElementById("promoBadge").value = "";
+      showStatus("Promotion saved & synced!");
+    };
+
+    onSnapshot(collection(db, "promotions"), snap => {
+      const list = document.getElementById("promotionsList");
+      list.innerHTML = "";
+      snap.forEach(d => {
+        const pr = d.data();
+        const el = document.createElement("div");
+        el.className = "item-card";
+        el.innerHTML = `
+          <span class="badge">${pr.active ? 'Active' : 'Hidden'}</span>
+          <strong>${pr.title}</strong>
+          <small>${pr.badge || ''}</small>
+          <button class="btn-danger btn-sm">Delete</button>`;
+        el.querySelector("button").onclick = () => deleteDoc(doc(db, "promotions", d.id));
+        list.appendChild(el);
+      });
+    });
+  </script>
+</body>
+</html>
