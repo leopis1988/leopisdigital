@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b6b3a"><link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="logo.png"><link rel="apple-touch-icon" href="logo.png"><title>Leopis Shop</title>
+<style>
+*{box-sizing:border-box;margin:0}body{font:15px system-ui,sans-serif;background:#f4f6f8;color:#1b1f24;padding-bottom:90px}
+header{position:sticky;top:0;z-index:5;background:#0b6b3a;color:#fff;padding:8px 12px}
+.top{display:flex;align-items:center;gap:8px;margin-bottom:8px}.top img{width:30px;height:30px;border-radius:8px;background:#fff}.top h1{font-size:18px;flex:1}
+.top button{border:0;border-radius:14px;padding:5px 10px;font-size:13px;background:#fff3;color:#fff}.top button.on{background:#fff;color:#0b6b3a;font-weight:700}
+#q{width:100%;padding:11px 14px;border:0;border-radius:22px;font-size:16px}
+#cats{display:flex;gap:8px;overflow-x:auto;padding:10px 12px;background:#fff;position:sticky;top:96px;z-index:4;scrollbar-width:none}
+#cats button{flex:none;border:1px solid #cfd6dd;background:#fff;padding:7px 13px;border-radius:18px;font-size:14px}#cats button.on{background:#0b6b3a;color:#fff;border-color:#0b6b3a}
+h3{padding:14px 12px 4px;font-size:17px}.hrow{display:flex;gap:10px;overflow-x:auto;padding:6px 12px;scrollbar-width:none}.hrow .card{flex:none;width:150px}
+#grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:10px}
+.card{background:#fff;border-radius:12px;overflow:hidden;display:flex;flex-direction:column;position:relative}
+.card img{width:100%;aspect-ratio:1;object-fit:cover;background:#e9edf0}.card .b{padding:8px;display:flex;flex-direction:column;gap:4px;flex:1}
+.card .n{font-size:13px;line-height:1.3;height:34px;overflow:hidden}.pr{font-weight:700;color:#0b6b3a}.old{font-size:12px;color:#888;text-decoration:line-through;margin-left:4px;font-weight:400}
+.tag{position:absolute;top:6px;left:6px;background:#e53935;color:#fff;font-size:11px;font-weight:700;padding:2px 7px;border-radius:10px}
+.add{margin-top:auto;border:0;background:#0b6b3a;color:#fff;border-radius:8px;padding:9px;font-size:14px}.add.ok{background:#25a244}
+#more{display:block;margin:6px auto 20px;padding:11px 26px;border:1px solid #0b6b3a;color:#0b6b3a;background:#fff;border-radius:22px;font-size:15px}
+#bar{position:fixed;left:0;right:0;bottom:0;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:#fff;box-shadow:0 -2px 10px #0002;display:none;z-index:6}
+#bar button{width:100%;border:0;background:#0b6b3a;color:#fff;border-radius:12px;padding:14px;font-size:16px;font-weight:600}
+#wa{position:fixed;right:14px;bottom:84px;z-index:6;width:52px;height:52px;border-radius:50%;background:#25a244;color:#fff;font-size:26px;display:flex;align-items:center;justify-content:center;text-decoration:none;box-shadow:0 3px 12px #0004}
+.sheet{position:fixed;inset:0;background:#0007;z-index:10;display:none;align-items:flex-end}.sheet.open{display:flex}
+.sheet>div{background:#fff;width:100%;max-height:92vh;overflow:auto;border-radius:18px 18px 0 0;padding:16px 16px calc(16px + env(safe-area-inset-bottom))}
+.row{display:flex;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid #eee}.row img{width:54px;height:54px;border-radius:8px;object-fit:cover;background:#e9edf0}.row .tt{flex:1;font-size:13px}
+.qty{display:flex;align-items:center;gap:8px}.qty button{width:30px;height:30px;border-radius:50%;border:1px solid #bbb;background:#fff;font-size:18px}
+.sum{padding:10px 0;display:grid;gap:4px}.sum div{display:flex;justify-content:space-between}
+input,select,textarea{width:100%;padding:12px;border:1px solid #cfd6dd;border-radius:10px;font-size:16px;margin:5px 0;font-family:inherit}
+.big{width:100%;border:0;background:#0b6b3a;color:#fff;border-radius:12px;padding:14px;font-size:16px;font-weight:600;margin-top:8px;display:block;text-align:center;text-decoration:none}.big.g{background:#25a244}
+.x{float:right;border:0;background:none;font-size:26px}#dimg{width:100%;aspect-ratio:1;object-fit:contain;background:#f1f3f5;border-radius:12px}
+.meta{color:#555;font-size:13px;margin:6px 0}#empty{text-align:center;padding:40px;color:#777}
+</style></head><body>
+<header><div class="top"><img src="logo.png" alt=""><h1>Leopis Shop</h1><button id="inst" hidden>⬇</button><button data-l="en">EN</button><button data-l="si">සිං</button><button data-l="ta">தமிழ்</button></div>
+<input id="q" type="search" data-ip="search"></header>
+<div id="cats"></div><div id="home"></div><h3 id="allh" data-i="allp"></h3><div id="grid"></div><button id="more">▼</button><p id="empty" hidden data-i="none"></p>
+<a id="wa" href="#" target="_blank" rel="noopener" aria-label="WhatsApp">💬</a><div id="bar"><button id="viewCart"></button></div>
+
+<div class="sheet" id="dSheet"><div><button class="x" data-close>×</button><img id="dimg" alt=""><h2 id="dn" style="margin-top:10px;font-size:18px"></h2><div id="dp" class="pr" style="font-size:20px;margin:6px 0"></div><div class="meta" id="dm"></div><p id="dd" style="font-size:14px;line-height:1.5;white-space:pre-line"></p>
+<button class="big" id="da"></button><a class="big g" id="dw" target="_blank" rel="noopener">💬 WhatsApp</a></div></div>
+<div class="sheet" id="cartSheet"><div><button class="x" data-close>×</button><h2 data-i="cart"></h2><div id="lines"></div><div class="sum" id="sum"></div><button class="big" id="toCheckout" data-i="checkout"></button></div></div>
+<div class="sheet" id="coSheet"><div><button class="x" data-close>×</button><h2 data-i="checkout"></h2>
+<input id="cName" data-ip="name" autocomplete="name"><input id="cPhone" type="tel" data-ip="phone" autocomplete="tel"><textarea id="cAddr" rows="3" data-ip="address"></textarea>
+<select id="pay"><option value="cod" data-i="codOption"></option><option value="bank" data-i="bankOption"></option></select><div class="sum" id="sum2"></div><button class="big g" id="send"></button></div></div>
+
+<script>
+const T={"en":{"search":"Search name, product code, or category…","all":"All categories","cart":"Cart","add":"Add to cart","total":"Total","name":"Your name","phone":"Phone number","address":"Delivery address","codOption":"Cash on delivery","bankOption":"Bank transfer","order":"Order via WhatsApp","empty":"Your cart is empty","none":"No products found","viewCart":"View cart","checkout":"Checkout","fill":"Please enter your name, mobile number and delivery address.","wa":"Confirm photo & details on WhatsApp","payment":"Payment method","remove":"Remove","allp":"All products"},"si":{"search":"නම, නිෂ්පාදන කේතය හෝ ප්‍රවර්ගය අනුව සොයන්න…","all":"සියලුම ප්‍රවර්ග","cart":"කරත්තය","add":"කරත්තයට එක් කරන්න","total":"මුළු මුදල","name":"ඔබේ නම","phone":"දුරකථන අංකය","address":"බෙදාහැරීමේ ලිපිනය","codOption":"භාණ්ඩ ලැබුණු පසු මුදල් ගෙවීම","bankOption":"බැංකු මාරු කිරීම","order":"WhatsApp හරහා ඇණවුම් කරන්න","empty":"කරත්තය හිස්ය","none":"නිෂ්පාදන හමු නොවීය","viewCart":"කරත්තය බලන්න","checkout":"ගෙවීමට යන්න","fill":"කරුණාකර නම, ජංගම දුරකථන අංකය සහ ලිපිනය ඇතුළත් කරන්න.","wa":"WhatsApp හරහා සැබෑ ඡායාරූප සහ විස්තර","payment":"ගෙවීමේ ක්‍රමය","remove":"ඉවත් කරන්න","allp":"සියලුම නිෂ්පාදන"},"ta":{"search":"பெயர், தயாரிப்பு குறியீடு அல்லது வகை மூலம் தேடுங்கள்…","all":"அனைத்து வகைகள்","cart":"வண்டி","add":"வண்டியில் சேர்","total":"மொத்தம்","name":"உங்கள் பெயர்","phone":"தொலைபேசி எண்","address":"விநியோக முகவரி","codOption":"பொருள் கிடைத்ததும் பணம்","bankOption":"வங்கி பரிமாற்றம்","order":"WhatsApp மூலம் ஆர்டர் செய்யுங்கள்","empty":"வண்டி காலியாக உள்ளது","none":"பொருட்கள் எதுவும் இல்லை","viewCart":"வண்டியைப் பார்க்க","checkout":"செலுத்தி முடிக்க","fill":"பெயர், கைபேசி எண் மற்றும் விநியோக முகவரியை உள்ளிடவும்.","wa":"WhatsApp மூலம் உண்மையான படங்கள் மற்றும் விவரங்கள்","payment":"கட்டண முறை","remove":"நீக்கு","allp":"அனைத்து பொருட்கள்"}};
+const CFG={wa:"94783366466",cur:"Rs.",perPage:24,url:"https://efnpwdugjmjzqdkgdawa.supabase.co",key:"sb_publishable_8a4trfyL_a-NgMfUsugMEA_By_KsGqM"};
+const DEL={perMerchant:450,discount:{1:0,2:100,3:300,4:450,5:800}};
+const $=s=>document.querySelector(s),money=n=>CFG.cur+" "+Number(n).toLocaleString("en-US"),H=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+let lang="en";try{lang=localStorage.getItem("leopis_lang")||"en"}catch(e){}
+const t=k=>(T[lang]&&T[lang][k])||T.en[k]||k;
+const nm=p=>(lang==="si"&&p.ns)||(lang==="ta"&&p.nt)||p.name,ds=p=>(lang==="si"&&p.ds)||(lang==="ta"&&p.dt)||p.desc||"";
+let all=[],byId={},view=[],shown=0,cat="",cart={};
+try{cart=JSON.parse(localStorage.getItem("leopis_cart")||"{}")}catch(e){}
+const save=()=>{try{localStorage.setItem("leopis_cart",JSON.stringify(cart))}catch(e){}};
+const mNo=p=>{const n=+String(p.merchant||"").replace(/\D/g,"")[0];return n>=1&&n<=10?n:5};
+function applyLang(){document.documentElement.lang=lang;document.querySelectorAll("[data-i]").forEach(e=>e.textContent=t(e.dataset.i));document.querySelectorAll("[data-ip]").forEach(e=>e.placeholder=t(e.dataset.ip));
+ document.querySelectorAll("[data-l]").forEach(b=>b.classList.toggle("on",b.dataset.l===lang));$("#send").textContent="💬 "+t("order");$("#more").textContent="▼ "+(lang==="en"?"Show more":lang==="si"?"තවත් පෙන්වන්න":"மேலும் காட்டு");
+ $("#wa").href="https://wa.me/"+CFG.wa+"?text="+encodeURIComponent("Hi Leopis");$("#da").textContent=t("add");const f=$("#cats button");if(f)f.textContent=t("all")}
+
+async function load(){
+ try{const rows=[];for(let f=0;;f+=1000){
+  const r=await fetch(CFG.url+"/rest/v1/products?select=*&active=eq.true&order=sort_order.asc,id.asc",{headers:{apikey:CFG.key,Authorization:"Bearer "+CFG.key,Range:f+"-"+(f+999)}});
+  if(!r.ok)throw 0;const part=await r.json();rows.push(...part);if(part.length<1000)break}
+  if(!rows.length)throw 0;
+  return rows.map(x=>({id:x.code||String(x.id),name:x.name,ns:x.name_si,nt:x.name_ta,desc:x.description,ds:x.description_si,dt:x.description_ta,w:x.warranty,category:x.category||"Other",price:+x.price,old:x.market_price?+x.market_price:0,
+   image:x.image||(x.images&&x.images[0])||"",merchant:x.merchant,sub:x.subcategory||"",pin:!!x.pinned,po:x.pin_order||0,hot:!!x.trending,fresh:!!x.new_arrival}));
+ }catch(e){const d=await (await fetch("products_final.json")).json();
+  return d.map(p=>({id:p.id,name:p.name,desc:p.description,w:p.warranty,category:p.category||"Other",price:+p.price,old:p.oldPrice||0,image:p.image||"",merchant:p.merchant,sub:p.subcategory||"",pin:0,po:0,hot:0,fresh:0}))}
+}
+async function loadCats(){try{const r=await fetch(CFG.url+"/rest/v1/categories?select=name&active=eq.true&order=sort_order.asc,name.asc",{headers:{apikey:CFG.key,Authorization:"Bearer "+CFG.key}});if(!r.ok)throw 0;const j=await r.json();return j.length?j.map(c=>c.name):null}catch(e){return null}}
+
+function card(p){const c=document.createElement("div");c.className="card";const off=p.old>p.price?Math.round((1-p.price/p.old)*100):0;
+ c.innerHTML=`${off?`<span class="tag">-${off}%</span>`:""}<img loading="lazy" alt=""><div class="b"><div class="n"></div><div class="pr">${money(p.price)}${off?`<span class="old">${money(p.old)}</span>`:""}</div><button class="add">${H(t("add"))}</button></div>`;
+ const i=c.querySelector("img");i.src=p.image;c.querySelector(".n").textContent=nm(p);
+ i.onclick=c.querySelector(".n").onclick=()=>detail(p);
+ const b=c.querySelector(".add");b.onclick=()=>{cart[p.id]=(cart[p.id]||0)+1;save();bar();b.textContent="✓";b.classList.add("ok");setTimeout(()=>{b.textContent=t("add");b.classList.remove("ok")},900);navigator.vibrate&&navigator.vibrate(20)};return c}
+function detail(p){$("#dimg").src=p.image;$("#dn").textContent=nm(p);const off=p.old>p.price;$("#dp").innerHTML=money(p.price)+(off?`<span class="old">${money(p.old)}</span>`:"");
+ $("#dm").textContent=[p.id,p.category,p.w&&p.w!=="checking warranty"?"🛡 "+p.w:""].filter(Boolean).join(" · ");$("#dd").textContent=ds(p)==="checking warranty"?"":ds(p);
+ $("#da").onclick=()=>{cart[p.id]=(cart[p.id]||0)+1;save();bar();close()};$("#dw").href="https://wa.me/"+CFG.wa+"?text="+encodeURIComponent(`Hi Leopis, I'm interested in ${p.name} [${p.id}]`);open("#dSheet")}
+function filter(){const q=$("#q").value.trim().toLowerCase().split(/\s+/).filter(Boolean);
+ view=all.filter(p=>(!cat||p.category===cat)&&q.every(w=>(p.name+" "+(p.ns||"")+" "+(p.nt||"")+" "+p.id+" "+p.category+" "+p.sub).toLowerCase().includes(w)));
+ const home=!q.length&&!cat;$("#home").innerHTML="";$("#allh").hidden=!home;
+ if(home)[["📌",all.filter(p=>p.pin),{en:"Featured",si:"විශේෂ",ta:"சிறப்பு"}],["🔥",all.filter(p=>p.hot),{en:"Trending",si:"ජනප්‍රිය",ta:"டிரெண்டிங்"}],["🆕",all.filter(p=>p.fresh),{en:"New arrivals",si:"අලුත් පැමිණීම්",ta:"புதிய வரவுகள்"}]].forEach(([e,l,n])=>{if(!l.length)return;
+  const h=document.createElement("h3");h.textContent=e+" "+n[lang];const r=document.createElement("div");r.className="hrow";l.slice(0,12).forEach(p=>r.append(card(p)));$("#home").append(h,r)});
+ shown=0;$("#grid").innerHTML="";more();$("#empty").hidden=view.length>0}
+function more(){const f=document.createDocumentFragment();view.slice(shown,shown+CFG.perPage).forEach(p=>f.append(card(p)));$("#grid").append(f);shown+=CFG.perPage;$("#more").style.display=shown<view.length?"block":"none"}
+function totals(){let sub=0,s=new Set();Object.keys(cart).forEach(id=>{const p=byId[id];if(p){sub+=p.price*cart[id];s.add(mNo(p))}});const n=s.size,fee=n*DEL.perMerchant,off=DEL.discount[n]||0;return{sub,n,fee,off,total:sub+fee-off}}
+function sumHtml(x){return `<div><span>Items</span><span>${money(x.sub)}</span></div><div><span>Delivery (${x.n} shop${x.n>1?"s":""})</span><span>${money(x.fee)}</span></div>`+(x.off?`<div style="color:#0b6b3a"><span>Delivery discount</span><span>-${money(x.off)}</span></div>`:"")+`<div><b>${H(t("total"))}</b><b>${money(x.total)}</b></div>`}
+function bar(){Object.keys(cart).forEach(id=>{if(!byId[id])delete cart[id]});const c=Object.values(cart).reduce((a,b)=>a+b,0);$("#bar").style.display=c?"block":"none";$("#wa").style.bottom=c?"84px":"20px";$("#viewCart").textContent=`🛒 ${t("viewCart")} (${c}) · ${money(totals().total)}`}
+function renderCart(){const ids=Object.keys(cart);$("#lines").innerHTML=ids.length?"":`<p id="empty">${H(t("empty"))}</p>`;
+ ids.forEach(id=>{const p=byId[id],r=document.createElement("div");r.className="row";r.innerHTML=`<img src=""><div class="tt"></div><div class="qty"><button>−</button><b>${cart[id]}</b><button>+</button></div>`;
+  r.querySelector("img").src=p.image;r.querySelector(".tt").innerHTML=`${H(nm(p))}<br><b>${money(p.price*cart[id])}</b>`;const[m,pl]=r.querySelectorAll(".qty button");
+  m.onclick=()=>{cart[id]--;if(cart[id]<1)delete cart[id];save();renderCart();bar()};pl.onclick=()=>{cart[id]++;save();renderCart();bar()};$("#lines").append(r)});
+ $("#sum").innerHTML=ids.length?sumHtml(totals()):"";$("#toCheckout").style.display=ids.length?"block":"none"}
+const open=id=>$(id).classList.add("open"),close=()=>document.querySelectorAll(".sheet").forEach(s=>s.classList.remove("open"));
+document.querySelectorAll("[data-close]").forEach(b=>b.onclick=close);document.querySelectorAll(".sheet").forEach(s=>s.onclick=e=>{if(e.target===s)close()});
+$("#viewCart").onclick=()=>{renderCart();open("#cartSheet")};
+$("#toCheckout").onclick=()=>{close();$("#sum2").innerHTML=sumHtml(totals());["cName","cPhone","cAddr"].forEach(k=>{try{$("#"+k).value=localStorage.getItem("leopis_"+k)||""}catch(e){}});open("#coSheet")};
+$("#send").onclick=()=>{const name=$("#cName").value.trim(),phone=$("#cPhone").value.trim(),addr=$("#cAddr").value.trim();
+ if(!name||!phone||!addr)return alert(t("fill"));const d=phone.replace(/\D/g,"");if(d.length<9||d.length>15)return alert("Please enter a valid mobile number.");
+ ["cName","cPhone","cAddr"].forEach(k=>{try{localStorage.setItem("leopis_"+k,$("#"+k).value)}catch(e){}});
+ const ids=Object.keys(cart).filter(id=>byId[id]),x=totals(),lines=ids.map((id,i)=>{const p=byId[id];return `${i+1}) ${p.name} [${p.id}] (Shop ${mNo(p)}) x${cart[id]} = ${money(p.price*cart[id])}`});
+ const msg=["New order - Leopis","","Name: "+name,"Phone: "+phone,"Address: "+addr,"Payment method: "+($("#pay").value==="bank"?"Bank transfer - please send payment instructions":"Cash on delivery"),"",...lines,"",
+  "Items: "+money(x.sub),`Delivery (${x.n} store${x.n>1?"s":""}): `+money(x.fee),...(x.off?["Delivery discount: -"+money(x.off)]:[]),"Total: "+money(x.total)].join("\n");
+ window.open("https://wa.me/"+CFG.wa+"?text="+encodeURIComponent(msg),"_blank")};
+$("#more").onclick=more;let tm;$("#q").oninput=()=>{clearTimeout(tm);tm=setTimeout(filter,200)};
+document.querySelectorAll("[data-l]").forEach(b=>b.onclick=()=>{lang=b.dataset.l;try{localStorage.setItem("leopis_lang",lang)}catch(e){}applyLang();filter();bar()});
+const rank=p=>p.pin?0:p.fresh?1:p.hot?2:3;
+Promise.all([load(),loadCats()]).then(([d,cn])=>{d=d.map((p,i)=>[p,i]).sort((a,b)=>rank(a[0])-rank(b[0])||(rank(a[0])===0?a[0].po-b[0].po:0)||a[1]-b[1]).map(x=>x[0]);all=d;d.forEach(p=>byId[p.id]=p);
+ const cats=cn||[...new Set(d.map(p=>p.category))].sort();
+ ["",...cats].forEach(c=>{const b=document.createElement("button");b.textContent=c||t("all");if(!c)b.className="on";
+  b.onclick=()=>{cat=c;document.querySelectorAll("#cats button").forEach(x=>x.classList.toggle("on",x===b));filter();scrollTo(0,0)};$("#cats").append(b)});
+ applyLang();filter();bar()});
+let dp;addEventListener("beforeinstallprompt",e=>{e.preventDefault();dp=e;$("#inst").hidden=false});
+$("#inst").onclick=async()=>{if(!dp)return;dp.prompt();await dp.userChoice;dp=null;$("#inst").hidden=true};
+addEventListener("appinstalled",()=>{$("#inst").hidden=true});
+if(/iphone|ipad/i.test(navigator.userAgent)&&!navigator.standalone){$("#inst").hidden=false;$("#inst").onclick=()=>alert("iPhone: tap Share, then 'Add to Home Screen'.")}
+applyLang();
+if("serviceWorker"in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});
+</script></body></html>
